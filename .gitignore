@@ -1,0 +1,21 @@
+# 환경 변수 / 인증 정보
+.env
+projects/**/.env
+credentials.json
+token.json
+
+# 임시 파일
+projects/**/.tmp/
+*.tmp
+
+# 의존성
+node_modules/
+
+# OS 생성 파일
+Thumbs.db
+.DS_Store
+
+# 대용량 바이너리 (GitHub 용량 제한 주의)
+*.pdf
+*.hwp
+*.hwpx

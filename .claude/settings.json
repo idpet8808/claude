@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "defaultMode": "acceptEdits",
+  "permissions": {
+    "allow": [
+      "Read",
+      "Glob",
+      "Grep",
+      "Write(projects/**)",
+      "Write(.claude/**)",
+      "Write(CLAUDE.md)",
+      "Edit(projects/**)",
+      "Edit(.claude/**)",
+      "Edit(CLAUDE.md)",
+      "Bash(ls:*)",
+      "Bash(pwd)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(mkdir:*)",
+      "Bash(cat:*)",
+      "Task",
+      "AskUserQuestion",
+      "mcp__notion__API-get-block-children",
+      "mcp__notion__API-get-self",
+      "mcp__notion__API-get-user",
+      "mcp__notion__API-get-users",
+      "mcp__notion__API-list-data-source-templates",
+      "mcp__notion__API-post-search",
+      "mcp__notion__API-retrieve-a-block",
+      "mcp__notion__API-retrieve-a-comment",
+      "mcp__notion__API-retrieve-a-data-source",
+      "mcp__notion__API-retrieve-a-database",
+      "mcp__notion__API-retrieve-a-page",
+      "mcp__notion__API-retrieve-a-page-property"
+    ],
+    "deny": [
+      "Bash(rm -rf:*)",
+      "Bash(rm -r:*)",
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)",
+      "Bash(git reset --hard:*)",
+      "Bash(git config --global:*)",
+      "Write(.mcp.json)",
+      "Edit(.mcp.json)",
+      "Write(start-team.sh)",
+      "Edit(start-team.sh)"
+    ],
+    "ask": [
+      "mcp__notion__API-post-page",
+      "mcp__notion__API-patch-page",
+      "mcp__notion__API-patch-block-children",
+      "mcp__notion__API-create-a-comment",
+      "mcp__notion__API-create-a-data-source",
+      "mcp__notion__API-update-a-block",
+      "mcp__notion__API-update-a-data-source",
+      "mcp__notion__API-delete-a-block",
+      "mcp__notion__API-move-page",
+      "Bash(git commit:*)",
+      "Bash(git add:*)",
+      "Bash(git push:*)",
+      "WebFetch",
+      "WebSearch"
+    ]
+  },
+  "env": {
+    "PYTHONIOENCODING": "utf-8",
+    "LANG": "ko_KR.UTF-8"
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cat projects/_INDEX.md 2>/dev/null || echo '(projects/_INDEX.md 없음 — Stage 1 완료 여부 확인)'"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "grep -qE '\"file_path\"[^,}]*(\\.mcp\\.json|start-team\\.sh)' && { echo 'BLOCKED: .mcp.json / start-team.sh 는 보호 대상 파일입니다 (CLAUDE.md section 8).' >&2; exit 2; } || exit 0"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "grep -qE '\"file_path\"[^,}]*projects/[^/]+/0[0-9]-[^\"]+\\.md' && { echo 'REMINDER: 산출물 작성 완료. STATE.md 의 산출물 인덱스 체크 + 다음 에이전트 호출 또는 /sync-notion 실행 권장.' >&2; exit 2; } || exit 0"
+          }
+        ]
+      }
+    ]
+  }
+}
