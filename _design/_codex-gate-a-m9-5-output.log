@@ -1,0 +1,15 @@
+# M9-5 Codex Gate A 1차 리뷰 결과 (2026-05-04)
+
+판정: 부분 반려 — H5가 비허용 `E-create`를 전제로 해 M9-3 closed event set 및 M9-5 I18과 직접 충돌하므로, M9-5-c 트리거 정의는 현 단계에서 고쳐야 합니다.
+
+| 심각도 | 발견 | 근거 | 처리 권장 |
+| --- | --- | --- | --- |
+| 높음 | 축1/3: H5의 `E-create + status=NA`는 M9-3의 4개 E-event가 아니라 `create` action을 새 event처럼 다뤄 closed set을 깹니다. | `_design/M9_deliverable-structure.md:789`, `:1240`, `:1397`, `:1486`, `:1538`, `:1547` | 현 단계 수정 — `E-create` 용어 삭제, H5를 기존 M9-2-c 최초 추가/확정 broadcast 또는 E-exempt/NA suffix 변경 감지로 재정의 |
+| 중간 | 축1: 변경 이벤트 시 "영향 노드의 인접 엣지만" 재검증하면 삭제·rename·상태변경 때 과거 incoming edge, dangling, orphan 전이가 즉시 검출되지 않을 수 있습니다. | `_design/M9_deliverable-structure.md:1397`, `:1466-1467` | 현 단계 수정 — impact set을 old/new 노드, reverse index, 과거 incident edge까지 포함하도록 명시 |
+| 중간 | 축1/3: NA 인간 판단의 "무응답 2턴 → PM 회부"가 M4-3-2의 T1/T2/T3 hard trigger closed set 중 어디에 매핑되는지 불명확합니다. | `_design/M9_deliverable-structure.md:1416`, `:1491`; `_design/M4-3-2_mid-intervention.md:30-36`, `:84-99`, `:114` | 현 단계 수정 — PM 회부는 신규 trigger가 아니라 T1 "팀장 판단 불가" 또는 기존 세션 종료 보고 경로로만 수행한다고 명시 |
+| 중간 | 축2: P영역 README `[NOT APPLICABLE]` SSoT 예외가 §9-4 카탈로그/그래프 입력에 명시적으로 들어가지 않아 P NA 누락·사유 빈약 검증이 빠질 수 있습니다. | `_design/M9_deliverable-structure.md:523`, `:527`, `:1452-1455`, `:1517` | 현 단계 수정 — F-8 또는 M-e 입력 정의에 README NA list 파싱을 포함 |
+| 중간 | 축2: F-3 ID 발급 규칙은 grep만으로 판정 불가한데 §9-1/§9-4-1이 grep 카탈로그로 분류합니다. | `_design/M9_deliverable-structure.md:1420`, `:1426`, `:1512` | 현 단계 수정 — "grep"을 "정적 형식/파서 검증"으로 바꾸고 F-3은 parser+카운팅 검증으로 명시 |
+| 중간 | 축3: M9-5 error blocking이 M2-3 Task 상태, M2-5 evidence, M2-6 Gate B 진행에 주는 효과가 비어 있습니다. | `_design/M9_deliverable-structure.md:377-378`, `:1389`, `:1545`; `CLAUDE.md:51-67` | 현 단계 수정 — affected deliverable의 M2-5 완료 승인/Gate B 진입 차단, remediation in_progress 허용, clean M9-5 결과 evidence 포함 여부 명시 |
+| 낮음 | 축2: H1/H2 false positive의 "적절 → 다음 검증 silent"가 어디에 기록되는지 불명확해 반복 warning 가능성이 있습니다. | `_design/M9_deliverable-structure.md:1484-1495`, `:1546` | 현 단계 수정 — warning 휴리스틱에 한해 suppress 또는 `_broadcast.log` resolved marker를 허용 |
+| 낮음 | 축2: H1/H2 임계값 정련은 이관되어 있으나 조정 주체와 승인 경로가 빠져 있습니다. | `_design/M9_deliverable-structure.md:1536-1537`, `:1557` | M10+ 이관 — 운영 1~2개월 후 팀장 제안/PM 승인 등 조정 경로만 명문화 |
+| 없음 | 축1: F-8과 M9-5-c 시나리오 1, M-e와 시나리오 4의 흡수 관계는 중복 처리 없이 정합합니다. | `_design/M9_deliverable-structure.md:1432`, `:1477-1478`, `:1529` | 수용 |

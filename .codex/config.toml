@@ -1,0 +1,6 @@
+[shell_environment_policy]
+inherit = "core"
+
+[shell_environment_policy.set]
+LANG = "ko_KR.UTF-8"
+PYTHONIOENCODING = "utf-8"

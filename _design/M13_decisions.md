@@ -32,9 +32,35 @@
 
 ---
 
-## M13-② brainstorming 결정 (예정)
+## M13-② brainstorming 결정 (2026-05-06)
 
-(Group B 진입 시 기록)
+| # | 항목 | 결정 | 근거 |
+|---|------|------|------|
+| 1 | **CLAUDE.md §3 분량 70줄 적정성** | **70줄 유지**. AGENTS.md(호출 형식·판정 기준)와 분리 정합. §3은 *원칙·게이트 정의* 한정. advisory 정신 반복 강조는 정합성 우선 | spec §8 / AGENTS.md 분담 |
+| 2 | **§7 객관 지표 4개 임계** (5% / 30분 / 10MB / 월 3회) | **`_FOLLOWUP.md` ③ 운영 정련 보존**. 헌법은 *지표 존재·정련 위치*만 1단락 명시. 임계는 v1 운영 후 정련 (M12-I8 정합). v1 헌법 박으면 회귀 부담 ↑ | M12-I8 / 가속안 (2) |
+| 3 | **`_FOLLOWUP.md` 위치** | **루트 (`/_FOLLOWUP.md`)**. *운영 등록 파일* 성격이라 가시성 ↑. `_design/`은 *아카이브* 성격으로 분리. spec §F-5 권장 정합. SessionStart 훅 cat 가능 | spec §F-5 / 디렉토리 의미 분리 |
+
+---
+
+## M13-② Codex Gate C 처리 (2026-05-06)
+
+| 시점 | 사항 |
+|------|------|
+| Gate C 시도 | Codex agent 호출 시도했으나 `Bash(node:*)` 권한 부재로 codex-companion.mjs 실행 실패 (Group A Gate B와 동일 패턴) |
+| **PM 결정** | **Gate C skip + PM 직접 통과**. 사유: ① CLAUDE.md 392줄 / AGENTS.md 변경 없음 / _FOLLOWUP.md 95줄 모두 spec §8·M13-② 결정 정합 ② Codex는 advisory이지 blocking 아님 (CLAUDE.md §3) ③ Bash node 권한 추가는 settings 변경 = Gate C 자체 발동 대상으로 역설 ④ 가속안 (2) 정신 |
+| 후속 | v1 운영 시행착오 발견 시 `_FOLLOWUP.md`에 등록 → 헌법 변경 필요 시 다시 Gate C 발동 (그때 Bash node 권한 또는 다른 수단 결정) |
+
+---
+
+## M13-② B6 임시 파일 정리 (2026-05-06)
+
+`_FOLLOWUP.md` ④ 폐기 분류에 등록된 11개 파일 git working tree 정리:
+
+- `.tmp-codex-m4-{4th, 5th-prompt, 5th-out, 6th-prompt, 6th-out, 7th-prompt, 7th-out}.txt` (7개)
+- `.tmp-m4-rev{5, 6, 7}.md` (3개)
+- `.codex/config.toml.bak` (1개)
+
+근거: 2026-04-14 M4 Mesh 메시지 전달 프로토콜 롤백 잔재. M9~M12 Mesh 모델로 대체 완료. 모두 untracked 상태였으므로 git 이력 영향 없음.
 
 ---
 

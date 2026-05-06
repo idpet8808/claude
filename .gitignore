@@ -19,3 +19,4 @@ Thumbs.db
 *.pdf
 *.hwp
 *.hwpx
+.gstack/

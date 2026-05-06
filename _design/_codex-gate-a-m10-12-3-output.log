@@ -1,0 +1,21 @@
+﻿[Codex 리뷰] Gate A 3차 (M10·M11·M12)
+- 대상: C:/Users/BN211/Desktop/claude/_design/M9_deliverable-structure.md §10 + inline 보강
+- 판정: 조건부 통과
+
+| 심각도 | 발견 | 근거 | 처리 권장 |
+| --- | --- | --- | --- |
+| 중간 | [축1] error remediation 후 재발동은 생겼지만 동일 error 반복 시 자동 재발동 상한·순환 감지가 없어 remediation Task 체인이 끝나지 않을 수 있다. | §10-2-5 예외 #1, §10-2-3 error 행, 2차 #1 | 현 단계 수정: 동일 deliverable+동일 위반 재발동 1회 초과 시 PM 회부 또는 M11-I9로 상한/순환 detection 명시 |
+| 중간 | [축1] 무응답 기준의 M2-5 Task evidence completed 신호가 다중 Task 산출물에서 마지막 Task인지 전체 Task인지 불명확하다. | §10-2-3 무응답 행, §10-2-4 M2-5 | 현 단계 수정: Gate B 대상 산출물의 모든 필수 완료 Task completed 후 또는 산출물 완료 대표 Task completed 후로 고정 |
+| 중간 | [축1/2] §10-2-3 매트릭스 warning 행에 아직 6필드 형식 표현이 남아 8필드 통합 본문과 충돌한다. | §10-2-3 warning 행, §10-2-3 8필드 표, §9-4 F-7 | 현 단계 수정 |
+| 중간 | [축2] F-7 parser를 8필드로 바꾸면 기존 M9-3 broadcast 6필드 계약과 충돌하며, 과거 _broadcast.log 6필드 entry의 backward compat도 정의되지 않았다. | §6-1-5, §6-3-3, I10, §9-4 F-7, §10-2-3 8필드 | 현 단계 수정: type=broadcast는 legacy 6필드 허용/매핑, type=self-check는 8필드 강제 등 parser 분기 명시 |
+| 낮음 | [축1/2] type=self-check가 H1/H2 적절 통과 silent 기록까지 담당하는지 불명확해 suppress/resolved marker 이관 사항과 혼동될 수 있다. | §9-3 H1/H2 인간 판단 처리, §9-6 M10+ 이관, §10-2-3 8필드 | 운영 정련: self-check는 Gate B evidence 기록으로 한정하고 H1/H2 silent 기록은 기존 M10+ 이관 유지 명시 |
+| 낮음 | [축1] M12-I8은 임계값 중복은 해소했지만 조정 절차의 주체·승인 문장이 아직 약하다. | §10-3, M12-I8 | 현 단계 수정: 팀장/owner 제안 → PM 승인 전속 → sub-step 반영 한 줄 추가 |
+| 낮음 | [축1] 50% 기준은 노드 헤더 카운트까지는 닫혔지만 deprecated/NA/skeleton 포함 여부와 산출물 내 영역 범위가 남아 있다. | §10-2-5 예외 #2 | 운영 정련: v1 기준으로 해당 산출물 내 실제 항목 헤더, 상태 무관 포함/스켈레톤 제외 등 포함 집합 명시 |
+| 없음 | [축3] M10·M12 P3 보류, M11 v1 확정, Gate B 회복 경로 신설의 큰 구조는 운영 시작 가능 수준이다. | §10-1, §10-2, §10-3 | 통과 |
+
+총평: 2차의 핵심 높음 결함인 Gate B 영구 차단 문제는 해소됐다. 다만 구현 단계로 넘기기 전에 _broadcast.log 6필드/8필드 전환 규칙과 M11 재발동 상한은 문장으로 닫아야 한다.
+
+잔여 이슈는 높음은 아니지만 중간 4건이므로 최종 판정은 조건부 통과가 적절하다.
+
+---
+생성: 2026-05-04
