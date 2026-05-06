@@ -50,6 +50,7 @@
     - `_broadcast.log`를 실시간 채널로 변환 (파일 → in-memory 큐 또는 hook 기반)
     - 부분 broadcast trigger 조건 정형화 (예: WHY 확정 시점 = TR 외부 의존성 1차 시작 신호)
   - **참고**: M13 v1 = 운영 검증 정신 정합. 실 발견된 격차로 v1.1+ 정련
+  - **2026-05-06 M14 부분 해결**: `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` 활성화 + CLAUDE.md §4-11 Agent Teams 매핑 신설 (4명 Teammates + 노션관리자 별도). TeamCreate/TaskList 공유로 Mesh + 부분 broadcast 정신 환경 확보. 운영 검증은 다음 멘사 재진행 세션부터 (`mensa-ranking-challenge` 처음부터 재테스트)
 - **기능명세서 별도 산출물 신설 검토** (2026-05-06 M13 v1 C6 발견 — slug=`mensa-ranking-challenge`)
   - **현 격차**: PRD §4 (기능 범위 MoSCoW) + TR §2 (Must 전수 평가)에 분산. **기능별 흐름도·입출력·예외 처리·정합성 룰 부재**
   - **BN시스템 실무 관행**: 별도 기능명세서 작성 표준
@@ -102,6 +103,8 @@ v1 운영 시행착오 누적 후 정련. 임계값·정책은 잠정값으로 �
 - **카탈로그 신규 카테고리 추가 메커니즘** (M13 또는 운영 — 영역 신설 절차 정형화 필요)
 - **M11 자가 점검 evidence 형식 표준화** (구현 단계)
 - **M11 owner별 자가 점검 운영 학습** (false positive·항목 정련)
+- **M14 헌법 변경 4블록 형식 운영 검증** (2026-05-06 M14 신설) — §11 4블록 형식 + §6-6 도구 인지 사전 검증 + §10 헌법 변경 절대 규칙 + settings.json PreToolUse NOTICE hook. 본 세션 4차 잘못 패턴(자의적 헌법 다운그레이드/교체) 회귀 발생률 추적. 4블록 형식 누락·우회 사례 발견 시 본 항목 갱신
+- **M14 Agent Teams 적용 운영 검증** (2026-05-06 M14 신설) — §4-11 매핑(4명 Teammates + 노션관리자 별도) 운영 시행착오 추적. TaskList 공유 부담·SendMessage 양방향 reply 실효성·draft↔정식 단계 전환 비용 등
 
 ## ④ 폐기
 

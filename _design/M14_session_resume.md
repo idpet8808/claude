@@ -123,3 +123,44 @@ Agent Teams 활성화 확인 후 진행.
 - 본 세션 = M13 v1 압축 종료 + 멘사 적용 + S4-A 추가 + M14 진입 + Agent Teams 활성화 준비
 - 누적 commit 9건. 미커밋 3건 (CLAUDE.md / settings.json / 본 파일)
 - 본 세션 *신뢰성*은 4차 잘못 누적으로 *낮음*. 다음 세션 시작 시 PM 명시 검증 필수
+
+---
+
+## 다음 세션 회복 결과 (2026-05-06 재시작 후)
+
+본 인수인계서 기반 재개 → (c)/(d) 모두 PM 권장대로 진행 완료.
+
+### (c) §4-11 본 하네스 적용 — ✓ 완료
+
+CLAUDE.md §4 끝에 **§4-11 신설**:
+- 매핑: 4명(서비스기획자·기술검토자·UX기획자·퍼블리셔) Teammates / 노션관리자 Agent 직접 호출 / Codex advisory 외부
+- 활성화/해체: `/kickoff` [2] Mesh 분해 진입 시 TeamCreate (팀 이름 = `<slug>`) / 페이즈 1 종료 후 TeamDelete
+- 페이즈 2: v1 미정의 (§12)
+
+검증: `m14-verification` 임시 팀 생성 → config.json + members + TaskList 디렉토리 정상 → TeamDelete 정리 완료.
+
+### (d) 신뢰성 보장 — ✓ 완료 (옵션 D 4중)
+
+본 세션 4차 잘못 패턴(자의적 헌법 다운그레이드/교체) 방지 메커니즘 4중 신설:
+
+| 차 | 메커니즘 | 위치 |
+|---|---------|------|
+| 1차 | 도구 인지 사전 검증 | CLAUDE.md §6 6번 항목 (신설) |
+| 2차 | PM 지적 시 헌법 재확인 우선 (도구 변명 금지) | CLAUDE.md §10 "헌법 변경 시 절대 규칙" (신설) |
+| 3차 | 헌법 변경 권장 4블록 형식 | CLAUDE.md §11 "헌법 변경 권장 시 4블록 고정" (신설) |
+| 4차 | settings.json PreToolUse hook (CLAUDE.md/AGENTS.md 수정 시 NOTICE) | settings.json (추가) |
+
+### `_reference/` 처리 — ✓ commit 포함 (D-1)
+
+`projects/mensa-ranking-challenge/_reference/` (5개 챌린지 PNG 25개, 1.8MB) commit 포함.
+근거: 산출물 ↔ 참조자료 의도적 분리 명명. 후행 챌린지 페이지 추가 시 재참조.
+
+---
+
+## 다음 세션 시작점 — 멘사 랭킹챌린지 재진행
+
+PM 시작 신호 시 **처음부터 테스트** 진행:
+- 본 M14에서 §4-11 Agent Teams 적용 + (d) 4중 신뢰성 보장 정의 완료
+- 멘사 랭킹챌린지를 §4 정의대로(Mesh + 부분 broadcast + Agent Teams) 재진행
+- 기존 멘사 산출물(`projects/mensa-ranking-challenge/`) 처리 방침 PM 결정 필요 (보존 / 백업 후 재시작 / 덮어쓰기)
+- 노션 기존 페이지(`356fd8b1-41f3-8095-9a28-cbbf2b7961ec`) 연결 방침 PM 결정 필요

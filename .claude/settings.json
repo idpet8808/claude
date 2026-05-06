@@ -86,6 +86,10 @@
           {
             "type": "command",
             "command": "grep -qE '\"file_path\"[^,}]*(\\.mcp\\.json|start-team\\.sh)' && { echo 'BLOCKED: .mcp.json / start-team.sh 는 보호 대상 파일입니다 (CLAUDE.md section 8).' >&2; exit 2; } || exit 0"
+          },
+          {
+            "type": "command",
+            "command": "grep -qE '\"file_path\"[^,}]*(CLAUDE\\.md|AGENTS\\.md)' && { echo 'NOTICE: 헌법 본문 수정 — §10 PM 명시 승인 필수, §11 헌법 변경 4블록 형식 적용 확인 (M14).' >&2; exit 0; } || exit 0"
           }
         ]
       }
