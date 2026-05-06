@@ -20,3 +20,9 @@ Thumbs.db
 *.hwp
 *.hwpx
 .gstack/
+
+# 로컬 백업·런타임·개인 설정 (M13 v1 정리)
+_backup/
+.agents/
+.claude/scheduled_tasks.lock
+.claude/settings.local.json
