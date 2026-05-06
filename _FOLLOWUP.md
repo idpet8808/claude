@@ -41,6 +41,48 @@
   - API 계약 정식화 (페이즈 1 `02-tech-review.md` 보강 vs 페이즈 2 진입 직후 정의 — 미정)
   - 페이즈 2 진입 게이트 (PM 명시 + 페이즈 1 산출물 4종 자가 점검 통과 등)
 - **type=broadcast 6필드 legacy 호환** (M9 line 1768) — 신규 8필드와 병존 vs 6필드 폐기 결정
+- **헌법 Mesh + 부분 broadcast + 양방향 reply + S 무관 선행 영역 동시 정신 vs 실제 순차 진행 격차** (2026-05-06 M13 v1 C6 발견 — slug=`mensa-ranking-challenge`)
+  - **현실 한계**: Claude Code Agent 도구 동기 호출 / `_broadcast.log` 파일 기반 메모 (실시간 채널 부재) / subagent task 종료 후 listening 불가 / 4 동시 호출 시 토큰 4배 + conflict 위험
+  - **실제 진행**: Mesh 분해 단계 생략, 정식 산출물만 의존성 순서로 순차 (PRD → TR → S → P)
+  - **v1.1+ 정련 방향**:
+    - `superpowers:dispatching-parallel-agents` Skill 활용 (S 무관 영역 동시 호출)
+    - SendMessage 기반 cross-Agent 통신 (양방향 reply 실 구현)
+    - `_broadcast.log`를 실시간 채널로 변환 (파일 → in-memory 큐 또는 hook 기반)
+    - 부분 broadcast trigger 조건 정형화 (예: WHY 확정 시점 = TR 외부 의존성 1차 시작 신호)
+  - **참고**: M13 v1 = 운영 검증 정신 정합. 실 발견된 격차로 v1.1+ 정련
+- **기능명세서 별도 산출물 신설 검토** (2026-05-06 M13 v1 C6 발견 — slug=`mensa-ranking-challenge`)
+  - **현 격차**: PRD §4 (기능 범위 MoSCoW) + TR §2 (Must 전수 평가)에 분산. **기능별 흐름도·입출력·예외 처리·정합성 룰 부재**
+  - **BN시스템 실무 관행**: 별도 기능명세서 작성 표준
+  - **v1.1+ 정련 옵션**:
+    - (a) `02b-functional-spec.md` 신설 (PRD↔TR 사이 단계) — 영역 owner = 서비스기획자 또는 TR-FUNC owner 신설
+    - (b) PRD §4 대폭 강화 (REQ-NNN 카탈로그 + 기능별 상세 명세)
+    - (c) TR §2 Must 전수 평가를 기능별 명세로 확장
+  - **헌법·plan·Skill 변경 수반** = Gate C 발동 대상
+- **세션 중 신설 에이전트 자동 인식 부재** (2026-05-06 M13 v1 C6 발견 — slug=`mensa-ranking-challenge`)
+  - **현 격차**: `.claude/agents/publisher.md` 신설 후 본 세션에서 Agent tool로 호출 시 "Agent type '퍼블리셔' not found" 에러. Available agents = 본 세션 *시작 시점* 등록분만 (4 에이전트)
+  - **Claude Code 동작**: subagent_type은 *세션 시작 시점*에 등록되며 세션 중 신설 파일은 *다음 세션부터* 인식
+  - **임시 우회**: `general-purpose` Agent에 publisher 정의 위임 (publisher.md + publisher-html Skill을 Read하도록 prompt에 명시)
+  - **v1.1+ 정련 옵션**:
+    - 신규 에이전트 신설 후 *Claude Code 재시작 권고* 헌법 §6에 추가
+    - 또는 Claude Code의 *동적 agent 등록* 메커니즘 확인 (있다면 활용)
+    - kickoff 명령 또는 Skill 신설 시점 hook 활용 가능성
+  - **참고**: 본 격차는 *Claude Code 도구 한계*. 헌법 변경 X — 운영 워크플로 보강만 필요
+- **`_INDEX.md` 운영 원칙 vs 실 사례 격차** (2026-05-06 M13 v1 C6 발견 — slug=`mensa-ranking-challenge`)
+  - **현 원칙**: `projects/_INDEX.md` "기존 노션 진행 프로젝트는 하네스 대상 아님 (노션관리자가 MCP로 직접 조회)"
+  - **실 사례**: `/kickoff` 후 노션 동기화 시점에 *동일 프로젝트가 이미 노션에 등록*되어 있음 발견 (page_id `356fd8b1-41f3-8095-9a28-cbbf2b7961ec`, "멘사>랭킹 챌린지 프로젝트 진행", PM 신주한 일치)
+  - **PM 결정**: 기존 페이지에 산출물 4종 연결 (예외 처리)
+  - **v1.1+ 정련 옵션**:
+    - (a) 원칙 강화: 노션에 이미 있는 프로젝트는 `/kickoff` 진입 시점에 *post-search 선행 검증* + 거부 또는 경고
+    - (b) 원칙 완화: "기존 노션 페이지 있는 프로젝트도 하네스 적용 가능" 예외 명시 + 연결 절차 정형화
+    - (c) 두 모드 분리: `/kickoff <slug>` (신규) vs `/kickoff-existing <page_id>` (기존 연결) 명령 분기
+- **Subagent 환경 settings.json `ask` 권한 자동 거부** (2026-05-06 M13 v1 C6 발견 — slug=`mensa-ranking-challenge`)
+  - **현 격차**: 노션관리자 subagent에 위임된 `API-patch-page` 호출 시 settings.json `ask` 프롬프트가 PM에게 발화되지 않고 *자동 거부*됨. controller(팀장 Claude)에서만 ask 발화 → PM 승인 가능
+  - **영향**: 노션 쓰기 작업 (`patch-page`·`patch-block-children`·`post-page` 등)을 노션관리자 subagent에 위임할 수 없음. controller가 직접 호출해야 PM 승인 발화
+  - **임시 우회**: controller 직접 노션 MCP 호출 (CLAUDE.md §8 "노션 MCP는 노션관리자만" 안티 패턴 예외 처리 — 권한 한계로 인한 불가피한 예외)
+  - **v1.1+ 정련 옵션**:
+    - (a) 노션관리자 정의 §6에 "노션 쓰기는 controller 위임 호출" 명시
+    - (b) Claude Code subagent 권한 정책 확인 — ask 발화 메커니즘 차이 분석
+    - (c) `notion-sync` Skill 절차에 "controller에서 호출, subagent는 변환만" 단계 분리
 
 ## ③ 운영 정련 보존 (v1 운영 후 정련)
 
