@@ -65,7 +65,8 @@
   },
   "env": {
     "PYTHONIOENCODING": "utf-8",
-    "LANG": "ko_KR.UTF-8"
+    "LANG": "ko_KR.UTF-8",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
   "hooks": {
     "SessionStart": [

@@ -92,6 +92,8 @@
 
 ## 4. 업무 흐름 (페이즈 1)
 
+> **정본 참조**: 본 워크플로의 *Mesh 분해 / 부분 broadcast / 양방향 reply / 공유 작업 목록*은 Claude Code **Agent Teams** 기능 정합. 정본 정의는 `https://code.claude.com/docs/ko/agent-teams` 참조.
+
 **v1 운영 흐름 — 페이즈 1만 정식 정의** (페이즈 2는 §12 방법론):
 
 ```
