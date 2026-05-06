@@ -35,12 +35,13 @@ argument-hint: [프로젝트명_또는_슬러그]
    [프로젝트명] 상세 현황
    - 슬러그: <slug>
    - PM: <name>
-   - 현재 단계: <단계>
+   - 현재 단계: <단계 — 4단계: 기획중 / MVP-구현중 / MVP-완료 / 종료>
    - 마지막 업데이트: <date>
-   - 산출물:
+   - 산출물 (4종):
      - 01-prd.md: N/7 ✓/✗
      - 02-tech-review.md: N/5 ✓/✗
      - 03-ux-spec.md: N/4 ✓/✗
+     - 04-prototype-mvp/: N/7 ✓/✗ (P-NNN N건, NA N건)
    - 오픈 이슈: N건
    - 다음 액션: <STATE.md의 다음 액션 섹션>
    ```

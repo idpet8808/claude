@@ -24,6 +24,11 @@ description: 로컬 마크다운 산출물을 노션 페이지에 동기화하�
    - 지원 블록: `paragraph`, `bulleted_list_item`만
    - 미지원 블록(표, 토글, 콜아웃, 헤더)은 변환 규칙에 따라 **굵은 글씨 paragraph** 또는 **bulleted_list_item**으로 강등
    - **자가 점검** 섹션은 그대로 유지 (체크박스는 `[x]/[ ]` 문자 그대로)
+   - **04-prototype-mvp/ 처리** (M13 v1 추가 규칙):
+     - `04-prototype-mvp/README.md` → 노션 본문 (paragraph + bulleted_list_item)
+     - `pages/<slug>.html` 및 `assets/` → **외부 링크만** (블록 변환 불가)
+       - 형식: `\`pages/<slug>.html\`` (코드 폰트) + 로컬 경로 표시
+     - `04-prototype-mvp/` 폴더 자체는 노션에 등록 X (README만 본문)
 
 4. **노션 API 호출** (쓰기 작업 — settings.json `ask` 권한 → 사용자 승인 프롬프트 발생)
    - 신규 페이지: `API-post-page` (PROJECT DB 하위)

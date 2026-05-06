@@ -30,6 +30,7 @@ argument-hint: <파일경로>
    - 노션관리자는 `notion-sync` Skill을 경유:
      - 파일 읽기
      - `md-to-notion-blocks.md` 규칙으로 블록 배열 생성
+     - **04-prototype-mvp 처리** (M13 v1): README.md → 본문 / pages·assets → 외부 링크 (블록 변환 불가)
      - 페이지 ID가 있으면 `API-patch-block-children`으로 추가
      - 페이지 ID가 없으면 팀장에게 "1) 신규 페이지 생성 2) 검색 후 연결 3) 중단" 옵션 보고
 
