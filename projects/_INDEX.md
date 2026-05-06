@@ -4,11 +4,14 @@
 > 기존 노션에서 진행 중인 프로젝트는 하네스 대상이 아니며, **신규 영업·기획 건만** `/kickoff`로 등록한다.
 > M13 v1 정합 — 산출물 4종(01-prd / 02-tech-review / 03-ux-spec / 04-prototype-mvp), 4단계 (기획중 / MVP-구현중 / MVP-완료 / 종료).
 
-## 활성 프로젝트 (1건)
+## 활성 프로젝트 (2건)
 
 | 슬러그 | 프로젝트 | PM | 현재 단계 | 산출물 진행 | 자가점검 | 오픈이슈 | 마지막 갱신 | STATE |
 |--------|----------|-----|----------|-----------|---------|---------|-----------|-------|
-| `mensa-ranking-challenge` | [멘사] 랭킹챌린지 | 신주한 | 기획중 | ···· | — | 0건 | 2026-05-06 | [열기](mensa-ranking-challenge/STATE.md) |
+| `mensa-ranking-challenge` | [멘사] 랭킹챌린지 (v1) | 신주한 | 기획중 | ···· | — | 0건 | 2026-05-06 | [열기](mensa-ranking-challenge/STATE.md) |
+| `mensa-ranking-challenge-v2` | [멘사코리아] 랭킹챌린지_ver1.0 | 신주한 | 기획중 | ···· | — | 0건 | 2026-05-06 | [열기](mensa-ranking-challenge-v2/STATE.md) |
+
+> 비고: `mensa-ranking-challenge`(v1)는 산출물이 `_archive/v1/`로 이동된 비교군 상태. v1.0 정식 재진행은 `mensa-ranking-challenge-v2` 슬러그 (PM 결정 2026-05-06).
 
 <!--
 이후 신규 프로젝트가 등록되면 아래 형식으로 자동 갱신됨 (weekly-status Skill, /status 호출)

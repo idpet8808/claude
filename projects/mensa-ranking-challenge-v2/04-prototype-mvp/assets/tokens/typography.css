@@ -1,0 +1,136 @@
+/* =====================================================
+   BN시스템 × 멘사코리아 랭킹챌린지 — 타이포그래피 토큰
+   모노스페이스(문제/코드) + 산세리프(UI) 조합
+   ===================================================== */
+
+/* Google Fonts: Pretendard(산세리프 한국어), Space Mono(모노스페이스 강조) */
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+/* Pretendard는 CDN 직접 로드 (폰트 파일 번들 아님) */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
+
+:root {
+  /* --- 폰트 패밀리 --- */
+  --font-family-ui:   'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont,
+                      'Segoe UI', sans-serif;
+  --font-family-mono: 'Space Mono', 'Noto Sans Mono', ui-monospace,
+                      'Cascadia Code', monospace;
+
+  /* --- 폰트 사이즈 스케일 (rem 기반, 루트 16px 가정) --- */
+  --text-xs:   0.75rem;    /* 12px */
+  --text-sm:   0.875rem;   /* 14px */
+  --text-base: 1rem;       /* 16px */
+  --text-lg:   1.125rem;   /* 18px */
+  --text-xl:   1.25rem;    /* 20px */
+  --text-2xl:  1.5rem;     /* 24px */
+  --text-3xl:  1.875rem;   /* 30px */
+  --text-4xl:  2.25rem;    /* 36px */
+  --text-5xl:  3rem;       /* 48px */
+
+  /* --- 폰트 웨이트 --- */
+  --font-weight-regular:   400;
+  --font-weight-medium:    500;
+  --font-weight-semibold:  600;
+  --font-weight-bold:      700;
+
+  /* --- 라인 하이트 --- */
+  --leading-tight:   1.25;
+  --leading-snug:    1.375;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose:   2;
+
+  /* --- 레터 스페이싱 --- */
+  --tracking-tight:  -0.025em;
+  --tracking-normal:  0em;
+  --tracking-wide:    0.025em;
+  --tracking-wider:   0.05em;
+  --tracking-widest:  0.1em;
+
+  /* --- 시맨틱 타이포그래피 롤 --- */
+
+  /* 헤딩 */
+  --type-h1-size:    var(--text-4xl);
+  --type-h1-weight:  var(--font-weight-bold);
+  --type-h1-leading: var(--leading-tight);
+  --type-h1-tracking:var(--tracking-tight);
+  --type-h1-family:  var(--font-family-ui);
+
+  --type-h2-size:    var(--text-3xl);
+  --type-h2-weight:  var(--font-weight-bold);
+  --type-h2-leading: var(--leading-snug);
+  --type-h2-tracking:var(--tracking-tight);
+  --type-h2-family:  var(--font-family-ui);
+
+  --type-h3-size:    var(--text-2xl);
+  --type-h3-weight:  var(--font-weight-semibold);
+  --type-h3-leading: var(--leading-snug);
+  --type-h3-family:  var(--font-family-ui);
+
+  --type-h4-size:    var(--text-xl);
+  --type-h4-weight:  var(--font-weight-semibold);
+  --type-h4-leading: var(--leading-normal);
+  --type-h4-family:  var(--font-family-ui);
+
+  /* 본문 */
+  --type-body-lg-size:   var(--text-lg);
+  --type-body-lg-weight: var(--font-weight-regular);
+  --type-body-lg-leading:var(--leading-relaxed);
+
+  --type-body-size:      var(--text-base);
+  --type-body-weight:    var(--font-weight-regular);
+  --type-body-leading:   var(--leading-normal);
+
+  --type-body-sm-size:   var(--text-sm);
+  --type-body-sm-weight: var(--font-weight-regular);
+  --type-body-sm-leading:var(--leading-normal);
+
+  /* UI 레이블 */
+  --type-label-size:     var(--text-sm);
+  --type-label-weight:   var(--font-weight-medium);
+  --type-label-leading:  var(--leading-tight);
+  --type-label-tracking: var(--tracking-wide);
+
+  --type-caption-size:   var(--text-xs);
+  --type-caption-weight: var(--font-weight-regular);
+  --type-caption-leading:var(--leading-normal);
+
+  /* 챌린지 문제 (모노스페이스 강조) */
+  --type-challenge-size:   var(--text-xl);
+  --type-challenge-weight: var(--font-weight-bold);
+  --type-challenge-leading:var(--leading-relaxed);
+  --type-challenge-family: var(--font-family-mono);
+
+  /* 점수/숫자 (모노스페이스 large) */
+  --type-score-size:   var(--text-5xl);
+  --type-score-weight: var(--font-weight-bold);
+  --type-score-leading:var(--leading-tight);
+  --type-score-family: var(--font-family-mono);
+
+  /* 랭킹 순위 숫자 */
+  --type-rank-size:   var(--text-3xl);
+  --type-rank-weight: var(--font-weight-bold);
+  --type-rank-family: var(--font-family-mono);
+
+  /* 버튼 */
+  --type-btn-lg-size:   var(--text-base);
+  --type-btn-lg-weight: var(--font-weight-semibold);
+  --type-btn-md-size:   var(--text-sm);
+  --type-btn-md-weight: var(--font-weight-semibold);
+  --type-btn-sm-size:   var(--text-xs);
+  --type-btn-sm-weight: var(--font-weight-medium);
+}
+
+/* --- 반응형 타이포그래피 스케일 조정 --- */
+@media (max-width: 767px) {
+  :root {
+    --type-h1-size: var(--text-3xl);      /* 모바일 h1 축소 */
+    --type-h2-size: var(--text-2xl);
+    --type-score-size: var(--text-4xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --type-h1-size: var(--text-5xl);      /* 데스크톱 h1 확대 */
+  }
+}

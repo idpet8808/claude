@@ -76,6 +76,25 @@
     - (a) 원칙 강화: 노션에 이미 있는 프로젝트는 `/kickoff` 진입 시점에 *post-search 선행 검증* + 거부 또는 경고
     - (b) 원칙 완화: "기존 노션 페이지 있는 프로젝트도 하네스 적용 가능" 예외 명시 + 연결 절차 정형화
     - (c) 두 모드 분리: `/kickoff <slug>` (신규) vs `/kickoff-existing <page_id>` (기존 연결) 명령 분기
+- **idle notification 의미 모호 — 진행 중·PM 응답 대기·차단 구분 불가** (2026-05-06 M14 멘사 v2 재진행 1회차 발견 — slug=`mensa-ranking-challenge-v2`)
+  - **현 격차**: Agent Teams Teammate가 *PM 응답 대기*로 idle 상태일 때, 팀장(controller)에게 도착하는 `idle_notification`은 `idleReason: "available"` 1개만 — 진행 중 자율 작업 / PM AskUserQuestion 응답 대기 / 작업 차단 3가지 상태 구분 불가
+  - **본 세션 발생 패턴**: service-planner spawn 직후 PM에게 8개 항목 AskUserQuestion 발화 → idle 알림 → 팀장이 "차단" 진단 → SendMessage로 상태 확인 → 또 idle → 팀장이 시행착오 #4 (subagent ask 권한 거부) *오진*. 실제로는 PM 응답 대기 중이었고, PM 답변 도착 후 PRD 7/7 정상 작성 완료
+  - **영향**: 팀장 진단 오류 → 운영 옵션 제시(controller 직접 작성 등) 비효율적 → PM 시간 낭비. 시행착오 #4 재현 시도가 *오진* 가능성 상존
+  - **임시 우회**: idle 1~2회는 *기다림*. SendMessage로 상태 명시 질의 시 응답 없으면 그제야 차단 의심
+  - **v1.1+ 정련 옵션**:
+    - (a) Teammate가 PM 인터뷰 발화 시점에 controller에게 SendMessage 1줄로 *상태 보고* 의무화 (정의 §2 절차에 추가)
+    - (b) `idleReason` 확장 — `awaiting_user`·`blocked`·`available` 3종 분리 (Claude Code 도구 한계 — 자체 합의 불가능, 우회 패턴 필요)
+    - (c) `_broadcast.log`에 self-check + state 이벤트 기록 의무화 (idle 시점 직전 활동 추적 가능)
+- **팀장 controller 진행 상황 시각화 §4 워터폴화 회귀 패턴** (2026-05-06 M14 멘사 v2 재진행 1회차 발견 — slug=`mensa-ranking-challenge-v2`)
+  - **현 격차**: 팀장이 PM에게 진행 상황 표를 그릴 때 [4] 정식 산출물 단계 4명을 *서비스기획자=진행 중 / 나머지 3명=대기*로 워터폴화 시각. §4 정의는 *부분 broadcast 받자마자 후행 부분 진행 가능* + *S 무관 영역 동시 선행 가능* 인데, 팀장 시각화는 `의존성 순서 = 워터폴 게이트`로 잘못 표현
+  - **본 세션 발생 패턴**: service-planner spawn 후 → 팀장이 tech-reviewer/ux-planner/publisher spawn을 *PRD 완성까지 대기* → PM 지적("다 달라붙어야 할텐데") → 즉시 정정 + UX·퍼블 동시 spawn
+  - **M14 4차 잘못 패턴 회귀**: M14 인수인계의 본 세션 누적 잘못 4차 (헌법 §4 다운그레이드 변명) 패턴이 *시각화 단계*에서 재발. M14 (d) 4중 신뢰성 보장 1차(도구 인지 사전 검증)는 *spawn 시점*에 한정 발화 — *시각화 단계*에 재발화 미작동
+  - **영향**: PM 매번 지적 부담. 4명 동시 spawn 가능했음에도 순차 spawn으로 진행 시간 손실
+  - **v1.1+ 정련 옵션**:
+    - (a) `/kickoff` Slash command [2] Mesh 분해 단계에 "4 Teammate 동시 spawn" 명시 + Group A 패턴 강제
+    - (b) 팀장 진행 상황 표 양식 표준화: "대기" 컬럼 폐지 → "진행 중 / 부분 진행 / 정식 진입 게이트 통과 / 완료" 4상태
+    - (c) M14 (d) 1차 신뢰성 보장 발화 시점 확장 — spawn 시점 외 *시각화·보고 시점*에도 §4 부분 broadcast 정신 자동 검증 hook
+    - (d) `_broadcast.log`에 *각 영역 진행 상태* 실시간 기록 → 팀장이 직접 표 그리는 대신 자동 시각화 (M9-5 cross-ref 자동 검증과 통합 가능)
 - **Subagent 환경 settings.json `ask` 권한 자동 거부** (2026-05-06 M13 v1 C6 발견 — slug=`mensa-ranking-challenge`)
   - **현 격차**: 노션관리자 subagent에 위임된 `API-patch-page` 호출 시 settings.json `ask` 프롬프트가 PM에게 발화되지 않고 *자동 거부*됨. controller(팀장 Claude)에서만 ask 발화 → PM 승인 가능
   - **영향**: 노션 쓰기 작업 (`patch-page`·`patch-block-children`·`post-page` 등)을 노션관리자 subagent에 위임할 수 없음. controller가 직접 호출해야 PM 승인 발화
