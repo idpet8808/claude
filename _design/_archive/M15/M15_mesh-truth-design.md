@@ -1,5 +1,13 @@
 # M15 — Mesh 본질 정정 (워터폴 회귀 근본 정정 설계)
 
+> ⚠️ **아카이브 상태 (2026-05-07)** — M16 진입에 따라 본 design 문서는 `_design/_archive/M15/`로 이동. PM 본질 지적 ("전면 수정 + 본질 정합 하네스 구조 설계")으로 M15 자체도 본질 재설계 대상에 포함. M16 [3] 대조 단계에서 정합/부정합 검증 후 처리 예정.
+>
+> **적용분 추적**: M15 Group A 적용분(CLAUDE.md §4-0 + §4 본문 + §6 + §10 + §11)은 commit `8978063` 시점부터 *현행 코드* 그대로 보존. M15 Group B 진행 중 보류분(`.claude/commands/kickoff.md` 재작성 / `.claude/agents/{5개}.md` 보강 / `.claude/skills/prd-draft/SKILL.md` 보강)도 현행 코드 보존. M16 [3] 대조 단계에서 정합 검증 후 보존/갱신/폐기 결정.
+>
+> **M16 진입 design doc**: `_design/M16_essence-redesign-brainstorming.md` (2026-05-07 작성)
+>
+> ---
+>
 > 본 spec은 **하네스 자체 변경 SSoT**이다. M14 (d) 4중 신뢰성 보장 한계 발견 + 본 세션 멘사 v2 /kickoff 1회차 격차 5건 누적 → 헌법 §4·§6·§11 보강 + /kickoff Slash 전면 재작성 + 5 에이전트 정의 보강 + 6 Skill 절차 보강 + settings.json hook 신설 + M14 (d) 5차 보장 추가.
 
 ---

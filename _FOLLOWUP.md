@@ -51,14 +51,19 @@
     - 부분 broadcast trigger 조건 정형화 (예: WHY 확정 시점 = TR 외부 의존성 1차 시작 신호)
   - **참고**: M13 v1 = 운영 검증 정신 정합. 실 발견된 격차로 v1.1+ 정련
   - **2026-05-06 M14 부분 해결**: `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` 활성화 + CLAUDE.md §4-11 Agent Teams 매핑 신설 (4명 Teammates + 노션관리자 별도). TeamCreate/TaskList 공유로 Mesh + 부분 broadcast 정신 환경 확보. 운영 검증은 다음 멘사 재진행 세션부터 (`mensa-ranking-challenge` 처음부터 재테스트)
-- **기능명세서 별도 산출물 신설 검토** (2026-05-06 M13 v1 C6 발견 — slug=`mensa-ranking-challenge`)
-  - **현 격차**: PRD §4 (기능 범위 MoSCoW) + TR §2 (Must 전수 평가)에 분산. **기능별 흐름도·입출력·예외 처리·정합성 룰 부재**
-  - **BN시스템 실무 관행**: 별도 기능명세서 작성 표준
-  - **v1.1+ 정련 옵션**:
-    - (a) `02b-functional-spec.md` 신설 (PRD↔TR 사이 단계) — 영역 owner = 서비스기획자 또는 TR-FUNC owner 신설
-    - (b) PRD §4 대폭 강화 (REQ-NNN 카탈로그 + 기능별 상세 명세)
-    - (c) TR §2 Must 전수 평가를 기능별 명세로 확장
-  - **헌법·plan·Skill 변경 수반** = Gate C 발동 대상
+- **기능명세서 별도 산출물 — *옵션 산출물 신설* (M16 갱신, PI-005)** (2026-05-06 M13 v1 발견 → 2026-05-07 M16에서 결정)
+  - **2026-05-07 M16 결정**: **옵션 (a) 채택 + 옵션 산출물 분류** — `01b-functional-spec.md` (PRD 직후, TR 직전 위치). *필요시 작성* (PM 명시 또는 service-planner/tech-reviewer 판단 시 신설). default 페이즈 1 산출물 4종은 그대로 유지.
+  - **본 항목 v1.1 이관 → v1 옵션 진입** (PI-005 정합)
+  - **트리거 (v1 잠정)**:
+    - (a) PM 명시적 "기능명세서 필요" 결정
+    - (b) service-planner 또는 tech-reviewer가 PRD 작성 중 *기능 파생 명세 필요* 판단 → controller 경유 PM 질의 → PM 결정
+  - **ID 체계**: `FN-NNN` 영역별 독립 시퀀스 (M10 정합), 매핑 형식 `FN-001 (→ REQ-USR-001-01)`
+  - **신설 시 영향 영역** (페이즈 1 산출물 4종 → 5종):
+    - 헌법 §5 산출물 정의 (M16에서 옵션 산출물 단서 추가 완료)
+    - 신규 Skill `functional-spec` (필요 시 신설)
+    - 신규 에이전트 `function-specifier` 또는 service-planner·tech-reviewer 영역 확장 결정
+  - **현 격차 (참고)**: PRD §B 16 필드(M16) + TR §2 요구사항 ID 단위 평가에서 *기능 파생 명세*가 부족할 경우 본 옵션 산출물 진입
+  - **운영 정련 영역**: 트리거 정형화·신설 빈도 추적 (`_FOLLOWUP.md` ③ 일부 이관)
 - **세션 중 신설 에이전트 자동 인식 부재** (2026-05-06 M13 v1 C6 발견 — slug=`mensa-ranking-challenge`)
   - **현 격차**: `.claude/agents/publisher.md` 신설 후 본 세션에서 Agent tool로 호출 시 "Agent type '퍼블리셔' not found" 에러. Available agents = 본 세션 *시작 시점* 등록분만 (4 에이전트)
   - **Claude Code 동작**: subagent_type은 *세션 시작 시점*에 등록되며 세션 중 신설 파일은 *다음 세션부터* 인식
@@ -95,6 +100,12 @@
     - (b) 팀장 진행 상황 표 양식 표준화: "대기" 컬럼 폐지 → "진행 중 / 부분 진행 / 정식 진입 게이트 통과 / 완료" 4상태
     - (c) M14 (d) 1차 신뢰성 보장 발화 시점 확장 — spawn 시점 외 *시각화·보고 시점*에도 §4 부분 broadcast 정신 자동 검증 hook
     - (d) `_broadcast.log`에 *각 영역 진행 상태* 실시간 기록 → 팀장이 직접 표 그리는 대신 자동 시각화 (M9-5 cross-ref 자동 검증과 통합 가능)
+- **M15 plan B-7 경로 격차 — kickoff Skill 미존재** (2026-05-07 M15 Group B 진행 중 발견)
+  - **현 격차**: `_design/M15_mesh-truth-plan.md` B-7이 ".claude/skills/kickoff/SKILL.md" 보강 명시. 실제 파일 시스템에 해당 경로 부재. kickoff은 Slash command(`.claude/commands/kickoff.md`)로만 존재
+  - **PM 결정 (2026-05-07)**: B-7 스킵. spec § 4.6.1 "kickoff Skill: §4.4 /kickoff Slash command 변경에 정합"은 *정합 확인 목적*이지 신설 명시 X. B-1에서 spec § 4.4 본문 그대로 적용 → spec § 4.6.1 정합 자동 충족
+  - **v1.1+ 정련 옵션**:
+    - (a) plan 작성 시 실제 파일 존재 여부 사전 검증 절차 추가
+    - (b) Skill 정의가 Slash command와 동일 의미를 갖는 경우 SSoT 분리 정책 명시 (중복 금지)
 - **Subagent 환경 settings.json `ask` 권한 자동 거부** (2026-05-06 M13 v1 C6 발견 — slug=`mensa-ranking-challenge`)
   - **현 격차**: 노션관리자 subagent에 위임된 `API-patch-page` 호출 시 settings.json `ask` 프롬프트가 PM에게 발화되지 않고 *자동 거부*됨. controller(팀장 Claude)에서만 ask 발화 → PM 승인 가능
   - **영향**: 노션 쓰기 작업 (`patch-page`·`patch-block-children`·`post-page` 등)을 노션관리자 subagent에 위임할 수 없음. controller가 직접 호출해야 PM 승인 발화

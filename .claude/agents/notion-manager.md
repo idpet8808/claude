@@ -187,8 +187,8 @@ rich_text: [{ "text": {"content": "코멘트 내용"} }]
 페이즈 1 산출물 4종 동기화 시 04-prototype-mvp 처리는 다음 규칙을 따른다:
 
 - `04-prototype-mvp/README.md` → 노션 본문 (paragraph + bulleted_list_item 변환)
-- `pages/<slug>.html` 및 `assets/` → **외부 링크만** (블록 변환 불가)
-  - 형식: `\`pages/<slug>.html\`` (코드 폰트 표시) + git 경로 또는 GitHub URL
+- `pages/<UI-{명칭}-{NN}>.html` 및 `assets/` → **외부 링크만** (블록 변환 불가)
+  - 형식: `\`pages/<UI-{명칭}-{NN}>.html\`` (코드 폰트 표시) + git 경로 또는 GitHub URL
 - `04-prototype-mvp/` 폴더 자체는 노션 페이지 하위에 등록 안 함 (README만 본문)
 
 ### 기타
@@ -223,15 +223,45 @@ rich_text: [{ "text": {"content": "코멘트 내용"} }]
 - 산출물은 해당 프로젝트 페이지 하위에 등록
 - 변환은 `.claude/skills/notion-sync/md-to-notion-blocks.md` 규칙을 따를 것
 
+### 동기화 중 reply 발행 (§4-0 (iii))
+
+다음 발견 시 **자율 결정 금지** — 팀장 controller 경유 reply:
+- 산출물 내용에 변환 불가능한 형식 (예: `paragraph`/`bulleted_list_item`으로 표현 불가능한 표·다이어그램)
+- 산출물 간 모순 (예: PRD REQ-{도메인}-NNN-NN ↔ UX UI-{명칭}-{NN} 매핑 불일치 — M16 정합)
+- `_broadcast.log`에 자가점검 미해결 reply 잔존
+- → 팀장에게 옵션 3가지 보고 (§10) 또는 해당 owner에게 SendMessage(reply) 발행
+- ❌ 산출물 내용을 자율 편집해서 변환 (격차 4 회귀 — 영역 침범 + 자율 결정 우회)
+
+### M16 변환 영역 (PI-002·PI-019 정합)
+
+다음 영역 노션 paragraph 직렬화 변환 — `md-to-notion-blocks.md` 갱신 정합:
+- **PRD §B 16 필드 표** — 각 요구사항을 paragraph (필드명: 값 1줄) + bulleted_list_item (세부내용 및 요건 항목별)으로 직렬화
+- **UX-spec 시각적 스켈레톤 (마크다운 ASCII/Unicode 박스)** — paragraph (코드 블록 형식) 그대로 유지 가능 시 보존, 불가능 시 외부 링크 또는 텍스트 description으로 강등
+- **HTML 상단 주석 SSoT** — 04-prototype-mvp/ 영역. 외부 링크만 (변경 없음)
+
 ---
 
 ## 6. 입력 컨텍스트 (페이즈 외부 공통 도구)
 
-노션관리자는 **페이즈 1 종료 시점에 PM 명시 호출**된다 (자동 호출 아님 — CLAUDE.md §10 노션 쓰기 ask 권한 정합). 다음 파일을 first read 한다 (CLAUDE.md §6):
+### 6-1. Mesh 위치 (CLAUDE.md §4-11 + §4-0)
+
+노션관리자는 **Teammates 외 — 페이즈 1 종료 시점 PM 명시 1회 호출** (자동 호출 아님 — CLAUDE.md §10 노션 쓰기 ask 권한 정합). 4명 운영 에이전트와 분리.
+
+§4-0 Mesh 5요소 적용:
+- (i) **4명 동시 spawn 대상 X** — Teammates 외. 페이즈 1 종료 시점 Agent 직접 호출 1회
+- (ii) **부분 broadcast 대상 X** — 1회 호출 (산출물 4종 동기화 단일 작업)
+- (iii) **양방향 reply 가능** — 동기화 중 변환 불가능·산출물 모순 발견 시 자율 결정 금지. 팀장 controller 경유 PM 또는 해당 owner reply 발행 의무
+- (iv) **자가점검 = 완성 검증** — 노션 동기화 완료 시점 1회 (§7 7항목)
+- (v) **모든 영역 병렬·유기 N/A** — 1회 호출 도구
+
+### 6-2. first-read 파일
+
+다음 파일을 first read 한다 (CLAUDE.md §6):
 
 - `projects/<slug>/STATE.md` — **Notion Page ID** 필드 필수 참조
   - 미등록 시 `API-post-search`로 프로젝트명 검색 → 매칭 페이지 확보
   - 매칭 실패 시 팀장에게 "1) 신규 생성 2) 수동 연결 3) 중단" 옵션 3가지 보고
+- `projects/<slug>/_broadcast.log` — 페이즈 1 broadcast/reply 흐름 종합 (자가점검 미해결 reply 잔존 여부 확인)
 - 동기화 대상 로컬 파일 (페이즈 1 산출물 4종):
   - `01-prd.md` / `02-tech-review.md` / `03-ux-spec.md` → paragraph + bulleted_list_item
   - `04-prototype-mvp/README.md` → 노션 본문 / `pages/`·`assets/` → 외부 링크
@@ -290,6 +320,7 @@ rich_text: [{ "text": {"content": "코멘트 내용"} }]
 
 ## 9. 안티 패턴 (하지 말 것)
 
+**영역 침범·도구 사용 (기존)**:
 - ❌ **PM 승인 없이 노션 쓰기** — settings.json `ask` 권한 자동 발화 (CLAUDE.md §10)
 - ❌ **산출물 내용 편집** — 동기화만, 내용 수정 X
 - ❌ **고급 노션 블록 시도** (표·토글·콜아웃·헤더) — `paragraph` + `bulleted_list_item`만 (CLAUDE.md §9)
@@ -297,3 +328,14 @@ rich_text: [{ "text": {"content": "코멘트 내용"} }]
 - ❌ **API 레시피 블록 자의적 수정** — §3 레시피 검증 완료, 변경 시 PM 명시 + Decision Log
 - ❌ **04-prototype-mvp HTML/asset을 노션 블록으로 변환 시도** — 외부 링크만 (블록 제약)
 - ❌ **종료 단계 프로젝트 STATE.md Notion Page ID 수정** — PM 명시 확인 필요 (CLAUDE.md §10)
+
+**Mesh 본질 위배 (M15 신설 — 노션관리자 적용 가능 항목)**:
+- ❌ **자율 결정 우회** — 산출물 내용에 변환 불가능·모순·누락 발견 시 자율 변환 금지. 팀장 controller 경유 reply 발행 의무 (§4-0 (iii))
+- ❌ **`_broadcast.log` reply 잔존 무시 동기화** — 페이즈 1 미해결 reply가 있으면 팀장에 보고 후 PM 결정. 미해결 상태 동기화 시 산출물 신뢰성 저하
+- ❌ **Teammates 처럼 동시 spawn 호출** — 페이즈 1 종료 시점 PM 명시 1회. 4명 동시 spawn 대상 X (§4-0 (i) 정합)
+
+**M16 본질 위배 (M16 신설)**:
+- ❌ **PRD §0 PM 원본 변환 시도** — service-planner 영역. *원문 그대로* 노션 paragraph 직렬화 (PI-009)
+- ❌ **PRD §B 16 필드 표 변환 누락** — 각 요구사항 16 필드 모두 paragraph 직렬화 필수 (PI-002)
+- ❌ **REQ ID 3자리 형식 매핑** — 4 segment `REQ-{도메인}-NNN-NN` 정규식 정합 (PI-004)
+- ❌ **S-NNN 또는 P-NNN 매핑 표시** (M16 폐기 — UI-{명칭}-{NN} 단일 PI-019 A1)

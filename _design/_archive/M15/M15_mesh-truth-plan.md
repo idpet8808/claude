@@ -1,6 +1,10 @@
 # M15 — Mesh 본질 정정 실행 plan
 
-> 본 plan은 `_design/M15_mesh-truth-design.md` spec 기반. spec § 4 정정 설계 + § 5 적용 영향을 6 Group + 30 task로 분해. §4-0 (v) "모든 영역 병렬·유기" 정합 — Group A·B·C·D 병렬 진행, Group E·F는 게이트.
+> ⚠️ **아카이브 상태 (2026-05-07)** — M16 진입으로 본 plan은 `_design/_archive/M15/`로 이동. M15 Group A 완료(`8978063` commit), Group B 진행 중 격차 6 발견 후 PM 본질 지적("전면 수정")으로 보류·재검토 대상. M16 [3] 대조 단계에서 처리. 자세한 추적은 동일 디렉토리 `M15_mesh-truth-design.md` 머리 참조.
+>
+> ---
+>
+> 본 plan은 `_design/M15_mesh-truth-design.md` spec 기반(현재 `_design/_archive/M15/M15_mesh-truth-design.md`로 이동). spec § 4 정정 설계 + § 5 적용 영향을 6 Group + 30 task로 분해. §4-0 (v) "모든 영역 병렬·유기" 정합 — Group A·B·C·D 병렬 진행, Group E·F는 게이트.
 
 ---
 

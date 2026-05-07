@@ -30,6 +30,7 @@
 - (2026-05-06) assets 골격 선행 작성 완료 — tokens(colors/spacing/typography) + css/base.css + js/main.js + README.md(골격). 디자인 토큰: 블루-네이비 primary + 골드 accent, WCAG AA 충족, Pretendard+Space Mono, 3단계 breakpoint 변수화. pages/는 03-ux-spec.md 자가 점검 통과 + S 확정 broadcast 수신 후 진입. M9 §2-5 정합.
 - (2026-05-06) PM 지시로 일시 정지 — 워터폴화 회귀 구조 설계 우선 진행
 - (2026-05-06) UX 화면 명세 완료 — S-001~S-010 확정(10화면). 4상태 전 화면 완비. Must 5개(REQ-001~005) + Should 2개(REQ-006·007) 전수 매핑. PG 미확정→S-008 추상 컴포넌트 대안 경로, 멘사 DB 미확정→S-009 코드 입력 대안 경로. 자가 점검 §A 4/4 + §B error 0. S 확정 broadcast 발행(E-broadcast-S-001). 오픈 이슈 5건 등록.
+- (2026-05-07) M16 진입에 따라 v2 산출물 `_archive/v2/`로 이동 — PM 결정. M15 정의 검증용으로 진행되었으나 PM 본질 지적 ("PRD = 요구사항정의서, 전면 수정")으로 격차 6 발견 후 M16 본질 재설계 진입. 본 v2 산출물은 *기존 누적 SSoT*로 보존 (M16 [2] 기존 누적 검토 + [3] 대조 단계에서 참조). 향후 M16 적용 후 신규 슬러그(v3 또는 다른 명칭)로 재진행 — PM 결정 시점.
 
 ## 미해결 이슈
 

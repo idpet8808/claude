@@ -4,14 +4,18 @@
 > 기존 노션에서 진행 중인 프로젝트는 하네스 대상이 아니며, **신규 영업·기획 건만** `/kickoff`로 등록한다.
 > M13 v1 정합 — 산출물 4종(01-prd / 02-tech-review / 03-ux-spec / 04-prototype-mvp), 4단계 (기획중 / MVP-구현중 / MVP-완료 / 종료).
 
-## 활성 프로젝트 (2건)
+## 활성 프로젝트 (0건)
 
-| 슬러그 | 프로젝트 | PM | 현재 단계 | 산출물 진행 | 자가점검 | 오픈이슈 | 마지막 갱신 | STATE |
-|--------|----------|-----|----------|-----------|---------|---------|-----------|-------|
-| `mensa-ranking-challenge` | [멘사] 랭킹챌린지 (v1) | 신주한 | 기획중 | ···· | — | 0건 | 2026-05-06 | [열기](mensa-ranking-challenge/STATE.md) |
-| `mensa-ranking-challenge-v2` | [멘사코리아] 랭킹챌린지_ver1.0 | 신주한 | 기획중 | ···· | — | 0건 | 2026-05-06 | [열기](mensa-ranking-challenge-v2/STATE.md) |
+> 현재 활성 프로젝트 없음 (M16 진행 중 — 하네스 구조 본질 재설계).
 
-> 비고: `mensa-ranking-challenge`(v1)는 산출물이 `_archive/v1/`로 이동된 비교군 상태. v1.0 정식 재진행은 `mensa-ranking-challenge-v2` 슬러그 (PM 결정 2026-05-06).
+### 아카이브 (2건)
+
+| 슬러그 | 위치 | 사유 |
+|--------|------|------|
+| `mensa-ranking-challenge` (v1) | `projects/mensa-ranking-challenge/_archive/v1/` | M14 멘사 v2 재진행 시점에 비교군 보존 (2026-05-06) |
+| `mensa-ranking-challenge-v2` | `_archive/v2/mensa-ranking-challenge-v2/` | M16 진입에 따라 v2 산출물 보존 (2026-05-07). M15 정의 검증용으로 진행되었으나 격차 6 발견 후 M16 본질 재설계 진입 |
+
+> 비고: 멘사 정식 재진행은 M16 적용 완료 후 신규 슬러그(v3 또는 다른 명칭)로 진행 — PM 결정 시점.
 
 <!--
 이후 신규 프로젝트가 등록되면 아래 형식으로 자동 갱신됨 (weekly-status Skill, /status 호출)
