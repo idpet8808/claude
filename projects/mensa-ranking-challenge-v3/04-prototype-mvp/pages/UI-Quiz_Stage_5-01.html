@@ -1,0 +1,72 @@
+<!-- UI-Quiz_Stage_5-01 / → REQ-QUIZ-001-01, REQ-QUIZ-002-01, REQ-QUIZ-003-01, REQ-QUIZ-004-01 -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UI-Quiz_Stage_5-01 — Stage 5 아름다운 수열</title>
+  <link rel="stylesheet" href="../assets/tokens/colors.css">
+  <link rel="stylesheet" href="../assets/tokens/spacing.css">
+  <link rel="stylesheet" href="../assets/tokens/typography.css">
+  <link rel="stylesheet" href="../assets/css/wireframe.css">
+</head>
+<body class="wireframe">
+
+  <main class="page-main quiz-stage">
+
+    <header class="stage-header" data-area="1">
+      <span class="area-num">1</span>
+      <div class="stage-progress">
+        <span class="stage-badge stage-badge--last">Stage 5 / 5</span>
+      </div>
+      <div class="stage-timer">
+        <div class="placeholder input small">1-2. 타이머: 00:00 (마지막 스테이지)</div>
+      </div>
+      <div class="stage-items">
+        <div class="placeholder input small">1-3. 힌트 아이템: N개 / 패스 아이템: N개</div>
+      </div>
+    </header>
+
+    <section class="quiz-image-section" data-area="2">
+      <span class="area-num">2</span>
+      <div class="placeholder large">2-1. 문제 PNG 이미지 — 아름다운 수열 (32칸 고리형 배치 퍼즐)</div>
+      <p class="quiz-title">2-2. 아름다운 수열</p>
+    </section>
+
+    <section class="answer-section answer-section--ring" data-area="3">
+      <span class="area-num">3</span>
+      <!-- 3-1. 32칸 고리형 입력 — publisher가 CSS/JS로 원형 배치 구현 -->
+      <div class="ring-grid">
+        <div class="ring-grid-note">
+          3-1. 32칸 고리형 배치 입력<br>
+          (publisher CSS·JS 보강 대상 — 원형 배치 구현)
+        </div>
+        <div class="ring-cells">
+          <!-- 32칸 placeholder — publisher가 원형 배치로 CSS 보강 -->
+          <div class="placeholder checkbox">1</div>
+          <div class="placeholder checkbox">2</div>
+          <div class="placeholder checkbox">3</div>
+          <div class="placeholder checkbox">4</div>
+          <div class="placeholder checkbox">...</div>
+          <div class="placeholder checkbox">32</div>
+        </div>
+      </div>
+      <button class="btn-primary btn-submit" disabled>3-2. 제출 (전체 완성 후 활성)</button>
+    </section>
+
+    <section class="item-section" data-area="4">
+      <span class="area-num">4</span>
+      <div class="item-actions">
+        <button class="btn-secondary">힌트 보기</button>
+        <button class="btn-secondary">패스</button>
+        <a href="#" class="link-purchase">아이템 구매</a>
+      </div>
+      <div class="hint-panel" hidden>
+        <div class="placeholder large">힌트 패널 — 단계별 힌트 텍스트</div>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>

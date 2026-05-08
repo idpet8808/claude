@@ -1,0 +1,147 @@
+<!-- UI-Admin_Dashboard-01 / → REQ-ADMIN-001-01, REQ-ADMIN-002-01, REQ-QUIZ-004-01 -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UI-Admin_Dashboard-01 — 관리자 현황 대시보드</title>
+  <link rel="stylesheet" href="../assets/tokens/colors.css">
+  <link rel="stylesheet" href="../assets/tokens/spacing.css">
+  <link rel="stylesheet" href="../assets/tokens/typography.css">
+  <link rel="stylesheet" href="../assets/css/wireframe.css">
+</head>
+<body class="wireframe">
+
+  <main class="page-main page-main--admin">
+
+    <header class="admin-header" data-area="1">
+      <span class="area-num">1</span>
+      <h1 class="page-title">1-1. 멘사 랭킹챌린지 관리자 대시보드</h1>
+      <div class="date-filter">
+        <label>1-2. 조회 기간</label>
+        <div class="placeholder input small">시작일</div>
+        <span>~</span>
+        <div class="placeholder input small">종료일</div>
+        <button class="btn-secondary btn-small">조회</button>
+      </div>
+    </header>
+
+    <section class="summary-cards-section" data-area="2">
+      <span class="area-num">2</span>
+      <div class="card-grid">
+        <div class="summary-card">
+          <label>전체 참여자 수</label>
+          <div class="placeholder input">2-1. N명</div>
+        </div>
+        <div class="summary-card">
+          <label>결제 건수</label>
+          <div class="placeholder input">2-2. N건</div>
+        </div>
+        <div class="summary-card">
+          <label>매출</label>
+          <div class="placeholder input">2-3. N원</div>
+        </div>
+        <div class="summary-card">
+          <label>힌트 사용 수</label>
+          <div class="placeholder input">2-4. N회</div>
+        </div>
+        <div class="summary-card">
+          <label>패스 사용 수</label>
+          <div class="placeholder input">2-5. N회</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="daily-chart-section" data-area="3">
+      <span class="area-num">3</span>
+      <h2 class="section-title">일자별 참여자 수</h2>
+      <div class="placeholder large">3-1. 일자별 참여자 수 그래프/표 (publisher JS 보강 대상)</div>
+    </section>
+
+    <section class="quiz-stats-section" data-area="4">
+      <span class="area-num">4</span>
+      <h2 class="section-title">문제별 통계</h2>
+      <table class="stats-table">
+        <thead>
+          <tr>
+            <th>문제명</th>
+            <th>정답률</th>
+            <th>평균 풀이 시간</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>배수 수열</td>
+            <td><div class="placeholder input small">4-1. N%</div></td>
+            <td><div class="placeholder input small">4-2. N초</div></td>
+          </tr>
+          <tr>
+            <td>11배수 스도쿠</td>
+            <td><div class="placeholder input small">N%</div></td>
+            <td><div class="placeholder input small">N초</div></td>
+          </tr>
+          <tr>
+            <td>너는 바보입니다</td>
+            <td><div class="placeholder input small">N%</div></td>
+            <td><div class="placeholder input small">N초</div></td>
+          </tr>
+          <tr>
+            <td>아 치킨먹고싶다</td>
+            <td><div class="placeholder input small">N%</div></td>
+            <td><div class="placeholder input small">N초</div></td>
+          </tr>
+          <tr>
+            <td>아름다운 수열</td>
+            <td><div class="placeholder input small">N%</div></td>
+            <td><div class="placeholder input small">N초</div></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="ranking-history-section" data-area="5">
+      <span class="area-num">5</span>
+      <h2 class="section-title">랭킹 및 도전 이력</h2>
+      <div class="ranking-top">
+        <h3>5-1. 랭킹 Top 회원 (공식 랭킹 Top 10)</h3>
+        <div class="placeholder large">Top 10 회원 목록 테이블</div>
+      </div>
+      <div class="user-history-search">
+        <h3>5-2. 사용자별 도전 이력 조회</h3>
+        <div class="search-row">
+          <div class="placeholder input">회원명 또는 ID 검색</div>
+          <button class="btn-secondary">조회</button>
+        </div>
+        <div class="placeholder large">검색 결과 도전 이력 테이블</div>
+      </div>
+    </section>
+
+    <section class="anomaly-section" data-area="6">
+      <span class="area-num">6</span>
+      <h2 class="section-title">비정상 풀이 의심 기록 (REQ-QUIZ-004-01)</h2>
+      <table class="anomaly-table">
+        <thead>
+          <tr>
+            <th>회원명</th>
+            <th>풀이 시간</th>
+            <th>탭 이탈 횟수</th>
+            <th>상태</th>
+            <th>처리</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="placeholder input">회원명</div></td>
+            <td><div class="placeholder input small">6-1. 비정상 속도</div></td>
+            <td><div class="placeholder input small">N회</div></td>
+            <td><div class="placeholder input small">6-2. 의심</div></td>
+            <td><button class="btn-secondary btn-small">검수</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+</body>
+</html>

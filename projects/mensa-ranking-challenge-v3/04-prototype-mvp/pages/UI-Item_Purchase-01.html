@@ -1,0 +1,70 @@
+<!-- UI-Item_Purchase-01 / → REQ-PAY-001-01 -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UI-Item_Purchase-01 — 아이템 구매</title>
+  <link rel="stylesheet" href="../assets/tokens/colors.css">
+  <link rel="stylesheet" href="../assets/tokens/spacing.css">
+  <link rel="stylesheet" href="../assets/tokens/typography.css">
+  <link rel="stylesheet" href="../assets/css/wireframe.css">
+</head>
+<body class="wireframe">
+
+  <!-- 모달 오버레이 (인-스테이지 모달) -->
+  <div class="modal-overlay">
+    <div class="modal-container">
+
+      <header class="modal-header" data-area="1">
+        <span class="area-num">1</span>
+        <h2 class="modal-title">1-1. 아이템 구매</h2>
+        <button class="btn-close" aria-label="닫기">1-2. ✕ 닫기</button>
+      </header>
+
+      <section class="current-items-section" data-area="2">
+        <span class="area-num">2</span>
+        <h3 class="section-title">현재 보유 아이템</h3>
+        <div class="item-stock-row">
+          <div class="placeholder input small">2-1. 힌트 아이템: N개</div>
+          <div class="placeholder input small">2-2. 패스 아이템: N개</div>
+        </div>
+      </section>
+
+      <section class="product-list-section" data-area="3">
+        <span class="area-num">3</span>
+        <h3 class="section-title">상품 목록</h3>
+        <div class="product-card">
+          <div class="product-info">
+            <div class="placeholder input">3-1. 힌트 아이템 (개별) — 상품명</div>
+            <div class="placeholder input small">가격</div>
+          </div>
+          <button class="btn-primary btn-buy">구매</button>
+        </div>
+        <div class="product-card">
+          <div class="product-info">
+            <div class="placeholder input">3-2. 패스 아이템 (개별) — 상품명</div>
+            <div class="placeholder input small">가격</div>
+          </div>
+          <button class="btn-primary btn-buy">구매</button>
+        </div>
+        <div class="product-card product-card--bundle">
+          <div class="product-info">
+            <div class="placeholder input">3-3. 유료 패스권 (묶음) — 상품명 + 포함 내용</div>
+            <div class="placeholder input small">가격</div>
+          </div>
+          <button class="btn-primary btn-buy">구매</button>
+        </div>
+      </section>
+
+      <section class="payment-info-section" data-area="4">
+        <span class="area-num">4</span>
+        <div class="placeholder input">4-1. 결제 수단 안내 텍스트</div>
+        <div class="placeholder input small">4-2. PG사: 이니시스</div>
+      </section>
+
+    </div>
+  </div>
+
+</body>
+</html>

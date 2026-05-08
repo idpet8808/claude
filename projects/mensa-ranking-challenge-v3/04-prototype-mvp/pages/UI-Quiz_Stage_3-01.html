@@ -1,0 +1,60 @@
+<!-- UI-Quiz_Stage_3-01 / → REQ-QUIZ-001-01, REQ-QUIZ-002-01, REQ-QUIZ-003-01, REQ-QUIZ-004-01 -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UI-Quiz_Stage_3-01 — Stage 3 너는 바보입니다</title>
+  <link rel="stylesheet" href="../assets/tokens/colors.css">
+  <link rel="stylesheet" href="../assets/tokens/spacing.css">
+  <link rel="stylesheet" href="../assets/tokens/typography.css">
+  <link rel="stylesheet" href="../assets/css/wireframe.css">
+</head>
+<body class="wireframe">
+
+  <main class="page-main quiz-stage">
+
+    <header class="stage-header" data-area="1">
+      <span class="area-num">1</span>
+      <div class="stage-progress">
+        <span class="stage-badge">Stage 3 / 5</span>
+      </div>
+      <div class="stage-timer">
+        <div class="placeholder input small">1-2. 타이머: 00:00</div>
+      </div>
+      <div class="stage-items">
+        <div class="placeholder input small">1-3. 힌트 아이템: N개 / 패스 아이템: N개</div>
+      </div>
+    </header>
+
+    <section class="quiz-image-section" data-area="2">
+      <span class="area-num">2</span>
+      <div class="placeholder large">2-1. 문제 PNG 이미지 — 너는 바보입니다 (문자/숫자 대응 암호형)</div>
+      <p class="quiz-title">2-2. 너는 바보입니다</p>
+    </section>
+
+    <section class="answer-section" data-area="3">
+      <span class="area-num">3</span>
+      <div class="field">
+        <label class="field-label">정답 입력</label>
+        <div class="placeholder input">3-1. 텍스트 입력 필드 (암호 해독 정답)</div>
+      </div>
+      <button class="btn-primary btn-submit" disabled>3-2. 제출</button>
+    </section>
+
+    <section class="item-section" data-area="4">
+      <span class="area-num">4</span>
+      <div class="item-actions">
+        <button class="btn-secondary">힌트 보기</button>
+        <button class="btn-secondary">패스</button>
+        <a href="#" class="link-purchase">아이템 구매</a>
+      </div>
+      <div class="hint-panel" hidden>
+        <div class="placeholder large">힌트 패널 — 단계별 힌트 텍스트</div>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>

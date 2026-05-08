@@ -1,0 +1,64 @@
+<!-- UI-Ranking_Widget-01 / → REQ-RANK-001-01 -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UI-Ranking_Widget-01 — 랭킹 위젯</title>
+  <link rel="stylesheet" href="../assets/tokens/colors.css">
+  <link rel="stylesheet" href="../assets/tokens/spacing.css">
+  <link rel="stylesheet" href="../assets/tokens/typography.css">
+  <link rel="stylesheet" href="../assets/css/wireframe.css">
+</head>
+<body class="wireframe">
+
+  <div class="widget-container" data-area="1">
+    <span class="area-num">1</span>
+
+    <section class="ranking-table-section" data-area="2">
+      <span class="area-num">2</span>
+      <h2 class="widget-title">멘사 랭킹챌린지 TOP 10</h2>
+      <table class="ranking-table">
+        <thead>
+          <tr>
+            <th>순위</th>
+            <th>회원명(닉네임)</th>
+            <th>점수</th>
+            <th>풀이시간</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="ranking-row">
+            <td class="rank-num">1</td>
+            <td><div class="placeholder input">회원명</div></td>
+            <td><div class="placeholder input small">120점</div></td>
+            <td><div class="placeholder input small">00:00</div></td>
+          </tr>
+          <tr class="ranking-row">
+            <td class="rank-num">2</td>
+            <td><div class="placeholder input">회원명</div></td>
+            <td><div class="placeholder input small">118점</div></td>
+            <td><div class="placeholder input small">00:00</div></td>
+          </tr>
+          <tr class="ranking-row">
+            <td class="rank-num">3</td>
+            <td><div class="placeholder input">회원명</div></td>
+            <td><div class="placeholder input small">115점</div></td>
+            <td><div class="placeholder input small">00:00</div></td>
+          </tr>
+          <tr class="ranking-row ranking-row--ellipsis">
+            <td colspan="4" class="ellipsis-row">... (Top 10까지)</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="cta-section" data-area="3">
+      <span class="area-num">3</span>
+      <button class="btn-primary btn-cta">챌린지 도전하기</button>
+    </section>
+
+  </div>
+
+</body>
+</html>

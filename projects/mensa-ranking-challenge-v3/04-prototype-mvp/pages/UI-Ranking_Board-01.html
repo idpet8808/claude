@@ -1,0 +1,79 @@
+<!-- UI-Ranking_Board-01 / → REQ-RANK-003-01 -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UI-Ranking_Board-01 — 랭킹 전체 보기</title>
+  <link rel="stylesheet" href="../assets/tokens/colors.css">
+  <link rel="stylesheet" href="../assets/tokens/spacing.css">
+  <link rel="stylesheet" href="../assets/tokens/typography.css">
+  <link rel="stylesheet" href="../assets/css/wireframe.css">
+</head>
+<body class="wireframe">
+
+  <main class="page-main">
+
+    <header class="page-header-section" data-area="1">
+      <span class="area-num">1</span>
+      <h1 class="page-title">1-1. 전체 랭킹</h1>
+      <nav class="tab-nav">
+        <button class="tab-btn tab-btn--active">1-2. 공식 랭킹</button>
+        <button class="tab-btn">1-2. 완주 랭킹</button>
+      </nav>
+    </header>
+
+    <section class="ranking-table-section" data-area="2">
+      <span class="area-num">2</span>
+      <!-- 공식 랭킹 탭 (기본값) -->
+      <table class="ranking-table">
+        <thead>
+          <tr>
+            <th>순위</th>
+            <th>회원명</th>
+            <th>점수</th>
+            <th>풀이시간</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="ranking-row ranking-row--mine">
+            <td class="rank-num">N</td>
+            <td><div class="placeholder input">2-3. 내 기록 (하이라이트)</div></td>
+            <td><div class="placeholder input small">점수</div></td>
+            <td><div class="placeholder input small">시간</div></td>
+          </tr>
+          <tr class="ranking-row">
+            <td class="rank-num">1</td>
+            <td><div class="placeholder input">회원명</div></td>
+            <td><div class="placeholder input small">120점</div></td>
+            <td><div class="placeholder input small">00:00</div></td>
+          </tr>
+          <tr class="ranking-row">
+            <td class="rank-num">2</td>
+            <td><div class="placeholder input">회원명</div></td>
+            <td><div class="placeholder input small">118점</div></td>
+            <td><div class="placeholder input small">00:00</div></td>
+          </tr>
+          <tr class="ranking-row ranking-row--ellipsis">
+            <td colspan="4" class="ellipsis-row">... (전체 기록 페이지네이션)</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="ranking-table-section ranking-section--complete" data-area="3" hidden>
+      <span class="area-num">3</span>
+      <!-- 완주 랭킹 탭 (전환 시) -->
+      <div class="placeholder large">3-1. 완주 랭킹 테이블 (힌트/패스 사용 기록 포함) — 공식 랭킹과 동일 구조</div>
+    </section>
+
+    <section class="cta-section" data-area="4">
+      <span class="area-num">4</span>
+      <button class="btn-primary">4-1. 챌린지 도전하기</button>
+      <a href="#" class="link-secondary">4-2. 챌린지 홈</a>
+    </section>
+
+  </main>
+
+</body>
+</html>

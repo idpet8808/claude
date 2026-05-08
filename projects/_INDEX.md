@@ -4,13 +4,16 @@
 > 기존 노션에서 진행 중인 프로젝트는 하네스 대상이 아니며, **신규 영업·기획 건만** `/kickoff`로 등록한다.
 > M13 v1 정합 — 산출물 4종(01-prd / 02-tech-review / 03-ux-spec / 04-prototype-mvp), 4단계 (기획중 / MVP-구현중 / MVP-완료 / 종료).
 
-## 활성 프로젝트 (1건)
+## 활성 프로젝트 (2건)
 
 | 슬러그 | 프로젝트 | PM | 현재 단계 | 산출물 진행 | 자가점검 | 오픈이슈 | 마지막 갱신 | STATE |
 |--------|----------|-----|----------|-----------|---------|---------|-----------|-------|
-| `mensa-ranking-challenge-v2-0` | 랭킹챌린지_ver2.0 | 신주한 | 기획중 | ···· | (착수) | 0건 | 2026-05-07 | [열기](mensa-ranking-challenge-v2-0/STATE.md) |
+| `mensa-ranking-challenge-v3` | 랭킹챌린지_ver3.0 | 신주한 | 기획중 | ✓✓✓✓ | PRD 7/7, Tech 5/5, UX 4/4, P 7/7 | 5건 | 2026-05-08 | [열기](mensa-ranking-challenge-v3/STATE.md) |
+| `mensa-ranking-challenge-v2-0` | 랭킹챌린지_ver2.0 | 신주한 | 기획중 | ···· | (보류) | 6건 | 2026-05-07 | [열기](mensa-ranking-challenge-v2-0/STATE.md) |
 
-> 비고: M16 정의 검증용 신규 진입 (PM 신규 검증 sub-step). 기존 멘사 v1·v2 아카이브 모두 제거 후 깨끗한 신규 진입 (2026-05-07).
+> 비고:
+> - `v3` (2026-05-08) — M18 정의 첫 적용 검증 (UX HTML wireframe 양식). 신규 진입.
+> - `v2-0` (2026-05-07) — M16 정의 검증용 진입. 격차 발견 (분해 깊이 + brainstorming 누락) 후 idle. v3 진입으로 비교군 보존.
 
 <!--
 이후 신규 프로젝트가 등록되면 아래 형식으로 자동 갱신됨 (weekly-status Skill, /status 호출)

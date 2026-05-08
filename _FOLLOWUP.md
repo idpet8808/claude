@@ -139,6 +139,20 @@ v1 운영 시행착오 누적 후 정련. 임계값·정책은 잠정값으로 �
 - **M17 idle·stop hook 보강 검토** (2026-05-08 M17 신설 — v1.1 이관) — D·E·F 통합 정정이 명문화 + 에이전트 §2 명시로 적용됨. Teammate 행동 의무는 hook 강제 어려움 (Teammate 내부 결정 검증 불가). 운영 시행착오 누적 시 v1.1+ idle/stop hook 보강 검토 (`PostToolUse on Write/Edit` matcher — 산출물 작성 직후 stderr REMINDER 등)
 - **M17 PreToolUse on Agent matcher subagent_type 동작 검증** (2026-05-08 M17 신설) — 한글명 매처 (`서비스기획자|기술검토자|UX기획자`) + grep 패턴 강화 (`\s*:\s*`) 적용. 멘사 v3 검증 시 실 발화 동작 확인. JSON 포맷 변화 시 grep 취약성은 v1.1+ jq·yq 등 구조 파싱 도입 검토 영역
 
+- **M18 멘사 v3 시연 발견 시행착오 2건** (2026-05-08 신설 — slug=`mensa-ranking-challenge-v3`, M18 첫 적용 검증)
+  - **(1) PI-002 후보 — §B 다건 묶음 broadcast 패턴**
+    - **현상**: service-planner가 PRD §B 12 REQ를 1번 broadcast로 묶어서 발행 (§A WHY 단독 broadcast 1건 후 §B 전체 1건). 부분 broadcast = 연속 흐름 (§4-0 (ii)) 본질 X
+    - **원인**: prd-draft SKILL.md §3 부분 broadcast 트리거 표에 "§B 1건 완성마다 broadcast" 명시되어 있으나, "§B 전체 완성 후 broadcast"가 *예시*인지 *필수*인지 모호. service-planner가 *완성 후 묶음 broadcast* 선택
+    - **정련 방향**: prd-draft SKILL.md §3 트리거 카탈로그를 "필수" 명시 강화 (`§B 1건 완성마다 즉시 broadcast 필수, 묶음 X` 명시) + checklist에 "broadcast 발행 건수 ≥ 요구사항 건수 N" 정합 검증 항목 신설 가능성. 격차 2 회귀 방지 강화
+    - **자가점검 통과는 정합** — broadcast 양식 위배만 발견, 산출물 본질 OK
+  - **(2) PI-024 (D) 확정 — 4 agent confirm signal ack 메아리 패턴**
+    - **현상**: 4 Teammate 중 3명 (service-planner / tech-reviewer / publisher) 모두 controller confirm signal 수신 시 *ack 메시지 발송* + idle 진입. 메시지 본문은 "이미 완료된 상태입니다"·"silent idle 유지" 등 정합 자체를 보고하는 메아리. 자기 모순 (silent idle 주장하면서 메시지 발송)
+    - **원인**: 4 agent 정의 §2 작업 절차에 PI-024 (D)(E)(F) 명시되어 있으나, *spawn 직후 controller confirm signal 처리* 케이스가 모호. agent들이 confirm signal에 대한 응답 의무를 자율 결정으로 ack 메시지 발송
+    - **정련 방향**: 4 agent 정의 §2 작업 절차 또는 4 SKILL.md에 **"controller confirm signal 수신 시 silent 작업 진입만 — ack 메시지 발송 X"** 명시 강화. 또는 §4-0 5요소에 "(D-1) confirm signal silent 처리" 신설 가능. 격차 D 회귀 방지 강화
+    - **결과적으로 진행 흐름 자체는 정상** — controller가 메아리 메아리 회피 (M17 정합)하여 추가 reply 발송 X. 시연 가치 = 정확한 시행착오 사례 수집
+
+  본 2건은 v1 운영 검증 가치 — 다음 sub-step에서 4 agent 정의 + Skill 정의 일괄 보강 필요
+
 ## ④ 폐기
 
 - **2026-04-14 M4 Mesh 메시지 전달 프로토콜** (롤백, M9~M12 Mesh 모델로 대체)
