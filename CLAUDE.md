@@ -203,8 +203,8 @@ projects/
     ├── 01b-functional-spec.md      # 기능명세서 (옵션 — 필요시 작성, PI-005)
     ├── 02-tech-review.md           # 기술검토자 — 요구사항 ID 단위 평가
     ├── 03-ux-spec.md               # UX기획자 — Screen ID UI-{명칭}-{NN} + 시각적 스켈레톤 + 메타 7 필드 + Description
-    └── 04-prototype-mvp/           # 퍼블리셔 (MVP 모드)
-        ├── pages/<UI-{명칭}-{NN}>.html  # 1 화면 = 1 HTML 파일 (M16 — 파일명 = UI ID)
+    └── 04-prototype-mvp/           # UX·publisher 공동 소유 (M18 — ux-planner HTML 골격 작성 + publisher CSS·JS·assets 보강)
+        ├── pages/<UI-{명칭}-{NN}>.html  # 1 화면 = 1 HTML 파일 (M16 — 파일명 = UI ID, M18 — wireframe 시각 스켈레톤 본질)
         ├── assets/{tokens, css, js}/
         └── README.md               # Screen ID ↔ REQ 매핑 표 + NA list
 
@@ -222,7 +222,7 @@ CLAUDE.md / AGENTS.md               # 헌법 + Codex 정의
 영문 소문자 + 하이픈만 (예: `verihum-auth`, `ksfarm-chatbot`). 숫자·특수문자 금지.
 
 ### 산출물 파일명
-- 페이즈 1 default 4종: `01-prd.md` / `02-tech-review.md` / `03-ux-spec.md` / `04-prototype-mvp/`
+- 페이즈 1 default 4종: `01-prd.md` / `02-tech-review.md` / `03-ux-spec.md` / `04-prototype-mvp/` (M18 — `04-prototype-mvp/pages/*.html`은 UX·publisher 공동 소유. ux-planner가 HTML 골격·영역 번호·상단 SSoT 주석 작성, publisher가 CSS·JS·assets 보강)
 - **옵션 산출물 1종** (M16 신설, PI-005): `01b-functional-spec.md` — 기능명세서 (필요시 작성, PM 결정 또는 service-planner/tech-reviewer 판단 시 신설). 요구사항에 따른 *기능 파생 명세* (시스템 관점 — 입력·출력·예외·정합성 룰)
 - 번호 접두사는 *진입 가능 순서* (완료 순서 아님 — 부분 broadcast로 동시성 허용)
 - 페이즈 2 산출물(`04-prototype-prod/`, `05-backend/`)은 v1 미정의
@@ -319,7 +319,7 @@ CLAUDE.md / AGENTS.md               # 헌법 + Codex 정의
      - 서비스기획자: UX 세부 결정·기술 스택 결정 금지
      - 기술검토자: 제품 기능 범위 축소/확장 금지
      - UX기획자: 기술 스택 선정·비주얼 시안 생성 금지
-     - 퍼블리셔: **화면 가감 결정 금지** (UX 명세 그대로 매핑) · 비주얼 디자인 시안 결정 금지
+     - 퍼블리셔 (M18 갱신): **화면 가감 결정 금지** (UX 영역) · **HTML 골격·영역 번호·시각 결정 변경 금지** (ux-planner 영역 — ux-planner HTML wireframe을 *그대로* 검토·CSS·JS·assets 보강만) · 비주얼 디자인 시안 결정 금지 (디자이너 영역)
      - 노션관리자: 산출물 내용 편집 금지 (동기화만)
      - 모든 영역: 다른 영역의 산출물 파일 직접 수정 금지
      - 모든 영역 (Teammate): **자율 재활성화·자율 작업 진행 금지** (M17 PI-024) — 작업 완료 후 controller·peer trigger 없이 자기 영역 자율 재시작·재진입 결정 X. controller stop signal 발행 시 즉시 정지 (작업 완성 자율 결정 X)
@@ -453,6 +453,11 @@ broadcast 발행·수신 이벤트 + M11 자가 점검 결과를 8필드 형식�
 - ❌ **brainstorming 사전 호출 누락 금지** (PI-022 — 격차 B 회귀 방지) — service-planner / tech-reviewer / ux-planner spawn 시 brainstorming 자동 invoke 의무 위배
 - ❌ **PRD §B Use Case 단위 분해 깊이 미흡 금지** (PI-020 — 격차 A 회귀 방지) — NN 단위 사용자/시스템 동작 분해 0건 / NNN 단일 묶음
 - ❌ **PRD §B에 입력·출력·예외 로직 분해 금지** (PI-021 — 영역 침범) — 로직 분해는 기능명세서(FN-NNN, 01b) 위임
+
+**M18 본질 위배 (M18 신설)**:
+- ❌ **시각적 스켈레톤 ASCII/Unicode 박스 작성 금지** (M18 폐기) — `┌─┐ ├─┤ └─┘` 마크다운 박스 시각 표현은 M16에서 도입했으나 PM 첨부 wireframe 이미지 수준 표현 불가 (회색 박스·placeholder·영역 번호·에러 상태). M18에서 HTML wireframe (`04-prototype-mvp/pages/<UI>.html`) 직접 작성으로 갱신
+- ❌ **publisher가 HTML 골격·영역 번호·시각 결정 변경 금지** (M18 신설) — ux-planner가 작성한 HTML wireframe 그대로 보존. publisher는 CSS·JS·assets/tokens·README NA list만 보강 (영역 침범)
+- ❌ **03-ux-spec.md 시각 스켈레톤 본문 인라인 금지** (M18 신설) — 03-ux-spec.md는 *시각 스켈레톤 HTML 링크만* (`→ 04-prototype-mvp/pages/<UI>.html`). 본문 인라인 = 토큰 ↑ + SSoT 분리 위반. 메타 7 필드·Description·빈/에러/로딩 텍스트는 03-ux-spec.md 보존
 
 ## 10. 에스컬레이션 규칙
 
