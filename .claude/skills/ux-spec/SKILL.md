@@ -9,10 +9,12 @@ description: UX 화면 명세서 작성 Skill. UX기획자가 PRD §B 요구사�
 
 UX기획자(UX owner)가 PRD §B 요구사항 카탈로그를 *기준 SSOT*로 받아 *시각적 스켈레톤 와이어프레임 + Description* 산출. 퍼블이 받아서 HTML/CSS/JS 변환할 수 있는 *전달 자료*.
 
-**격차 7 정정 본질** (M16):
-- 텍스트 명세만 (M9·M13) 폐기 — *시각적 스켈레톤 와이어프레임* 필수
-- BN 표준 Screen ID `UI-{명칭}-{NN}` (S-NNN 폐기)
-- 화면 메타 7 필드 + Description (영역별 번호 + 동작·연결)
+**격차 7 정정 본질** (M16 → M18 갱신):
+- 텍스트 명세만 (M9·M13) 폐기 — *시각적 스켈레톤 와이어프레임* 필수 (M16)
+- BN 표준 Screen ID `UI-{명칭}-{NN}` (S-NNN 폐기, M16)
+- 화면 메타 7 필드 + Description (영역별 번호 + 동작·연결, M16)
+- **시각적 스켈레톤 = HTML wireframe** (`04-prototype-mvp/pages/<UI>.html` 직접 작성, M18 갱신 — ASCII/Unicode 박스 폐기)
+- **4상태 표현**: 정상 = HTML 시각 / 빈·에러·로딩 = 03-ux-spec.md 텍스트 (M18 갱신)
 
 ## 언제 쓰나
 
@@ -60,12 +62,12 @@ ux-planner spawn 직후 **자기 영역 산출물 작성 시작 전** 다음 의
 
 #### 부분 broadcast 트리거 (명세 중 즉시 발행)
 
-| 트리거 사건 | broadcast 대상 |
+| 트리거 사건 (M18 갱신) | broadcast 대상 |
 |-------------|----------------|
 | 화면 1개 후보 (UI-{명칭}-{NN} 발급) | P |
 | 화면 1개 메타 7 필드 채움 | P |
-| 화면 1개 시각적 스켈레톤 작성 | P |
-| 화면 1개 4상태 확정 | P |
+| 화면 1개 HTML wireframe 골격 작성 (`pages/<UI>.html` 발급 + 영역 번호 마커 + 상단 SSoT 주석) | P |
+| 화면 1개 4상태 확정 (정상=HTML 시각, 빈/에러/로딩=마크다운 텍스트) | P |
 | 빈/에러/로딩 자동 실패 발견 | REQ/TR |
 | S 확정 (모든 화면 + 4상태 완료) | P (완성 broadcast — 부분 broadcast 누적 결과) |
 
@@ -77,9 +79,13 @@ ux-planner spawn 직후 **자기 영역 산출물 작성 시작 전** 다음 의
 - **§2 화면 명세** (각 화면):
   - **메타 7 필드** (자동 실패 조건 A-1): 버전·화면명·Screen ID·이용자·작성인·작성일·페이지 경로
   - **Screen ID 정규식** (자동 실패 조건 A-2): `^UI-[A-Za-z][A-Za-z0-9_]*-\d{2}$`
-  - **시각적 스켈레톤** (통과율 B-1, 격차 7 핵심): 마크다운 ASCII/Unicode 박스 (예: `┌─┐ ├─┤ └─┘`). *비주얼 디자인 시안 X* (색상·폰트·세부 X — 화면 *구조*만)
+  - **시각적 스켈레톤** (통과율 B-1, M16 격차 7 정정 + M18 갱신):
+    - **HTML wireframe** (`04-prototype-mvp/pages/<UI-{명칭}-{NN}>.html`) 직접 작성
+    - 03-ux-spec.md 본문에는 *링크만* (`→ 04-prototype-mvp/pages/<UI>.html`). 본문 인라인 X (M18 안티 패턴)
+    - HTML 양식: 상단 SSoT 주석 (`<!-- UI-{명칭}-{NN} / → REQ-{도메인}-NNN-NN -->`) + 영역 번호 마커 (`<span class="area-num">N</span>`) + placeholder 박스 (`<div class="placeholder">`) + class 명명
+    - 비주얼 디자인 시안 X (색상·폰트·세부 X — 화면 *구조*만)
   - **Description** (통과율 B-2): 영역별 번호 (1, 2, ...) + 설명 + 구성 요소 정의 + 동작 + 연결 페이지
-  - **4상태** (자동 실패 조건 A-3): 정상/빈/에러/로딩 모두 정의 (1건 누락 시 자동 실패)
+  - **4상태** (자동 실패 조건 A-3, M18 갱신): 정상 = HTML wireframe / 빈·에러·로딩 = 03-ux-spec.md 텍스트 명세 (1건 누락 시 자동 실패)
   - **인터랙션**: 트리거/동작/결과 3요소
   - **기술 제약 반영**: TR 판정 *불가능* → 제외 / *조건부* → 대안 경로
 - **§3 공통 컴포넌트 / §4 네비게이션 플로우 / §5 접근성·반응형 / §6 오픈 이슈** 보존
@@ -169,6 +175,9 @@ P가 UX 산출물 모순·누락 발견하여 reply 발행한 경우:
 - ❌ **빈/에러/로딩 상태 누락** (자동 실패 조건 A-3)
 - ❌ **brainstorming 사전 호출 누락 금지** (M17 PI-022 — 격차 B 회귀 방지)
 - ❌ **broadcast 한쪽만 발행 금지** (M17 PI-023 — 격차 C 회귀 방지) — `SendMessage` + `_broadcast.log` 양쪽 의무
+- ❌ **시각적 스켈레톤 ASCII/Unicode 박스 작성** (M18 폐기) — HTML wireframe 직접 작성으로 갱신
+- ❌ **03-ux-spec.md 시각 스켈레톤 본문 인라인** (M18 — HTML 링크만)
+- ❌ **HTML 골격에 색상·폰트·세부 디자인 시안 추가** (보존 — 비주얼 시안 X)
 
 ## 참조 파일
 
@@ -179,5 +188,6 @@ P가 UX 산출물 모순·누락 발견하여 reply 발행한 경우:
 
 ## 변경 이력
 
+- (2026-05-08) **M18 진입** — UX 시각적 스켈레톤 ASCII → HTML wireframe 전환. `04-prototype-mvp/pages/<UI>.html` 직접 작성 (UX·publisher 공동 소유). 4상태 = 정상 HTML / 빈·에러·로딩 텍스트. 영역 1~7 PM 결정 종합 (`_design/M18_ux-html-wireframe-design.md` 참조).
 - (2026-05-07) **M16 진입** — UX 본질 재설계 (격차 7 정정). Screen ID `UI-{명칭}-{NN}` BN 표준 (S-NNN 폐기). 시각적 스켈레톤 와이어프레임 + 화면 메타 7 필드 + Description (영역별 번호 + 동작·연결) 신설. 요구사항 ID 1:1 매핑 + REQ 4 segment 인용. M15 B-4 (ux-planner 에이전트 정의 보강분 — 격차 5 multi-hop) 통합. PI-001~PI-019 정합.
 - (이전) M9·M13 — 텍스트 명세만 + S-NNN ID + Must 정합 가정 (M16에서 폐기).
