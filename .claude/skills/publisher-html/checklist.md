@@ -1,6 +1,6 @@
-# publisher-html checklist (M16 — PI-001~PI-019 정합, M11 v1 + M9 §10-2-2 정합)
+# publisher-html checklist (M16 + M18 갱신 — PI-001~PI-019 + M11 v1 + M9 §10-2-2 정합)
 
-본 checklist는 M9 §10-2-2 자가 점검 모델을 P 영역에 적용. M16 진입에 따라 **P-NNN 폐기 + UI ID 단일 사용** (PI-019 A1 결정).
+본 checklist는 M9 §10-2-2 자가 점검 모델을 P 영역에 적용. M16 진입에 따라 **P-NNN 폐기 + UI ID 단일 사용** (PI-019 A1 결정). M18 진입에 따라 **HTML 골격 = ux-planner 작성, publisher = CSS·JS·assets 보강 + 검증 본질**.
 
 ---
 
@@ -36,14 +36,17 @@ P owner 본질 = `1 화면(UI-{명칭}-{NN}) = 1 HTML 파일 (pages/<UI-{명칭}
   - **P-NNN 사용 금지** (M16 폐기)
   - evidence: `ls 04-prototype-mvp/pages/` + UX-spec §1 비교
 
-- [ ] **항목 2: F-4·F-5·F-6 (HTML 상단 주석 헤더 정합)**
+- [ ] **항목 2: F-4·F-5·F-6 (HTML 상단 주석 헤더 정합 — *검증* 본질, M18 갱신)**
+  - **작성 = ux-planner / 검증 = publisher** (M18) — publisher는 정규식 정합 확인. 위배 발견 시 ux-planner reply (격차 5 multi-hop 시작점)
   - 모든 HTML 파일 상단에 UI ID 주석 존재
   - **REQ 매핑 형식** (일반 화면): `<!-- UI-{명칭}-{NN} / → REQ-{도메인}-NNN-NN, REQ-{도메인}-NNN-NN -->`
     - 정규식: `^<!-- UI-[A-Za-z][A-Za-z0-9_]*-\d{2} / → REQ-[A-Z]{2,4}-\d{3}-\d{2}(, REQ-[A-Z]{2,4}-\d{3}-\d{2})* -->$`
   - **전역 화면 형식** (REQ 무관 전역 공통 — 헤더/푸터/공통 레이아웃 등): `<!-- UI-{명칭}-{NN} / → 전역 -->`
     - 정규식: `^<!-- UI-[A-Za-z][A-Za-z0-9_]*-\d{2} / → 전역 -->$`
     - 예: `<!-- UI-Header_Footer-00 / → 전역 -->`
-  - evidence: `grep -L "^<!-- UI-" 04-prototype-mvp/pages/*.html` → 누락 0
+  - **영역 번호 마커 검증** (M18 신설): `<span class="area-num">N</span>` 존재 + 03-ux-spec.md Description §N과 1:1 매핑
+  - **assets/css class ↔ HTML class 1:1 연결 검증** (M18 신설): ux-planner HTML class 모두 assets/css/wireframe.css 또는 base.css에 정의됨 (orphan class 0건)
+  - evidence: `grep -L "^<!-- UI-" 04-prototype-mvp/pages/*.html` → 누락 0 / `grep "area-num" pages/*.html` / class 정합 검증
 
 - [ ] **항목 3: F-8 + README NA SSoT 예외 (§3-3 I5)**
   - README.md `[NOT APPLICABLE]` 섹션 존재
@@ -102,6 +105,8 @@ P owner 본질 = `1 화면(UI-{명칭}-{NN}) = 1 HTML 파일 (pages/<UI-{명칭}
 1. **HTML 상단 주석 SSoT 누락** (항목 2 / F-4 강제) — UI ID 형식 정규식 위배 포함
 2. **README NA list 형식 위반** — NA 항목 존재인데 `- REQ-{도메인}-NNN-NN: 사유` 형식 미준수 (항목 3 / F-8 + §3-3 I5 강제)
 3. **P-NNN 사용** — M16 폐기 (PI-019 A1 결정). UI ID 단일 사용 강제
+4. **HTML 골격 직접 변경** (M18 신설 — 영역 침범) — publisher가 ux-planner 작성 HTML element/class 추가·삭제·수정. 발견 시 즉시 reply 의무 (자율 결정 금지)
+5. **상단 SSoT 주석 직접 수정** (M18 신설) — publisher가 SSoT 주석 직접 변경. 검증·정합 확인만 가능. 위배 발견 시 ux-planner reply
 
 ## 결과 보고 양식 (8필드 통합)
 
@@ -125,5 +130,6 @@ P owner 본질 = `1 화면(UI-{명칭}-{NN}) = 1 HTML 파일 (pages/<UI-{명칭}
 
 ## 변경 이력
 
+- (2026-05-08) **M18 진입** — F-4·5·6 책임 이관 (검증 본질 — 작성 = ux-planner). 항목 2에 영역 번호 마커 검증 + assets/css class 1:1 연결 검증 보강. 자동 실패 조건 4·5 신설 (HTML 골격 직접 변경 / SSoT 주석 직접 수정 — 영역 침범).
 - (2026-05-07) **M16 진입** — P-NNN 폐기 (PI-019 A1 결정) + UI ID 단일 사용 + REQ 4 segment 매핑 + 파일명 UI ID 기반 (M9 §1-2-2 갱신). 격차 7 정정.
 - (이전) M9·M11·M13 — P-NNN 영역별 독립 시퀀스 + 3자리 REQ 매핑 (M16에서 폐기).

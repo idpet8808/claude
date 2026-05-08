@@ -7,12 +7,18 @@ description: 퍼블리셔 MVP 모드 산출물 작성 Skill. UX-spec 화면 명�
 
 ## 본질
 
-퍼블리셔(P owner)가 UX-spec 시각적 스켈레톤·Description을 *기준 SSOT*로 받아 HTML/CSS/JS 변환. *비주얼 디자인 시안 결정 X* (영역 침범). 1 화면(UI-{명칭}-{NN}) = 1 HTML 파일.
+퍼블리셔(P owner)가 ux-planner 작성 HTML wireframe + 03-ux-spec.md 메타·Description·빈/에러/로딩 텍스트를 *기준 SSOT*로 받아 **CSS·JS·assets 보강** (M18 갱신). HTML 골격·영역 번호·시각 결정은 ux-planner 영역 (보강 대상 X).
 
-**M16 정합** (PI-019 A1):
+**M18 정합** (UX·publisher 공동 소유):
+- ux-planner = HTML 골격 작성 (영역 번호 마커·상단 SSoT 주석·placeholder 박스·class 명명)
+- publisher = 동일 HTML 검토 + 외부 CSS·JS 연결 + assets/{tokens, css, js}/ + README NA list
+- HTML 신규 작성 X (ux-planner 영역) — *검토·보강* 본질
+- 1 화면 = 1 HTML 파일 (`04-prototype-mvp/pages/<UI-{명칭}-{NN}>.html`)
+- HTML 상단 주석 = `<!-- UI-{명칭}-{NN} / → REQ-{도메인}-NNN-NN -->` (ux-planner 작성, publisher 검증)
+
+**M16 정합** (PI-019 A1, 보존):
 - **P-NNN 폐기** — UI ID 단일 사용
 - 파일명 = UI ID (M9 §1-2-2 갱신)
-- HTML 상단 주석 = `<!-- UI-{명칭}-{NN} / → REQ-{도메인}-NNN-NN -->`
 
 ## 호출 주체
 
@@ -52,36 +58,50 @@ description: 퍼블리셔 MVP 모드 산출물 작성 Skill. UX-spec 화면 명�
   - §3 아키텍처·기술 스택 — HTML 구조 정합
 - 03-ux-spec.md:
   - §1 화면 목록 — 모든 UI-{명칭}-{NN} 식별 → 1:1 매핑 대상
-  - §2 화면 명세 — 시각적 스켈레톤·Description·4상태 매핑
+  - §2 화면 명세 — 메타 7 필드 + Description (영역 번호 1:1 매핑) + 빈/에러/로딩 텍스트
+  - **시각적 스켈레톤은 HTML 링크만** (`04-prototype-mvp/pages/<UI>.html`) — ux-planner 작성 HTML 파일 직접 검토 (M18)
+- 04-prototype-mvp/pages/*.html (M18 신설):
+  - ux-planner 작성 HTML wireframe — *검토 대상*
+  - 상단 SSoT 주석 검증 (정규식 정합)
+  - 영역 번호 마커 `<span class="area-num">` 검증
+  - class 명명 검증 → assets/css/wireframe.css 연결
 
 ### 2. 폴더 골격 부트스트랩 (assets/ S 무관 선행 — §4-0 (v))
 
 `template.md` 참조:
-- `04-prototype-mvp/pages/`, `assets/{tokens, css, js}/`, `README.md` 생성
-- assets/ tokens (color·spacing·typography) + css/base.css + js/main.js 작성
+- `04-prototype-mvp/assets/{tokens, css, js}/`, `README.md` 생성 (M18 갱신 — pages/ 디렉토리는 ux-planner가 HTML 작성하면서 생성)
+- assets/ tokens (color·spacing·typography) + css/base.css + css/wireframe.css (M18 신설 — placeholder·area-num·page-* 스타일) + js/main.js 작성
+- pages/ 디렉토리 진입 시점은 ux-planner의 첫 HTML wireframe 발급 broadcast 수신 후
 
 ### 3. UX-spec 부분 broadcast 수신마다 해당 화면 HTML 부분 진행
 
 #### 부분 broadcast 트리거 (HTML 작성 중 즉시 발행)
 
-| 트리거 사건 | broadcast 대상 |
+| 트리거 사건 (M18 갱신) | broadcast 대상 |
 |-------------|----------------|
 | assets 토큰 1개 확정 | (선행 영역 무관) |
-| HTML 파일 1개 발급 (UI-{명칭}-{NN}) | UX |
+| ux-planner HTML wireframe 1개 검토 완료 (CSS class 연결·SSoT 주석 검증·assets 토큰 매핑) | UX |
+| HTML 보강 후 CSS·JS·assets 1 단위 확정 (publisher 보강 사건) | (자체 진행) |
 | NA 발견 (UI ↔ REQ 매핑 누락) | REQ/UX |
+| ux-planner HTML 골격 모순·누락 발견 (영역 번호 누락·SSoT 주석 형식 위배 등) | UX (reply — 격차 5 multi-hop 시작점) |
 
 발행 방식: `SendMessage`(broadcast) **+** `_broadcast.log` 8필드 기록 (type=`broadcast`, owner=`P`, target=`UI-{명칭}-{NN}` 또는 NA 항목) — **양쪽 의무** (M17 PI-023 — 격차 C 정정). 한쪽만 발행 = 안티 패턴 (CLAUDE.md §9 M17 본질 위배 정합).
 
-#### 작성 시 본질 영역
+#### 작성 시 본질 영역 (M18 갱신)
 
-- **화면 1:1 매핑** — 03-ux-spec §1의 모든 UI ID와 1:1 매핑 (누락·추가 0건)
-- **파일명** — `pages/<UI-{명칭}-{NN}>.html` (UI ID 기반)
-- **HTML 상단 주석 SSoT**:
-  - REQ 매핑 화면: `<!-- UI-{명칭}-{NN} / → REQ-{도메인}-NNN-NN, REQ-{도메인}-NNN-NN -->`
+- **화면 1:1 매핑 검증** — 03-ux-spec §1의 모든 UI ID ↔ pages/*.html 1:1 매핑 (ux-planner 작성분 검증)
+- **파일명 검증** — `pages/<UI-{명칭}-{NN}>.html` (ux-planner 작성, publisher 검증)
+- **HTML 상단 주석 SSoT 검증** (작성은 ux-planner, 검증은 publisher):
+  - REQ 매핑: `<!-- UI-{명칭}-{NN} / → REQ-{도메인}-NNN-NN, REQ-{도메인}-NNN-NN -->`
     - 정규식: `^<!-- UI-[A-Za-z][A-Za-z0-9_]*-\d{2} / → REQ-[A-Z]{2,4}-\d{3}-\d{2}(, REQ-[A-Z]{2,4}-\d{3}-\d{2})* -->$`
   - **전역 화면 예외** (UX-spec에서 `→ 전역 공통`로 정의된 화면 — 헤더/푸터 등): `<!-- UI-{명칭}-{NN} / → 전역 -->`
     - 정규식: `^<!-- UI-[A-Za-z][A-Za-z0-9_]*-\d{2} / → 전역 -->$`
-- **화면 콘텐츠** — UX-spec §2 시각적 스켈레톤·Description *그대로 매핑* (퍼블 자의 추가·변경 금지)
+- **HTML 골격 변경 X** (M18 신설 — 영역 침범) — ux-planner 작성 wireframe 그대로 보존
+- **CSS·JS·assets 보강** (M18 신설):
+  - assets/css/wireframe.css — `.placeholder`·`.area-num`·`.page-header` 등 회색 박스 스타일
+  - assets/css/base.css — 레이아웃·폰트 기본
+  - assets/js/main.js — 인터랙션 hook (`onclick` 등 — 필요 시)
+  - 새 class 추가는 publisher 자유 (CSS 정의 보강). HTML class 추가/삭제 X
 - **README 매핑 표** — Screen ID + 화면명 + REQ + pages/ 컬럼
 - **NA list** — `- REQ-{도메인}-NNN-NN: 사유 1줄` 형식 (§3-3 I5)
 
@@ -178,6 +198,9 @@ description: 퍼블리셔 MVP 모드 산출물 작성 Skill. UX-spec 화면 명�
 - ❌ **묶음 broadcast** — 부분 broadcast 연속 흐름 (§4-0 (ii))
 - ❌ **노션 MCP 직접 호출** — 노션관리자 경유
 - ❌ **broadcast 한쪽만 발행 금지** (M17 PI-023 — 격차 C 회귀 방지) — `SendMessage` + `_broadcast.log` 양쪽 의무 (publisher는 brainstorming 의무 X — UX 명세 매핑 본질이 영역 침범 안티 패턴 정합)
+- ❌ **HTML 골격 직접 변경** (M18 신설 — 영역 침범) — ux-planner 작성 HTML wireframe 그대로 보존. element 추가/삭제 X. class 추가/삭제 X. publisher는 CSS 정의 추가만 가능
+- ❌ **영역 번호 마커 변경** (M18 신설 — 영역 침범) — `<span class="area-num">N</span>` 위치·번호 변경 X
+- ❌ **상단 SSoT 주석 직접 수정** (M18 신설 — 작성은 ux-planner) — publisher는 검증·정규식 정합 확인만. 수정 발견 시 ux-planner reply
 
 ## 참조 파일
 
@@ -189,5 +212,6 @@ description: 퍼블리셔 MVP 모드 산출물 작성 Skill. UX-spec 화면 명�
 
 ## 변경 이력
 
+- (2026-05-08) **M18 진입** — UX·publisher 공동 소유 모델 도입. ux-planner = HTML 골격 작성, publisher = CSS·JS·assets 보강. HTML 신규 작성 → 검토·보강 본질 갱신. assets/css/wireframe.css 신설 (placeholder·area-num·page-* 스타일). 영역 침범 강화 (HTML 골격·영역 번호·SSoT 주석 변경 X).
 - (2026-05-07) **M16 진입** — P-NNN 폐기 (PI-019 A1) + UI ID 단일 사용 + REQ 4 segment 매핑 + 파일명 UI ID 기반 (M9 §1-2-2 갱신) + 격차 5 시작점 multi-hop 시나리오 통합 (M15 B-5). PI-001~PI-019 정합.
 - (이전) M9·M13 — P-NNN + slug 파일명 + 3자리 REQ (M16에서 폐기).
