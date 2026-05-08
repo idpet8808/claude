@@ -38,7 +38,7 @@
 
 | 플러그인 | 분류 | 역할 |
 |----------|------|------|
-| **Superpowers** | Claude 내부 스킬 (프로세스) | 브레인스토밍 (service-planner / tech-reviewer / ux-planner spawn 시 자동 invoke / publisher 의무 X — UX 명세 매핑 본질, M17 PI-022) · 계획 수립 · 디버깅 등 |
+| **Superpowers** | Claude 내부 스킬 (프로세스) | 브레인스토밍 (service-planner / tech-reviewer / ux-planner spawn 시 자동 invoke / publisher 의무 X — M18 갱신: publisher 본질 = ux-planner HTML 검토·CSS·JS·assets 보강. UX 명세·HTML 골격 결정 X 본질 정합으로 brainstorming 제외 보존) · 계획 수립 · 디버깅 등 |
 | **gstack** | Claude 내부 스킬 (브라우저/QA) | 헤드리스 브라우저·QA 테스트·디자인 검증 — 필요 시 호출 |
 | **Codex** | 외부 리뷰 엔진 (OpenAI) | 산출물·설계·코드 리뷰 — Claude 토큰 미소모, **advisory** |
 
@@ -422,7 +422,7 @@ broadcast 발행·수신 이벤트 + M11 자가 점검 결과를 8필드 형식�
 - ❌ **노션 query-data-source API 사용 금지** — post-search + 수동 필터 워크어라운드 유지
 - ❌ **고급 노션 블록(표·토글·콜아웃) 시도 금지** — `paragraph` + `bulleted_list_item`만
 - ❌ 에이전트 간 **동시 쓰기 금지** — 같은 산출물 파일 여러 에이전트 동시 편집 X
-- ❌ **퍼블리셔 화면 가감 금지** — UX 명세 그대로 매핑 (영역 침범)
+- ❌ **퍼블리셔 화면 가감 금지** (UX 영역) + **HTML 골격 변경 금지** (M18 갱신 — ux-planner 영역. publisher는 ux-planner HTML wireframe 검토·CSS·JS·assets 보강만)
 
 **M16 본질 위배 (M16 신설)**:
 - ❌ **§0 PM 원본 변환·삭제 금지** (PI-009) — service-planner가 §0 영역 *원문 그대로 보존*. 정형화 표현은 §A·§B에서. 변환·삭제 시 의도 SSoT 손실 = 격차 6 근본 원인
@@ -435,7 +435,7 @@ broadcast 발행·수신 이벤트 + M11 자가 점검 결과를 8필드 형식�
 - ❌ **표준 패턴(로그인·회원가입 등) §C 기록 누락 금지** (PI-013)
 - ❌ **특정 로직(결제·도메인 로직) PM 질의 우회 금지** (PI-012)
 - ❌ **S-NNN / P-NNN 사용 금지** (M16 폐기 — PI-019 A1) — UX·P 영역 모두 `UI-{명칭}-{NN}` BN 표준 단일 사용
-- ❌ **시각적 스켈레톤 부재 (UX 텍스트 명세만) 금지** (격차 7 회귀, PI-019)
+- ❌ **시각적 스켈레톤 부재 (UX 텍스트 명세만) 금지** (격차 7 회귀, M16 PI-019. M18 갱신: ASCII 박스 폐기 → HTML wireframe (`04-prototype-mvp/pages/<UI>.html`) 직접 작성으로 대체)
 - ❌ **HTML 상단 주석 SSoT 누락 금지** — P 영역 자동 실패 (M9-5 cross-ref F-4). M16 형식: `<!-- UI-{명칭}-{NN} / → REQ-{도메인}-NNN-NN -->`
 - ❌ **README NA list 형식 위반 금지** — `- REQ-{도메인}-NNN-NN: 사유 1줄` 강제 (§3-3 I5 NA SSoT 예외, M16 4 segment 정합)
 
@@ -457,6 +457,7 @@ broadcast 발행·수신 이벤트 + M11 자가 점검 결과를 8필드 형식�
 **M18 본질 위배 (M18 신설)**:
 - ❌ **시각적 스켈레톤 ASCII/Unicode 박스 작성 금지** (M18 폐기) — `┌─┐ ├─┤ └─┘` 마크다운 박스 시각 표현은 M16에서 도입했으나 PM 첨부 wireframe 이미지 수준 표현 불가 (회색 박스·placeholder·영역 번호·에러 상태). M18에서 HTML wireframe (`04-prototype-mvp/pages/<UI>.html`) 직접 작성으로 갱신
 - ❌ **publisher가 HTML 골격·영역 번호·시각 결정 변경 금지** (M18 신설) — ux-planner가 작성한 HTML wireframe 그대로 보존. publisher는 CSS·JS·assets/tokens·README NA list만 보강 (영역 침범)
+- ❌ **publisher가 ux-planner HTML 골격 모순·누락 발견 시 자율 결정 금지** (M18 신설 — 격차 5 multi-hop 시작점) — 영역 번호 누락·SSoT 주석 형식 위배·class 명명 부재 등 발견 시 `SendMessage`(ux-planner) reply 의무. 직접 수정·자체 결정 X
 - ❌ **03-ux-spec.md 시각 스켈레톤 본문 인라인 금지** (M18 신설) — 03-ux-spec.md는 *시각 스켈레톤 HTML 링크만* (`→ 04-prototype-mvp/pages/<UI>.html`). 본문 인라인 = 토큰 ↑ + SSoT 분리 위반. 메타 7 필드·Description·빈/에러/로딩 텍스트는 03-ux-spec.md 보존
 
 ## 10. 에스컬레이션 규칙

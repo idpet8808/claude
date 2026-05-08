@@ -1,0 +1,13 @@
+중간 | `CLAUDE.md`의 기존 M16 안티패턴이 아직 “HTML 상단 SSoT 주석 누락 = P 영역 자동 실패”라고 남아 있어, M18의 “SSoT 작성 = ux-planner / publisher = 검증” 책임 이관과 충돌한다. | CLAUDE.md:439; _design/M18_ux-html-wireframe-design.md:19,243
+
+중간 | publisher의 class 권한이 문서 간 불일치한다. design doc은 “새 class 추가는 publisher 자유”라고 하지만, plan은 HTML class 추가/삭제 금지로 좁힌다. 첫 적용 시 CSS 연결을 위해 HTML class를 만질 수 있는지 판단이 갈린다. | _design/M18_ux-html-wireframe-design.md:122; _design/M18_progress-plan.md:519,529
+
+중간 | M17 PI-022 설명이 `publisher 의무 X — UX 명세 매핑 본질`로 남아 있어, M18의 publisher 본질 변경(`ux-planner HTML 검토·CSS·JS·assets 보강`)과 용어상 충돌한다. Superpowers 호출 제외 자체는 유지 가능하지만 근거 문구가 과거 모델이다. | CLAUDE.md:41,48; _design/M18_ux-html-wireframe-design.md:21
+
+낮음 | publisher → ux-planner reply는 design/plan에는 명시됐지만, `CLAUDE.md`의 M18 신설 안티패턴에는 “직접 수정 금지”만 있고 “발견 시 reply”가 publisher-specific 규칙으로 박혀 있지 않다. 현재는 일반 reply 조항에 의존한다. | _design/M18_ux-html-wireframe-design.md:224; _design/M18_progress-plan.md:487,531; CLAUDE.md:327-330,457-460
+
+낮음 | mensa 첫 적용 검증이 “양식 적합 확인” 수준이다. PM은 첫 ux-planner 산출물에서 `area-num` ↔ Description §N 1:1, 최상단 SSoT 주석, global 화면 예외, 4상태 분담이 동시에 지켜지는지 직접 확인해야 한다. | _design/M18_ux-html-wireframe-design.md:109-111,189-191; _design/M18_progress-plan.md:720-721
+
+낮음 | M16 ASCII box 폐기는 방향상 충돌은 없지만, `CLAUDE.md`에는 기존 “시각적 스켈레톤 부재 금지”와 M18 “ASCII 금지”가 병존한다. 둘 사이의 대체 기준이 HTML wireframe임은 뒤에서만 드러나므로 첫 수행자 혼선 가능성이 있다. | CLAUDE.md:438,458; _design/M18_ux-html-wireframe-design.md:194-197
+
+Overall verdict: CONDITIONAL

@@ -119,7 +119,9 @@
 - `assets/css/wireframe.css` — `.placeholder`·`.area-num`·`.page-header` 등 회색 박스 스타일 정의
 - `assets/css/base.css` — 레이아웃·폰트 기본
 - `assets/js/main.js` — 필요 시 인터랙션 hook (`onclick` 등)
-- 새 class 추가는 publisher 자유 (CSS 보강 본질). HTML 골격 변경 X (ux-planner 영역)
+- **assets/css 안 새 class 정의 추가는 publisher 자유** (CSS 보강 본질 — 예: ux-planner가 작성한 `.form-section`을 publisher가 wireframe.css에 정의)
+- **HTML 안 element·class 추가/삭제는 X** (ux-planner 영역 — Codex Gate C #2 정합)
+- HTML 골격 변경 X (영역 침범 — element/class 추가/삭제·SSoT 주석 직접 수정 X. 모순·누락 발견 시 ux-planner reply 의무 — 격차 5 multi-hop 시작점)
 
 ---
 
@@ -268,7 +270,13 @@ M18 적용 후 검증 단계:
 1. **Codex Gate C** (헌법·Skill·settings 변경 advisory) — 변경안 commit 전 invoke
 2. **자기 검증 4블록** (§11 헌법 변경 4블록 형식) — 각 변경 § 단위로 (a) 원 § 인용 (b) 변경 부분 (c) 정당성 (d) PM 명시 승인
 3. **Mesh 5요소 자기 검증** (§4-0 + §10 5차 보장) — M18 변경이 (i)~(v) 위배 0건인지
-4. **활성 프로젝트 진입 검증** — `projects/mensa-ranking-challenge-v2-0/` 기획중 단계 진입 시 ux-planner HTML wireframe 작성 양식 정합 확인
+4. **활성 프로젝트 진입 검증 — 첫 ux-planner HTML 산출물 체크리스트** (Codex Gate C #5 정합):
+   - (a) `<span class="area-num">N</span>` 마커 ↔ 03-ux-spec.md Description §N과 1:1 매핑 정합
+   - (b) 최상단 SSoT 주석 정규식 정합 (REQ 매핑 형식 또는 전역 화면 예외 형식)
+   - (c) 전역 화면 예외 (`<!-- UI-{명칭}-{NN} / → 전역 -->`) 헤더/푸터 등 정합
+   - (d) 4상태 분담 (정상=HTML wireframe / 빈·에러·로딩=03-ux-spec.md 텍스트) 동시 정합
+   - (e) class 명명 — assets/css/wireframe.css에 정의되어야 할 class와 1:1 연결
+   - 위 (a)~(e) 위배 발견 시 publisher → ux-planner reply (격차 5 multi-hop 시작점)
 
 ### 5-3. M18 진행 plan (writing-plans 단계 미리보기)
 
