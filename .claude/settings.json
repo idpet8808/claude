@@ -92,6 +92,15 @@
             "command": "grep -qE '\"file_path\"[^,}]*(CLAUDE\\.md|AGENTS\\.md)' && { echo 'NOTICE: 헌법 본문 수정 — §10 PM 명시 승인 필수, §11 헌법 변경 4블록 형식 적용 확인 (M14).' >&2; exit 0; } || exit 0"
           }
         ]
+      },
+      {
+        "matcher": "Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "grep -qE '\"subagent_type\"\\s*:\\s*\"(서비스기획자|기술검토자|UX기획자)\"' && { echo 'REMINDER: 본 Agent spawn은 sub-step 진입 신호 — 사전 superpowers:brainstorming invoke 의무 (M17 PI-022·PI-025 / feedback_brainstorm_first 정합). 퍼블리셔 제외.' >&2; exit 0; } || exit 0"
+          }
+        ]
       }
     ],
     "PostToolUse": [

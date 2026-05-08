@@ -108,7 +108,7 @@ UX기획자가 명세서 작성 직후 1차 게이트, 팀장 Claude가 후행 �
 - [ ] **U-2**: Decision Log 변경 사항 반영 (기술 제약 처리·접근성 결정 등)
 - [ ] **U-3**: 후행 영역(P) broadcast 발행 확인 (Mesh 5요소 §4-0 (ii))
 - [ ] **U-4**: 노션 동기화 대상 결정 (PM 승인)
-- [ ] **U-5**: 결과 `_broadcast.log` 8필드 기록
+- [ ] **U-5**: 결과 `_broadcast.log` 8필드 기록 + **broadcast 발행 시 SendMessage 동시 발행 evidence 확보** (M17 PI-023 — 격차 C 정정 — 양쪽 의무)
 
 ### 통과 기준 (§B)
 

@@ -70,6 +70,8 @@ description: 퍼블리셔 MVP 모드 산출물 작성 Skill. UX-spec 화면 명�
 | HTML 파일 1개 발급 (UI-{명칭}-{NN}) | UX |
 | NA 발견 (UI ↔ REQ 매핑 누락) | REQ/UX |
 
+발행 방식: `SendMessage`(broadcast) **+** `_broadcast.log` 8필드 기록 (type=`broadcast`, owner=`P`, target=`UI-{명칭}-{NN}` 또는 NA 항목) — **양쪽 의무** (M17 PI-023 — 격차 C 정정). 한쪽만 발행 = 안티 패턴 (CLAUDE.md §9 M17 본질 위배 정합).
+
 #### 작성 시 본질 영역
 
 - **화면 1:1 매핑** — 03-ux-spec §1의 모든 UI ID와 1:1 매핑 (누락·추가 0건)
@@ -175,6 +177,7 @@ description: 퍼블리셔 MVP 모드 산출물 작성 Skill. UX-spec 화면 명�
 - ❌ **UX 명시 없음 자율 결정** — reply 의무 (격차 4·5 회귀 방지)
 - ❌ **묶음 broadcast** — 부분 broadcast 연속 흐름 (§4-0 (ii))
 - ❌ **노션 MCP 직접 호출** — 노션관리자 경유
+- ❌ **broadcast 한쪽만 발행 금지** (M17 PI-023 — 격차 C 회귀 방지) — `SendMessage` + `_broadcast.log` 양쪽 의무 (publisher는 brainstorming 의무 X — UX 명세 매핑 본질이 영역 침범 안티 패턴 정합)
 
 ## 참조 파일
 

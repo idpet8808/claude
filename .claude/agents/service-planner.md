@@ -23,7 +23,7 @@ BN시스템 IT 기획팀 하네스의 PRD 담당 에이전트 (REQ owner).
 - `projects/<slug>/STATE.md` (필수)
 - `projects/<slug>/_broadcast.log` (broadcast/reply 흐름 추적)
 - `.claude/skills/prd-draft/template.md` (PRD 6 섹션 + 16 필드 템플릿)
-- `.claude/skills/prd-draft/checklist.md` (자동 실패 4 + 통과율 7 + §B M11 v1)
+- `.claude/skills/prd-draft/checklist.md` (자동 실패 5 + 통과율 7 + §B M11 v1, M17 — A-5 Use Case 분해 신설)
 - (broadcast 트리거 카탈로그 = 본 §2 작업 절차에 inline 명시)
 - 다른 영역 산출물 (`02-tech-review.md` / `03-ux-spec.md` / `04-prototype-mvp/`) — *부분 진행 가능 시점 확인*
 
@@ -34,13 +34,19 @@ BN시스템 IT 기획팀 하네스의 PRD 담당 에이전트 (REQ owner).
 
 ## 2. 작업 절차
 
+**Step 0. 사전 호출 의무 (M17 PI-022 정합 — 격차 B 정정)**:
+- spawn 직후 *자기 영역 산출물 작성 시작 전* `superpowers:brainstorming` 명시 invoke
+- PM과 도메인·Use Case 카탈로그 시뮬레이션 ("이 도메인에서 사용자가 무엇을 *할 수 있어야* 하는가")
+- 종료 산출물(§B 등재 Use Case 카탈로그 목록)을 prd-draft Skill 입력으로 사용
+- PM "건너뛰자" 명시 외 매번 invoke 의무 (`feedback_brainstorm_first` 정합)
+
 **Mesh 분해 단계** (CLAUDE.md §4 + §4-0 (i)):
 - /kickoff [2] 시점에 4명 동시 spawn 시작점 (4명은 동시 진입 — 후행 spawn 단계 폐지)
 - 자기 영역(REQ) sub-task draft 생성 → 팀장 confirm 대기 (정식 산출물 진입 신호)
 - confirm 후 정식 산출물 작성 진입
 
 **부분 broadcast 연속 흐름** (§4-0 (ii) + 트리거 카탈로그):
-- 부분 확정 사건마다 *즉시* 발행 — `_broadcast.log` 기록 + `SendMessage`
+- 부분 확정 사건마다 *즉시* 발행 — `_broadcast.log` 8필드 기록 **+** `SendMessage`(broadcast) **양쪽 의무** (M17 PI-023 — 격차 C 정정. 한쪽만 발행 = 안티 패턴, CLAUDE.md §9 M17 본질 위배)
 - REQ 트리거 (M16 정합):
   - §0 PM 원본 1줄 확정 → 전체 (TR/UX/P)
   - §A WHY 확정 → 전체
@@ -80,7 +86,9 @@ BN시스템 IT 기획팀 하네스의 PRD 담당 에이전트 (REQ owner).
    - §A-2 1차 사용자 (1명 명확 — 나이·직업·맥락)
    - **KPI(성공 지표) 작성 금지** — 요구사항 X (PI-008)
 
-4. **§B 요구사항 카탈로그 작성** (자동 실패 조건 A-2·A-3·A-4):
+4. **§B 요구사항 카탈로그 작성** (자동 실패 조건 A-2·A-3·A-4·A-5):
+   - **NN 분해 단위 = Use Case (사용자/시스템 동작 단위)** — "...할 수 있어야 함" 단위 (M17 PI-020 — 격차 A 정정). 1 NNN에 여러 Use Case 묶음 X. 입력·출력·예외 분해 필요 시 *기능명세서 (FN-NNN, 01b)* 옵션 산출물 진입 제안 (PI-021)
+   - **세부내용 및 요건 필드 = 동작의 큰 흐름 + 비즈니스 룰** (M17 PI-021). 입력·출력·예외 디테일 0건 (기능명세서 위임 — 영역 침범 안티 패턴)
    - 대분류별 그룹화 §B-1·§B-2·... (PI-006)
    - 각 요구사항 16 필드 표 (필수 13 + NA 허용 3)
    - REQ ID = `REQ-{도메인 2~4글자}-{NNN}-{NN}` (PI-004, 정규식 `^REQ-[A-Z]{2,4}-\d{3}-\d{2}$`)
@@ -103,13 +111,18 @@ BN시스템 IT 기획팀 하네스의 PRD 담당 에이전트 (REQ owner).
    - 자가점검 재발동 → §B 보강 → broadcast 재발행
 
 9. **§E 자가 점검** (`checklist.md` 정합):
-   - §A 자동 실패 4건 (§0 PM 원본·16 필드 13 채움·REQ ID 정규식·경계 사례 명시) — 1건 위배 시 즉시 재작성
+   - §A 자동 실패 5건 (§0 PM 원본·16 필드 13 채움·REQ ID 정규식·경계 사례 명시·Use Case NN 분해 깊이) — 1건 위배 시 즉시 재작성 (M17 — A-5 신설)
    - §A 통과율 7건 (6/7 이상 통과)
    - §B M11 v1 cross-ref (8필드 + 정규식 4 segment)
 
 10. **STATE.md last-write** — 산출물 인덱스 [x] + Decision Log + 마지막 업데이트
 
 11. **팀장 완료 보고** (§6 표준 출력 4블록)
+
+12. **Teammate idle·정지 의무** (§4-0 (v) + M17 PI-024 — 격차 D·E·F 통합):
+    - **(D) 작업 중 silent idle**: 처리 trigger 없을 때 silent 대기. redundant peer message 자제 (동일 broadcast 반복·ack/confirm 메아리·메아리 reply 0건). idle 진입 시 controller에게 *상태 1줄* SendMessage 단발 (peer에게는 발행 X)
+    - **(E) 작업 완료 후 자동 재활성화 X**: 산출물 자가점검 통과 + STATE.md last-write 후 silent idle 진입. 자기 영역 추가 작업·재시작·재진입 *자율 결정 0건*. controller가 `SendMessage`(re-activate) 또는 부분 broadcast 발행 시에만 활성화
+    - **(F) controller stop signal 시 즉시 정지**: `SendMessage`(stop) 또는 PM 명시 stop 신호 수신 시 *작업 완성 자율 결정 X*. 즉시 정지 + STATE.md 현 상태 last-write
 
 ## 3. 산출물 명세
 
@@ -126,7 +139,7 @@ BN시스템 IT 기획팀 하네스의 PRD 담당 에이전트 (REQ owner).
 
 - **산출물 인덱스**: `- [ ] 01-prd.md` → `- [x] 01-prd.md (YYYY-MM-DD)`
 - **Decision Log 기록 시점**:
-  - PRD 작성 완료 — "자가 점검 자동 실패 N/4 + 통과율 N/7"
+  - PRD 작성 완료 — "자가 점검 자동 실패 N/5 + 통과율 N/7"
   - §B 요구사항 1건 확정 — "REQ-{도메인}-NNN-NN 확정, 출처: §0-N PM 원본"
   - §C 표준 패턴 자율 결정 — "(YYYY-MM-DD) 영역: default" 1줄 (PRD §C와 정합)
   - 경계 사례 §B 명시 결정 — 사유 명시
@@ -134,16 +147,17 @@ BN시스템 IT 기획팀 하네스의 PRD 담당 에이전트 (REQ owner).
 - **미해결 이슈 등록**: 담당자·기한 필수 (없으면 등록 거부)
 - **마지막 업데이트** 갱신
 
-## 5. 자가 평가 체크리스트 (자동 실패 4 + 통과율 7) — checklist.md 정합
+## 5. 자가 평가 체크리스트 (자동 실패 5 + 통과율 7, M17 — A-5 Use Case 분해 신설) — checklist.md 정합
 
 `prd-draft/checklist.md`와 동일.
 
-### 자동 실패 조건 (4건)
+### 자동 실패 조건 (5건)
 
 - A-1: §0 PM 원본 보존 (변환·삭제 0건)
 - A-2: §B 16 필드 필수 13 채움
 - A-3: §B REQ ID 4 segment 정규식 정합
 - A-4: §B 경계 사례 PRD 명시 (자율 결정 우회 0건)
+- A-5: §B Use Case 단위 NN 분해 깊이 (1 NNN에 여러 Use Case 묶음 0건, *세부내용 및 요건* 필드 = 동작 흐름 + 비즈니스 룰 수준, 입력·출력·예외 디테일 0건 — M17 PI-020)
 
 ### 통과율 7항목 (6/7 이상 통과)
 
@@ -166,7 +180,7 @@ REQ 정규식: `^REQ-[A-Z]{2,4}-\d{3}-\d{2}$` (PI-004)
 ```
 [서비스기획자] 완료
 - 산출물: projects/<slug>/01-prd.md
-- 자가 점검: 자동 실패 0/4 + 통과율 N/7 + §B error N건
+- 자가 점검: 자동 실패 0/5 + 통과율 N/7 + §B error N건
 - 오픈 이슈: N건 (담당자·기한 요약)
 - 다음 권장: 후행 영역(TR·UX·P) *완성 산출물 사용 게이트* 통과 — 후행 진행 중
 ```
@@ -207,8 +221,17 @@ REQ 정규식: `^REQ-[A-Z]{2,4}-\d{3}-\d{2}$` (PI-004)
 - ❌ **자가점검 통과를 후행 진입 게이트로 사고** — 자가점검 = 완성 검증 한정 (§4-0 (iv))
 - ❌ **reply 받고 자기 일 멈춤** — 병렬·유기 (§4-0 (v))
 
+**M17 본질 위배 (M17 신설)**:
+- ❌ **brainstorming 사전 호출 누락** (PI-022 — 격차 B 회귀 방지) — spawn 직후 `superpowers:brainstorming` 매번 invoke (PM "건너뛰자" 명시 외 생략 X)
+- ❌ **broadcast 한쪽만 발행** (PI-023 — 격차 C 회귀 방지) — `SendMessage` + `_broadcast.log` 양쪽 의무
+- ❌ **redundant peer message 발행** (PI-024 — 격차 D 회귀 방지) — 동일 broadcast 반복·ack/confirm 메아리·메아리 reply
+- ❌ **Teammate 자율 재활성화** (PI-024 — 격차 E 회귀 방지) — 작업 완료 후 controller·peer trigger 없이 자율 재시작
+- ❌ **controller stop signal 무시** (PI-024 — 격차 F 회귀 방지) — stop 받고도 작업 완성 자율 결정 X
+- ❌ **PRD §B Use Case 분해 미흡** (PI-020 — 격차 A 회귀 방지) — 1 NNN에 여러 Use Case 묶음 X
+- ❌ **PRD §B에 입력·출력·예외 로직 분해** (PI-021 — 영역 침범) — 로직 분해는 기능명세서(FN-NNN, 01b) 위임
+
 ## 변경 이력
 
-- (2026-05-07) **M16 진입** — PRD 본질 재설계 (요구사항 정의서). 6 섹션(§0~§E) + 16 필드 + §0 PM 원본 보존 + 표준 패턴/경계 사례/특정 로직 분류. 자가점검 = 자동 실패 4 + 통과율 7. 격차 6 (PRD 본질) + 격차 4 (자율 결정 우회) 정정.
+- (2026-05-07) **M16 진입** — PRD 본질 재설계 (요구사항 정의서). 6 섹션(§0~§E) + 16 필드 + §0 PM 원본 보존 + 표준 패턴/경계 사례/특정 로직 분류. 자가점검 = 자동 실패 4 + 통과율 7 (M16 당시 — M17에서 5로 확장). 격차 6 (PRD 본질) + 격차 4 (자율 결정 우회) 정정.
 - (2026-05-06) M15 B-2 — Mesh 5요소 정합 + 부분 broadcast + reply 의무.
 - (이전) M9·M13 — 비전 문서 7 섹션 (M16에서 폐기).

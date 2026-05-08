@@ -29,6 +29,17 @@ description: 기술 검토서 작성 Skill. 기술검토자가 PRD §B 요구사
 - (iv) **자가점검 = 완성 검증**: 검토서 완성 시점 1회. 후행 영역(UX·P) 진입 트리거 *아님*
 - (v) **모든 영역 병렬·유기**: reply 처리 중에도 자기 영역 다른 작업 진행 계속
 
+## §0. 사전 호출 의무 (M17 PI-022 정합 — 격차 B 정정)
+
+tech-reviewer spawn 직후 **자기 영역 산출물 작성 시작 전** 다음 의무:
+
+1. **superpowers:brainstorming 명시 invoke**
+   - PRD §B 요구사항 ID별 *아키텍처 옵션 카탈로그* 시뮬레이션 (스택 후보·아키텍처 패턴·외부 의존성 비교)
+   - 종료 산출물 = "TR-NNN별 평가 옵션 카탈로그"
+   - 본 카탈로그를 §2 요구사항 전수 평가 시작점으로 사용
+
+2. (skip 조건) PM 명시적 "건너뛰자" 지시 시만 생략. 그 외 매번 invoke (`feedback_brainstorm_first` 정합).
+
 ## 호출 절차
 
 ### 1. STATE.md + `_broadcast.log` + 01-prd.md first read (CLAUDE.md §6)
@@ -53,7 +64,7 @@ description: 기술 검토서 작성 Skill. 기술검토자가 PRD §B 요구사
 | 공수 1차 시나리오 | REQ |
 | 요구사항 1건 기술 가능성 평가 (TR-NNN 발급) | REQ·UX |
 
-발행 방식: `SendMessage`(broadcast) 또는 `_broadcast.log` 8필드 기록 (type=`broadcast`, owner=`TR`, target=`02-tech-review.md §N`)
+발행 방식: `SendMessage`(broadcast) **+** `_broadcast.log` 8필드 기록 (type=`broadcast`, owner=`TR`, target=`02-tech-review.md §N`) — **양쪽 의무** (M17 PI-023 — 격차 C 정정). 한쪽만 발행 = 안티 패턴 (CLAUDE.md §9 M17 본질 위배 정합).
 
 #### 작성 시 본질 영역
 
@@ -166,6 +177,8 @@ UX·P가 TR 산출물 모순·누락 발견하여 reply 발행한 경우:
 - ❌ 특정 로직(결제·도메인 로직) PM 질의 우회
 - ❌ 묶음 broadcast (검토서 완성 시점 1회 발행 = 격차 2 회귀)
 - ❌ 섹션 단위 인용 (`01-prd.md §N`) — REQ ID 4 segment 단위 인용만
+- ❌ **brainstorming 사전 호출 누락 금지** (M17 PI-022 — 격차 B 회귀 방지)
+- ❌ **broadcast 한쪽만 발행 금지** (M17 PI-023 — 격차 C 회귀 방지) — `SendMessage` + `_broadcast.log` 양쪽 의무
 
 ## 참조 파일
 

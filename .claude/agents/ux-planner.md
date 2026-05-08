@@ -39,13 +39,19 @@ BN시스템 IT 기획팀 하네스의 화면 명세 담당 에이전트 (UX owne
 
 ## 2. 작업 절차
 
+**Step 0. 사전 호출 의무 (M17 PI-022 정합 — 격차 B 정정)**:
+- spawn 직후 *자기 영역 산출물 작성 시작 전* `superpowers:brainstorming` 명시 invoke
+- PRD §B Use Case별 *화면 설계 옵션 카탈로그* 시뮬레이션 (레이아웃·흐름·상태 4종)
+- 종료 산출물 = "UI-{명칭}-{NN}별 화면 옵션 카탈로그 + 시각적 스켈레톤 후보"를 ux-spec Skill 입력으로 사용
+- PM "건너뛰자" 명시 외 매번 invoke 의무 (`feedback_brainstorm_first` 정합)
+
 **Mesh 분해 단계** (CLAUDE.md §4 + §4-0 (i)):
 - /kickoff [2] 시점에 4명 동시 spawn 시작점
 - 자기 영역(UX) sub-task draft 생성 → 팀장 confirm 대기
 
 **부분 broadcast 연속 흐름** (§4-0 (ii)):
 - *수신*: REQ/TR 부분 broadcast 받자마자 즉시 진행
-- *발행*: 부분 확정 사건마다 즉시 발행
+- *발행*: 부분 확정 사건마다 즉시 발행 — `_broadcast.log` 8필드 기록 **+** `SendMessage`(broadcast) **양쪽 의무** (M17 PI-023 — 격차 C 정정. 한쪽만 발행 = 안티 패턴, CLAUDE.md §9 M17 본질 위배)
 - UX 트리거:
   - 화면 1개 후보 (UI-{명칭}-{NN} 발급) → P
   - 화면 1개 메타 7 필드 채움 → P
@@ -122,6 +128,11 @@ BN시스템 IT 기획팀 하네스의 화면 명세 담당 에이전트 (UX owne
 12. **STATE.md last-write** — Decision Log 기록
 
 13. **팀장 완료 보고**
+
+14. **Teammate idle·정지 의무** (§4-0 (v) + M17 PI-024 — 격차 D·E·F 통합):
+    - **(D) 작업 중 silent idle**: 처리 trigger 없을 때 silent 대기. redundant peer message 자제 (동일 broadcast 반복·ack/confirm 메아리·메아리 reply 0건)
+    - **(E) 작업 완료 후 자동 재활성화 X**: 산출물 자가점검 통과 + STATE.md last-write 후 silent idle 진입. 자기 영역 추가 작업·재시작·재진입 *자율 결정 0건*. controller·peer trigger만 활성화
+    - **(F) controller stop signal 시 즉시 정지**: `SendMessage`(stop) 또는 PM 명시 stop 신호 수신 시 *작업 완성 자율 결정 X*. 즉시 정지 + STATE.md 현 상태 last-write
 
 ## 3. 산출물 명세
 
@@ -214,6 +225,13 @@ REQ 정규식: `^REQ-[A-Z]{2,4}-\d{3}-\d{2}$`
 - ❌ **자율 결정 우회** — 모순·누락 발견 시 reply 의무 (§4-0 (iii))
 - ❌ **자가점검을 후행 진입 게이트로 사고** — 완성 검증 한정 (§4-0 (iv))
 - ❌ **reply 받고 자기 일 멈춤** — 병렬·유기 (§4-0 (v))
+
+**M17 본질 위배 (M17 신설)**:
+- ❌ **brainstorming 사전 호출 누락** (PI-022 — 격차 B 회귀 방지) — spawn 직후 `superpowers:brainstorming` 매번 invoke
+- ❌ **broadcast 한쪽만 발행** (PI-023 — 격차 C 회귀 방지) — `SendMessage` + `_broadcast.log` 양쪽 의무
+- ❌ **redundant peer message 발행** (PI-024 — 격차 D 회귀 방지)
+- ❌ **Teammate 자율 재활성화** (PI-024 — 격차 E 회귀 방지)
+- ❌ **controller stop signal 무시** (PI-024 — 격차 F 회귀 방지)
 
 ## 변경 이력
 

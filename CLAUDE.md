@@ -38,14 +38,14 @@
 
 | 플러그인 | 분류 | 역할 |
 |----------|------|------|
-| **Superpowers** | Claude 내부 스킬 (프로세스) | 브레인스토밍·계획 수립·디버깅 등 — 자동 적용 |
+| **Superpowers** | Claude 내부 스킬 (프로세스) | 브레인스토밍 (service-planner / tech-reviewer / ux-planner spawn 시 자동 invoke / publisher 의무 X — UX 명세 매핑 본질, M17 PI-022) · 계획 수립 · 디버깅 등 |
 | **gstack** | Claude 내부 스킬 (브라우저/QA) | 헤드리스 브라우저·QA 테스트·디자인 검증 — 필요 시 호출 |
 | **Codex** | 외부 리뷰 엔진 (OpenAI) | 산출물·설계·코드 리뷰 — Claude 토큰 미소모, **advisory** |
 
 ### 사이클 구조
 
 ```
-① Superpowers 브레인스토밍 (자동)
+① Superpowers 브레인스토밍 (3 영역 자동 invoke / publisher 의무 X — M17 PI-022)
        ↓
    PM 승인 (도메인/비즈니스 렌즈)
    Codex 리뷰 (구조/논리 렌즈)       ← 게이트 A (advisory)
@@ -104,7 +104,7 @@
 | (ii) | **부분 broadcast = 연속 흐름** | 부분 확정 사건(WHY/페르소나/Must 1개/기능 1개 등)마다 즉시 broadcast 발행. 묶음 broadcast 금지 |
 | (iii) | **양방향 reply = 그래프** | 임의 영역 ↔ 임의 영역 SendMessage peer-to-peer + multi-hop. 후행이 선행 모순·누락 발견 시 *자율 결정 금지* — reply 의무 |
 | (iv) | **자가점검 = 완성 검증** | 산출물 완성·수정 시 1회. 후행 영역 진입 게이트 아님. 후행은 부분 broadcast마다 즉시 진행 |
-| (v) | **모든 영역 병렬·유기** | 각 영역은 자기 일 진행 계속. reply 흐름과 무관한 작업 멈춤 X. 진행 상황 표에 "대기" 컬럼 사용 금지 |
+| (v) | **모든 영역 병렬·유기 + Teammate idle·정지 의무 통합** | 각 영역은 자기 일 진행 계속. reply 흐름과 무관한 작업 멈춤 X. 진행 상황 표에 "대기" 컬럼 사용 금지. **idle·stop 본질 통합** (active work + idle·stop 양쪽 정의, M17 PI-024): (D) 작업 중 silent idle — redundant peer message 자제 (동일 broadcast 반복·ack/confirm 메아리·메아리 reply 0건) / (E) 작업 완료 후 자동 재활성화 X — 자기 영역 추가 작업·재시작 자율 결정 0건. controller·peer trigger만 활성화 / (F) controller stop signal 시 즉시 정지 — 작업 완성 자율 결정 X |
 
 5차 신뢰성 보장 (§10): 본 5요소가 §4 정의 본질이며, 격차 발생 시 본 5요소를 기준으로 자기 검증한다. 위배는 *모든 시점*에 발현 가능 (spawn / 작업 / 시각화 / 보고 / 진단 / 옵션 / 표 / reply / broadcast).
 
@@ -152,6 +152,7 @@ PM 입력 (/kickoff <고객사> <프로젝트명> [PM])
 - **부분 broadcast = 연속 흐름** (§4-0 (ii)): 부분 확정 사건마다 *즉시* 발행. 묶음 broadcast 금지. 영역별 트리거 카탈로그는 각 Skill SKILL.md / 에이전트 정의 §2 작업 절차에 inline 명시 (외부 카탈로그 파일 부재 — M16 정합)
 - **양방향 reply = peer-to-peer + multi-hop** (§4-0 (iii)): 임의 영역 ↔ 임의 영역. 후행이 선행 모순·누락 발견 시 *자율 결정 금지*. SendMessage(선행 owner) reply 발행 → 선행 자가점검 재발동 (M11) → 보강 → broadcast 재발행. 연쇄 reply 가능 (multi-hop)
 - **자가점검 = 완성 검증** (§4-0 (iv)): 산출물 완성 시점 1회 (수정 시 재발동). 후행 영역 진입 트리거 X
+- **broadcast 양쪽 의무** (M17 PI-023 신설): 모든 broadcast 발행은 `SendMessage`(broadcast) **+** `_broadcast.log` 8필드 기록 — **양쪽 의무**. `_broadcast.log` = 영구 기록 (M11 evidence·M9-5 cross-ref·디버깅 추적) / `SendMessage` = 실시간 통지 (peer Teammate 즉시 reply trigger). 한쪽만 발행 = 안티 패턴 (§9 M17 본질 위배). 영역별 발행 방식 디테일은 Skill SKILL.md §3 부분 broadcast 트리거 표에 명시.
 - **broadcast 로그**: `_broadcast.log` 별도 운영 (회전 정책 v1.1 이관 — `_FOLLOWUP.md` ③)
 
 ### 병렬 허용
@@ -304,7 +305,7 @@ CLAUDE.md / AGENTS.md               # 헌법 + Codex 정의
 1. **선행 조건 체크**: 모든 에이전트는 작업 시작 전 `STATE.md`를 **first read**한다.
 
 2. **선행 산출물 *완성* 사용 게이트** (§4-0 (iv) 정합 — 후행 *진입* 게이트 아님, M16 갱신):
-   - 기술검토자가 PRD를 *완성된 산출물로 사용*하는 시점: PRD §A 자동 실패 0/4 + 통과율 ≥ 6/7 + §B error 0
+   - 기술검토자가 PRD를 *완성된 산출물로 사용*하는 시점: PRD §A 자동 실패 0/5 + 통과율 ≥ 6/7 + §B error 0 (M17 — A-5 Use Case 분해 신설)
    - UX기획자가 PRD/Tech를 *완성된 산출물로 사용*하는 시점: PRD 통과 + Tech §A ≥ 4/5 + §B error 0
    - 퍼블리셔가 03을 *완성된 산출물로 사용*하는 시점: 03 자동 실패 0/3 + 통과율 ≥ 3/4 + UI 확정 broadcast 수신
    - (퍼블리셔 `assets/` 골격은 UI broadcast 무관 선행 가능 — §4-0 (v))
@@ -321,6 +322,7 @@ CLAUDE.md / AGENTS.md               # 헌법 + Codex 정의
      - 퍼블리셔: **화면 가감 결정 금지** (UX 명세 그대로 매핑) · 비주얼 디자인 시안 결정 금지
      - 노션관리자: 산출물 내용 편집 금지 (동기화만)
      - 모든 영역: 다른 영역의 산출물 파일 직접 수정 금지
+     - 모든 영역 (Teammate): **자율 재활성화·자율 작업 진행 금지** (M17 PI-024) — 작업 완료 후 controller·peer trigger 없이 자기 영역 자율 재시작·재진입 결정 X. controller stop signal 발행 시 즉시 정지 (작업 완성 자율 결정 X)
    - **협업 의무 (M15 신설)**:
      - 후행 영역이 선행 산출물에서 *명시 없음 / 모순 / 누락* 발견 시 **자율 결정 금지** — reply 발행 의무
      - reply 경로: SendMessage(선행 owner) peer-to-peer. controller 경유 PM 확인 우회 가능 (§10 ask 권한 한계 시)
@@ -443,6 +445,15 @@ broadcast 발행·수신 이벤트 + M11 자가 점검 결과를 8필드 형식�
 - ❌ **자가점검을 후행 진입 게이트로 사고 금지** — 완성 검증 한정 (§4-0 (iv), 격차 3 회귀 방지)
 - ❌ **reply 받고 자기 일 멈춤 금지** — 병렬·유기 (§4-0 (v))
 
+**M17 본질 위배 (M17 신설)**:
+- ❌ **broadcast 한쪽만 발행 금지** (PI-023 — 격차 C 회귀 방지) — `SendMessage` + `_broadcast.log` 양쪽 발행 필수. 한쪽만 = 영구 기록 누락 또는 실시간 통지 누락
+- ❌ **redundant peer message 발행 금지** (PI-024 — 격차 D 회귀 방지) — 동일 broadcast 반복·ack/confirm 메아리·의미 없는 reply
+- ❌ **Teammate 자동 재활성화 금지** (PI-024 — 격차 E 회귀 방지) — 작업 완료 후 controller·peer trigger 없이 자율 재시작
+- ❌ **controller stop signal 무시 금지** (PI-024 — 격차 F 회귀 방지) — 4 Teammate가 stop 받고도 작업 완성 자율 결정 X. 즉시 정지
+- ❌ **brainstorming 사전 호출 누락 금지** (PI-022 — 격차 B 회귀 방지) — service-planner / tech-reviewer / ux-planner spawn 시 brainstorming 자동 invoke 의무 위배
+- ❌ **PRD §B Use Case 단위 분해 깊이 미흡 금지** (PI-020 — 격차 A 회귀 방지) — NN 단위 사용자/시스템 동작 분해 0건 / NNN 단일 묶음
+- ❌ **PRD §B에 입력·출력·예외 로직 분해 금지** (PI-021 — 영역 침범) — 로직 분해는 기능명세서(FN-NNN, 01b) 위임
+
 ## 10. 에스컬레이션 규칙
 
 ### 사용자 확인 없이 진행 금지
@@ -451,6 +462,7 @@ broadcast 발행·수신 이벤트 + M11 자가 점검 결과를 8필드 형식�
 - 이미 "종료" 단계 프로젝트의 STATE.md 수정
 - Decision Log 과거 항목 수정/삭제
 - `.mcp.json` · settings.json 수정 (settings.json `deny` + PreToolUse 훅 BLOCKED)
+- 팀 에이전트 spawn (`Agent` 도구 / `TeamCreate` / `TaskCreate`) — `/kickoff` [2] Mesh 분해 외 시점은 PM 명시 승인 필수 (단일 대화 모드 보호)
 
 ### 블로커 발생 시 에이전트 행동
 1. 작업 중단

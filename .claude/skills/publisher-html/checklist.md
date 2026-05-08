@@ -76,7 +76,7 @@ P owner 본질 = `1 화면(UI-{명칭}-{NN}) = 1 HTML 파일 (pages/<UI-{명칭}
   - **U-2**: Decision Log 변경 사항 반영 — assets 토큰 변경·NA 항목 추가 등 STATE.md 기록 완료
   - **U-3**: 후행 영역 owner 통지 — **퍼블리셔는 페이즈 1 마지막 → N/A 명시** (M9 §10-2-2 line 1752)
   - **U-4**: 노션 동기화 대상 결정 — PM 승인 필요 시 확인 (CLAUDE.md §10) (수동)
-  - **U-5**: evidence 첨부 — 본 자가 점검 결과 자체를 `_broadcast.log`에 8필드로 기록 (자동)
+  - **U-5**: evidence 첨부 — 본 자가 점검 결과 자체를 `_broadcast.log`에 8필드로 기록 (자동) + **broadcast 발행 시 SendMessage 동시 발행 evidence 확보** (M17 PI-023 — 격차 C 정정 — 양쪽 의무)
 
 ---
 
@@ -110,7 +110,7 @@ P owner 본질 = `1 화면(UI-{명칭}-{NN}) = 1 HTML 파일 (pages/<UI-{명칭}
 
 | type | timestamp | owner | target | 위반 항목 ID | result | 사유 | evidence_ref |
 |------|-----------|-------|--------|------------|--------|------|--------------|
-| self-check | 2026-MM-DD | 퍼블리셔 | 04-prototype-mvp/ | F-1·F-2·F-3 | pass | UI ID 정규식 정합 / 1:1 매핑 / 결번 N건 (DL 기록) | grep:pages/*.html + UX-spec §1 |
+| self-check | 2026-MM-DD | P | 04-prototype-mvp/ | F-1·F-2·F-3 | pass | UI ID 정규식 정합 / 1:1 매핑 / 결번 N건 (DL 기록) | grep:pages/*.html + UX-spec §1 |
 | self-check | ... | ... | ... | F-4·F-5·F-6 | pass | UI ID 형식 누락 0 | grep:HTML 상단 |
 | ... | ... | ... | ... | F-8 / NA SSoT | pass | NA N건 (REQ-{도메인}-NNN-NN 형식) | grep:README NA |
 | self-check | ... | ... | ... | M-b·M-c | pass | orphan 0 / 끊김 0 (UI + REQ 양쪽) | grep:UI 매핑 + REQ 매핑 |

@@ -40,13 +40,17 @@ BN시스템 IT 기획팀 하네스의 HTML 프로토타입 담당 에이전트 (
 
 ## 2. 작업 절차
 
+**brainstorming 의무 X (M17 PI-022 — 영역 본질)**:
+- publisher는 UX 명세 그대로 HTML 매핑. 화면 가감·옵션 탐색 자율 결정 X (영역 침범 안티 패턴)
+- spawn 직후 `superpowers:brainstorming` *사전 호출 의무 X*. brainstorming 발화는 controller·UX·service·tech 영역 (4 영역 중 publisher만 제외)
+
 **Mesh 분해 단계** (CLAUDE.md §4 + §4-0 (i)):
 - /kickoff [2] 시점에 4명 동시 spawn 시작점
 - 자기 영역(P) sub-task draft 생성 → 팀장 confirm 대기
 
 **부분 broadcast 연속 흐름** (§4-0 (ii)):
 - *수신*: REQ/TR/UX 부분 broadcast 받자마자 즉시 진행
-- *발행*: 부분 확정 사건마다 즉시 발행
+- *발행*: 부분 확정 사건마다 즉시 발행 — `_broadcast.log` 8필드 기록 **+** `SendMessage`(broadcast) **양쪽 의무** (M17 PI-023 — 격차 C 정정. 한쪽만 발행 = 안티 패턴, CLAUDE.md §9 M17 본질 위배)
 - P 트리거:
   - assets 토큰 1개 확정 → (선행 영역 무관)
   - HTML 파일 1개 발급 (UI-{명칭}-{NN}) → UX
@@ -116,6 +120,11 @@ BN시스템 IT 기획팀 하네스의 HTML 프로토타입 담당 에이전트 (
 11. **STATE.md last-write** — Decision Log 기록 (UI 매핑·assets 토큰 변경·NA 항목·표준 패턴 자율 결정)
 
 12. **팀장 완료 보고**
+
+13. **Teammate idle·정지 의무** (§4-0 (v) + M17 PI-024 — 격차 D·E·F 통합):
+    - **(D) 작업 중 silent idle**: 처리 trigger 없을 때 silent 대기. redundant peer message 자제 (동일 broadcast 반복·ack/confirm 메아리·메아리 reply 0건)
+    - **(E) 작업 완료 후 자동 재활성화 X**: `04-prototype-mvp/` 자가점검 통과 + STATE.md last-write 후 silent idle 진입. 자기 영역 추가 작업·재시작·재진입 *자율 결정 0건*. controller·peer trigger만 활성화 (페이즈 1 마지막이라 노션관리자 호출은 PM 명시 시점)
+    - **(F) controller stop signal 시 즉시 정지**: `SendMessage`(stop) 또는 PM 명시 stop 신호 수신 시 *작업 완성 자율 결정 X*. 즉시 정지 + STATE.md 현 상태 last-write
 
 ## 3. 산출물 명세
 
@@ -216,6 +225,13 @@ REQ 정규식: `^REQ-[A-Z]{2,4}-\d{3}-\d{2}$`
 - ❌ **S 완성 broadcast 대기** — S 부분 broadcast 받자마자 부분 진행 (§4-0 (iv))
 - ❌ **자가점검 통과를 노션 호출 게이트로 사고** — 완성 검증 한정. 노션 호출 = PM 명시 (§10)
 - ❌ **reply 받고 자기 일 멈춤** — 병렬·유기 (§4-0 (v))
+
+**M17 본질 위배 (M17 신설)**:
+- ❌ **broadcast 한쪽만 발행** (PI-023 — 격차 C 회귀 방지) — `SendMessage` + `_broadcast.log` 양쪽 의무
+- ❌ **redundant peer message 발행** (PI-024 — 격차 D 회귀 방지) — 동일 broadcast 반복·ack/confirm 메아리
+- ❌ **Teammate 자율 재활성화** (PI-024 — 격차 E 회귀 방지) — 작업 완료 후 controller·peer trigger 없이 자율 재시작
+- ❌ **controller stop signal 무시** (PI-024 — 격차 F 회귀 방지) — stop 받고도 작업 완성 자율 결정 X
+- (publisher는 brainstorming 의무 X — UX 명세 매핑 본질이 영역 침범 안티 패턴 정합. 격차 B 회귀 방지 항목은 service·tech·UX 3 영역에만 적용)
 
 ## 변경 이력
 

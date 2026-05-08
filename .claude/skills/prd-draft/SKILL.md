@@ -1,6 +1,6 @@
 ---
 name: prd-draft
-description: PRD(요구사항정의서) 작성 Skill. 서비스기획자가 신규 프로젝트의 요구사항을 정형화할 때 호출. 출력은 반드시 projects/<slug>/01-prd.md 경로에 생성하며, 본문은 §0 PM 원본 + §A 비전 + §B 요구사항 카탈로그(16 필드 양식) + §C 표준 패턴 + §D 오픈 이슈 + §E 자가 점검 6 섹션. 자가 점검 = §A 자동 실패 4건 + 통과율 7건 + §B M11 v1 cross-ref.
+description: PRD(요구사항정의서) 작성 Skill. 서비스기획자가 신규 프로젝트의 요구사항을 정형화할 때 호출. 출력은 반드시 projects/<slug>/01-prd.md 경로에 생성하며, 본문은 §0 PM 원본 + §A 비전 + §B 요구사항 카탈로그(16 필드 양식) + §C 표준 패턴 + §D 오픈 이슈 + §E 자가 점검 6 섹션. 자가 점검 = §A 자동 실패 5건 + 통과율 7건 + §B M11 v1 cross-ref (M17 PI-020 — A-5 Use Case 분해 신설).
 ---
 
 # prd-draft — PRD 작성 Skill (요구사항정의서)
@@ -23,6 +23,17 @@ PRD = **요구사항 정의서** (Product Requirements Document). 4 에이전트
 - (iii) **양방향 reply**: 후행 영역(TR/UX/P)에서 reply 받으면 자가점검 재발동 + 보강 + broadcast 재발행
 - (iv) **자가점검 = 완성 검증**: PRD 완성 시점 1회. 후행 영역(TR/UX/P) 진입 트리거 *아님*. 후행이 *완성 산출물 사용 시점*에만 게이트 (CLAUDE.md §6-2)
 - (v) **모든 영역 병렬·유기**: reply 처리 중에도 자기 영역 다른 작업 진행 계속
+
+## §0. 사전 호출 의무 (M17 PI-022 정합 — 격차 B 정정)
+
+service-planner spawn 직후 **자기 영역 산출물 작성 시작 전** 다음 의무:
+
+1. **superpowers:brainstorming 명시 invoke**
+   - PM과 도메인·Use Case 카탈로그 시뮬레이션 ("이 도메인에서 사용자가 무엇을 *할 수 있어야* 하는가")
+   - 종료 산출물 = "§B 등재 Use Case 카탈로그 목록" (대분류·NNN·NN 단위)
+   - 본 카탈로그를 §B 16 필드 채우기 시작점으로 사용
+
+2. (skip 조건) PM 명시적 "건너뛰자" 지시 시만 생략. 그 외 매번 invoke (`feedback_brainstorm_first` 정합).
 
 ## 호출 절차
 
@@ -68,12 +79,14 @@ PRD = **요구사항 정의서** (Product Requirements Document). 4 에이전트
 | §C 표준 패턴 자율 결정 | 전체 (참고 정보) |
 | §D 오픈 이슈 추가 | 전체 |
 
-발행 방식: `SendMessage`(broadcast) 또는 `_broadcast.log` 8필드 기록 (type=`broadcast`, owner=`REQ`, target=`PRD §N`)
+발행 방식: `SendMessage`(broadcast) **+** `_broadcast.log` 8필드 기록 (type=`broadcast`, owner=`REQ`, target=`PRD §N`) — **양쪽 의무** (M17 PI-023 — 격차 C 정정). 한쪽만 발행 = 안티 패턴 (CLAUDE.md §9 M17 본질 위배 정합).
 
 #### 작성 시 본질 영역
 
 - **§A 비전**: WHY + 1차 사용자만. **KPI(성공 지표) 작성 금지** (PI-008)
 - **§B 요구사항 카탈로그**:
+  - **NN 분해 단위 = Use Case (사용자/시스템 동작 단위)** — "...할 수 있어야 함" 단위 (M17 PI-020 — 격차 A 정정). 예: 결제 도메인에 *결제 / 결제 조회 / 결제 취소* = 3 NN. 1 NNN에 여러 Use Case 묶음 X
+  - **세부내용 및 요건 필드 = 동작의 큰 흐름 + 비즈니스 룰** (M17 PI-021). 입력·출력·예외·정합성 룰 디테일은 *기능명세서 (FN-NNN, 01b-functional-spec.md, PI-005 옵션 산출물)* 위임. service-planner는 Use Case 단위 분해만, 로직 분해는 기능명세서 영역
   - 대분류별 그룹화 §B-1·§B-2·... (PI-006)
   - 각 요구사항 = 16 필드 표 (필수 13 + NA 허용 3 — 소분류·제약사항 및 전제조건·기타사항)
   - REQ ID = `REQ-{도메인 2~4글자}-{NNN}-{NN}` 4 segment 정합 (PI-004, 정규식 `^REQ-[A-Z]{2,4}-\d{3}-\d{2}$`)
@@ -101,12 +114,13 @@ PRD 작성 중 다음 영역 발견 시 자율 결정 금지:
 
 산출물 하단 §E 섹션에 결과 기록:
 
-#### §A 자동 실패 조건 (4건 — 1건 위배 시 즉시 재작성)
+#### §A 자동 실패 조건 (5건 — 1건 위배 시 즉시 재작성)
 
 - A-1: §0 PM 원본 보존 (변환·삭제 0건)
 - A-2: §B 16 필드 필수 13 채움
 - A-3: §B REQ ID 4 segment 정규식 정합
 - A-4: §B 경계 사례 PRD 명시 (자율 결정 우회 0건)
+- A-5: §B Use Case 단위 NN 분해 깊이 (M17 PI-020 — 1 NNN에 여러 Use Case 묶음 0건, *세부내용 및 요건* 필드 = 동작 흐름 + 비즈니스 룰 수준, 입력·출력·예외 디테일 0건 — 기능명세서 위임)
 
 #### §A 통과율 7항목 (6/7 이상 통과, 5/7 이하 재작성)
 
@@ -123,7 +137,7 @@ PRD 작성 중 다음 영역 발견 시 자율 결정 금지:
 ### 7. STATE.md 갱신 (last write 원칙)
 
 - 산출물 인덱스: `- [ ] 01-prd.md` → `- [x] 01-prd.md (YYYY-MM-DD)`
-- Decision Log: "PRD 작성 (자가 점검 자동 실패 N/4 + 통과율 N/7)" 기록
+- Decision Log: "PRD 작성 (자가 점검 자동 실패 N/5 + 통과율 N/7)" 기록
 - 마지막 업데이트 갱신
 
 ## 출력 경로
@@ -136,7 +150,7 @@ PRD 작성 중 다음 영역 발견 시 자율 결정 금지:
 ```
 [서비스기획자] 완료
 - 산출물: projects/<slug>/01-prd.md
-- 자가 점검: 자동 실패 0/4 + 통과율 N/7 + §B error N건
+- 자가 점검: 자동 실패 0/5 + 통과율 N/7 + §B error N건
 - 오픈 이슈: N건 (담당자·기한 요약)
 - 다음 권장: 후행 영역(TR·UX·P) *완성 산출물 사용 게이트* 통과 — 후행 진행 중
 ```
@@ -151,11 +165,15 @@ PRD 작성 중 다음 영역 발견 시 자율 결정 금지:
 - ❌ 표준 패턴(로그인·회원가입 등) §C 기록 누락 (PI-013)
 - ❌ REQ ID 4 segment 정규식 위배 (자동 실패 A-3)
 - ❌ 묶음 broadcast (산출물 완성 시점 1회 발행 = 격차 2 회귀)
+- ❌ **PRD §B에 입력·출력·예외 로직 분해 금지** (M17 PI-021 — 영역 침범) — 로직 분해는 *기능명세서 (FN-NNN, 01b-functional-spec.md)* 옵션 산출물 위임. 필요 시 controller 경유 PM 결정 후 기능명세서 진입 제안
+- ❌ **brainstorming 사전 호출 누락 금지** (M17 PI-022 — 격차 B 회귀 방지) — spawn 직후 superpowers:brainstorming 매번 invoke (PM "건너뛰자" 명시 외 생략 X)
+- ❌ **NN 분해 깊이 미흡 금지** (M17 PI-020 — 격차 A 회귀 방지) — Use Case 단위 분해 0건 / NNN 단일 묶음
+- ❌ **broadcast 한쪽만 발행 금지** (M17 PI-023 — 격차 C 회귀 방지) — `SendMessage` + `_broadcast.log` 양쪽 의무
 
 ## 참조 파일
 
 - `template.md` — PRD 6 섹션 + 16 필드 표 구조 템플릿
-- `checklist.md` — §A 자동 실패 4 + 통과율 7 + §B M11 v1 cross-ref
+- `checklist.md` — §A 자동 실패 5 + 통과율 7 + §B M11 v1 cross-ref (M17 PI-020 — A-5 Use Case 분해 신설)
 - `CLAUDE.md` §4-0 — Mesh 본질 5요소
 - `CLAUDE.md` §6-2 — 선행 산출물 *완성* 사용 게이트 (M15 갱신)
 - `CLAUDE.md` §9 — 안티 패턴

@@ -31,6 +31,17 @@ UX기획자(UX owner)가 PRD §B 요구사항 카탈로그를 *기준 SSOT*로 �
 - (iv) **자가점검 = 완성 검증**: 명세서 완성 시점 1회. 후행(P) 진입 트리거 *아님*
 - (v) **모든 영역 병렬·유기**: reply 처리 중에도 자기 영역 다른 작업 진행 계속
 
+## §0. 사전 호출 의무 (M17 PI-022 정합 — 격차 B 정정)
+
+ux-planner spawn 직후 **자기 영역 산출물 작성 시작 전** 다음 의무:
+
+1. **superpowers:brainstorming 명시 invoke**
+   - PRD §B Use Case별 *화면 설계 옵션 카탈로그* 시뮬레이션 (레이아웃·흐름·상태 4종)
+   - 종료 산출물 = "UI-{명칭}-{NN}별 화면 옵션 카탈로그 + 시각적 스켈레톤 후보"
+   - 본 카탈로그를 화면 메타 7 필드 + 시각적 스켈레톤 + Description 작성 시작점으로 사용
+
+2. (skip 조건) PM 명시적 "건너뛰자" 지시 시만 생략. 그 외 매번 invoke (`feedback_brainstorm_first` 정합).
+
 ## 호출 절차
 
 ### 1. STATE.md + `_broadcast.log` + 01-prd.md + 02-tech-review.md first read
@@ -58,7 +69,7 @@ UX기획자(UX owner)가 PRD §B 요구사항 카탈로그를 *기준 SSOT*로 �
 | 빈/에러/로딩 자동 실패 발견 | REQ/TR |
 | S 확정 (모든 화면 + 4상태 완료) | P (완성 broadcast — 부분 broadcast 누적 결과) |
 
-발행 방식: `SendMessage`(broadcast) 또는 `_broadcast.log` 8필드 기록 (type=`broadcast`, owner=`UX`, target=`UI-{명칭}-{NN}`)
+발행 방식: `SendMessage`(broadcast) **+** `_broadcast.log` 8필드 기록 (type=`broadcast`, owner=`UX`, target=`UI-{명칭}-{NN}`) — **양쪽 의무** (M17 PI-023 — 격차 C 정정). 한쪽만 발행 = 안티 패턴 (CLAUDE.md §9 M17 본질 위배 정합).
 
 #### 작성 시 본질 영역
 
@@ -156,6 +167,8 @@ P가 UX 산출물 모순·누락 발견하여 reply 발행한 경우:
 - ❌ **묶음 broadcast** (UI 확정 broadcast 1회 = 격차 2 회귀)
 - ❌ **기술검토 *불가능* 컴포넌트 사용** (기술 제약 무시 = 스프린트 폭파)
 - ❌ **빈/에러/로딩 상태 누락** (자동 실패 조건 A-3)
+- ❌ **brainstorming 사전 호출 누락 금지** (M17 PI-022 — 격차 B 회귀 방지)
+- ❌ **broadcast 한쪽만 발행 금지** (M17 PI-023 — 격차 C 회귀 방지) — `SendMessage` + `_broadcast.log` 양쪽 의무
 
 ## 참조 파일
 

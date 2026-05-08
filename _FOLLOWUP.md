@@ -135,6 +135,9 @@ v1 운영 시행착오 누적 후 정련. 임계값·정책은 잠정값으로 �
 - **M11 owner별 자가 점검 운영 학습** (false positive·항목 정련)
 - **M14 헌법 변경 4블록 형식 운영 검증** (2026-05-06 M14 신설) — §11 4블록 형식 + §6-6 도구 인지 사전 검증 + §10 헌법 변경 절대 규칙 + settings.json PreToolUse NOTICE hook. 본 세션 4차 잘못 패턴(자의적 헌법 다운그레이드/교체) 회귀 발생률 추적. 4블록 형식 누락·우회 사례 발견 시 본 항목 갱신
 - **M14 Agent Teams 적용 운영 검증** (2026-05-06 M14 신설) — §4-11 매핑(4명 Teammates + 노션관리자 별도) 운영 시행착오 추적. TaskList 공유 부담·SendMessage 양방향 reply 실효성·draft↔정식 단계 전환 비용 등
+- **M17 6건 격차 정정 운영 검증** (2026-05-08 M17 신설) — PI-020~PI-025 6 본질 정합 (Gap A PRD §B Use Case 분해 / B brainstorming 자동 발화 / C broadcast 양쪽 의무 / D·E·F Teammate idle·정지 의무 통합). 멘사 v3 검증 sub-step에서 6건 격차 해소 확인. 새 격차 발견 시 본 항목 갱신
+- **M17 idle·stop hook 보강 검토** (2026-05-08 M17 신설 — v1.1 이관) — D·E·F 통합 정정이 명문화 + 에이전트 §2 명시로 적용됨. Teammate 행동 의무는 hook 강제 어려움 (Teammate 내부 결정 검증 불가). 운영 시행착오 누적 시 v1.1+ idle/stop hook 보강 검토 (`PostToolUse on Write/Edit` matcher — 산출물 작성 직후 stderr REMINDER 등)
+- **M17 PreToolUse on Agent matcher subagent_type 동작 검증** (2026-05-08 M17 신설) — 한글명 매처 (`서비스기획자|기술검토자|UX기획자`) + grep 패턴 강화 (`\s*:\s*`) 적용. 멘사 v3 검증 시 실 발화 동작 확인. JSON 포맷 변화 시 grep 취약성은 v1.1+ jq·yq 등 구조 파싱 도입 검토 영역
 
 ## ④ 폐기
 

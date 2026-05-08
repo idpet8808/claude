@@ -104,7 +104,7 @@ UX기획자: 03 보강 → "UI-Member_Detail-03 그리드 확정" broadcast(P)
 - 각 Teammate는 자기 산출물 *완성 시점* 자가점검 1회 (수정 시 재발동)
 - 8필드 형식 (M11 v1) — `_broadcast.log` 기록 (`type=self-check`)
 - 통과율 산정 (M16 정합):
-  - **PRD**: §A 자동 실패 4건 (§0 PM 원본·16 필드 13 필수·REQ ID 정규식·경계 사례 명시) + 통과율 7건 (6/7 이상)
+  - **PRD**: §A 자동 실패 5건 (§0 PM 원본·16 필드 13 필수·REQ ID 정규식·경계 사례 명시·Use Case NN 분해 — M17 A-5 신설) + 통과율 7건 (6/7 이상)
   - **TR**: §A 5항목 (요구사항 ID 단위 평가·리스크 완화책·공수 3시나리오·외부 의존성·REQ 4 segment 인용)
   - **UX**: §A 자동 실패 3건 (메타 7 필드·UI ID 정규식·4상태) + 통과율 4건 (스켈레톤·Description·요구사항 ID 매핑·기술 제약)
   - **P**: 7항목 + 자동 실패 3건 (HTML 상단 주석·NA 형식·P-NNN 사용)
@@ -151,7 +151,7 @@ CLAUDE.md §11 표준 출력 4블록 준수:
 [팀장] 신규 프로젝트 착수 완료
 - 산출물: projects/<slug>/{01-prd.md, 02-tech-review.md, 03-ux-spec.md, 04-prototype-mvp/}
 - 자가 점검 요약 (M16):
-  - PRD: 자동 실패 N/4 + 통과율 N/7
+  - PRD: 자동 실패 N/5 + 통과율 N/7 (M17 — A-5 Use Case 분해 신설)
   - Tech: §A N/5
   - UX: 자동 실패 N/3 + 통과율 N/4
   - P: N/7 (자동 실패 N/3)
@@ -175,7 +175,7 @@ CLAUDE.md §11 표준 출력 4블록 준수:
 | [2] Mesh 분해 | 4명 동시 spawn 완료 | TeamCreate + TaskCreate 4건 + Agent spawn 4명 모두 성공 (한 메시지 내) | spawn 실패 시 재시도 또는 PM 보고. `check-mesh-spawn` hook NOTICE 발화 시 즉시 재시도 |
 | [3] 팀장 confirm | 정식 산출물 진입 신호 | 4 draft Task + 매핑·트리거 정합 확인 | confirm 미통과 시 spawn 1회 재시도 |
 | [4] 병렬 진행 | 4 산출물 완성 자가점검 | 각 산출물 자가점검 통과 + broadcast/reply 흐름 정상 (`_broadcast.log` 추적) | 자가점검 미통과 시 재발동 (M11). 재시도 3회 연속 미달 시 PM 보고 (§10) |
-| [4] 산출물 *사용* 게이트 | 후행이 선행을 완성 산출물로 사용하는 시점 | PRD 자동 실패 0/4 + 통과율 ≥ 6/7 / Tech §A ≥ 4/5 / UX 자동 실패 0/3 + 통과율 ≥ 3/4 + UI 확정 broadcast | 부분 broadcast/reply 흐름은 게이트 무관 (§4-0 (iv)) |
+| [4] 산출물 *사용* 게이트 | 후행이 선행을 완성 산출물로 사용하는 시점 | PRD 자동 실패 0/5 + 통과율 ≥ 6/7 (M17 — A-5 Use Case 분해 신설) / Tech §A ≥ 4/5 / UX 자동 실패 0/3 + 통과율 ≥ 3/4 + UI 확정 broadcast | 부분 broadcast/reply 흐름은 게이트 무관 (§4-0 (iv)) |
 | [5] 노션관리자 | PM 명시 호출 | 4 산출물 완성 + PM 결정 | PM 보류 시 [5] 생략 |
 
 **자가점검 게이트는 후행 영역 *진입* 게이트가 아님** — 산출물 *완성 사용 시점* 게이트 (§4-0 (iv) + §6-2).
