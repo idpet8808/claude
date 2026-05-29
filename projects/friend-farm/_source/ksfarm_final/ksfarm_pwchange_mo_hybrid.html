@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KS팜 — 비밀번호 변경</title>
+<style>
+  :root {
+    --bg: #ECEAE0; --card: #FFFFFF; --ink: #20251D; --ink-2: #45493E; --gray: #76796C;
+    --line: rgba(48,42,30,.10);
+    --field-bg: #F4F4EF;
+    --green: #1F4B3C; --green-2: #163729; --green-soft: #E7EEE6;
+    --red: #B0612C;
+    --r-lg: 18px; --r-md: 14px;
+    --shadow: 0 1px 2px rgba(36,30,18,.05);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  button, input { font-family: inherit; }
+  a, button { color: inherit; text-decoration: none; background: none; border: 0; cursor: pointer; }
+  h1,h2,h3,p,span,a,label { word-break: keep-all; }
+  body {
+    background: #D8D5C9;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Pretendard", "Noto Sans KR", system-ui, sans-serif;
+    color: var(--ink); -webkit-font-smoothing: antialiased;
+    display: flex; justify-content: center; padding: 24px 0 40px;
+  }
+  .ic { width: 1em; height: 1em; display: inline-block; vertical-align: -0.12em; flex-shrink: 0; }
+
+  .phone {
+    position: relative; width: min(390px, 100%);
+    background: var(--bg); border-radius: 30px; overflow: hidden;
+    box-shadow: 0 18px 44px -12px rgba(40,34,22,.42);
+    height: 820px;
+  }
+
+  /* dimmed backdrop (회원정보 수정 화면 힌트) */
+  .backhint { position: absolute; inset: 0; padding: 52px 20px; pointer-events: none; }
+  .bh-field { background: #fff; border-radius: var(--r-md); padding: 9px 14px; margin-bottom: 14px; opacity: .5; }
+  .bh-field .l { font-size: 11px; color: var(--gray); font-weight: 700; }
+  .bh-field .v { font-size: 15px; font-weight: 600; margin-top: 4px; }
+  .scrim { position: absolute; inset: 0; background: rgba(24,20,12,.5); z-index: 5; }
+
+  /* bottom sheet */
+  .sheet {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    background: var(--bg); z-index: 10;
+    border-top-left-radius: 24px; border-top-right-radius: 24px;
+    box-shadow: 0 -10px 30px -8px rgba(36,30,18,.28);
+    padding: 10px 22px calc(22px + env(safe-area-inset-bottom));
+  }
+  .handle { width: 40px; height: 4px; border-radius: 999px; background: rgba(48,42,30,.16); margin: 4px auto 14px; }
+
+  .sheet-head { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; }
+  .sheet-title { font-size: 19px; font-weight: 800; letter-spacing: -0.022em; line-height: 1.34; }
+  .sheet-close { width: 32px; height: 32px; display: grid; place-items: center; color: var(--ink-2); margin: -2px -4px 0 0; }
+  .sheet-close .ic { font-size: 21px; }
+
+  /* field (회원정보 수정과 동일 토스식) */
+  .field { margin-bottom: 14px; }
+  .field .lab { display: block; font-size: 13px; font-weight: 700; color: var(--ink-2); margin-bottom: 8px; padding-left: 2px; letter-spacing: -0.01em; }
+  .field .box {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--field-bg); border: 1.5px solid transparent; border-radius: var(--r-md);
+    padding: 0 14px; height: 52px; transition: border-color .12s, background .12s, box-shadow .12s;
+  }
+  .field .inp {
+    flex: 1; width: 100%; border: 0; background: transparent; padding: 0;
+    font-size: 16px; font-weight: 600; color: var(--ink); letter-spacing: -0.014em; outline: none;
+  }
+  .field .inp::placeholder { color: #ADAFa4; font-weight: 500; letter-spacing: -0.01em; }
+  .field .box:focus-within { background: var(--card); border-color: var(--green); box-shadow: 0 0 0 3px rgba(31,75,60,.10); }
+  .eye { width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center; color: var(--gray); flex: 0 0 26px; }
+  .eye .ic { font-size: 18px; }
+
+  .hint { font-size: 11.5px; color: var(--gray); margin: 0 2px 0; line-height: 1.5; display: flex; align-items: center; gap: 5px; }
+  .hint .ic { font-size: 13px; color: #A9AC9F; }
+
+  /* error state (간단 구현) */
+  .field .box.err { border-color: var(--red); background: var(--card); }
+  .err-msg { display: none; font-size: 11.5px; color: var(--red); font-weight: 600; margin: 6px 2px 0; padding-left: 2px; }
+  .field.show-err .err-msg { display: block; }
+  .field.show-err .hint { display: none; }
+
+  .sheet-foot { margin-top: 22px; }
+  .btn-save { width: 100%; height: 54px; border-radius: var(--r-md); color: #fff; font-size: 15.5px; font-weight: 800; letter-spacing: -0.01em;
+    background: linear-gradient(180deg, #2C6150 0%, var(--green) 52%, var(--green-2) 100%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 8px 18px -8px rgba(22,55,41,.5); }
+</style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.9 5.1A9.6 9.6 0 0 1 12 5c6.5 0 10 7 10 7a16 16 0 0 1-3 3.7M6.6 6.6A16 16 0 0 0 2 12s3.5 7 10 7a9.5 9.5 0 0 0 4.4-1.1"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/><line x1="3" y1="3" x2="21" y2="21"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><circle cx="12" cy="7.6" r="0.6" fill="currentColor"/></symbol>
+  </defs></svg>
+
+  <div class="phone">
+    <!-- backdrop hint -->
+    <div class="backhint" aria-hidden="true">
+      <div class="bh-field"><div class="l">이메일</div><div class="v">summertoohotplzstop@gmail.com</div></div>
+      <div class="bh-field"><div class="l">닉네임</div><div class="v">utii</div></div>
+    </div>
+    <div class="scrim"></div>
+
+    <!-- bottom sheet -->
+    <section class="sheet" aria-label="비밀번호 변경">
+      <div class="handle"></div>
+      <div class="sheet-head">
+        <h2 class="sheet-title">비밀번호를<br>변경해 주세요</h2>
+        <button class="sheet-close" aria-label="닫기"><svg class="ic"><use href="#i-x"/></svg></button>
+      </div>
+
+      <div class="field">
+        <label class="lab" for="pw-cur">현재 비밀번호</label>
+        <div class="box"><input class="inp" id="pw-cur" type="password" placeholder="현재 비밀번호 입력" /><button class="eye" aria-label="비밀번호 표시"><svg class="ic"><use href="#i-eye"/></svg></button></div>
+      </div>
+
+      <div class="field" id="field-new">
+        <label class="lab" for="pw-new">새 비밀번호</label>
+        <div class="box"><input class="inp" id="pw-new" type="password" placeholder="새 비밀번호 입력" /><button class="eye" aria-label="비밀번호 표시"><svg class="ic"><use href="#i-eye"/></svg></button></div>
+        <p class="err-msg">영문·숫자·특수문자 포함 8~20자로 입력해 주세요.</p>
+      </div>
+
+      <div class="field" id="field-cfm">
+        <label class="lab" for="pw-cfm">비밀번호 확인</label>
+        <div class="box"><input class="inp" id="pw-cfm" type="password" placeholder="새 비밀번호 재입력" /><button class="eye" aria-label="비밀번호 표시"><svg class="ic"><use href="#i-eye"/></svg></button></div>
+        <p class="err-msg">비밀번호가 일치하지 않아요.</p>
+      </div>
+
+      <p class="hint"><svg class="ic"><use href="#i-info"/></svg> 영문·숫자 포함 8자 이상으로 설정해 주세요.</p>
+
+      <div class="sheet-foot">
+        <button class="btn-save">비밀번호 변경</button>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // 눈 토글
+    document.querySelectorAll('.eye').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var inp = btn.parentElement.querySelector('.inp');
+        var use = btn.querySelector('use');
+        if (!inp || !use) return;
+        if (inp.type === 'password') { inp.type = 'text'; use.setAttribute('href', '#i-eye-off'); }
+        else { inp.type = 'password'; use.setAttribute('href', '#i-eye'); }
+      });
+    });
+
+    // 간단 유효성 검사 (개발 구현은 별도, 여기선 표현 데모)
+    var btnSave = document.querySelector('.btn-save');
+    var fNew = document.getElementById('field-new');
+    var fCfm = document.getElementById('field-cfm');
+    var iNew = document.getElementById('pw-new');
+    var iCfm = document.getElementById('pw-cfm');
+    var rule = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,20}$/;
+    function setErr(field, on){
+      field.classList.toggle('show-err', on);
+      field.querySelector('.box').classList.toggle('err', on);
+    }
+    if (btnSave) btnSave.addEventListener('click', function(){
+      var okNew = rule.test(iNew.value);
+      var okCfm = iCfm.value !== '' && iCfm.value === iNew.value;
+      setErr(fNew, !okNew);
+      setErr(fCfm, !okCfm);
+      if (okNew && okCfm) { /* 통과: 실제 변경은 개발에서 처리 */ }
+    });
+    [iNew, iCfm].forEach(function(inp){
+      inp.addEventListener('input', function(){
+        var field = inp.closest('.field');
+        if (field.classList.contains('show-err')) setErr(field, false);
+      });
+    });
+  </script>
+</body>
+</html>

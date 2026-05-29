@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KS팜 — 병해진단</title>
+<style>
+  :root {
+    --bg: #ECEAE0; --card: #FFFFFF; --ink: #20251D; --ink-2: #45493E; --gray: #76796C;
+    --line: rgba(48,42,30,.08); --field-bg: #F4F4EF;
+    --green: #1F4B3C; --green-2: #163729; --green-soft: #E7EEE6;
+    --sage: #2F6150; --gold: #B08A3E; --clay: #B0612C;
+    --r-lg: 18px; --r-md: 14px; --shadow: 0 1px 2px rgba(36,30,18,.05);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  button, input, textarea { font-family: inherit; }
+  a, button { color: inherit; text-decoration: none; background: none; border: 0; cursor: pointer; }
+  h1,h2,h3,p,span,a,label { word-break: keep-all; }
+  body {
+    background: #D8D5C9;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Pretendard", "Noto Sans KR", system-ui, sans-serif;
+    color: var(--ink); -webkit-font-smoothing: antialiased;
+    display: flex; justify-content: center; padding: 24px 0 40px;
+  }
+  .ic { width: 1em; height: 1em; display: inline-block; vertical-align: -0.12em; flex-shrink: 0; }
+
+  .phone {
+    position: relative; width: min(390px, 100%); background: var(--bg);
+    border-radius: 30px; overflow: hidden;
+    box-shadow: 0 18px 44px -12px rgba(40,34,22,.42); min-height: 860px;
+    display: flex; flex-direction: column;
+  }
+  .status-bar { height: 44px; display: flex; align-items: center; justify-content: space-between; padding: 0 22px; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .status-bar .group { display: inline-flex; gap: 6px; align-items: center; }
+
+  .appbar { display: flex; align-items: center; padding: 4px 12px 0; flex-shrink: 0; }
+  .appbar .back { width: 38px; height: 38px; display: grid; place-items: center; color: var(--ink); }
+  .appbar .back .ic { font-size: 22px; }
+  .appbar .title { flex: 1; text-align: center; font-size: 16px; font-weight: 800; letter-spacing: -0.02em; }
+  .appbar .rt { width: 38px; text-align: center; font-size: 12.5px; font-weight: 800; color: var(--gray); }
+  .appbar .rt b { color: var(--green); }
+
+  /* 진행 단계 (번호+이름+선) */
+  .prog { display: flex; align-items: flex-start; padding: 18px 28px 6px; flex-shrink: 0; }
+  .pstep { display: flex; flex-direction: column; align-items: center; gap: 7px; width: 40px; flex-shrink: 0; }
+  .pstep .pdot { width: 25px; height: 25px; border-radius: 50%; display: grid; place-items: center; font-size: 11.5px; font-weight: 700; background: transparent; color: var(--gray); border: 1.5px solid #CFCCBF; transition: all .28s cubic-bezier(.4,0,.2,1); }
+  .pstep .pdot .ic { font-size: 13px; }
+  .pstep .pnm { font-size: 11px; font-weight: 600; color: var(--gray); transition: color .28s; letter-spacing: -.01em; }
+  .pstep.on .pdot { background: var(--green); border-color: var(--green); color: #fff; transform: scale(1.12); box-shadow: 0 3px 9px -2px rgba(31,75,60,.45); }
+  .pstep.on .pnm { color: var(--green); font-weight: 800; }
+  .pstep.done .pdot { background: var(--green); border-color: var(--green); color: #fff; }
+  .pstep.done .pnm { color: var(--ink-2); font-weight: 700; }
+  .pline { flex: 1; height: 1.5px; background: #D6D3C7; border-radius: 1px; margin: 12px 4px 0; position: relative; overflow: hidden; }
+  .pline::after { content: ""; position: absolute; inset: 0; background: var(--green); transform: scaleX(0); transform-origin: left; transition: transform .35s cubic-bezier(.4,0,.2,1); }
+  .pline.done::after { transform: scaleX(1); }
+
+  .scroll { overflow-x: hidden; flex: 1; overflow-y: auto; padding: 30px 22px 24px; }
+
+  .step-label { font-size: 13px; font-weight: 800; color: var(--sage); margin: 0 0 12px; letter-spacing: .04em; }
+  .bigq { font-size: 28px; font-weight: 800; line-height: 1.28; letter-spacing: -0.028em; margin: 0 0 10px; }
+  .bigsub { font-size: 14.5px; color: var(--ink-2); font-weight: 600; margin: 0 0 32px; }
+
+  /* 답 목록 (작물·시기) */
+  .answers { display: flex; flex-direction: column; gap: 10px; }
+  .ans { display: flex; align-items: center; gap: 14px; padding: 17px 18px; border-radius: 15px; background: var(--card); box-shadow: var(--shadow); border: 1.5px solid transparent; font-size: 15.5px; font-weight: 700; color: var(--ink); transition: all .15s; }
+  .ans .sub { font-size: 12px; color: var(--gray); font-weight: 600; margin-left: 2px; }
+  .ans .arrow { margin-left: auto; color: #C7C8BE; font-size: 16px; display: inline-grid; }
+  .ans.on { background: var(--green-soft); border-color: var(--green); color: var(--green); font-weight: 800; }
+  .ans.on .arrow { color: var(--green); }
+
+  /* 증상 칩 (복수) */
+  .sub-label { font-size: 13.5px; font-weight: 800; color: var(--ink); margin: 0 2px 12px; display: flex; align-items: center; gap: 6px; }
+  .sub-label .multi { font-size: 11.5px; font-weight: 600; color: var(--gray); }
+  .info-btn { width: 22px; height: 22px; display: inline-grid; place-items: center; color: var(--gray); }
+  .info-btn .ic { font-size: 17px; }
+  .glo-term { display: flex; gap: 12px; padding: 13px 0; border-top: 1px solid var(--line); }
+  .glo-term:first-child { border-top: 0; }
+  .glo-term .gt { flex-shrink: 0; width: 62px; font-size: 14px; font-weight: 800; color: var(--green); }
+  .glo-term .gd { font-size: 13px; color: var(--ink-2); font-weight: 500; line-height: 1.55; }
+  .chips { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 24px; }
+  .chips:last-child { margin-bottom: 0; }
+  .chip { padding: 13px 17px; border-radius: 13px; background: var(--card); box-shadow: var(--shadow); border: 1.5px solid transparent; font-size: 14.5px; font-weight: 700; color: var(--ink-2); transition: all .15s; }
+  .chip.on { background: var(--green-soft); border-color: var(--green); color: var(--green); font-weight: 800; }
+
+  /* 사진 단계 */
+  .photo-hero { width: 100%; border-radius: var(--r-lg); background: var(--field-bg); border: 1.6px dashed rgba(48,42,30,.2); padding: 36px 20px 22px; display: flex; flex-direction: column; align-items: center; gap: 11px; color: var(--gray); margin-bottom: 0; text-align: center; }
+  .photo-hero .ic { font-size: 36px; color: var(--sage); }
+  .photo-hero .pt { font-size: 15.5px; font-weight: 800; color: var(--ink); }
+  .photo-hero .ps { font-size: 12.5px; font-weight: 500; line-height: 1.55; margin-bottom: 4px; }
+  .photo-hero .skip-in { font-size: 11.5px; color: var(--gray); font-weight: 600; padding-top: 14px; margin-top: 4px; border-top: 1px solid rgba(48,42,30,.08); width: 80%; }
+
+  /* 환경 (선택, 사진 단계 하단) */
+  .env-title { font-size: 14px; font-weight: 800; margin: 30px 2px 4px; }
+  .env-sub { font-size: 12px; color: var(--gray); font-weight: 600; margin: 0 2px 13px; }
+  .env-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .selectbox { background: var(--card); box-shadow: var(--shadow); border: 1.5px solid transparent; border-radius: 12px; padding: 13px 14px; font-size: 13.5px; font-weight: 600; color: var(--gray); display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+  .selectbox.set { color: var(--ink); font-weight: 700; }
+  .selectbox .ic { color: var(--gray); font-size: 15px; }
+
+  /* 하단 버튼 */
+  .footer { flex-shrink: 0; padding: 14px 20px calc(14px + env(safe-area-inset-bottom)); background: var(--bg); border-top: 1px solid var(--line); display: flex; gap: 10px; }
+  .btn { height: 54px; border-radius: 15px; font-size: 16px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; gap: 7px; }
+  .btn-ghost { flex: 0 0 30%; background: var(--field-bg); color: var(--ink-2); }
+  .btn-next { flex: 1; background: var(--green); color: #fff; }
+  .btn-next.dim { background: #C6C3B6; color: #fff; box-shadow: none; }
+  .btn-diag { flex: 1; background: var(--green); color: #fff; box-shadow: 0 6px 18px -4px rgba(31,75,60,.45); }
+  .btn .ic { font-size: 19px; }
+
+  /* 미니 시트 */
+  .sheet-dim { position: absolute; inset: 0; background: rgba(20,18,12,.4); opacity: 0; pointer-events: none; transition: opacity .25s; z-index: 10; }
+  .sheet-dim.on { opacity: 1; pointer-events: auto; }
+  .sheet { position: absolute; left: 0; right: 0; bottom: 0; background: var(--card); border-radius: 22px 22px 0 0; padding: 8px 22px calc(24px + env(safe-area-inset-bottom)); transform: translateY(100%); transition: transform .28s cubic-bezier(.32,.72,0,1); z-index: 11; max-height: 70%; overflow-y: auto; }
+  .sheet.on { transform: translateY(0); }
+  .sheet-grip { width: 38px; height: 4px; border-radius: 2px; background: var(--line); margin: 6px auto 16px; }
+  .sheet h3 { font-size: 16px; font-weight: 800; margin: 0 0 14px; }
+  .opt-row { display: flex; align-items: center; justify-content: space-between; width: 100%; text-align: left; padding: 14px 4px; font-size: 14.5px; font-weight: 700; color: var(--ink-2); border-top: 1px solid var(--line); }
+  .opt-row:first-child { border-top: 0; }
+  .opt-row .rc { color: var(--green); opacity: 0; }
+  .opt-row.on { color: var(--green); font-weight: 800; }
+  .opt-row.on .rc { opacity: 1; }
+
+  .step { display: none; }
+  .step.active { display: block; }
+
+  /* === 360px safety net (v3) === */
+  .phone img, .phone svg { max-width: 100%; height: auto; }
+  .phone { word-break: keep-all; overflow-wrap: break-word; }
+  </style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14 0"/><path d="M8.5 16.05a6 6 0 0 1 7 0"/><path d="M2 8.82a15 15 0 0 1 20 0"/><line x1="12" y1="20" x2="12" y2="20"/></symbol>
+    <symbol id="i-battery" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="8" width="18" height="9" rx="2"/><path d="M22 11v3"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 6 9 12 15 18"/></symbol>
+    <symbol id="i-next" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></symbol>
+    <symbol id="i-cam" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></symbol>
+    <symbol id="i-scan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><line x1="3" y1="12" x2="21" y2="12"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></symbol>
+  </defs></svg>
+
+  <div class="phone">
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="group"><svg class="ic"><use href="#i-wifi"/></svg> <svg class="ic"><use href="#i-battery"/></svg></span>
+    </div>
+
+    <div class="appbar">
+      <button class="back" id="topBack" aria-label="뒤로"><svg class="ic"><use href="#i-back"/></svg></button>
+      <span class="title">병해진단</span>
+      <span class="rt"></span>
+    </div>
+
+    <div class="prog" id="prog">
+      <div class="pstep on" data-s="1"><span class="pdot">1</span><span class="pnm">작물</span></div>
+      <span class="pline"></span>
+      <div class="pstep" data-s="2"><span class="pdot">2</span><span class="pnm">증상</span></div>
+      <span class="pline"></span>
+      <div class="pstep" data-s="3"><span class="pdot">3</span><span class="pnm">시기</span></div>
+      <span class="pline"></span>
+      <div class="pstep" data-s="4"><span class="pdot">4</span><span class="pnm">사진</span></div>
+    </div>
+
+    <div class="scroll">
+      <!-- STEP 1: 작물 -->
+      <div class="step active" data-step="1">
+        <p class="step-label">STEP 1</p>
+        <h2 class="bigq">어떤 작물에<br>생긴 문제인가요?</h2>
+        <p class="bigsub">작물을 골라주세요</p>
+        <div class="answers" id="cropAns">
+          <button class="ans on" data-v="오이">오이<span class="arrow"><svg class="ic"><use href="#i-check"/></svg></span></button>
+          <button class="ans" data-v="딸기">딸기<span class="arrow"><svg class="ic"><use href="#i-next"/></svg></span></button>
+          <button class="ans" data-v="토마토">토마토<span class="arrow"><svg class="ic"><use href="#i-next"/></svg></span></button>
+          <button class="ans" data-v="고추">고추<span class="arrow"><svg class="ic"><use href="#i-next"/></svg></span></button>
+          <button class="ans" data-v="배추">배추<span class="arrow"><svg class="ic"><use href="#i-next"/></svg></span></button>
+        </div>
+      </div>
+
+      <!-- STEP 2: 부위 + 증상 -->
+      <div class="step" data-step="2">
+        <p class="step-label">STEP 2</p>
+        <h2 class="bigq">어디에 어떤<br>증상이 보이나요?</h2>
+        <p class="bigsub">발생 부위와 증상을 골라주세요</p>
+
+        <p class="sub-label">발생 부위</p>
+        <div class="chips" id="partChips">
+          <button class="chip on">잎</button>
+          <button class="chip">줄기</button>
+          <button class="chip">열매</button>
+          <button class="chip">뿌리</button>
+          <button class="chip">전체</button>
+        </div>
+
+        <p class="sub-label">주요 증상 <button class="info-btn" id="infoBtn" aria-label="증상 용어 설명"><svg class="ic"><use href="#i-info"/></svg></button><span class="multi">복수 선택</span></p>
+        <div class="chips" id="symptomChips">
+          <button class="chip on">반점</button>
+          <button class="chip">마름</button>
+          <button class="chip">변색</button>
+          <button class="chip">황화</button>
+          <button class="chip on">흰가루</button>
+          <button class="chip">곰팡이</button>
+          <button class="chip">오그라듦</button>
+          <button class="chip">기형</button>
+          <button class="chip">시듦</button>
+          <button class="chip">괴사</button>
+          <button class="chip">기타</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: 발생 시기 -->
+      <div class="step" data-step="3">
+        <p class="step-label">STEP 3</p>
+        <h2 class="bigq">언제부터<br>증상이 보였나요?</h2>
+        <p class="bigsub">대략적인 시기를 골라주세요</p>
+        <div class="answers" id="periodAns">
+          <button class="ans" data-v="1~3일">최근 1~3일<span class="arrow"><svg class="ic"><use href="#i-next"/></svg></span></button>
+          <button class="ans on" data-v="4~7일">4~7일 전부터<span class="arrow"><svg class="ic"><use href="#i-check"/></svg></span></button>
+          <button class="ans" data-v="1~2주">1~2주 됐어요<span class="arrow"><svg class="ic"><use href="#i-next"/></svg></span></button>
+          <button class="ans" data-v="2주 이상">2주 이상 됐어요<span class="arrow"><svg class="ic"><use href="#i-next"/></svg></span></button>
+          <button class="ans" data-v="잘 모름">잘 모르겠어요<span class="arrow"><svg class="ic"><use href="#i-next"/></svg></span></button>
+        </div>
+      </div>
+
+      <!-- STEP 4: 사진 + 환경 -->
+      <div class="step" data-step="4">
+        <p class="step-label">STEP 4</p>
+        <h2 class="bigq">증상 사진을<br>올려주세요</h2>
+        <p class="bigsub">사진이 있으면 진단 정확도가 크게 올라가요</p>
+        <button class="photo-hero">
+          <svg class="ic"><use href="#i-cam"/></svg>
+          <span class="pt">사진 촬영 · 등록</span>
+          <span class="ps">잎·줄기·열매의 증상 부위를<br>가까이서 찍어주세요 (최대 5장)</span>
+          <span class="skip-in">사진 없이도 진단할 수 있어요</span>
+        </button>
+
+        <p class="env-title">재배 환경 <span style="font-size:11.5px;color:var(--gray);font-weight:600">선택</span></p>
+        <p class="env-sub">알려주면 진단이 더 정확해져요</p>
+        <div class="env-grid">
+          <div class="selectbox" data-env="재배 방식"><span>재배 방식</span><svg class="ic"><use href="#i-down"/></svg></div>
+          <div class="selectbox" data-env="온도"><span>온도</span><svg class="ic"><use href="#i-down"/></svg></div>
+          <div class="selectbox" data-env="습도"><span>습도</span><svg class="ic"><use href="#i-down"/></svg></div>
+          <div class="selectbox" data-env="토양 상태"><span>토양 상태</span><svg class="ic"><use href="#i-down"/></svg></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <button class="btn btn-ghost" id="prevBtn" style="display:none">이전</button>
+      <button class="btn btn-next" id="nextBtn">다음 <svg class="ic"><use href="#i-next"/></svg></button>
+      <a class="btn btn-diag" id="diagBtn" href="#" style="display:none"><svg class="ic"><use href="#i-scan"/></svg> AI 진단하기</a>
+    </div>
+
+    <!-- 환경 옵션 시트 -->
+    <div class="sheet-dim" id="envDim"></div>
+    <div class="sheet" id="envSheet">
+      <div class="sheet-grip"></div>
+      <h3 id="envTitle">재배 방식</h3>
+      <div id="envList"></div>
+    </div>
+
+    <!-- 증상 용어 설명 시트 -->
+    <div class="sheet-dim" id="gloDim"></div>
+    <div class="sheet" id="gloSheet">
+      <div class="sheet-grip"></div>
+      <h3>증상 용어 안내</h3>
+      <p class="bigsub" style="margin-bottom:14px">처음이라 헷갈린다면 참고하세요</p>
+      <div class="glo-term"><span class="gt">반점</span><span class="gd">잎·열매·줄기에 둥글거나 불규칙한 점·얼룩이 생기는 증상이에요.</span></div>
+      <div class="glo-term"><span class="gt">마름</span><span class="gd">조직이 말라서 갈색·검은색으로 변하고 바삭해지는 증상이에요.</span></div>
+      <div class="glo-term"><span class="gt">변색</span><span class="gd">원래 색과 다른 색으로 바뀌는 증상이에요 (반점·황화 외 전반적 색 변화).</span></div>
+      <div class="glo-term"><span class="gt">황화</span><span class="gd">잎이 노랗게 변하는 증상이에요. 영양 결핍·바이러스 등이 원인이에요.</span></div>
+      <div class="glo-term"><span class="gt">흰가루</span><span class="gd">잎 표면에 밀가루를 뿌린 듯 흰 가루가 덮이는 증상이에요 (흰가루병).</span></div>
+      <div class="glo-term"><span class="gt">곰팡이</span><span class="gd">회색·검은색·솜털 같은 곰팡이가 잎·열매에 피는 증상이에요.</span></div>
+      <div class="glo-term"><span class="gt">오그라듦</span><span class="gd">잎이 안쪽·바깥쪽으로 말리거나 쪼그라드는 증상이에요.</span></div>
+      <div class="glo-term"><span class="gt">기형</span><span class="gd">잎·열매가 비정상적인 모양으로 자라거나 비틀리는 증상이에요.</span></div>
+      <div class="glo-term"><span class="gt">시듦</span><span class="gd">물을 줘도 잎·줄기가 축 늘어지고 생기를 잃는 증상이에요.</span></div>
+      <div class="glo-term"><span class="gt">괴사</span><span class="gd">조직이 죽어 갈색·검은색으로 변하며 썩어들어가는 증상이에요.</span></div>
+      <button class="btn btn-next" id="gloClose" style="width:100%; margin-top:18px; flex:none">닫기</button>
+    </div>
+  </div>
+
+  <script>
+    var step = 1, totalSteps = 4;
+    var steps = document.querySelectorAll('.step');
+    var pSteps = document.querySelectorAll('#prog .pstep');
+    var pLines = document.querySelectorAll('#prog .pline');
+    var prevBtn = document.getElementById('prevBtn');
+    var nextBtn = document.getElementById('nextBtn');
+    var diagBtn = document.getElementById('diagBtn');
+    var curStepEl = document.getElementById('curStep');
+
+    function render(){
+      steps.forEach(function(s){ s.classList.toggle('active', parseInt(s.dataset.step)===step); });
+      pSteps.forEach(function(p){
+        var n = parseInt(p.dataset.s);
+        p.classList.toggle('on', n === step);
+        p.classList.toggle('done', n < step);
+        var dot = p.querySelector('.pdot');
+        if (n < step) dot.innerHTML = '<svg class="ic"><use href="#i-check"/></svg>';
+        else dot.textContent = n;
+      });
+      pLines.forEach(function(l,i){ l.classList.toggle('done', i < step - 1); });
+      if (curStepEl) curStepEl.textContent = step;
+      prevBtn.style.display = step > 1 ? 'inline-flex' : 'none';
+      if (step === totalSteps){
+        nextBtn.style.display = 'none';
+        diagBtn.style.display = 'inline-flex';
+      } else {
+        nextBtn.style.display = 'inline-flex';
+        diagBtn.style.display = 'none';
+      }
+      document.querySelector('.scroll').scrollTop = 0;
+    }
+    nextBtn.addEventListener('click', function(){ if (step < totalSteps){ step++; render(); } });
+    prevBtn.addEventListener('click', function(){ if (step > 1){ step--; render(); } });
+    document.getElementById('topBack').addEventListener('click', function(){ if (step > 1){ step--; render(); } });
+
+    // 작물 단일 선택
+    document.querySelectorAll('#cropAns .ans').forEach(function(a){
+      a.addEventListener('click', function(){
+        document.querySelectorAll('#cropAns .ans').forEach(function(x){
+          x.classList.remove('on');
+          x.querySelector('.arrow use').setAttribute('href', '#i-next');
+        });
+        a.classList.add('on');
+        a.querySelector('.arrow use').setAttribute('href', '#i-check');
+      });
+    });
+
+    // 발생 부위 단일 선택
+    document.querySelectorAll('#partChips .chip').forEach(function(c){
+      c.addEventListener('click', function(){
+        document.querySelectorAll('#partChips .chip').forEach(function(x){ x.classList.remove('on'); });
+        c.classList.add('on');
+      });
+    });
+
+    // 증상 복수 선택
+    document.querySelectorAll('#symptomChips .chip').forEach(function(c){
+      c.addEventListener('click', function(){ c.classList.toggle('on'); });
+    });
+
+    // 발생 시기 단일 선택
+    document.querySelectorAll('#periodAns .ans').forEach(function(a){
+      a.addEventListener('click', function(){
+        document.querySelectorAll('#periodAns .ans').forEach(function(x){
+          x.classList.remove('on');
+          x.querySelector('.arrow use').setAttribute('href', '#i-next');
+        });
+        a.classList.add('on');
+        a.querySelector('.arrow use').setAttribute('href', '#i-check');
+      });
+    });
+
+    // 증상 용어 설명 시트
+    var gloSheet = document.getElementById('gloSheet');
+    var gloDim = document.getElementById('gloDim');
+    document.getElementById('infoBtn').addEventListener('click', function(e){
+      e.stopPropagation();
+      gloSheet.classList.add('on'); gloDim.classList.add('on');
+    });
+    document.getElementById('gloClose').addEventListener('click', function(){
+      gloSheet.classList.remove('on'); gloDim.classList.remove('on');
+    });
+    gloDim.addEventListener('click', function(){ gloSheet.classList.remove('on'); gloDim.classList.remove('on'); });
+
+    // 환경 옵션 시트
+    var envOptions = {
+      '재배 방식': ['노지', '시설(하우스)', '수경', '기타'],
+      '온도': ['10℃ 이하', '10~20℃', '20~30℃', '30℃ 이상', '모름'],
+      '습도': ['건조(낮음)', '보통', '습함(높음)', '모름'],
+      '토양 상태': ['건조', '적당', '과습', '모름']
+    };
+    var envSheet = document.getElementById('envSheet');
+    var envDim = document.getElementById('envDim');
+    var envTitle = document.getElementById('envTitle');
+    var envList = document.getElementById('envList');
+    var curBox = null;
+    document.querySelectorAll('.selectbox[data-env]').forEach(function(box){
+      box.addEventListener('click', function(){
+        curBox = box; var key = box.dataset.env;
+        envTitle.textContent = key;
+        var cur = box.querySelector('span').textContent;
+        envList.innerHTML = envOptions[key].map(function(o){
+          return '<button class="opt-row'+(o===cur?' on':'')+'" data-v="'+o+'">'+o+'<span class="rc"><svg class="ic"><use href="#i-check"/></svg></span></button>';
+        }).join('');
+        envList.querySelectorAll('.opt-row').forEach(function(r){
+          r.addEventListener('click', function(){
+            curBox.querySelector('span').textContent = r.dataset.v;
+            curBox.classList.add('set');
+            envSheet.classList.remove('on'); envDim.classList.remove('on');
+          });
+        });
+        envSheet.classList.add('on'); envDim.classList.add('on');
+      });
+    });
+    envDim.addEventListener('click', function(){ envSheet.classList.remove('on'); envDim.classList.remove('on'); });
+
+    render();
+  </script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>작물 추가 버튼 — 비교</title>
+<style>
+:root{--bg:#ECEAE0;--card:#FFFFFF;--ink:#20251D;--ink-2:#45493E;--gray:#76796C;--line:rgba(48,42,30,.10);--field-bg:#F4F4EF;--green:#1F4B3C;--green-2:#163729;--green-soft:#E7EEE6;--r-md:14px;--shadow:0 1px 2px rgba(36,30,18,.05);}
+*{box-sizing:border-box;} button{color:inherit;background:none;border:0;cursor:pointer;font-family:inherit;}
+.ic{width:1em;height:1em;display:inline-block;vertical-align:-0.12em;}
+body{margin:0;background:#D8D5C9;padding:26px 16px 50px;font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Noto Sans KR",system-ui,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+.wrap{max-width:390px;margin:0 auto;}
+.intro{font-size:13px;color:#5a5d52;margin:0 0 22px;line-height:1.6;}
+.opt{background:var(--bg);border-radius:18px;padding:18px;box-shadow:0 8px 22px -12px rgba(40,34,22,.4);margin-bottom:16px;}
+.opt-head{display:flex;align-items:baseline;gap:9px;margin-bottom:14px;}
+.opt-head .tag{font-size:11px;font-weight:800;color:var(--green);background:var(--green-soft);padding:3px 9px;border-radius:999px;}
+.opt-head h3{font-size:14px;font-weight:800;letter-spacing:-0.02em;margin:0;}
+
+.guide{font-size:12px;color:var(--gray);margin:0 2px 12px;}
+.added-list{display:flex;flex-direction:column;gap:8px;margin-top:14px;}
+.added-item{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:var(--r-md);box-shadow:var(--shadow);padding:14px 12px 14px 16px;}
+.ai-main{flex:1;display:flex;align-items:baseline;gap:9px;}
+.ai-name{font-size:14.5px;font-weight:700;color:var(--ink);}
+.ai-meta{font-size:12.5px;font-weight:600;color:var(--gray);}
+.ai-x{width:26px;height:26px;border-radius:50%;background:var(--field-bg);color:var(--gray);display:grid;place-items:center;flex-shrink:0;}
+.ai-x .ic{font-size:13px;}
+
+/* 버튼 변형들 */
+.b-base{width:100%;height:50px;border-radius:var(--r-md);font-size:14.5px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:6px;}
+.b-base .ic{font-size:17px;}
+
+/* 현재: 딥틸 외곽선 */
+.b-teal{color:var(--green);background:var(--card);border:1.5px solid var(--green);}
+/* A: 중립 회색 외곽선 + 딥틸 글씨 */
+.b-neutral{color:var(--green);background:var(--card);border:1.5px solid var(--line);box-shadow:var(--shadow);}
+/* B: 옅은 면 (field-bg) + 딥틸 글씨 */
+.b-soft{color:var(--green);background:var(--field-bg);}
+/* C: 점선 박스 (추가 자리 느낌) */
+.b-dashed{color:var(--green);background:transparent;border:1.5px dashed rgba(31,75,60,.35);}
+/* D: 리스트 끝 점선 행 (카드 리스트의 일부) */
+.b-row{width:100%;display:flex;align-items:center;justify-content:center;gap:6px;height:50px;border-radius:var(--r-md);border:1.5px dashed rgba(48,42,30,.2);color:var(--gray);font-size:14px;font-weight:700;}
+.b-row .ic{font-size:16px;color:var(--green);}
+</style></head>
+<body>
+<div class="wrap">
+<p class="intro">작물 추가 버튼 비교입니다. 각 버튼 아래에 실제 카드 리스트를 같이 둬서 어울리는지 확인하세요.</p>
+
+<div class="opt">
+  <div class="opt-head"><span class="tag">현재</span><h3>딥틸 외곽선</h3></div>
+  <p class="guide">재배 중인 작물을 최소 1가지 이상 추가해 주세요.</p>
+  <button class="b-base b-teal"><svg class="ic"><use href="#i-plus"/></svg> 작물 추가</button>
+  <div class="added-list"><div class="added-item"><div class="ai-main"><span class="ai-name">오이 (백다다기)</span><span class="ai-meta">500주</span></div><button class="ai-x"><svg class="ic"><use href="#i-x"/></svg></button></div></div>
+</div>
+
+<div class="opt">
+  <div class="opt-head"><span class="tag">A안</span><h3>중립 외곽선 + 딥틸 글씨</h3></div>
+  <p class="guide">재배 중인 작물을 최소 1가지 이상 추가해 주세요.</p>
+  <button class="b-base b-neutral"><svg class="ic"><use href="#i-plus"/></svg> 작물 추가</button>
+  <div class="added-list"><div class="added-item"><div class="ai-main"><span class="ai-name">오이 (백다다기)</span><span class="ai-meta">500주</span></div><button class="ai-x"><svg class="ic"><use href="#i-x"/></svg></button></div></div>
+</div>
+
+<div class="opt">
+  <div class="opt-head"><span class="tag">B안</span><h3>옅은 면 + 딥틸 글씨</h3></div>
+  <p class="guide">재배 중인 작물을 최소 1가지 이상 추가해 주세요.</p>
+  <button class="b-base b-soft"><svg class="ic"><use href="#i-plus"/></svg> 작물 추가</button>
+  <div class="added-list"><div class="added-item"><div class="ai-main"><span class="ai-name">오이 (백다다기)</span><span class="ai-meta">500주</span></div><button class="ai-x"><svg class="ic"><use href="#i-x"/></svg></button></div></div>
+</div>
+
+<div class="opt">
+  <div class="opt-head"><span class="tag">C안</span><h3>점선 박스 (추가 자리)</h3></div>
+  <p class="guide">재배 중인 작물을 최소 1가지 이상 추가해 주세요.</p>
+  <button class="b-base b-dashed"><svg class="ic"><use href="#i-plus"/></svg> 작물 추가</button>
+  <div class="added-list"><div class="added-item"><div class="ai-main"><span class="ai-name">오이 (백다다기)</span><span class="ai-meta">500주</span></div><button class="ai-x"><svg class="ic"><use href="#i-x"/></svg></button></div></div>
+</div>
+
+<div class="opt">
+  <div class="opt-head"><span class="tag">D안</span><h3>리스트 끝 추가 행</h3></div>
+  <p class="guide">재배 중인 작물을 최소 1가지 이상 추가해 주세요.</p>
+  <div class="added-list">
+    <div class="added-item"><div class="ai-main"><span class="ai-name">오이 (백다다기)</span><span class="ai-meta">500주</span></div><button class="ai-x"><svg class="ic"><use href="#i-x"/></svg></button></div>
+    <button class="b-row"><svg class="ic"><use href="#i-plus"/></svg> 작물 추가</button>
+  </div>
+</div>
+
+</div>
+<svg width="0" height="0" style="position:absolute"><defs>
+<symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></symbol>
+</defs></svg>
+</body></html>

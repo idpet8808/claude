@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>전문가 답변 — 농부 아이콘</title>
+<style>
+:root{
+  --bg:#ECEAE0;--card:#FFFFFF;--ink:#20251D;--ink-2:#45493E;--gray:#76796C;
+  --line:rgba(48,42,30,.10);
+  --green:#1F4B3C;--green-2:#163729;--green-soft:#E7EEE6;
+  --gold:#B08A3E;--gold-soft:#F2E9D2;--clay:#B0612C;--clay-soft:#F3E1D2;
+  --sage:#2F6150;--sage-soft:#E4ECE0;
+  --r-lg:18px;--shadow:0 1px 2px rgba(36,30,18,.05);
+}
+*{box-sizing:border-box;}
+h3,h4,p,strong,span{word-break:keep-all;}
+.ic{width:1em;height:1em;display:inline-block;vertical-align:-0.14em;flex-shrink:0;}
+body{margin:0;background:#DEDBCF;padding:24px 0 44px;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Pretendard","Noto Sans KR",system-ui,sans-serif;
+  color:var(--ink);-webkit-font-smoothing:antialiased;}
+.wrap{width:min(390px,100%);margin:0 auto;padding:0 20px;}
+.opt-h{margin:30px 0 12px;}
+.opt-h .tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.02em;color:var(--green);
+  background:var(--green-soft);padding:3px 9px;border-radius:999px;margin-bottom:7px;}
+.opt-h h3{font-size:17px;font-weight:800;letter-spacing:-0.02em;margin:0;}
+.opt-h p{font-size:12.5px;color:var(--gray);margin:5px 0 0;line-height:1.55;}
+
+.card{display:block;background:var(--card);border:1px solid var(--line);
+  border-radius:var(--r-lg);box-shadow:var(--shadow);overflow:hidden;}
+.q{padding:16px;}
+.q-top{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.pill{display:inline-flex;align-items:center;height:23px;padding:0 10px;border-radius:999px;font-size:11.5px;font-weight:700;}
+.pill.green{background:var(--green-soft);color:var(--green);}
+.q-top .meta{font-size:11.5px;color:var(--gray);font-weight:500;}
+.q h4{font-size:15.5px;line-height:1.4;font-weight:700;letter-spacing:-0.018em;color:var(--ink);margin:0;}
+.answer{margin-top:11px;padding:12px 13px;border-radius:12px;background:#F6F7F4;
+  color:var(--ink-2);font-size:12.5px;line-height:1.5;}
+
+/* token form */
+.B .answer{display:flex;gap:10px;align-items:flex-start;}
+.B .answer .tok{width:28px;height:28px;flex:0 0 28px;border-radius:50%;display:grid;place-items:center;
+  font-size:18px;color:var(--green);
+  background:linear-gradient(160deg,#F2F9F4 0%,var(--green-soft) 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 2px 5px -1px rgba(20,146,75,.14);margin-top:0;}
+
+/* inline form */
+.A .answer{display:flex;gap:9px;align-items:flex-start;}
+.A .answer .lead{color:var(--green);font-size:17px;flex:0 0 auto;margin-top:0;}
+
+/* big preview of the icon */
+.preview{display:flex;align-items:center;gap:18px;background:var(--card);border:1px solid var(--line);
+  border-radius:14px;padding:16px;margin-top:14px;}
+.preview .big{font-size:46px;color:var(--green);}
+.preview .mid{font-size:26px;color:var(--green);}
+.preview .sm{font-size:16px;color:var(--green);}
+.preview small{font-size:11px;color:var(--gray);}
+</style></head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-farmer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M8.5 8C8.5 5.7 9.9 4 12 4S15.5 5.7 15.5 8"/>
+  <path d="M4.5 8.3C8 9.7 16 9.7 19.5 8.3"/>
+  <circle cx="12" cy="11.7" r="2.3"/>
+  <path d="M6 20v-.7a6 6 0 0 1 12 0V20"/>
+</symbol>
+</defs></svg>
+<div class="wrap">
+
+<div class="opt-h"><span class="tag">아이콘</span><h3>농부 아이콘 (밀짚모자)</h3><p>새로 만든 라인 아이콘. 크기별 가독성 확인용.</p></div>
+<div class="preview">
+  <svg class="ic big"><use href="#i-farmer"/></svg>
+  <svg class="ic mid"><use href="#i-farmer"/></svg>
+  <svg class="ic sm"><use href="#i-farmer"/></svg>
+  <small>46 / 26 / 16px</small>
+</div>
+
+<div class="opt-h"><span class="tag">㉠ 토큰형</span><h3>그린 원형 토큰 + 농부</h3><p>답변 영역이 또렷하게 구분됨. 화면 다른 토큰들과 톤 일치.</p></div>
+<div class="card B"><div class="q">
+  <div class="q-top"><span class="pill green">답변완료</span><span class="meta">스마트팜 · 환경제어 · 2일 전</span></div>
+  <h4>딸기 하우스 적정 온습도가 궁금합니다</h4>
+  <div class="answer"><span class="tok"><svg class="ic"><use href="#i-farmer"/></svg></span><span>생육 단계에 따라 주간·야간 온도 기준을 분리해 관리하는 것이 좋습니다.</span></div>
+</div></div>
+
+<div class="opt-h"><span class="tag">㉡ 인라인형</span><h3>인라인 농부 아이콘</h3><p>토큰 없이 그린 아이콘만. 가장 가볍고 절제됨.</p></div>
+<div class="card A"><div class="q">
+  <div class="q-top"><span class="pill green">답변완료</span><span class="meta">스마트팜 · 환경제어 · 2일 전</span></div>
+  <h4>딸기 하우스 적정 온습도가 궁금합니다</h4>
+  <div class="answer"><svg class="ic lead"><use href="#i-farmer"/></svg><span>생육 단계에 따라 주간·야간 온도 기준을 분리해 관리하는 것이 좋습니다.</span></div>
+</div></div>
+
+</div>
+</body></html>

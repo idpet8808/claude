@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>병해진단 STEP1 — 허전함 채우기 비교</title>
+<style>
+  :root {
+    --bg: #ECEAE0; --card: #FFFFFF; --ink: #20251D; --ink-2: #45493E; --gray: #76796C;
+    --line: rgba(48,42,30,.08); --field-bg: #F4F4EF;
+    --green: #1F4B3C; --green-2: #163729; --green-soft: #E7EEE6;
+    --sage: #2F6150; --gold: #B08A3E; --clay: #B0612C;
+    --r-lg: 18px; --r-md: 14px; --shadow: 0 1px 2px rgba(36,30,18,.05);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  button { font-family: inherit; }
+  a, button { color: inherit; text-decoration: none; background: none; border: 0; cursor: pointer; }
+  h1,h2,h3,p,span,a,label { word-break: keep-all; }
+  body {
+    background: #C9C6BA;
+    font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Noto Sans KR", system-ui, sans-serif;
+    color: var(--ink); -webkit-font-smoothing: antialiased;
+    padding: 30px 20px 50px;
+  }
+  .lab { max-width: 1300px; margin: 0 auto 22px; }
+  .lab h1 { font-size: 19px; font-weight: 800; margin: 0 0 4px; }
+  .lab p { font-size: 13px; color: var(--ink-2); margin: 0; font-weight: 600; }
+  .row { display: flex; gap: 28px; justify-content: center; flex-wrap: wrap; max-width: 1300px; margin: 0 auto; }
+  .col { width: 360px; }
+  .col > .tag { text-align: center; margin-bottom: 12px; }
+  .col > .tag b { font-size: 15px; font-weight: 800; }
+  .col > .tag span { display: block; font-size: 12px; color: var(--ink-2); font-weight: 600; margin-top: 3px; }
+
+  .phone { position: relative; width: 360px; height: 740px; background: var(--bg); border-radius: 28px; overflow: hidden; box-shadow: 0 14px 36px -10px rgba(40,34,22,.4); display: flex; flex-direction: column; }
+  .ic { width: 1em; height: 1em; display: inline-block; vertical-align: -0.12em; flex-shrink: 0; }
+  .sb { height: 40px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+  .ab { display: flex; align-items: center; padding: 2px 10px; flex-shrink: 0; }
+  .ab .bk { width: 34px; height: 34px; display: grid; place-items: center; }
+  .ab .bk .ic { font-size: 20px; }
+  .ab .tt { flex: 1; text-align: center; font-size: 15px; font-weight: 800; }
+  .ab .rt { width: 34px; }
+  .scroll { flex: 1; overflow-y: auto; padding: 16px 20px 16px; }
+  .foot { flex-shrink: 0; padding: 12px 18px 18px; background: var(--bg); display: flex; gap: 9px; }
+  .btn-next { flex: 1; height: 52px; border-radius: 14px; background: var(--green); color: #fff; font-size: 15px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; gap: 7px; }
+  .btn-next .ic { font-size: 18px; }
+
+  /* 진행 인디케이터 (공통, 다듬은 버전) */
+  .prog { display: flex; align-items: flex-start; padding: 4px 8px 6px; }
+  .pstep { display: flex; flex-direction: column; align-items: center; gap: 7px; width: 40px; flex-shrink: 0; }
+  .pstep .pdot { width: 25px; height: 25px; border-radius: 50%; display: grid; place-items: center; font-size: 11.5px; font-weight: 700; background: transparent; color: var(--gray); border: 1.5px solid #CFCCBF; }
+  .pstep .pnm { font-size: 11px; font-weight: 600; color: var(--gray); }
+  .pstep.on .pdot { background: var(--green); border-color: var(--green); color: #fff; transform: scale(1.12); box-shadow: 0 3px 9px -2px rgba(31,75,60,.45); }
+  .pstep.on .pnm { color: var(--green); font-weight: 800; }
+  .pline { flex: 1; height: 1.5px; background: #D6D3C7; margin: 12px 4px 0; }
+
+  .step-label { font-size: 12px; font-weight: 800; color: var(--sage); margin: 18px 0 9px; letter-spacing: .02em; }
+  .bigq { font-size: 24px; font-weight: 800; line-height: 1.32; letter-spacing: -0.025em; margin: 0 0 7px; }
+  .bigsub { font-size: 13px; color: var(--gray); font-weight: 600; margin: 0 0 22px; }
+
+  /* 공통 답 행 */
+  .ans { display: flex; align-items: center; gap: 14px; padding: 17px 18px; border-radius: 15px; background: var(--card); box-shadow: var(--shadow); border: 1.5px solid transparent; font-size: 15.5px; font-weight: 700; color: var(--ink); }
+  .ans .arrow { margin-left: auto; color: #C7C8BE; font-size: 16px; }
+  .ans.on { background: var(--green-soft); border-color: var(--green); color: var(--green); font-weight: 800; }
+  .ans.on .arrow { color: var(--green); }
+
+  /* ===== A: 큰 카드 (넉넉한 패딩, 큰 글씨) ===== */
+  .A .ansL { display: flex; flex-direction: column; gap: 11px; }
+  .A .ansL .ans { padding: 21px 20px; font-size: 17px; border-radius: 16px; }
+
+  /* ===== B: 내 농장 작물 먼저 ===== */
+  .B .mine-label { font-size: 11.5px; font-weight: 800; color: var(--sage); margin: 0 2px 9px; display: flex; align-items: center; gap: 5px; }
+  .B .mine-label .ic { font-size: 13px; }
+  .B .mine { display: flex; flex-direction: column; gap: 9px; margin-bottom: 22px; }
+  .B .mine .ans { border: 1.5px solid var(--green-soft); }
+  .B .mine .ans.on { border-color: var(--green); }
+  .B .all-label { font-size: 11.5px; font-weight: 800; color: var(--gray); margin: 0 2px 9px; }
+  .B .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+  .B .gans { padding: 15px 16px; border-radius: 13px; background: var(--card); box-shadow: var(--shadow); border: 1.5px solid transparent; font-size: 14.5px; font-weight: 700; color: var(--ink-2); text-align: center; }
+
+  /* ===== C: 상단 일러스트/안내 카드 + 답 ===== */
+  .C .guide { border-radius: var(--r-lg); background: linear-gradient(155deg, #28523f, #163729); padding: 22px 20px; margin-bottom: 24px; position: relative; overflow: hidden; }
+  .C .guide::after { content: ""; position: absolute; right: -24px; bottom: -30px; width: 110px; height: 110px; border-radius: 50%; background: rgba(255,255,255,.05); }
+  .C .guide .gic { width: 38px; height: 38px; border-radius: 11px; background: rgba(255,255,255,.14); display: grid; place-items: center; color: #fff; margin-bottom: 13px; }
+  .C .guide .gic .ic { font-size: 20px; }
+  .C .guide h3 { font-size: 15.5px; font-weight: 800; color: #fff; margin: 0 0 5px; }
+  .C .guide p { font-size: 12.5px; color: #B9D2C6; font-weight: 600; margin: 0; line-height: 1.5; }
+  .C .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+  .C .gans { padding: 16px; border-radius: 13px; background: var(--card); box-shadow: var(--shadow); border: 1.5px solid transparent; font-size: 14.5px; font-weight: 700; color: var(--ink-2); text-align: center; }
+  .C .gans.on { background: var(--green-soft); border-color: var(--green); color: var(--green); }
+</style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute"><defs>
+    <symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14 0"/><path d="M2 8.82a15 15 0 0 1 20 0"/><line x1="12" y1="20" x2="12" y2="20"/></symbol>
+    <symbol id="i-batt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="8" width="18" height="9" rx="2"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 6 9 12 15 18"/></symbol>
+    <symbol id="i-next" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+    <symbol id="i-scan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><line x1="3" y1="12" x2="21" y2="12"/></symbol>
+  </defs></svg>
+
+  <div class="lab">
+    <h1>병해진단 STEP1 — 허전함 채우기 3안</h1>
+    <p>작물 5개라 아래가 비는 문제. 비율·내용으로 채우는 세 방향.</p>
+  </div>
+
+  <div class="row">
+
+    <!-- A -->
+    <div class="col">
+      <div class="tag"><b>A · 큰 카드 + 넓은 간격</b><span>답을 큼직하게, 여백을 채움. 가장 단순</span></div>
+      <div class="phone A">
+        <div class="sb"><span>9:41</span><span><svg class="ic"><use href="#i-wifi"/></svg> <svg class="ic"><use href="#i-batt"/></svg></span></div>
+        <div class="ab"><span class="bk"><svg class="ic"><use href="#i-back"/></svg></span><span class="tt">병해진단</span><span class="rt"></span></div>
+        <div class="prog">
+          <div class="pstep on"><span class="pdot">1</span><span class="pnm">작물</span></div><span class="pline"></span>
+          <div class="pstep"><span class="pdot">2</span><span class="pnm">증상</span></div><span class="pline"></span>
+          <div class="pstep"><span class="pdot">3</span><span class="pnm">시기</span></div><span class="pline"></span>
+          <div class="pstep"><span class="pdot">4</span><span class="pnm">사진</span></div>
+        </div>
+        <div class="scroll">
+          <p class="step-label">STEP 1</p>
+          <h2 class="bigq">어떤 작물에<br>생긴 문제인가요?</h2>
+          <p class="bigsub">작물을 골라주세요</p>
+          <div class="ansL">
+            <button class="ans on">토마토<span class="arrow"><svg class="ic"><use href="#i-check"/></svg></span></button>
+            <button class="ans">고추<span class="arrow"><svg class="ic"><use href="#i-next"/></svg></span></button>
+            <button class="ans">딸기<span class="arrow"><svg class="ic"><use href="#i-next"/></svg></span></button>
+            <button class="ans">오이<span class="arrow"><svg class="ic"><use href="#i-next"/></svg></span></button>
+            <button class="ans">배추<span class="arrow"><svg class="ic"><use href="#i-next"/></svg></span></button>
+          </div>
+        </div>
+        <div class="foot"><button class="btn-next">다음 <svg class="ic"><use href="#i-next"/></svg></button></div>
+      </div>
+    </div>
+
+    <!-- B -->
+    <div class="col">
+      <div class="tag"><b>B · 내 농장 작물 먼저</b><span>등록 작물을 위에 크게, 전체는 아래 그리드</span></div>
+      <div class="phone B">
+        <div class="sb"><span>9:41</span><span><svg class="ic"><use href="#i-wifi"/></svg> <svg class="ic"><use href="#i-batt"/></svg></span></div>
+        <div class="ab"><span class="bk"><svg class="ic"><use href="#i-back"/></svg></span><span class="tt">병해진단</span><span class="rt"></span></div>
+        <div class="prog">
+          <div class="pstep on"><span class="pdot">1</span><span class="pnm">작물</span></div><span class="pline"></span>
+          <div class="pstep"><span class="pdot">2</span><span class="pnm">증상</span></div><span class="pline"></span>
+          <div class="pstep"><span class="pdot">3</span><span class="pnm">시기</span></div><span class="pline"></span>
+          <div class="pstep"><span class="pdot">4</span><span class="pnm">사진</span></div>
+        </div>
+        <div class="scroll">
+          <p class="step-label">STEP 1</p>
+          <h2 class="bigq">어떤 작물에<br>생긴 문제인가요?</h2>
+          <p class="bigsub">작물을 골라주세요</p>
+          <p class="mine-label"><svg class="ic"><use href="#i-pin"/></svg> 완주 청년농원 작물</p>
+          <div class="mine">
+            <button class="ans on">오이<span class="arrow"><svg class="ic"><use href="#i-check"/></svg></span></button>
+            <button class="ans">딸기<span class="arrow"><svg class="ic"><use href="#i-next"/></svg></span></button>
+          </div>
+          <p class="all-label">전체 작물</p>
+          <div class="grid2">
+            <button class="gans">토마토</button>
+            <button class="gans">고추</button>
+            <button class="gans">배추</button>
+            <button class="gans">그 외</button>
+          </div>
+        </div>
+        <div class="foot"><button class="btn-next">다음 <svg class="ic"><use href="#i-next"/></svg></button></div>
+      </div>
+    </div>
+
+    <!-- C -->
+    <div class="col">
+      <div class="tag"><b>C · 상단 안내 카드 + 2열</b><span>딥틸 안내로 위 채우고, 작물은 2열 그리드</span></div>
+      <div class="phone C">
+        <div class="sb"><span>9:41</span><span><svg class="ic"><use href="#i-wifi"/></svg> <svg class="ic"><use href="#i-batt"/></svg></span></div>
+        <div class="ab"><span class="bk"><svg class="ic"><use href="#i-back"/></svg></span><span class="tt">병해진단</span><span class="rt"></span></div>
+        <div class="prog">
+          <div class="pstep on"><span class="pdot">1</span><span class="pnm">작물</span></div><span class="pline"></span>
+          <div class="pstep"><span class="pdot">2</span><span class="pnm">증상</span></div><span class="pline"></span>
+          <div class="pstep"><span class="pdot">3</span><span class="pnm">시기</span></div><span class="pline"></span>
+          <div class="pstep"><span class="pdot">4</span><span class="pnm">사진</span></div>
+        </div>
+        <div class="scroll">
+          <div class="guide">
+            <div class="gic"><svg class="ic"><use href="#i-scan"/></svg></div>
+            <h3>사진과 몇 가지 정보로 병을 찾아요</h3>
+            <p>먼저 어떤 작물인지 알려주세요. 작물에 맞는 병해충을 분석해드려요.</p>
+          </div>
+          <p class="step-label" style="margin-top:0">STEP 1 · 작물 선택</p>
+          <div class="grid2">
+            <button class="gans on">토마토</button>
+            <button class="gans">고추</button>
+            <button class="gans">딸기</button>
+            <button class="gans">오이</button>
+            <button class="gans">배추</button>
+            <button class="gans">그 외</button>
+          </div>
+        </div>
+        <div class="foot"><button class="btn-next">다음 <svg class="ic"><use href="#i-next"/></svg></button></div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

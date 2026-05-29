@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>병해진단 입력 — 비교</title>
+<style>
+  :root {
+    --bg: #ECEAE0; --card: #FFFFFF; --ink: #20251D; --ink-2: #45493E; --gray: #76796C;
+    --line: rgba(48,42,30,.08); --field-bg: #F4F4EF;
+    --green: #1F4B3C; --green-2: #163729; --green-soft: #E7EEE6;
+    --sage: #2F6150; --gold: #B08A3E; --clay: #B0612C;
+    --r-lg: 18px; --r-md: 14px; --shadow: 0 1px 2px rgba(36,30,18,.05);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  button { font-family: inherit; }
+  a, button { color: inherit; text-decoration: none; background: none; border: 0; cursor: pointer; }
+  h1,h2,h3,p,span,a,label { word-break: keep-all; }
+  body {
+    background: #C9C6BA;
+    font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Noto Sans KR", system-ui, sans-serif;
+    color: var(--ink); -webkit-font-smoothing: antialiased;
+    padding: 30px 20px 50px;
+  }
+  .lab { max-width: 1300px; margin: 0 auto 22px; }
+  .lab h1 { font-size: 19px; font-weight: 800; margin: 0 0 4px; }
+  .lab p { font-size: 13px; color: var(--ink-2); margin: 0; font-weight: 600; }
+  .row { display: flex; gap: 28px; justify-content: center; flex-wrap: wrap; max-width: 1300px; margin: 0 auto; }
+  .col { width: 360px; }
+  .col > .tag { text-align: center; margin-bottom: 12px; }
+  .col > .tag b { font-size: 15px; font-weight: 800; }
+  .col > .tag span { display: block; font-size: 12px; color: var(--ink-2); font-weight: 600; margin-top: 3px; }
+
+  .phone {
+    position: relative; width: 360px; height: 740px; background: var(--bg);
+    border-radius: 28px; overflow: hidden; box-shadow: 0 14px 36px -10px rgba(40,34,22,.4);
+    display: flex; flex-direction: column;
+  }
+  .ic { width: 1em; height: 1em; display: inline-block; vertical-align: -0.12em; flex-shrink: 0; }
+  .sb { height: 40px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+  .ab { display: flex; align-items: center; padding: 2px 10px; flex-shrink: 0; }
+  .ab .bk { width: 34px; height: 34px; display: grid; place-items: center; }
+  .ab .bk .ic { font-size: 20px; }
+  .ab .tt { flex: 1; text-align: center; font-size: 15px; font-weight: 800; }
+  .ab .rt { width: 34px; font-size: 11px; }
+  .scroll { flex: 1; overflow-y: auto; }
+  .foot { flex-shrink: 0; padding: 12px 18px 18px; background: var(--bg); }
+  .diag-btn { width: 100%; height: 52px; border-radius: 14px; background: var(--green); color: #fff; font-size: 15px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; gap: 7px; box-shadow: 0 6px 16px -4px rgba(31,75,60,.45); }
+  .diag-btn .ic { font-size: 18px; }
+
+  /* ===== 공통 작은 요소 ===== */
+  .chip { padding: 9px 13px; border-radius: 10px; background: var(--card); box-shadow: var(--shadow); border: 1.5px solid transparent; font-size: 12.5px; font-weight: 700; color: var(--ink-2); }
+  .chip.on { background: var(--green-soft); border-color: var(--green); color: var(--green); font-weight: 800; }
+  .chips { display: flex; flex-wrap: wrap; gap: 7px; }
+
+  /* =========================================================
+     A안 — 사진 히어로
+     ========================================================= */
+  .A .hero { margin: 4px 18px 22px; border-radius: var(--r-lg); background: linear-gradient(160deg, #234c3d, #163729); padding: 26px 22px 24px; position: relative; overflow: hidden; }
+  .A .hero::after { content: ""; position: absolute; right: -30px; top: -30px; width: 130px; height: 130px; border-radius: 50%; background: rgba(255,255,255,.05); }
+  .A .hero .eyebrow { font-size: 11.5px; font-weight: 800; color: #9DBFB0; letter-spacing: .04em; margin: 0 0 6px; }
+  .A .hero h2 { font-size: 21px; font-weight: 800; color: #fff; margin: 0 0 18px; line-height: 1.35; letter-spacing: -.02em; }
+  .A .shot { display: flex; gap: 10px; }
+  .A .shot .big { flex: 1; height: 116px; border-radius: 14px; background: rgba(255,255,255,.1); border: 1.5px dashed rgba(255,255,255,.35); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px; color: #fff; }
+  .A .shot .big .ic { font-size: 28px; }
+  .A .shot .big .t { font-size: 12.5px; font-weight: 700; }
+  .A .shot .mini { width: 70px; display: flex; flex-direction: column; gap: 8px; }
+  .A .shot .mini .m { flex: 1; border-radius: 11px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16); display: grid; place-items: center; color: rgba(255,255,255,.5); }
+  .A .shot .mini .m .ic { font-size: 15px; }
+  .A .body { padding: 0 18px; }
+  .A .qline { font-size: 13px; font-weight: 800; color: var(--ink); margin: 0 2px 10px; display: flex; align-items: center; gap: 6px; }
+  .A .qline .mini2 { font-size: 11px; font-weight: 600; color: var(--gray); }
+  .A .seg { margin-bottom: 20px; }
+  .A .cropline { display: flex; gap: 7px; overflow-x: auto; padding-bottom: 2px; }
+  .A .cropline .cc { flex-shrink: 0; display: flex; align-items: center; gap: 6px; padding: 9px 13px; border-radius: 999px; background: var(--card); box-shadow: var(--shadow); font-size: 12.5px; font-weight: 700; color: var(--ink-2); border: 1.5px solid transparent; }
+  .A .cropline .cc.on { background: var(--green); color: #fff; border-color: var(--green); }
+  .A .cropline .cc .ic { font-size: 14px; }
+
+  /* =========================================================
+     B안 — 단계 카드 (여백 넉넉, 큰 카드)
+     ========================================================= */
+  .B .scroll { padding: 6px 18px 10px; }
+  .B .intro { margin: 6px 2px 20px; }
+  .B .intro h2 { font-size: 20px; font-weight: 800; margin: 0 0 5px; letter-spacing: -.02em; }
+  .B .intro p { font-size: 12.5px; color: var(--gray); font-weight: 600; margin: 0; }
+  .B .qcard { background: var(--card); border-radius: var(--r-lg); box-shadow: var(--shadow); padding: 17px 16px; margin-bottom: 13px; }
+  .B .qcard .qh { display: flex; align-items: center; gap: 9px; margin-bottom: 14px; }
+  .B .qcard .qh .num { width: 24px; height: 24px; border-radius: 8px; background: var(--green-soft); color: var(--green); font-size: 12px; font-weight: 800; display: grid; place-items: center; flex-shrink: 0; }
+  .B .qcard .qh .qt { font-size: 14px; font-weight: 800; }
+  .B .qcard .qh .qopt { margin-left: auto; font-size: 11px; font-weight: 700; color: var(--gray); }
+  .B .qcard.filled .qh .num { background: var(--green); color: #fff; }
+  .B .crop3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 7px; }
+  .B .crop3 .cc { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 4px; border-radius: 12px; background: var(--field-bg); border: 1.5px solid transparent; font-size: 11.5px; font-weight: 700; color: var(--ink-2); }
+  .B .crop3 .cc .ic { font-size: 22px; }
+  .B .crop3 .cc.on { background: var(--green-soft); border-color: var(--green); color: var(--green); }
+  .B .crop3 .cc.on .ic { color: var(--green); }
+  .B .photo { display: flex; align-items: center; gap: 12px; padding: 4px; }
+  .B .photo .pbox { width: 72px; height: 72px; border-radius: 12px; background: var(--field-bg); border: 1.5px dashed rgba(48,42,30,.2); display: grid; place-items: center; color: var(--sage); flex-shrink: 0; }
+  .B .photo .pbox .ic { font-size: 22px; }
+  .B .photo .ptxt b { font-size: 13px; font-weight: 800; display: block; margin-bottom: 2px; }
+  .B .photo .ptxt span { font-size: 11.5px; color: var(--gray); font-weight: 600; }
+
+  /* =========================================================
+     C안 — 대화형 (한 번에 하나, 큰 질문)
+     ========================================================= */
+  .C .scroll { padding: 8px 20px 10px; }
+  .C .prog { display: flex; gap: 5px; margin: 6px 0 26px; }
+  .C .prog i { flex: 1; height: 4px; border-radius: 2px; background: var(--line); }
+  .C .prog i.on { background: var(--green); }
+  .C .prog i.cur { background: var(--green); }
+  .C .step-label { font-size: 12px; font-weight: 800; color: var(--sage); margin: 0 0 8px; }
+  .C .bigq { font-size: 25px; font-weight: 800; line-height: 1.3; letter-spacing: -.025em; margin: 0 0 6px; }
+  .C .bigsub { font-size: 13px; color: var(--gray); font-weight: 600; margin: 0 0 26px; }
+  .C .answers { display: flex; flex-direction: column; gap: 10px; }
+  .C .ans { display: flex; align-items: center; gap: 13px; padding: 16px 17px; border-radius: 15px; background: var(--card); box-shadow: var(--shadow); border: 1.5px solid transparent; font-size: 15px; font-weight: 700; color: var(--ink); }
+  .C .ans .ic { font-size: 22px; color: var(--sage); }
+  .C .ans.on { background: var(--green-soft); border-color: var(--green); color: var(--green); font-weight: 800; }
+  .C .ans.on .ic { color: var(--green); }
+  .C .ans .arrow { margin-left: auto; color: #C7C8BE; font-size: 16px; }
+</style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute"><defs>
+    <symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14 0"/><path d="M2 8.82a15 15 0 0 1 20 0"/><line x1="12" y1="20" x2="12" y2="20"/></symbol>
+    <symbol id="i-batt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="8" width="18" height="9" rx="2"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 6 9 12 15 18"/></symbol>
+    <symbol id="i-cam" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></symbol>
+    <symbol id="i-scan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><line x1="3" y1="12" x2="21" y2="12"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="6" x2="12" y2="18"/><line x1="6" y1="12" x2="18" y2="12"/></symbol>
+    <symbol id="i-next" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></symbol>
+    <symbol id="cf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="14" r="7"/><path d="M12 7c0-2 1-4 3-4"/></symbol>
+    <symbol id="cl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></symbol>
+    <symbol id="cr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6s4 1 4 5-3 11-4 11-4-7-4-11 4-5 4-5z"/></symbol>
+    <symbol id="ct" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="6"/><path d="M12 7V4"/></symbol>
+    <symbol id="cg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V8"/><path d="M12 8c-2 0-3-1.5-3-3.5C11 4.5 12 6 12 8zM12 8c2 0 3-1.5 3-3.5C13 4.5 12 6 12 8z"/></symbol>
+    <symbol id="cs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 13v8"/><path d="M5 13a7 7 0 0 1 14 0z"/></symbol>
+  </defs></svg>
+
+  <div class="lab">
+    <h1>병해진단 입력 — 비교 3안</h1>
+    <p>"정보 때려박은" 느낌 빼고, 비율·위계·호흡 잡은 세 방향. hybrid 톤 유지.</p>
+  </div>
+
+  <div class="row">
+
+    <!-- ============ A안 ============ -->
+    <div class="col">
+      <div class="tag"><b>A · 사진 히어로</b><span>사진이 주인공. AI 진단 = 사진이라는 메시지</span></div>
+      <div class="phone A">
+        <div class="sb"><span>9:41</span><span><svg class="ic"><use href="#i-wifi"/></svg> <svg class="ic"><use href="#i-batt"/></svg></span></div>
+        <div class="ab"><span class="bk"><svg class="ic"><use href="#i-back"/></svg></span><span class="tt">병해진단</span><span class="rt"></span></div>
+        <div class="scroll">
+          <div class="hero">
+            <p class="eyebrow">AI 영상 진단</p>
+            <h2>증상 사진을 올리면<br>병을 찾아드려요</h2>
+            <div class="shot">
+              <button class="big"><svg class="ic"><use href="#i-cam"/></svg><span class="t">사진 촬영 · 등록</span></button>
+              <div class="mini">
+                <div class="m"><svg class="ic"><use href="#i-plus"/></svg></div>
+                <div class="m"><svg class="ic"><use href="#i-plus"/></svg></div>
+              </div>
+            </div>
+          </div>
+          <div class="body">
+            <div class="seg">
+              <p class="qline">어떤 작물인가요?</p>
+              <div class="cropline">
+                <button class="cc on"><svg class="ic"><use href="#cf"/></svg>과채류</button>
+                <button class="cc"><svg class="ic"><use href="#cl"/></svg>엽채류</button>
+                <button class="cc"><svg class="ic"><use href="#cr"/></svg>근채류</button>
+                <button class="cc"><svg class="ic"><use href="#ct"/></svg>과수</button>
+              </div>
+            </div>
+            <div class="seg">
+              <p class="qline">주요 증상 <span class="mini2">복수 선택</span></p>
+              <div class="chips">
+                <button class="chip on">잎 반점</button>
+                <button class="chip">잎 마름</button>
+                <button class="chip on">흰가루·곰팡이</button>
+                <button class="chip">잎 변색</button>
+                <button class="chip">시듦</button>
+              </div>
+            </div>
+            <div class="seg">
+              <p class="qline">언제부터?</p>
+              <div class="chips">
+                <button class="chip">1~3일</button>
+                <button class="chip on">4~7일</button>
+                <button class="chip">1~2주</button>
+                <button class="chip">2주+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="foot"><button class="diag-btn"><svg class="ic"><use href="#i-scan"/></svg> AI 진단하기</button></div>
+      </div>
+    </div>
+
+    <!-- ============ B안 ============ -->
+    <div class="col">
+      <div class="tag"><b>B · 단계 카드</b><span>질문마다 카드로 분리. 여백·위계로 호흡</span></div>
+      <div class="phone B">
+        <div class="sb"><span>9:41</span><span><svg class="ic"><use href="#i-wifi"/></svg> <svg class="ic"><use href="#i-batt"/></svg></span></div>
+        <div class="ab"><span class="bk"><svg class="ic"><use href="#i-back"/></svg></span><span class="tt">병해진단</span><span class="rt"></span></div>
+        <div class="scroll">
+          <div class="intro">
+            <h2>무엇이 문제인지<br>같이 찾아봐요</h2>
+            <p>몇 가지만 알려주면 AI가 진단해드려요</p>
+          </div>
+          <div class="qcard filled">
+            <div class="qh"><span class="num">1</span><span class="qt">어떤 작물인가요?</span></div>
+            <div class="crop3">
+              <button class="cc on"><svg class="ic"><use href="#cf"/></svg>과채류</button>
+              <button class="cc"><svg class="ic"><use href="#cl"/></svg>엽채류</button>
+              <button class="cc"><svg class="ic"><use href="#cr"/></svg>근채류</button>
+              <button class="cc"><svg class="ic"><use href="#ct"/></svg>과수</button>
+              <button class="cc"><svg class="ic"><use href="#cg"/></svg>벼·잡곡</button>
+              <button class="cc"><svg class="ic"><use href="#cs"/></svg>특용</button>
+            </div>
+          </div>
+          <div class="qcard filled">
+            <div class="qh"><span class="num">2</span><span class="qt">주요 증상</span><span class="qopt">복수</span></div>
+            <div class="chips">
+              <button class="chip on">잎 반점</button>
+              <button class="chip">잎 마름</button>
+              <button class="chip on">흰가루·곰팡이</button>
+              <button class="chip">잎 변색</button>
+            </div>
+          </div>
+          <div class="qcard">
+            <div class="qh"><span class="num">3</span><span class="qt">증상 사진</span><span class="qopt">선택</span></div>
+            <div class="photo">
+              <div class="pbox"><svg class="ic"><use href="#i-cam"/></svg></div>
+              <div class="ptxt"><b>사진 등록 / 촬영</b><span>최대 5장, 있으면 정확도 ↑</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="foot"><button class="diag-btn"><svg class="ic"><use href="#i-scan"/></svg> AI 진단하기</button></div>
+      </div>
+    </div>
+
+    <!-- ============ C안 ============ -->
+    <div class="col">
+      <div class="tag"><b>C · 대화형</b><span>한 번에 하나씩 크게 물음. 부담 없이</span></div>
+      <div class="phone C">
+        <div class="sb"><span>9:41</span><span><svg class="ic"><use href="#i-wifi"/></svg> <svg class="ic"><use href="#i-batt"/></svg></span></div>
+        <div class="ab"><span class="bk"><svg class="ic"><use href="#i-back"/></svg></span><span class="tt">병해진단</span><span class="rt">1/4</span></div>
+        <div class="scroll">
+          <div class="prog"><i class="on"></i><i class="cur"></i><i></i><i></i></div>
+          <p class="step-label">STEP 1</p>
+          <h2 class="bigq">어떤 작물에<br>생긴 문제인가요?</h2>
+          <p class="bigsub">작물 종류를 골라주세요</p>
+          <div class="answers">
+            <button class="ans on"><svg class="ic"><use href="#cf"/></svg>과채류 (오이·토마토·고추)<span class="arrow"><svg class="ic"><use href="#i-next"/></svg></span></button>
+            <button class="ans"><svg class="ic"><use href="#cl"/></svg>엽채류 (상추·배추)<span class="arrow"><svg class="ic"><use href="#i-next"/></svg></span></button>
+            <button class="ans"><svg class="ic"><use href="#ct"/></svg>과수 (사과·배·감귤)<span class="arrow"><svg class="ic"><use href="#i-next"/></svg></span></button>
+            <button class="ans"><svg class="ic"><use href="#cg"/></svg>벼·잡곡<span class="arrow"><svg class="ic"><use href="#i-next"/></svg></span></button>
+          </div>
+        </div>
+        <div class="foot"><button class="diag-btn">다음 <svg class="ic"><use href="#i-next"/></svg></button></div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

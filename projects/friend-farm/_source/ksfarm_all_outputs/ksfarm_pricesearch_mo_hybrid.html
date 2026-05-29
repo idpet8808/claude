@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KS팜 — 작물 시세 검색</title>
+<style>
+  :root {
+    --bg: #ECEAE0; --card: #FFFFFF; --ink: #20251D; --ink-2: #45493E; --gray: #76796C;
+    --line: rgba(48,42,30,.08); --field-bg: #F4F4EF;
+    --green: #1F4B3C; --green-2: #163729; --green-soft: #E7EEE6;
+    --sage: #2F6150; --gold: #B08A3E; --clay: #B0612C;
+    --r-lg: 18px; --r-md: 14px; --shadow: 0 1px 2px rgba(36,30,18,.05);
+    --up: #B0612C; --down: #2F6150;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  button, input { font-family: inherit; }
+  a, button { color: inherit; text-decoration: none; background: none; border: 0; cursor: pointer; }
+  h1,h2,h3,p,span,a { word-break: keep-all; }
+  body {
+    background: #D8D5C9;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Pretendard", "Noto Sans KR", system-ui, sans-serif;
+    color: var(--ink); -webkit-font-smoothing: antialiased;
+    display: flex; justify-content: center; padding: 24px 0 40px;
+  }
+  .ic { width: 1em; height: 1em; display: inline-block; vertical-align: -0.12em; flex-shrink: 0; }
+
+  .phone {
+    position: relative; width: min(390px, 100%); background: var(--bg);
+    border-radius: 30px; overflow: hidden;
+    box-shadow: 0 18px 44px -12px rgba(40,34,22,.42); min-height: 860px;
+    display: flex; flex-direction: column;
+  }
+
+  .status-bar { height: 44px; display: flex; align-items: center; justify-content: space-between; padding: 0 22px; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .status-bar .group { display: inline-flex; gap: 6px; align-items: center; }
+
+  /* 검색 앱바 */
+  .search-appbar { display: flex; align-items: center; gap: 8px; padding: 4px 12px 12px; flex-shrink: 0; }
+  .search-appbar .back { width: 38px; height: 38px; display: grid; place-items: center; color: var(--ink); flex-shrink: 0; }
+  .search-appbar .back .ic { font-size: 22px; }
+  .search-appbar .input-wrap { flex: 1; display: flex; align-items: center; gap: 9px; background: var(--field-bg); border-radius: 12px; padding: 10px 14px; transition: background .15s, box-shadow .15s; }
+  .search-appbar .input-wrap:focus-within { background: var(--card); box-shadow: 0 0 0 3px rgba(31,75,60,.1); }
+  .search-appbar .input-wrap .ic { font-size: 17px; color: var(--gray); }
+  .search-appbar input { flex: 1; border: 0; background: none; font-size: 14.5px; font-weight: 500; color: var(--ink); outline: none; }
+  .search-appbar input::placeholder { color: var(--gray); font-weight: 500; }
+  .search-appbar .clear { padding: 2px; color: var(--gray); display: none; }
+  .search-appbar .clear.show { display: inline-flex; }
+  .search-appbar .clear .ic { font-size: 16px; }
+
+  .scroll { overflow-x: hidden; flex: 1; overflow-y: auto; padding: 4px 20px 24px; }
+
+  /* 초기 상태: 인기/최근 */
+  .sec-h { font-size: 13.5px; color: var(--gray); font-weight: 700; margin: 14px 2px 11px; }
+  .pchips { display: flex; flex-wrap: wrap; gap: 7px; }
+  .pchip { display: inline-flex; align-items: center; gap: 5px; padding: 7px 13px; border-radius: 999px; background: var(--card); box-shadow: var(--shadow); font-size: 13px; font-weight: 700; color: var(--ink-2); }
+  .pchip .rk { font-size: 11px; font-weight: 800; color: var(--green); }
+
+  /* 결과 상태 */
+  .result-head { font-size: 13.5px; color: var(--gray); font-weight: 600; margin: 6px 2px 12px; }
+  .result-head b { color: var(--ink); font-weight: 800; }
+  .price-list { display: flex; flex-direction: column; gap: 10px; }
+  .pcard { display: flex; align-items: center; gap: 12px; background: var(--card); border-radius: var(--r-md); box-shadow: var(--shadow); padding: 14px 16px; }
+  .pcard .pi { width: 40px; height: 40px; border-radius: 10px; background: var(--green-soft); color: var(--green); display: grid; place-items: center; flex-shrink: 0; font-size: 19px; }
+  .pcard .pm { flex: 1; min-width: 0; }
+  .pcard .pn-row { display: flex; align-items: baseline; gap: 6px; }
+  .pcard .pn { font-size: 14.5px; font-weight: 800; letter-spacing: -0.014em; }
+  .pcard .pu { font-size: 11px; color: var(--gray); font-weight: 600; }
+  .pcard .pp-row { display: flex; align-items: baseline; gap: 8px; margin-top: 4px; }
+  .pcard .pp { font-size: 15.5px; font-weight: 800; }
+  .pcard .pd { font-size: 11.5px; font-weight: 800; display: inline-flex; align-items: center; gap: 2px; }
+  .pcard .pd.up { color: var(--up); }
+  .pcard .pd.down { color: var(--down); }
+  .pcard .pd .arr { font-size: 9px; }
+  .pcard .cv { color: #C7C8BE; font-size: 17px; flex-shrink: 0; }
+
+  .empty { text-align: center; padding: 60px 20px; color: var(--gray); }
+  .empty .em { font-size: 13.5px; font-weight: 600; }
+  .empty .es { font-size: 12px; margin-top: 6px; }
+  .hidden { display: none !important; }
+
+  /* === 360px safety net (v3) === */
+  .phone img, .phone svg { max-width: 100%; height: auto; }
+  .phone { word-break: keep-all; overflow-wrap: break-word; }
+  </style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14 0"/><path d="M8.5 16.05a6 6 0 0 1 7 0"/><path d="M2 8.82a15 15 0 0 1 20 0"/><line x1="12" y1="20" x2="12" y2="20"/></symbol>
+    <symbol id="i-battery" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="8" width="18" height="9" rx="2"/><path d="M22 11v3"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 6 9 12 15 18"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></symbol>
+    <symbol id="i-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></symbol>
+  </defs></svg>
+
+  <div class="phone">
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="group"><svg class="ic"><use href="#i-wifi"/></svg> <svg class="ic"><use href="#i-battery"/></svg></span>
+    </div>
+
+    <div class="search-appbar">
+      <button class="back" aria-label="뒤로"><svg class="ic"><use href="#i-back"/></svg></button>
+      <div class="input-wrap">
+        <svg class="ic"><use href="#i-search"/></svg>
+        <input id="q" type="text" placeholder="작물 이름 검색" autocomplete="off"/>
+        <button class="clear" id="clear" aria-label="지우기"><svg class="ic"><use href="#i-x"/></svg></button>
+      </div>
+    </div>
+
+    <div class="scroll">
+      <!-- 초기 상태 -->
+      <div id="initState">
+        <h2 class="sec-h">최근 검색어</h2>
+        <div class="pchips">
+          <a class="pchip">양파</a>
+          <a class="pchip">토마토</a>
+          <a class="pchip">감자</a>
+        </div>
+        <h2 class="sec-h">많이 찾는 작물</h2>
+        <div class="pchips">
+          <a class="pchip"><span class="rk">1</span>배추</a>
+          <a class="pchip"><span class="rk">2</span>양파</a>
+          <a class="pchip"><span class="rk">3</span>마늘</a>
+          <a class="pchip"><span class="rk">4</span>고추</a>
+          <a class="pchip"><span class="rk">5</span>대파</a>
+        </div>
+      </div>
+
+      <!-- 결과 상태 -->
+      <div id="resultState" class="hidden">
+        <p class="result-head"><b id="qText"></b> 검색 결과 <b id="qCount">0</b>건</p>
+        <div class="price-list" id="resultList"></div>
+        <div class="empty hidden" id="emptyState">
+          <div class="em">검색 결과가 없어요</div>
+          <div class="es">다른 작물 이름으로 검색해 보세요</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // KAMIS daily_sales_list 응답 그대로 (도매 기준) — 데모 데이터
+    var DATA = [
+      {nm:'양파', unit:'1kg', price:'2,180원', dir:'up', val:'2.4'},
+      {nm:'양파', unit:'20kg', price:'34,500원', dir:'up', val:'1.8'},
+      {nm:'양파(붉은)', unit:'1kg', price:'2,450원', dir:'up', val:'3.1'},
+      {nm:'토마토', unit:'10kg', price:'28,500원', dir:'down', val:'2.7'},
+      {nm:'토마토(완숙)', unit:'5kg', price:'18,200원', dir:'down', val:'1.5'},
+      {nm:'대추방울토마토', unit:'5kg', price:'42,300원', dir:'up', val:'4.5'},
+      {nm:'감자', unit:'20kg', price:'36,400원', dir:'up', val:'1.2'},
+      {nm:'감자(수미)', unit:'1kg', price:'2,100원', dir:'up', val:'0.8'},
+      {nm:'배추', unit:'10kg', price:'12,200원', dir:'down', val:'5.4'},
+      {nm:'배추(절임)', unit:'10kg', price:'18,500원', dir:'down', val:'2.1'},
+      {nm:'무', unit:'20kg', price:'18,600원', dir:'up', val:'2.1'},
+      {nm:'고추', unit:'10kg', price:'52,000원', dir:'up', val:'7.8'},
+      {nm:'고추(청양)', unit:'10kg', price:'68,400원', dir:'up', val:'9.2'},
+      {nm:'마늘', unit:'1kg', price:'8,200원', dir:'down', val:'1.3'},
+      {nm:'마늘(깐)', unit:'1kg', price:'12,400원', dir:'down', val:'0.8'},
+      {nm:'대파', unit:'1kg', price:'2,800원', dir:'up', val:'4.5'},
+      {nm:'오이', unit:'10kg', price:'38,400원', dir:'up', val:'3.2'},
+      {nm:'오이(백다다기)', unit:'10kg', price:'42,100원', dir:'up', val:'2.8'},
+      {nm:'딸기', unit:'2kg', price:'24,800원', dir:'down', val:'1.5'},
+      {nm:'당근', unit:'20kg', price:'42,500원', dir:'up', val:'1.8'}
+    ];
+
+    var input = document.getElementById('q');
+    var clearBtn = document.getElementById('clear');
+    var initState = document.getElementById('initState');
+    var resultState = document.getElementById('resultState');
+    var qText = document.getElementById('qText');
+    var qCount = document.getElementById('qCount');
+    var listEl = document.getElementById('resultList');
+    var emptyEl = document.getElementById('emptyState');
+
+    function itemHTML(d){
+      var arr = d.dir==='up' ? '▲' : '▼';
+      return '<a class="pcard">'
+        + '<span class="pi"><svg class="ic"><use href="#i-leaf"/></svg></span>'
+        + '<div class="pm">'
+        + '<div class="pn-row"><span class="pn">'+d.nm+'</span><span class="pu">'+d.unit+'</span></div>'
+        + '<div class="pp-row"><span class="pp">'+d.price+'</span><span class="pd '+d.dir+'"><span class="arr">'+arr+'</span>'+d.val+'%</span></div>'
+        + '</div>'
+        + '<svg class="ic cv"><use href="#i-cv"/></svg></a>';
+    }
+
+    function update(){
+      var q = input.value.trim();
+      clearBtn.classList.toggle('show', q.length>0);
+      if (!q) {
+        initState.classList.remove('hidden');
+        resultState.classList.add('hidden');
+        return;
+      }
+      initState.classList.add('hidden');
+      resultState.classList.remove('hidden');
+      var matches = DATA.filter(function(d){ return d.nm.indexOf(q) !== -1; });
+      qText.textContent = q;
+      qCount.textContent = matches.length;
+      listEl.innerHTML = matches.map(itemHTML).join('');
+      emptyEl.classList.toggle('hidden', matches.length>0);
+      listEl.classList.toggle('hidden', matches.length===0);
+    }
+
+    input.addEventListener('input', update);
+    clearBtn.addEventListener('click', function(){ input.value=''; input.focus(); update(); });
+    document.querySelectorAll('.pchip').forEach(function(c){
+      c.addEventListener('click', function(){ input.value = c.textContent.replace(/^\d+/,'').trim(); update(); });
+    });
+
+    // ?q= 진입 처리
+    (function(){
+      var p = new URLSearchParams(window.location.search);
+      var pre = p.get('q');
+      if (pre) { input.value = pre; update(); }
+    })();
+  </script>
+</body>
+</html>

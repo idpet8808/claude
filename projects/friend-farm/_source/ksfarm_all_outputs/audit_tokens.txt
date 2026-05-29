@@ -1,0 +1,127 @@
+================================================================================
+컬러·토큰 일관성 감사
+================================================================================
+
+[✅ 일치하는 토큰]
+  --bg: #ECEAE0  (45개 파일에서 사용)
+  --card: #FFFFFF  (45개 파일에서 사용)
+  --clay: #B0612C  (21개 파일에서 사용)
+  --clay-soft: #F3E1D2  (1개 파일에서 사용)
+  --down: #2F6150  (2개 파일에서 사용)
+  --field-bg: #F4F4EF  (29개 파일에서 사용)
+  --gold: #B08A3E  (23개 파일에서 사용)
+  --gold-soft: #F2E9D2  (1개 파일에서 사용)
+  --gray: #76796C  (45개 파일에서 사용)
+  --gray-soft: #EDEEE9  (2개 파일에서 사용)
+  --green: #1F4B3C  (45개 파일에서 사용)
+  --green-2: #163729  (39개 파일에서 사용)
+  --green-soft: #E7EEE6  (43개 파일에서 사용)
+  --ink: #20251D  (45개 파일에서 사용)
+  --ink-2: #45493E  (45개 파일에서 사용)
+  --r-lg: 18px  (45개 파일에서 사용)
+  --r-md: 14px  (42개 파일에서 사용)
+  --r-sm: 10px  (1개 파일에서 사용)
+  --red: #B0612C  (12개 파일에서 사용)
+  --red-soft: #F3E6D6  (3개 파일에서 사용)
+  --sage: #2F6150  (27개 파일에서 사용)
+  --sage-soft: #E4ECE0  (1개 파일에서 사용)
+  --shadow: 0 1px 2px rgba(36,30,18,.05)  (39개 파일에서 사용)
+  --up: #B0612C  (2개 파일에서 사용)
+
+[🔴 불일치 토큰]
+
+  --line:
+    'rgba(48,42,30,.08)'  (25개)
+      - cropguide_detail
+      - cropguide_list
+      - diagnose_followup
+      - diagnose_input
+      - diagnose_loading
+      - diagnose_result
+      - diary_list
+      - diary_write2
+      - diary_write
+      - expert_detail
+      - expert_list
+      - expert_write
+      - farm_detail
+      - inquiry_list
+      - marketing_consent
+      - mypage
+      - noti_setting
+      - pestsearch_detail
+      - pestsearch_home
+      - pestsearch_search
+      - pricehome
+      - pricesearch
+      - settings
+      - support_detail
+      - support_list
+    'rgba(48,42,30,.10)'  (17개)
+      - dialogs
+      - editprofile
+      - farm_edit
+      - farm_register
+      - farmlist
+      - findaccount
+      - inquiry_detail
+      - inquiry_write
+      - location_view
+      - main
+      - notice_detail
+      - notice
+      - privacy_view
+      - pwchange
+      - signup
+      - signup_terms
+      - terms_view
+    'rgba(48,42,30,.12)'  (2개)
+      - login
+      - onboarding_entry
+    'rgba(48,42,30,.06)'  (1개)
+      - menu
+
+[누락 토큰 - 표준 토큰 셋과 비교]
+  cropguide_detail: 누락 ['down', 'up']
+  cropguide_list: 누락 ['down', 'up']
+  diagnose_followup: 누락 ['down', 'up']
+  diagnose_input: 누락 ['down', 'up']
+  diagnose_loading: 누락 ['down', 'up']
+  diagnose_result: 누락 ['down', 'up']
+  dialogs: 누락 ['clay', 'down', 'gold', 'sage', 'up']
+  diary_list: 누락 ['down', 'up']
+  diary_write2: 누락 ['down', 'up']
+  diary_write: 누락 ['down', 'up']
+  editprofile: 누락 ['clay', 'down', 'gold', 'sage', 'up']
+  expert_detail: 누락 ['down', 'up']
+  expert_list: 누락 ['down', 'up']
+  expert_write: 누락 ['down', 'up']
+  farm_detail: 누락 ['down', 'gold', 'up']
+  farm_edit: 누락 ['clay', 'down', 'gold', 'up']
+  farm_register: 누락 ['clay', 'down', 'gold', 'up']
+  farmlist: 누락 ['clay', 'down', 'field-bg', 'up']
+  findaccount: 누락 ['clay', 'down', 'gold', 'sage', 'up']
+  inquiry_detail: 누락 ['clay', 'down', 'field-bg', 'gold', 'sage', 'up']
+  inquiry_list: 누락 ['clay', 'down', 'field-bg', 'sage', 'up']
+  inquiry_write: 누락 ['clay', 'down', 'gold', 'sage', 'up']
+  location_view: 누락 ['clay', 'down', 'field-bg', 'gold', 'green-2', 'sage', 'shadow', 'up']
+  login: 누락 ['clay', 'down', 'gold', 'up']
+  main: 누락 ['down', 'field-bg', 'up']
+  marketing_consent: 누락 ['clay', 'down', 'field-bg', 'gold', 'sage', 'up']
+  menu: 누락 ['clay', 'down', 'field-bg', 'gold', 'green-2', 'r-md', 'sage', 'shadow', 'up']
+  mypage: 누락 ['clay', 'down', 'field-bg', 'up']
+  noti_setting: 누락 ['clay', 'down', 'field-bg', 'gold', 'green-soft', 'r-md', 'sage', 'up']
+  notice_detail: 누락 ['clay', 'down', 'field-bg', 'gold', 'green-2', 'sage', 'shadow', 'up']
+  notice: 누락 ['clay', 'down', 'field-bg', 'gold', 'green-2', 'green-soft', 'r-md', 'sage', 'shadow', 'up']
+  onboarding_entry: 누락 ['clay', 'down', 'field-bg', 'gold', 'up']
+  pestsearch_detail: 누락 ['down', 'up']
+  pestsearch_home: 누락 ['down', 'up']
+  pestsearch_search: 누락 ['down', 'up']
+  privacy_view: 누락 ['clay', 'down', 'field-bg', 'gold', 'green-2', 'sage', 'shadow', 'up']
+  pwchange: 누락 ['clay', 'down', 'gold', 'sage', 'up']
+  settings: 누락 ['clay', 'down', 'field-bg', 'gold', 'sage', 'up']
+  signup: 누락 ['clay', 'down', 'gold', 'sage', 'up']
+  signup_terms: 누락 ['clay', 'down', 'field-bg', 'gold', 'sage', 'up']
+  support_detail: 누락 ['down', 'up']
+  support_list: 누락 ['down', 'up']
+  terms_view: 누락 ['clay', 'down', 'field-bg', 'gold', 'green-2', 'sage', 'shadow', 'up']

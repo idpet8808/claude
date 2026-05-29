@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>맞춤 추천 — 비교</title>
+<style>
+:root{--bg:#ECEAE0;--card:#FFFFFF;--ink:#20251D;--ink-2:#45493E;--gray:#76796C;--line:rgba(48,42,30,.08);--field-bg:#F4F4EF;--green:#1F4B3C;--green-2:#163729;--green-soft:#E7EEE6;--sage:#2F6150;--gold:#B08A3E;--clay:#B0612C;--r-lg:18px;--r-md:14px;--shadow:0 1px 2px rgba(36,30,18,.05);}
+*{box-sizing:border-box;}
+.ic{width:1em;height:1em;display:inline-block;vertical-align:-0.12em;flex-shrink:0;}
+body{margin:0;background:#D8D5C9;padding:26px 14px 50px;font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Noto Sans KR",system-ui,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+h3,p,span,div{word-break:keep-all;}
+.row{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;max-width:1480px;margin:0 auto;align-items:flex-start;}
+.col{width:350px;}
+.lab{margin:0 0 10px;text-align:center;}
+.lab .tag{display:inline-block;font-size:11px;font-weight:800;color:var(--green);background:var(--green-soft);padding:3px 10px;border-radius:999px;margin-bottom:6px;}
+.lab h3{font-size:14px;font-weight:800;margin:0 0 3px;letter-spacing:-0.02em;}
+.lab p{font-size:11.5px;color:#5a5d52;margin:0;font-weight:500;line-height:1.4;}
+.demo{background:var(--bg);border-radius:20px;padding:18px;box-shadow:0 10px 28px -12px rgba(40,34,22,.36);min-height:300px;}
+.sec-h{font-size:13px;font-weight:800;letter-spacing:-0.014em;margin:0 2px 11px;display:flex;align-items:center;gap:6px;}
+.sec-h .ic{font-size:15px;color:var(--green);}
+.sec-h .more{margin-left:auto;font-size:11.5px;color:var(--gray);font-weight:600;}
+.dday{flex-shrink:0;font-size:10px;font-weight:800;padding:2px 8px;border-radius:999px;background:var(--field-bg);color:var(--ink-2);}
+.dday.soon{background:var(--clay);color:#fff;}
+
+/* ===== A: 작은 가로 카드 ===== */
+.A-scroll{display:flex;gap:10px;overflow-x:auto;margin:0 -18px;padding:0 18px 4px;scrollbar-width:none;}
+.A-scroll::-webkit-scrollbar{display:none;}
+.A-card{flex:0 0 180px;background:var(--card);border-radius:var(--r-md);box-shadow:var(--shadow);padding:14px;border-left:3px solid var(--green);}
+.A-card .t{font-size:13.5px;font-weight:800;letter-spacing:-0.014em;line-height:1.38;}
+.A-card .o{font-size:11px;color:var(--gray);font-weight:600;margin-top:7px;}
+.A-card .d{margin-top:10px;}
+
+/* ===== B: 세로 리스트 강조 ===== */
+.B-list{display:flex;flex-direction:column;gap:9px;}
+.B-item{display:flex;align-items:center;gap:11px;background:var(--green-soft);border-radius:var(--r-md);padding:14px;}
+.B-item .star{color:var(--green);font-size:15px;flex-shrink:0;}
+.B-item .m{flex:1;min-width:0;}
+.B-item .t{font-size:13.5px;font-weight:800;letter-spacing:-0.014em;line-height:1.38;color:var(--green-2);}
+.B-item .o{font-size:11px;color:var(--sage);font-weight:600;margin-top:5px;display:flex;align-items:center;gap:6px;}
+.B-item .cv{color:var(--sage);opacity:.6;font-size:17px;flex-shrink:0;}
+
+/* ===== C: 1개 히어로 ===== */
+.C-hero{background:linear-gradient(155deg,#2C6150,var(--green) 66%,var(--green-2));border-radius:var(--r-md);padding:18px;color:#fff;}
+.C-hero .tp{display:flex;align-items:center;gap:6px;margin-bottom:12px;}
+.C-hero .bd{font-size:10px;font-weight:800;background:rgba(255,255,255,.2);padding:3px 9px;border-radius:999px;}
+.C-hero .dd{font-size:10px;font-weight:800;background:var(--clay);padding:3px 9px;border-radius:999px;}
+.C-hero .t{font-size:17px;font-weight:800;letter-spacing:-0.018em;line-height:1.4;}
+.C-hero .o{font-size:12px;opacity:.9;margin-top:8px;font-weight:600;}
+.C-more{display:flex;align-items:center;justify-content:center;gap:5px;margin-top:10px;height:42px;border-radius:var(--r-md);background:var(--card);box-shadow:var(--shadow);font-size:13px;font-weight:700;color:var(--ink-2);}
+.C-more .ic{font-size:15px;color:var(--gray);}
+
+/* ===== E: 요약 배너 ===== */
+.E-banner{display:flex;align-items:center;gap:13px;background:var(--card);border-radius:var(--r-md);box-shadow:var(--shadow);padding:16px;border-left:3px solid var(--green);}
+.E-banner .eic{width:42px;height:42px;border-radius:11px;background:var(--green-soft);color:var(--green);display:grid;place-items:center;flex-shrink:0;}
+.E-banner .eic .ic{font-size:21px;}
+.E-banner .em{flex:1;}
+.E-banner .et{font-size:14px;font-weight:800;letter-spacing:-0.014em;}
+.E-banner .et b{color:var(--green);}
+.E-banner .ed{font-size:11.5px;color:var(--gray);font-weight:500;margin-top:3px;}
+.E-banner .cv{color:#C7C8BE;font-size:18px;}
+</style></head>
+<body>
+<div class="row">
+
+<!-- A -->
+<div class="col">
+  <div class="lab"><span class="tag">A안</span><h3>작은 가로 카드</h3><p>지금보다 콤팩트, 2개씩 보임</p></div>
+  <div class="demo">
+    <div class="sec-h"><svg class="ic"><use href="#i-star"/></svg> 내 농장 맞춤 추천</div>
+    <div class="A-scroll">
+      <div class="A-card"><div class="t">청년후계농 영농정착지원</div><div class="o">농림축산식품부</div><div class="d"><span class="dday soon">D-5</span></div></div>
+      <div class="A-card"><div class="t">스마트팜 시설 현대화 지원</div><div class="o">전북 완주군</div><div class="d"><span class="dday">D-12</span></div></div>
+      <div class="A-card"><div class="t">농기계 구입 융자</div><div class="o">농협중앙회</div><div class="d"><span class="dday">D-25</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- B -->
+<div class="col">
+  <div class="lab"><span class="tag">B안</span><h3>세로 리스트 강조</h3><p>전체랑 같은 형태, 딥틸 배경+★로 구분</p></div>
+  <div class="demo">
+    <div class="sec-h"><svg class="ic"><use href="#i-star"/></svg> 내 농장 맞춤 추천</div>
+    <div class="B-list">
+      <a class="B-item"><svg class="ic star"><use href="#i-star"/></svg><div class="m"><div class="t">청년후계농 영농정착지원사업</div><div class="o">농림축산식품부 · 청년농 <span class="dday soon">D-5</span></div></div><svg class="ic cv"><use href="#i-cv"/></svg></a>
+      <a class="B-item"><svg class="ic star"><use href="#i-star"/></svg><div class="m"><div class="t">스마트팜 시설 현대화 지원사업</div><div class="o">전북 완주군 · 시설·현대화 <span class="dday">D-12</span></div></div><svg class="ic cv"><use href="#i-cv"/></svg></a>
+    </div>
+  </div>
+</div>
+
+<!-- C -->
+<div class="col">
+  <div class="lab"><span class="tag">C안</span><h3>1개 히어로 + 모두 보기</h3><p>가장 맞는 1개만 크게, 나머지는 버튼</p></div>
+  <div class="demo">
+    <div class="sec-h"><svg class="ic"><use href="#i-star"/></svg> 내 농장 맞춤 추천</div>
+    <div class="C-hero">
+      <div class="tp"><span class="bd">청년농</span><span class="dd">D-5</span></div>
+      <div class="t">2026년 청년후계농 영농정착지원사업</div>
+      <div class="o">농림축산식품부 · 만 18~40세</div>
+    </div>
+    <a class="C-more">맞춤 추천 3건 모두 보기 <svg class="ic"><use href="#i-cv"/></svg></a>
+  </div>
+</div>
+
+<!-- E -->
+<div class="col">
+  <div class="lab"><span class="tag">E안</span><h3>요약 배너</h3><p>카드 없이 "N건" 요약 → 탭하면 필터된 목록</p></div>
+  <div class="demo">
+    <a class="E-banner">
+      <span class="eic"><svg class="ic"><use href="#i-star"/></svg></span>
+      <span class="em"><span class="et"><b>완주군 · 시설채소</b> 맞춤 <b>3건</b></span><span class="ed">내 농장 조건에 맞는 지원사업이 있어요</span></span>
+      <svg class="ic cv"><use href="#i-cv"/></svg>
+    </a>
+  </div>
+</div>
+
+</div>
+<svg width="0" height="0" style="position:absolute"><defs>
+<symbol id="i-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15 9 22 9.5 17 14.5 18.5 21.5 12 17.5 5.5 21.5 7 14.5 2 9.5 9 9"/></symbol>
+<symbol id="i-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></symbol>
+<symbol id="i-cv-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></symbol>
+</defs></svg>
+</body></html>

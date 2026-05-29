@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>온보딩 빈공간 처리 — 비교</title>
+<style>
+:root{
+  --bg:#ECEAE0;--card:#FFFFFF;--ink:#20251D;--ink-2:#45493E;--gray:#76796C;
+  --line:rgba(48,42,30,.12);--green:#1F4B3C;--green-2:#163729;--green-soft:#E7EEE6;
+  --sage:#2F6150;--gold:#B08A3E;--r-lg:18px;--r-md:14px;--shadow:0 1px 2px rgba(36,30,18,.05);
+}
+*{box-sizing:border-box;} button{font-family:inherit;color:inherit;background:none;border:0;cursor:pointer;}
+h1,h2,h3,p,span{word-break:keep-all;}
+.ic{width:1em;height:1em;display:inline-block;vertical-align:-0.12em;flex-shrink:0;}
+body{margin:0;background:#D8D5C9;padding:24px 14px 50px;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Pretendard","Noto Sans KR",system-ui,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+.row-wrap{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;max-width:1180px;margin:0 auto;}
+.col{width:360px;}
+.lab2{margin:0 0 10px;}
+.lab2 .tag{display:inline-block;font-size:11px;font-weight:800;color:var(--green);background:var(--green-soft);padding:3px 9px;border-radius:999px;margin-bottom:7px;}
+.lab2 h3{font-size:15px;font-weight:800;letter-spacing:-0.02em;margin:0 0 4px;}
+.lab2 p{font-size:12px;color:#5a5d52;margin:0;line-height:1.5;}
+
+.phone{width:100%;background:var(--bg);border-radius:28px;overflow:hidden;box-shadow:0 16px 38px -12px rgba(40,34,22,.4);height:740px;display:flex;flex-direction:column;position:relative;}
+.status{height:40px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:12px;font-weight:700;flex-shrink:0;position:relative;z-index:2;}
+.body{flex:1;display:flex;flex-direction:column;padding:0 26px 26px;position:relative;z-index:2;}
+
+.logo{width:62px;height:62px;border-radius:20px;background:linear-gradient(160deg,#2C6150,var(--green));display:grid;place-items:center;color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 12px 24px -8px rgba(22,55,41,.5);}
+.logo .ic{font-size:33px;}
+.headline{font-size:24px;font-weight:800;letter-spacing:-0.03em;line-height:1.3;}
+.headline .hl{color:var(--green);}
+.sub{font-size:14px;color:var(--gray);margin-top:12px;line-height:1.6;font-weight:500;}
+
+.auth{flex-shrink:0;}
+.btn{width:100%;height:52px;border-radius:var(--r-md);font-size:14.5px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:9px;margin-bottom:9px;position:relative;}
+.btn .bi{position:absolute;left:18px;width:20px;height:20px;display:grid;place-items:center;}
+.btn .bi .ic{font-size:17px;}
+.btn-primary{background:linear-gradient(180deg,#2C6150,var(--green) 52%,var(--green-2));color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 8px 18px -8px rgba(22,55,41,.5);}
+.btn-kakao{background:#FEE500;color:#3C1E1E;}
+.divider{display:flex;align-items:center;gap:12px;margin:13px 0;color:var(--gray);font-size:12px;font-weight:600;}
+.divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--line);}
+.icon-row{display:flex;justify-content:center;gap:15px;}
+.icon-btn{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);}
+.icon-btn .ic{font-size:22px;}
+.icon-btn.naver{background:#03C75A;border-color:transparent;color:#fff;}
+.icon-btn.apple{background:#111;border-color:transparent;color:#fff;}
+.foot{text-align:center;font-size:13px;color:var(--gray);margin-top:20px;font-weight:500;}
+.foot a{color:var(--green);font-weight:700;text-decoration:underline;}
+
+/* ============ A안: 배경 모티프 + 심볼 강화 ============ */
+.A .hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+.A .logo{width:84px;height:84px;border-radius:26px;margin-bottom:26px;}
+.A .logo .ic{font-size:44px;}
+.A .headline{font-size:26px;}
+.A .bg-motif{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none;}
+.A .bg-motif svg{position:absolute;opacity:.05;}
+.A .m1{width:300px;height:300px;top:-60px;right:-90px;color:var(--green);}
+.A .m2{width:240px;height:240px;bottom:120px;left:-100px;color:var(--sage);}
+
+/* ============ B안: 기능 인트로 슬라이드 ============ */
+.B .hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+.B .slide-ic{width:120px;height:120px;border-radius:30px;background:var(--green-soft);display:grid;place-items:center;color:var(--green);margin-bottom:28px;}
+.B .slide-ic .ic{font-size:60px;}
+.B .headline{font-size:23px;}
+.B .dots{display:flex;justify-content:center;gap:7px;margin:24px 0 0;}
+.B .dot{width:7px;height:7px;border-radius:999px;background:rgba(48,42,30,.18);}
+.B .dot.on{width:20px;background:var(--green);}
+.B .auth .skip{text-align:center;font-size:13px;color:var(--gray);font-weight:600;margin-top:14px;}
+
+/* ============ C안: 상단 이미지 영역 ============ */
+.C .body{padding:0;}
+.C .imgwrap{height:300px;flex-shrink:0;position:relative;overflow:hidden;background:linear-gradient(165deg,#3A6B57 0%,var(--green) 60%,var(--green-2) 100%);display:flex;align-items:center;justify-content:center;}
+.C .imgwrap .big{color:rgba(255,255,255,.92);}
+.C .imgwrap .big .ic{font-size:96px;}
+.C .imgwrap .field{position:absolute;bottom:0;left:0;right:0;height:80px;background:rgba(255,255,255,.06);}
+.C .imgwrap .field2{position:absolute;bottom:0;left:0;right:0;height:40px;background:rgba(255,255,255,.06);}
+.C .cbody{flex:1;display:flex;flex-direction:column;padding:26px 26px 26px;}
+.C .ctop{text-align:center;margin-bottom:auto;}
+.C .headline{font-size:23px;}
+.C .sub{margin-bottom:8px;}
+</style></head>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs>
+<symbol id="i-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8a7 7 0 0 1-13.71 2"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></symbol>
+<symbol id="i-leaf-f" viewBox="0 0 24 24" fill="currentColor"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8a7 7 0 0 1-13.71 2"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
+<symbol id="i-chat" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.5 3 2 6.6 2 11c0 2.8 1.9 5.3 4.7 6.7-.2.7-.7 2.5-.8 2.9 0 .2.1.4.4.2.3-.2 3-2 4.2-2.8.5.1 1 .1 1.5.1 5.5 0 10-3.6 10-8s-4.5-8-10-8z"/></symbol>
+<symbol id="i-apple" viewBox="0 0 24 24" fill="currentColor"><path d="M17 12.5c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.8-3.5.8s-1.8-.8-3-.8c-1.5 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7 2-1.1 2.8-2.2c.9-1.3 1.2-2.5 1.3-2.6-.1 0-2.5-1-2.5-3.8z"/></symbol>
+<symbol id="i-naver" viewBox="0 0 24 24" fill="currentColor"><path d="M5 4h4.6l4.8 7.2V4H19v16h-4.6L9.6 12.8V20H5z"/></symbol>
+<symbol id="i-google" viewBox="0 0 24 24"><path fill="#4285F4" d="M21.6 12.2c0-.6-.1-1.3-.2-1.9H12v3.6h5.4c-.2 1.2-.9 2.3-2 3v2.5h3.2c1.9-1.7 3-4.3 3-7.2z"/><path fill="#34A853" d="M12 22c2.7 0 5-.9 6.6-2.5l-3.2-2.5c-.9.6-2 .9-3.4.9-2.6 0-4.8-1.8-5.6-4.2H3.1v2.6C4.7 19.9 8.1 22 12 22z"/><path fill="#FBBC05" d="M6.4 13.7c-.2-.6-.3-1.2-.3-1.9s.1-1.3.3-1.9V7.3H3.1C2.4 8.7 2 10.3 2 12s.4 3.3 1.1 4.7l3.3-2.6z"/><path fill="#EA4335" d="M12 6.4c1.5 0 2.8.5 3.8 1.5l2.8-2.8C16.9 3.5 14.7 2.6 12 2.6 8.1 2.6 4.7 4.7 3.1 7.9l3.3 2.6C7.2 8.1 9.4 6.4 12 6.4z"/></symbol>
+<symbol id="i-camera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.2"/></symbol>
+<symbol id="i-sprout" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V11"/><path d="M12 11c0-3-2-5-5-5-1 0-2 .3-2 .3s.2 4 3 5c2 .7 4-.3 4-.3z"/><path d="M12 13c0-3 2-5 5-5 1 0 2 .3 2 .3s-.2 4-3 5c-2 .7-4-.3-4-.3z"/></symbol>
+</defs></svg>
+
+<div class="row-wrap">
+
+<!-- A안 -->
+<div class="col">
+  <div class="lab2"><span class="tag">A안</span><h3>배경 모티프 + 심볼 강화</h3><p>지금 구조 유지. 배경에 아주 옅은 잎 모티프 + 로고를 크게. 가장 가볍고 톤 안정적.</p></div>
+  <div class="phone A">
+    <div class="bg-motif">
+      <svg class="m1" viewBox="0 0 24 24"><use href="#i-leaf-f"/></svg>
+      <svg class="m2" viewBox="0 0 24 24"><use href="#i-leaf-f"/></svg>
+    </div>
+    <div class="status"><span>9:41</span><span>●●●</span></div>
+    <div class="body">
+      <div class="hero">
+        <div class="logo"><svg class="ic"><use href="#i-leaf"/></svg></div>
+        <h1 class="headline">농사를 더 쉽게,<br><span class="hl">더 똑똑하게</span></h1>
+        <p class="sub">일지 작성, 작물 정보, 대화형 AI까지<br>하나로 관리해 보세요</p>
+      </div>
+      <div class="auth">
+        <button class="btn btn-primary"><span class="bi"><svg class="ic"><use href="#i-mail"/></svg></span>이메일로 시작하기</button>
+        <button class="btn btn-kakao"><span class="bi"><svg class="ic"><use href="#i-chat"/></svg></span>카카오로 시작하기</button>
+        <div class="divider">간편 로그인</div>
+        <div class="icon-row">
+          <button class="icon-btn naver"><svg class="ic"><use href="#i-naver"/></svg></button>
+          <button class="icon-btn apple"><svg class="ic"><use href="#i-apple"/></svg></button>
+          <button class="icon-btn"><svg class="ic"><use href="#i-google"/></svg></button>
+        </div>
+        <div class="foot">이미 계정이 있으신가요? <a href="#">로그인</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- B안 -->
+<div class="col">
+  <div class="lab2"><span class="tag">B안</span><h3>기능 인트로 슬라이드</h3><p>로그인 전에 앱 소개 2~3장. 큰 기능 아이콘 + 카피 + 점 인디케이터. 마지막 장에서 로그인.</p></div>
+  <div class="phone B">
+    <div class="status"><span>9:41</span><span>●●●</span></div>
+    <div class="body">
+      <div class="hero">
+        <div class="slide-ic"><svg class="ic"><use href="#i-camera"/></svg></div>
+        <h1 class="headline">사진 한 장이면<br><span class="hl">병해를 진단</span>해요</h1>
+        <p class="sub">잎 사진을 찍어 올리면<br>AI가 병해를 살펴봐 드려요</p>
+        <div class="dots"><span class="dot on"></span><span class="dot"></span><span class="dot"></span></div>
+      </div>
+      <div class="auth">
+        <button class="btn btn-primary">다음</button>
+        <div class="skip">건너뛰기</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- C안 -->
+<div class="col">
+  <div class="lab2"><span class="tag">C안</span><h3>상단 이미지 영역</h3><p>당근식. 상단에 딥틸 이미지/일러스트 영역(밭·작물), 하단에 카피+로그인. 따뜻하고 농사앱다움.</p></div>
+  <div class="phone C">
+    <div class="status"><span>9:41</span><span>●●●</span></div>
+    <div class="imgwrap">
+      <span class="big"><svg class="ic"><use href="#i-sprout"/></svg></span>
+      <div class="field"></div><div class="field2"></div>
+    </div>
+    <div class="cbody">
+      <div class="ctop">
+        <h1 class="headline">농사를 더 쉽게,<br><span class="hl">더 똑똑하게</span></h1>
+        <p class="sub">일지 작성, 작물 정보, 대화형 AI까지<br>하나로 관리해 보세요</p>
+      </div>
+      <div class="auth">
+        <button class="btn btn-primary"><span class="bi"><svg class="ic"><use href="#i-mail"/></svg></span>이메일로 시작하기</button>
+        <button class="btn btn-kakao"><span class="bi"><svg class="ic"><use href="#i-chat"/></svg></span>카카오로 시작하기</button>
+        <div class="icon-row" style="margin-top:13px">
+          <button class="icon-btn naver"><svg class="ic"><use href="#i-naver"/></svg></button>
+          <button class="icon-btn apple"><svg class="ic"><use href="#i-apple"/></svg></button>
+          <button class="icon-btn"><svg class="ic"><use href="#i-google"/></svg></button>
+        </div>
+        <div class="foot">이미 계정이 있으신가요? <a href="#">로그인</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</body></html>

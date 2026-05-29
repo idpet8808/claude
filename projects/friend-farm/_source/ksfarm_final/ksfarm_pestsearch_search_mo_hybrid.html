@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KS팜 — 병해충 검색</title>
+<style>
+  :root {
+    --bg: #ECEAE0; --card: #FFFFFF; --ink: #20251D; --ink-2: #45493E; --gray: #76796C;
+    --line: rgba(48,42,30,.08); --field-bg: #F4F4EF;
+    --green: #1F4B3C; --green-2: #163729; --green-soft: #E7EEE6;
+    --sage: #2F6150; --gold: #B08A3E; --clay: #B0612C;
+    --r-lg: 18px; --r-md: 14px; --shadow: 0 1px 2px rgba(36,30,18,.05);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  button, input { font-family: inherit; }
+  a, button { color: inherit; text-decoration: none; background: none; border: 0; cursor: pointer; }
+  h1,h2,h3,p,span,a { word-break: keep-all; }
+  body {
+    background: #D8D5C9;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Pretendard", "Noto Sans KR", system-ui, sans-serif;
+    color: var(--ink); -webkit-font-smoothing: antialiased;
+    display: flex; justify-content: center; padding: 24px 0 40px;
+  }
+  .ic { width: 1em; height: 1em; display: inline-block; vertical-align: -0.12em; flex-shrink: 0; }
+
+  .phone {
+    position: relative; width: min(390px, 100%); background: var(--bg);
+    border-radius: 30px; overflow: hidden;
+    box-shadow: 0 18px 44px -12px rgba(40,34,22,.42); min-height: 860px;
+    display: flex; flex-direction: column;
+  }
+
+  .status-bar { height: 44px; display: flex; align-items: center; justify-content: space-between; padding: 0 22px; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .status-bar .group { display: inline-flex; gap: 6px; align-items: center; }
+
+  /* 검색 앱바 */
+  .search-bar { display: flex; align-items: center; gap: 8px; padding: 4px 16px 12px; flex-shrink: 0; }
+  .search-bar .back { width: 34px; height: 38px; display: grid; place-items: center; color: var(--ink); flex-shrink: 0; }
+  .search-bar .back .ic { font-size: 22px; }
+  .search-bar .field { flex: 1; display: flex; align-items: center; gap: 8px; background: var(--field-bg); border: 1.5px solid transparent; border-radius: var(--r-md); padding: 0 14px; height: 46px; transition: all .12s; }
+  .search-bar .field:focus-within { background: var(--card); border-color: var(--green); box-shadow: 0 0 0 3px rgba(31,75,60,.10); }
+  .search-bar .field .ic { color: var(--gray); font-size: 18px; }
+  .search-bar .field input { flex: 1; border: 0; background: transparent; font-size: 15px; font-weight: 600; color: var(--ink); outline: none; }
+  .search-bar .field input::placeholder { color: #ADAFa4; font-weight: 500; }
+  .search-bar .field .clear { color: var(--gray); width: 20px; height: 20px; display: grid; place-items: center; border-radius: 50%; background: rgba(0,0,0,.08); }
+  .search-bar .field .clear .ic { font-size: 11px; }
+
+  .scroll { flex: 1; overflow-y: auto; padding: 4px 20px 20px; }
+
+  /* 초기: 최근 + 추천 */
+  .blk { margin-bottom: 26px; }
+  .blk-h { display: flex; align-items: center; margin: 0 2px 12px; }
+  .blk-h .t { font-size: 13px; font-weight: 800; letter-spacing: -0.014em; }
+  .blk-h .clr { margin-left: auto; font-size: 12px; color: var(--gray); font-weight: 600; }
+  .recent { display: flex; gap: 8px; flex-wrap: wrap; }
+  .rchip { display: inline-flex; align-items: center; gap: 6px; padding: 8px 13px; border-radius: 999px; background: var(--card); box-shadow: var(--shadow); font-size: 13px; font-weight: 700; color: var(--ink-2); }
+  .rchip .x { color: var(--gray); font-size: 11px; }
+  .pop-list { display: flex; flex-direction: column; }
+  .pop { display: flex; align-items: center; gap: 12px; padding: 11px 2px; }
+  .pop .rank { width: 20px; font-size: 14px; font-weight: 800; color: var(--green); text-align: center; flex-shrink: 0; }
+  .pop .pnm { flex: 1; font-size: 14.5px; font-weight: 600; }
+  .pop .ptag { font-size: 10.5px; font-weight: 700; color: var(--sage); }
+
+  /* 결과 */
+  .result-info { font-size: 12.5px; color: var(--gray); font-weight: 600; margin: 2px 2px 13px; }
+  .result-info b { color: var(--ink); font-weight: 800; }
+  .list { display: flex; flex-direction: column; gap: 10px; }
+  .item { display: flex; gap: 13px; background: var(--card); border-radius: var(--r-lg); box-shadow: var(--shadow); padding: 13px; align-items: center; }
+  .item .thumb { width: 60px; height: 60px; border-radius: 11px; background: linear-gradient(150deg, #DCDACC, #CFCDBC); display: grid; place-items: center; flex-shrink: 0; }
+  .item .thumb .ic { font-size: 24px; color: var(--sage); opacity: .45; }
+  .item .info { flex: 1; min-width: 0; }
+  .item .nm-row { display: flex; align-items: center; gap: 7px; }
+  .item .nm { font-size: 15px; font-weight: 800; letter-spacing: -0.014em; }
+  .item .tag { font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 999px; flex-shrink: 0; }
+  .item .tag.dis { background: #F2E3D6; color: var(--clay); }
+  .item .tag.pst { background: var(--green-soft); color: var(--green); }
+  .item .sci { font-size: 11.5px; color: var(--gray); font-style: italic; margin-top: 4px; font-weight: 500; }
+  .item .cv { color: #C7C8BE; font-size: 19px; flex-shrink: 0; }
+
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14 0"/><path d="M8.5 16.05a6 6 0 0 1 7 0"/><path d="M2 8.82a15 15 0 0 1 20 0"/><line x1="12" y1="20" x2="12" y2="20"/></symbol>
+    <symbol id="i-battery" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="8" width="18" height="9" rx="2"/><path d="M22 11v3"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 6 9 12 15 18"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></symbol>
+    <symbol id="i-img" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></symbol>
+    <symbol id="i-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></symbol>
+  </defs></svg>
+
+  <div class="phone">
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="group"><svg class="ic"><use href="#i-wifi"/></svg> <svg class="ic"><use href="#i-battery"/></svg></span>
+    </div>
+
+    <!-- 검색 앱바 -->
+    <div class="search-bar">
+      <button class="back" aria-label="뒤로"><svg class="ic"><use href="#i-back"/></svg></button>
+      <div class="field">
+        <svg class="ic"><use href="#i-search"/></svg>
+        <input type="text" id="searchInput" placeholder="작물 또는 병해충 이름" autocomplete="off"/>
+        <button class="clear hidden" id="clearBtn" aria-label="지우기"><svg class="ic"><use href="#i-x"/></svg></button>
+      </div>
+    </div>
+
+    <div class="scroll">
+      <!-- 초기 상태: 최근 + 추천 -->
+      <div id="initState">
+        <div class="blk">
+          <div class="blk-h"><span class="t">최근 검색</span><button class="clr">전체 삭제</button></div>
+          <div class="recent">
+            <button class="rchip">탄저병 <span class="x"><svg class="ic"><use href="#i-x"/></svg></span></button>
+            <button class="rchip">고추 <span class="x"><svg class="ic"><use href="#i-x"/></svg></span></button>
+            <button class="rchip">진딧물 <span class="x"><svg class="ic"><use href="#i-x"/></svg></span></button>
+          </div>
+        </div>
+        <div class="blk">
+          <div class="blk-h"><span class="t">많이 찾는 병해충</span></div>
+          <div class="pop-list">
+            <div class="pop"><span class="rank">1</span><span class="pnm">탄저병</span><span class="ptag">병</span></div>
+            <div class="pop"><span class="rank">2</span><span class="pnm">진딧물</span><span class="ptag">해충</span></div>
+            <div class="pop"><span class="rank">3</span><span class="pnm">노균병</span><span class="ptag">병</span></div>
+            <div class="pop"><span class="rank">4</span><span class="pnm">총채벌레</span><span class="ptag">해충</span></div>
+            <div class="pop"><span class="rank">5</span><span class="pnm">역병</span><span class="ptag">병</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 결과 상태 -->
+      <div id="resultState" class="hidden">
+        <p class="result-info"><b id="q">탄저병</b> <span id="qkind">검색 결과</span> <b id="qcnt">3</b>건</p>
+        <div class="list" id="resultList"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var input = document.getElementById('searchInput');
+    var clearBtn = document.getElementById('clearBtn');
+    var initState = document.getElementById('initState');
+    var resultState = document.getElementById('resultState');
+    var q = document.getElementById('q');
+    var qkind = document.getElementById('qkind');
+    var qcnt = document.getElementById('qcnt');
+    var resultList = document.getElementById('resultList');
+
+    // 데모용 데이터 (NCPMS 검색 API 응답 형태)
+    // 작물명 검색 → 그 작물의 병해충들 / 병해충명 검색 → 여러 작물의 같은 병해충
+    var byCrop = {
+      '토마토': [
+        {nm:'잎곰팡이병', kind:'dis', sci:'Passalora fulva', crop:'토마토'},
+        {nm:'역병', kind:'dis', sci:'Phytophthora infestans', crop:'토마토'},
+        {nm:'잿빛곰팡이병', kind:'dis', sci:'Botrytis cinerea', crop:'토마토'},
+        {nm:'담배가루이', kind:'pst', sci:'Bemisia tabaci', crop:'토마토'},
+        {nm:'아메리카잎굴파리', kind:'pst', sci:'Liriomyza trifolii', crop:'토마토'}
+      ],
+      '고추': [
+        {nm:'탄저병', kind:'dis', sci:'Colletotrichum acutatum', crop:'고추'},
+        {nm:'역병', kind:'dis', sci:'Phytophthora capsici', crop:'고추'},
+        {nm:'담배나방', kind:'pst', sci:'Helicoverpa assulta', crop:'고추'},
+        {nm:'진딧물', kind:'pst', sci:'Myzus persicae', crop:'고추'}
+      ],
+      '오이': [
+        {nm:'노균병', kind:'dis', sci:'Pseudoperonospora cubensis', crop:'오이'},
+        {nm:'흰가루병', kind:'dis', sci:'Sphaerotheca fuliginea', crop:'오이'},
+        {nm:'탄저병', kind:'dis', sci:'Colletotrichum orbiculare', crop:'오이'},
+        {nm:'총채벌레', kind:'pst', sci:'Frankliniella occidentalis', crop:'오이'}
+      ],
+      '딸기': [
+        {nm:'잿빛곰팡이병', kind:'dis', sci:'Botrytis cinerea', crop:'딸기'},
+        {nm:'흰가루병', kind:'dis', sci:'Sphaerotheca aphanis', crop:'딸기'},
+        {nm:'점박이응애', kind:'pst', sci:'Tetranychus urticae', crop:'딸기'}
+      ],
+      '논벼': [
+        {nm:'도열병', kind:'dis', sci:'Magnaporthe oryzae', crop:'논벼'},
+        {nm:'잎집무늬마름병', kind:'dis', sci:'Rhizoctonia solani', crop:'논벼'},
+        {nm:'벼멸구', kind:'pst', sci:'Nilaparvata lugens', crop:'논벼'}
+      ],
+      '사과': [
+        {nm:'탄저병', kind:'dis', sci:'Colletotrichum gloeosporioides', crop:'사과'},
+        {nm:'갈색무늬병', kind:'dis', sci:'Diplocarpon mali', crop:'사과'},
+        {nm:'사과응애', kind:'pst', sci:'Panonychus ulmi', crop:'사과'}
+      ],
+      '배추': [
+        {nm:'무름병', kind:'dis', sci:'Pectobacterium carotovorum', crop:'배추'},
+        {nm:'노균병', kind:'dis', sci:'Hyaloperonospora brassicae', crop:'배추'},
+        {nm:'배추좀나방', kind:'pst', sci:'Plutella xylostella', crop:'배추'}
+      ],
+      '감자': [
+        {nm:'역병', kind:'dis', sci:'Phytophthora infestans', crop:'감자'},
+        {nm:'더뎅이병', kind:'dis', sci:'Streptomyces scabies', crop:'감자'},
+        {nm:'진딧물', kind:'pst', sci:'Myzus persicae', crop:'감자'}
+      ]
+    };
+    var byPest = {
+      '탄저병': [
+        {nm:'탄저병', kind:'dis', sci:'Colletotrichum acutatum', crop:'고추'},
+        {nm:'탄저병', kind:'dis', sci:'Colletotrichum gloeosporioides', crop:'사과'},
+        {nm:'탄저병', kind:'dis', sci:'Colletotrichum orbiculare', crop:'오이'}
+      ],
+      '진딧물': [
+        {nm:'진딧물', kind:'pst', sci:'Myzus persicae', crop:'고추'},
+        {nm:'진딧물', kind:'pst', sci:'Aphis gossypii', crop:'오이'},
+        {nm:'진딧물', kind:'pst', sci:'Myzus persicae', crop:'감자'}
+      ],
+      '노균병': [
+        {nm:'노균병', kind:'dis', sci:'Pseudoperonospora cubensis', crop:'오이'},
+        {nm:'노균병', kind:'dis', sci:'Hyaloperonospora brassicae', crop:'배추'}
+      ],
+      '총채벌레': [
+        {nm:'총채벌레', kind:'pst', sci:'Frankliniella occidentalis', crop:'오이'},
+        {nm:'총채벌레', kind:'pst', sci:'Thrips palmi', crop:'고추'}
+      ],
+      '역병': [
+        {nm:'역병', kind:'dis', sci:'Phytophthora capsici', crop:'고추'},
+        {nm:'역병', kind:'dis', sci:'Phytophthora infestans', crop:'토마토'},
+        {nm:'역병', kind:'dis', sci:'Phytophthora infestans', crop:'감자'}
+      ]
+    };
+
+    function cardHTML(d){
+      return '<a class="item"><span class="thumb"><svg class="ic"><use href="#i-img"/></svg></span>'
+        + '<div class="info"><div class="nm-row"><span class="nm">' + d.nm + '</span>'
+        + '<span class="tag ' + d.kind + '">' + (d.kind==='dis'?'병':'해충') + '</span></div>'
+        + '<div class="sci">' + d.sci + '</div></div>'
+        + '<svg class="ic cv"><use href="#i-cv"/></svg></a>';
+    }
+
+    function render(v){
+      var list, kind;
+      if (byCrop[v]) { list = byCrop[v]; kind = '병해충'; }       // 작물명 검색
+      else if (byPest[v]) { list = byPest[v]; kind = '검색 결과'; } // 병해충명 검색
+      else {
+        // 데모: 매칭 없으면 토마토 기준으로 표시 (실제론 API 응답)
+        list = byCrop['토마토']; kind = '검색 결과';
+      }
+      q.textContent = v;
+      qkind.textContent = kind;
+      qcnt.textContent = list.length;
+      resultList.innerHTML = list.map(cardHTML).join('');
+    }
+
+    function update(){
+      var v = input.value.trim();
+      clearBtn.classList.toggle('hidden', v.length === 0);
+      if (v.length > 0) {
+        initState.classList.add('hidden');
+        resultState.classList.remove('hidden');
+        render(v);
+      } else {
+        initState.classList.remove('hidden');
+        resultState.classList.add('hidden');
+      }
+    }
+    input.addEventListener('input', update);
+    clearBtn.addEventListener('click', function(){ input.value = ''; input.focus(); update(); });
+    // 최근/추천 클릭 → 입력
+    document.querySelectorAll('.rchip').forEach(function(c){
+      c.addEventListener('click', function(e){
+        if (e.target.closest('.x')) { c.remove(); return; }
+        input.value = c.childNodes[0].textContent.trim(); update();
+      });
+    });
+    document.querySelectorAll('.pop').forEach(function(p){
+      p.addEventListener('click', function(){ input.value = p.querySelector('.pnm').textContent; update(); });
+    });
+
+    // 메인에서 작물칩/병해충을 누르고 넘어온 경우: ?q=토마토 → 결과 바로 표시
+    (function(){
+      var params = new URLSearchParams(window.location.search);
+      var pre = params.get('q');
+      if (pre) { input.value = pre; update(); }
+    })();
+  </script>
+</body>
+</html>

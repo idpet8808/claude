@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KS팜 — 작물 시세</title>
+<style>
+  :root {
+    --bg: #ECEAE0; --card: #FFFFFF; --ink: #20251D; --ink-2: #45493E; --gray: #76796C;
+    --line: rgba(48,42,30,.08); --field-bg: #F4F4EF;
+    --green: #1F4B3C; --green-2: #163729; --green-soft: #E7EEE6;
+    --sage: #2F6150; --gold: #B08A3E; --clay: #B0612C;
+    --r-lg: 18px; --r-md: 14px; --shadow: 0 1px 2px rgba(36,30,18,.05);
+    --up: #B0612C; --down: #2F6150;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  button { font-family: inherit; }
+  a, button { color: inherit; text-decoration: none; background: none; border: 0; cursor: pointer; }
+  h1,h2,h3,p,span,a { word-break: keep-all; }
+  body {
+    background: #D8D5C9;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Pretendard", "Noto Sans KR", system-ui, sans-serif;
+    color: var(--ink); -webkit-font-smoothing: antialiased;
+    display: flex; justify-content: center; padding: 24px 0 40px;
+  }
+  .ic { width: 1em; height: 1em; display: inline-block; vertical-align: -0.12em; flex-shrink: 0; }
+
+  .phone {
+    position: relative; width: min(390px, 100%); background: var(--bg);
+    border-radius: 30px; overflow: hidden;
+    box-shadow: 0 18px 44px -12px rgba(40,34,22,.42); min-height: 860px;
+    display: flex; flex-direction: column;
+  }
+
+  .status-bar { height: 44px; display: flex; align-items: center; justify-content: space-between; padding: 0 22px; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .status-bar .group { display: inline-flex; gap: 6px; align-items: center; }
+
+  .appbar { display: flex; align-items: center; padding: 4px 12px 0; flex-shrink: 0; }
+  .appbar .back, .appbar .act { width: 38px; height: 38px; display: grid; place-items: center; color: var(--ink); }
+  .appbar .back .ic { font-size: 22px; }
+  .appbar .act .ic { font-size: 19px; color: var(--ink-2); }
+  .appbar .title { flex: 1; text-align: center; font-size: 16px; font-weight: 800; letter-spacing: -0.02em; }
+
+  .scroll { flex: 1; overflow-y: auto; padding: 8px 20px 24px; }
+
+  /* 농장 기준 한 줄 */
+  .basis { display: flex; align-items: center; gap: 6px; margin: 6px 2px 4px; font-size: 12.5px; color: var(--gray); font-weight: 600; }
+  .basis .ic { font-size: 14px; color: var(--sage); }
+  .basis b { color: var(--ink); font-weight: 700; }
+
+  /* 헤드라인 */
+  .headline { font-size: 26px; font-weight: 800; letter-spacing: -0.026em; line-height: 1.32; margin: 12px 2px 4px; }
+  .headline b { color: var(--green); }
+  .head-sub { font-size: 12px; color: var(--gray); font-weight: 600; margin: 0 2px 18px; }
+
+  /* 작물 탭 (밑줄식) */
+  .tabs { display: flex; align-items: center; gap: 22px; border-bottom: 1px solid var(--line); margin: 0 0 18px; }
+  .tab { padding: 0 2px 11px; font-size: 14.5px; font-weight: 700; color: var(--gray); position: relative; }
+  .tab.on { color: var(--ink); font-weight: 800; }
+  .tab.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2.5px; background: var(--green); border-radius: 2px; }
+  .tab-add { margin-left: auto; margin-bottom: 7px; width: 30px; height: 30px; display: grid; place-items: center; border-radius: 9px; background: var(--field-bg); color: var(--green); }
+  .tab-add .ic { font-size: 16px; }
+
+  /* 그래프 카드 */
+  .chart-card { background: var(--card); border-radius: var(--r-lg); box-shadow: var(--shadow); padding: 18px; margin-bottom: 16px; }
+  .cc-top { display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px; }
+  .cc-name { font-size: 13px; color: var(--gray); font-weight: 700; }
+  .cc-name b { color: var(--ink); font-weight: 800; font-size: 15px; }
+  .cc-price-row { display: flex; align-items: baseline; gap: 9px; }
+  .cc-price { font-size: 26px; font-weight: 800; color: var(--ink); letter-spacing: -0.024em; }
+  .cc-pd { font-size: 13.5px; font-weight: 800; display: inline-flex; align-items: center; gap: 3px; }
+  .cc-pd.up { color: var(--up); }
+  .cc-pd.down { color: var(--down); }
+  .cc-pd .arr { font-size: 10px; }
+  .spark { margin-top: 14px; height: 104px; position: relative; }
+  .spark canvas { width: 100% !important; height: 100% !important; }
+  .spark-labels { display: flex; justify-content: space-between; margin-top: 6px; padding: 0 2px; font-size: 10.5px; color: var(--gray); font-weight: 600; }
+  .spark-labels .lb.now { color: var(--ink); font-weight: 800; }
+
+  /* 단위/품종별 카드 리스트 */
+  .sec-h { font-size: 13px; color: var(--gray); font-weight: 700; margin: 18px 2px 10px; }
+  .list { background: var(--card); border-radius: var(--r-md); box-shadow: var(--shadow); overflow: hidden; }
+  .prow { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; padding: 18px 18px; }
+  .prow + .prow { border-top: 1px solid var(--line); }
+  .prow .pm { flex: 1; min-width: 0; }
+  .prow .meta { font-size: 14px; color: var(--ink); font-weight: 700; letter-spacing: -0.012em; }
+  .prow .pp-row { display: flex; align-items: baseline; gap: 8px; margin-top: 6px; }
+  .prow .pp { font-size: 15px; font-weight: 800; color: var(--ink); }
+  .prow .pd { font-size: 12px; font-weight: 800; display: inline-flex; align-items: center; gap: 2px; }
+  .prow .pd.up { color: var(--up); }
+  .prow .pd.down { color: var(--down); }
+  .prow .pd .arr { font-size: 9px; }
+</style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14 0"/><path d="M8.5 16.05a6 6 0 0 1 7 0"/><path d="M2 8.82a15 15 0 0 1 20 0"/><line x1="12" y1="20" x2="12" y2="20"/></symbol>
+    <symbol id="i-battery" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="8" width="18" height="9" rx="2"/><path d="M22 11v3"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 6 9 12 15 18"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+  </defs></svg>
+
+  <div class="phone">
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="group"><svg class="ic"><use href="#i-wifi"/></svg> <svg class="ic"><use href="#i-battery"/></svg></span>
+    </div>
+
+    <div class="appbar">
+      <button class="back" aria-label="뒤로"><svg class="ic"><use href="#i-back"/></svg></button>
+      <span class="title">작물 시세</span>
+      <span style="width:38px"></span>
+    </div>
+
+    <div class="scroll">
+      <div class="basis"><svg class="ic"><use href="#i-pin"/></svg> <b>완주 청년농원</b> 기준 · 완주군 · 시설채소</div>
+      <h1 class="headline" id="headline"><b>오이</b> 도매 시세<br>3건이에요</h1>
+      <p class="head-sub">2026.05.27 기준</p>
+
+      <!-- 작물 탭 -->
+      <div class="tabs" id="tabs">
+        <button class="tab on" data-c="오이">오이</button>
+        <button class="tab" data-c="딸기">딸기</button>
+        <a class="tab-add" href="ksfarm_farm_mo_hybrid.html" aria-label="작물 추가"><svg class="ic"><use href="#i-plus"/></svg></a>
+      </div>
+
+      <!-- 그래프 카드 + 단위/품종 리스트 -->
+      <div id="pane"></div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+  <script>
+    // KAMIS daily_sales_list — 작물별 단위/품종 항목들 (도매)
+    var CROPS = {
+      '오이': {
+        repr: { unit: '10kg · 백다다기', now: 38400, dir: 'up', val: '3.2' },
+        chart: { y1: 32100, m1: 35800, d1: 37200, now: 38400 },
+        items: [
+          { meta: '10kg · 백다다기', price: 38400, dir: 'up', val: '3.2' },
+          { meta: '10kg · 가시',     price: 41200, dir: 'up', val: '2.8' },
+          { meta: '100개',          price: 25600, dir: 'down', val: '1.2' }
+        ]
+      },
+      '딸기': {
+        repr: { unit: '2kg · 상품', now: 24800, dir: 'down', val: '1.5' },
+        chart: { y1: 26900, m1: 28400, d1: 25180, now: 24800 },
+        items: [
+          { meta: '2kg · 상품', price: 24800, dir: 'down', val: '1.5' },
+          { meta: '2kg · 중품', price: 19500, dir: 'down', val: '2.1' }
+        ]
+      }
+    };
+
+    function fmt(n){ return n.toLocaleString('ko-KR') + '원'; }
+
+
+    var COLOR = { up: '#B0612C', down: '#2F6150' };
+    var chartInstance = null;
+
+    function drawChart(P, dir){
+      var canvas = document.getElementById('priceChart');
+      if (!canvas) return;
+      var ctx = canvas.getContext('2d');
+      var color = dir === 'up' ? COLOR.up : COLOR.down;
+
+      // chartArea 기준 그라데이션 (그릴 때 실제 영역으로 생성)
+      function areaGradient(context){
+        var chart = context.chart;
+        var chartArea = chart.chartArea;
+        if (!chartArea) return color + '14';
+        var g = chart.ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+        g.addColorStop(0, color + '2B');    // ~0.17 (선 근처만 은은)
+        g.addColorStop(0.5, color + '12');  // ~0.07
+        g.addColorStop(1, color + '00');    // 완전 투명 (바닥)
+        return g;
+      }
+
+      if (chartInstance) chartInstance.destroy();
+      chartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['1년 전', '1개월 전', '1일 전', '오늘'],
+          datasets: [{
+            data: [P.y1, P.m1, P.d1, P.now],
+            borderColor: color,
+            backgroundColor: areaGradient,
+            fill: true,
+            tension: 0.35,
+            borderWidth: 2.6,
+            pointRadius: [4, 4, 4, 6],
+            pointBackgroundColor: ['#fff', '#fff', '#fff', color],
+            pointBorderColor: color,
+            pointBorderWidth: 2.2,
+            pointHoverRadius: [4, 4, 4, 6]
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          layout: { padding: { top: 16, bottom: 2, left: 4, right: 4 } },
+          plugins: { legend: { display: false }, tooltip: { enabled: false } },
+          scales: {
+            x: { display: false, offset: false },
+            y: { display: false, grace: '20%' }
+          },
+          animation: { duration: 500 }
+        }
+      });
+    }
+
+    function render(name){
+      var c = CROPS[name];
+      var R = c.repr;
+      var rArr = R.dir==='up' ? '▲' : '▼';
+
+      // 헤드라인 업데이트
+      document.getElementById('headline').innerHTML = '<b>'+name+'</b> 도매 시세<br>'+c.items.length+'건이에요';
+
+      // 그래프 카드
+      var chartHTML =
+        '<div class="chart-card">'
+      +   '<div class="cc-top"><span class="cc-name"><b>'+name+'</b> · '+R.unit+'</span></div>'
+      +   '<div class="cc-price-row"><span class="cc-price">'+fmt(R.now)+'</span><span class="cc-pd '+R.dir+'"><span class="arr">'+rArr+'</span>'+R.val+'%</span></div>'
+      +   '<div class="spark"><canvas id="priceChart"></canvas></div>'
+      +   '<div class="spark-labels"><span class="lb">1년 전</span><span class="lb">1개월 전</span><span class="lb">1일 전</span><span class="lb now">오늘</span></div>'
+      + '</div>';
+
+      // 단위/품종 리스트
+      var listHTML =
+        '<h2 class="sec-h">단위 · 품종별 시세</h2>'
+      + '<div class="list">'
+      + c.items.map(function(it){
+          var arr = it.dir==='up' ? '▲' : '▼';
+          return '<div class="prow">'
+            + '<div class="pm">'
+            +   '<div class="meta">'+it.meta+'</div>'
+            +   '<div class="pp-row"><span class="pp">'+fmt(it.price)+'</span><span class="pd '+it.dir+'"><span class="arr">'+arr+'</span>'+it.val+'%</span></div>'
+            + '</div>'
+            + '</div>';
+        }).join('')
+      + '</div>';
+
+      document.getElementById('pane').innerHTML = chartHTML + listHTML;
+      drawChart(c.chart, R.dir);
+    }
+
+    document.querySelectorAll('.tab[data-c]').forEach(function(t){
+      t.addEventListener('click', function(){
+        document.querySelectorAll('.tab[data-c]').forEach(function(x){ x.classList.remove('on'); });
+        t.classList.add('on');
+        render(t.dataset.c);
+      });
+    });
+    render('오이');
+  </script>
+</body>
+</html>

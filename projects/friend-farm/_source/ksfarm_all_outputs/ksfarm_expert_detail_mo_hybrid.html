@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KS팜 — 질문 상세</title>
+<style>
+  :root {
+    --bg: #ECEAE0; --card: #FFFFFF; --ink: #20251D; --ink-2: #45493E; --gray: #76796C;
+    --line: rgba(48,42,30,.08); --field-bg: #F4F4EF;
+    --green: #1F4B3C; --green-2: #163729; --green-soft: #E7EEE6;
+    --sage: #2F6150; --gold: #B08A3E; --clay: #B0612C;
+    --r-lg: 18px; --r-md: 14px; --shadow: 0 1px 2px rgba(36,30,18,.05);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  button, input, textarea { font-family: inherit; }
+  a, button { color: inherit; text-decoration: none; background: none; border: 0; cursor: pointer; }
+  h1,h2,h3,p,span,a { word-break: keep-all; }
+  body {
+    background: #D8D5C9;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Pretendard", "Noto Sans KR", system-ui, sans-serif;
+    color: var(--ink); -webkit-font-smoothing: antialiased;
+    display: flex; justify-content: center; padding: 24px 0 40px;
+  }
+  .ic { width: 1em; height: 1em; display: inline-block; vertical-align: -0.12em; flex-shrink: 0; }
+
+  .phone {
+    position: relative; width: min(390px, 100%); background: var(--bg);
+    border-radius: 30px; overflow: hidden;
+    box-shadow: 0 18px 44px -12px rgba(40,34,22,.42); min-height: 860px;
+    display: flex; flex-direction: column;
+  }
+
+  .status-bar { height: 44px; display: flex; align-items: center; justify-content: space-between; padding: 0 22px; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .status-bar .group { display: inline-flex; gap: 6px; align-items: center; }
+
+  .appbar { display: flex; align-items: center; padding: 4px 12px 0; flex-shrink: 0; }
+  .appbar .back { width: 38px; height: 38px; display: grid; place-items: center; color: var(--ink); }
+  .appbar .back .ic { font-size: 22px; }
+  .appbar .title { flex: 1; text-align: center; font-size: 16px; font-weight: 800; letter-spacing: -0.02em; }
+  .appbar .share { width: 38px; height: 38px; display: grid; place-items: center; color: var(--ink-2); }
+  .appbar .share .ic { font-size: 19px; }
+  .appbar .more { width: 38px; height: 38px; display: grid; place-items: center; color: var(--ink-2); }
+  .appbar .more .ic { font-size: 20px; }
+
+  /* 액션 시트 */
+  .sheet-scrim { position: absolute; inset: 0; background: rgba(24,20,12,.45); z-index: 20; border-radius: 30px; overflow: hidden; display: flex; align-items: flex-end;
+    opacity: 0; visibility: hidden; transition: opacity .26s ease, visibility .26s ease; }
+  .sheet-scrim.show { opacity: 1; visibility: visible; }
+  .action-sheet { width: 100%; padding: 0 10px calc(10px + env(safe-area-inset-bottom)); transform: translateY(110%); transition: transform .4s cubic-bezier(.22,1,.36,1); }
+  .sheet-scrim.show .action-sheet { transform: translateY(0); }
+  .as-group { background: rgba(248,247,243,.92); backdrop-filter: blur(14px); border-radius: 16px; overflow: hidden; margin-bottom: 8px; }
+  .as-item { width: 100%; height: 56px; font-size: 16px; font-weight: 700; color: var(--green); display: flex; align-items: center; justify-content: center; }
+  .as-item + .as-item { border-top: 1px solid var(--line); }
+  .as-item.del { color: var(--clay); }
+  .as-item:active { background: rgba(0,0,0,.04); }
+  .as-cancel { width: 100%; height: 56px; background: var(--card); border-radius: 16px; font-size: 16px; font-weight: 800; color: var(--ink); }
+  .as-cancel:active { background: var(--field-bg); }
+
+  /* 모달 */
+  .modal-scrim { position: absolute; inset: 0; background: rgba(24,20,12,.5); z-index: 30; border-radius: 30px; overflow: hidden; display: grid; place-items: center; padding: 0 32px;
+    opacity: 0; visibility: hidden; transition: opacity .25s ease, visibility .25s ease; }
+  .modal-scrim.show { opacity: 1; visibility: visible; }
+  .modal { width: 100%; max-width: 320px; background: var(--card); border-radius: 22px; padding: 28px 24px 20px; text-align: center;
+    transform: scale(.92); transition: transform .28s cubic-bezier(.22,1,.36,1); }
+  .modal-scrim.show .modal { transform: scale(1); }
+  .modal-ic { width: 58px; height: 58px; border-radius: 50%; background: var(--green-soft); color: var(--green); display: grid; place-items: center; margin: 0 auto 16px; }
+  .modal-ic .ic { font-size: 32px; }
+  .modal-title { font-size: 18px; font-weight: 800; letter-spacing: -0.02em; }
+  .modal-desc { font-size: 13.5px; color: var(--gray); line-height: 1.6; margin-top: 10px; font-weight: 500; }
+  .modal-btn { width: 100%; height: 52px; border-radius: var(--r-md); color: #fff; font-size: 15.5px; font-weight: 800; margin-top: 22px;
+    background: linear-gradient(180deg, #2C6150, var(--green) 52%, var(--green-2));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 8px 18px -8px rgba(22,55,41,.5); }
+  .modal-actions { display: flex; gap: 9px; margin-top: 22px; }
+  .mbtn-ghost { flex: 1; height: 52px; border-radius: var(--r-md); font-size: 15px; font-weight: 800; color: var(--ink-2); background: var(--field-bg); }
+  .mbtn-danger { flex: 1; height: 52px; border-radius: var(--r-md); font-size: 15px; font-weight: 800; color: #fff; background: var(--clay); }
+
+  .scroll { overflow-x: hidden; flex: 1; overflow-y: auto; padding: 8px 20px 20px; }
+
+  /* 질문 헤더 */
+  .q-head { padding: 8px 2px 16px; border-bottom: 1px solid var(--line); }
+  .q-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 999px; background: var(--green-soft); color: var(--green); margin-bottom: 12px; }
+  .q-badge.wait { background: var(--field-bg); color: var(--gray); }
+  .q-badge .ic { font-size: 13px; }
+
+  /* 답변대기 빈 상태 (답변이 없을 때 전문가정보~별점 대신 노출) */
+  .wait-box { margin-top: 40px; text-align: center; padding: 0 10px; }
+  .wait-ic { width: 76px; height: 76px; border-radius: 50%; background: var(--field-bg); color: var(--sage); display: grid; place-items: center; margin: 0 auto 18px; }
+  .wait-ic .ic { font-size: 38px; }
+  .wait-t { font-size: 16px; font-weight: 800; letter-spacing: -0.018em; }
+  .wait-d { font-size: 13.5px; color: var(--gray); font-weight: 500; line-height: 1.65; margin-top: 10px; }
+  .q-title { font-size: 20px; font-weight: 800; letter-spacing: -0.022em; line-height: 1.4; }
+  .q-meta { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--gray); font-weight: 600; margin-top: 12px; }
+  .q-meta .cat { color: var(--sage); font-weight: 700; }
+  .q-meta .dot { width: 2.5px; height: 2.5px; border-radius: 50%; background: #C7C8BE; }
+  .q-body { font-size: 14.5px; color: var(--ink-2); line-height: 1.7; margin-top: 14px; }
+
+  /* 전문가 정보 카드 */
+  .expert { display: flex; align-items: center; gap: 13px; background: var(--card); border-radius: var(--r-lg); box-shadow: var(--shadow); padding: 15px 16px; margin-top: 18px; }
+  .expert .ava { width: 46px; height: 46px; border-radius: 50%; background: var(--green-soft); color: var(--green); display: grid; place-items: center; flex-shrink: 0; }
+  .expert .ava .ic { font-size: 24px; }
+  .expert .ex-main { flex: 1; min-width: 0; }
+  .expert .ex-name { font-size: 14.5px; font-weight: 800; letter-spacing: -0.014em; display: flex; align-items: center; gap: 6px; }
+  .expert .ex-verify { font-size: 9.5px; font-weight: 800; color: var(--gold); background: #F1E8D6; padding: 2px 6px; border-radius: 999px; }
+  .expert .ex-meta { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--gray); font-weight: 600; margin-top: 5px; }
+  .expert .ex-meta .rate { display: inline-flex; align-items: center; gap: 2px; color: var(--gold); font-weight: 800; }
+  .expert .ex-meta .rate .ic { font-size: 11px; }
+  .expert .ex-meta .dot { width: 2.5px; height: 2.5px; border-radius: 50%; background: #C7C8BE; }
+
+  /* 답변 핵심 요약 */
+  .sec-title { font-size: 14px; font-weight: 800; letter-spacing: -0.016em; padding: 24px 2px 12px; display: flex; align-items: center; gap: 6px; }
+  .sec-title .ic { font-size: 16px; color: var(--green); }
+  .summary { background: var(--green-soft); border-radius: var(--r-lg); padding: 16px 16px 6px; }
+  .summary .s-item { display: flex; align-items: flex-start; gap: 9px; padding-bottom: 12px; }
+  .summary .s-item .ck { width: 18px; height: 18px; border-radius: 50%; background: var(--green); color: #fff; display: grid; place-items: center; flex-shrink: 0; margin-top: 1px; }
+  .summary .s-item .ck .ic { font-size: 11px; }
+  .summary .s-item .tx { flex: 1; font-size: 13.5px; font-weight: 600; color: var(--green-2); line-height: 1.5; }
+
+  /* 상세 답변 (아코디언) */
+  .acc { background: var(--card); border-radius: var(--r-lg); box-shadow: var(--shadow); overflow: hidden; margin-top: 10px; }
+  .acc-item + .acc-item { border-top: 1px solid var(--line); }
+  .acc-head { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; padding: 16px; }
+  .acc-num { width: 22px; height: 22px; border-radius: 7px; background: var(--green-soft); color: var(--green); font-size: 12px; font-weight: 800; display: grid; place-items: center; flex-shrink: 0; }
+  .acc-title { flex: 1; font-size: 14.5px; font-weight: 700; color: var(--ink); letter-spacing: -0.014em; }
+  .acc-cv { color: var(--gray); font-size: 18px; transition: transform .2s; }
+  .acc-item.open .acc-cv { transform: rotate(180deg); }
+  .acc-body { display: none; padding: 0 16px 16px 48px; font-size: 13.5px; color: var(--ink-2); line-height: 1.7; }
+  .acc-item.open .acc-body { display: block; }
+
+  /* 답변 평가 (별점) */
+  .rate-answer { margin-top: 24px; background: var(--card); border-radius: var(--r-lg); box-shadow: var(--shadow); padding: 20px 16px; text-align: center; }
+  .rate-answer .ra-q { font-size: 14.5px; font-weight: 800; letter-spacing: -0.014em; }
+  .rate-answer .ra-stars { display: flex; justify-content: center; gap: 6px; margin-top: 14px; }
+  .rate-answer .ra-star { color: #DAD8CC; transition: color .12s, transform .12s; }
+  .rate-answer .ra-star .ic { font-size: 30px; display: block; }
+  .rate-answer .ra-star.on { color: var(--gold); }
+  .rate-answer .ra-star:active { transform: scale(1.15); }
+  .rate-answer .ra-hint { font-size: 12.5px; color: var(--gray); font-weight: 600; margin-top: 12px; }
+  .rate-answer .ra-hint.done { color: var(--green); font-weight: 700; }
+
+
+  /* === 360px safety net (v3) === */
+  .phone img, .phone svg { max-width: 100%; height: auto; }
+  .phone { word-break: keep-all; overflow-wrap: break-word; }
+  </style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14 0"/><path d="M8.5 16.05a6 6 0 0 1 7 0"/><path d="M2 8.82a15 15 0 0 1 20 0"/><line x1="12" y1="20" x2="12" y2="20"/></symbol>
+    <symbol id="i-battery" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="8" width="18" height="9" rx="2"/><path d="M22 11v3"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 6 9 12 15 18"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></symbol>
+    <symbol id="i-check-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></symbol>
+    <symbol id="i-expert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.8.6-5.1 4.5 1.5 6.6L12 17.3 5.9 20.6l1.5-6.6L2.3 8.9l6.8-.6z"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></symbol>
+    <symbol id="i-cv-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11v9"/><path d="M14 4l-2 7h6.5a2 2 0 0 1 2 2.3l-1.2 6A2 2 0 0 1 17.3 21H7"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M17 13V4"/><path d="M10 20l2-7H5.5a2 2 0 0 1-2-2.3l1.2-6A2 2 0 0 1 6.7 3H17"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></symbol>
+    <symbol id="i-hourglass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12M6 22h12"/><path d="M6 2c0 5 5 7 6 10 1-3 6-5 6-10"/><path d="M6 22c0-5 5-7 6-10 1 3 6 5 6 10"/></symbol>
+  </defs></svg>
+
+  <div class="phone">
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="group"><svg class="ic"><use href="#i-wifi"/></svg> <svg class="ic"><use href="#i-battery"/></svg></span>
+    </div>
+
+    <div class="appbar">
+      <button class="back" aria-label="뒤로"><svg class="ic"><use href="#i-back"/></svg></button>
+      <span class="title">질문 상세</span>
+      <button class="more" id="moreBtn" aria-label="더보기"><svg class="ic"><use href="#i-more"/></svg></button>
+    </div>
+
+    <div class="scroll">
+      <!-- 질문 -->
+      <div class="q-head">
+        <span class="q-badge"><svg class="ic"><use href="#i-check-c"/></svg> 답변완료</span>
+        <h1 class="q-title">딸기는 어떻게 재배하나요?</h1>
+        <div class="q-meta"><span class="cat">가공</span><span class="dot"></span><span>2026.03.11</span><span class="dot"></span><span>조회 245</span></div>
+        <p class="q-body">처음 딸기 농사를 시작하는데 환경 설정이 막막합니다. 온도·습도·일조량은 어느 정도로 맞춰야 하고, 토양은 어떻게 준비해야 하는지 알려주세요.</p>
+      </div>
+
+      <!-- ▼▼ 답변완료 상태: 아래 전문가 정보~별점 평가 노출 ▼▼ -->
+      <!-- (답변대기 상태일 땐 아래 전체 대신, 맨 아래 주석의 .wait-box 노출) -->
+
+      <!-- 전문가 정보 -->
+      <div class="expert">
+        <div class="ava"><svg class="ic"><use href="#i-expert"/></svg></div>
+        <div class="ex-main">
+          <div class="ex-name">원예·시설재배 전문가 <span class="ex-verify">인증</span></div>
+          <div class="ex-meta"><span class="rate"><svg class="ic"><use href="#i-star"/></svg> 4.8</span><span class="dot"></span><span>답변 312건</span></div>
+        </div>
+      </div>
+
+      <!-- 답변 핵심 요약 -->
+      <div class="sec-title"><svg class="ic"><use href="#i-check-c"/></svg> 답변 핵심 요약</div>
+      <div class="summary">
+        <div class="s-item"><span class="ck"><svg class="ic"><use href="#i-check"/></svg></span><span class="tx">딸기는 서늘한 환경(15~25℃)을 좋아합니다.</span></div>
+        <div class="s-item"><span class="ck"><svg class="ic"><use href="#i-check"/></svg></span><span class="tx">물 빠짐이 좋은 토양이 중요합니다.</span></div>
+        <div class="s-item"><span class="ck"><svg class="ic"><use href="#i-check"/></svg></span><span class="tx">정식은 모종 상태와 재배방식에 따라 다릅니다.</span></div>
+        <div class="s-item"><span class="ck"><svg class="ic"><use href="#i-check"/></svg></span><span class="tx">병해충 예방과 적절한 물 관리가 핵심입니다.</span></div>
+      </div>
+
+      <!-- 상세 답변 -->
+      <div class="sec-title"><svg class="ic"><use href="#i-list"/></svg> 상세 답변</div>
+      <div class="acc">
+        <div class="acc-item open">
+          <button class="acc-head"><span class="acc-num">1</span><span class="acc-title">재배 환경</span><svg class="ic acc-cv"><use href="#i-cv-down"/></svg></button>
+          <div class="acc-body">생육 적온은 15~25℃이며, 햇빛은 하루 6시간 이상이 좋습니다. 습도는 60~70%를 유지하면 곰팡이병 예방에 도움이 됩니다.</div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-head"><span class="acc-num">2</span><span class="acc-title">토양 조건</span><svg class="ic acc-cv"><use href="#i-cv-down"/></svg></button>
+          <div class="acc-body">물 빠짐이 좋은 사질양토가 적합합니다. 정식 2~3주 전 퇴비를 넣고 토양 산도(pH 5.5~6.5)를 맞춰 주세요.</div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-head"><span class="acc-num">3</span><span class="acc-title">정식(심기)</span><svg class="ic acc-cv"><use href="#i-cv-down"/></svg></button>
+          <div class="acc-body">건강한 모종을 골라 9월 중순~10월에 정식합니다. 포기 간격은 20~25cm를 유지하세요.</div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-head"><span class="acc-num">4</span><span class="acc-title">물 관리</span><svg class="ic acc-cv"><use href="#i-cv-down"/></svg></button>
+          <div class="acc-body">토양 표면이 마르면 충분히 관수하되 과습은 피합니다. 점적관수가 병해 예방에 유리합니다.</div>
+        </div>
+      </div>
+
+      <!-- 답변 평가 (별점) -->
+      <div class="rate-answer">
+        <div class="ra-q">이 답변이 도움이 되셨나요?</div>
+        <div class="ra-stars" id="raStars">
+          <button class="ra-star" data-v="1"><svg class="ic"><use href="#i-star"/></svg></button>
+          <button class="ra-star" data-v="2"><svg class="ic"><use href="#i-star"/></svg></button>
+          <button class="ra-star" data-v="3"><svg class="ic"><use href="#i-star"/></svg></button>
+          <button class="ra-star" data-v="4"><svg class="ic"><use href="#i-star"/></svg></button>
+          <button class="ra-star" data-v="5"><svg class="ic"><use href="#i-star"/></svg></button>
+        </div>
+        <div class="ra-hint" id="raHint">별점을 눌러 평가해 주세요</div>
+      </div>
+      <!-- ▲▲ 여기까지 답변완료 상태 ▲▲ -->
+
+      <!-- ▼▼ 답변대기 상태일 때: 위 전문가정보~별점 평가 대신 아래 .wait-box 를 노출 ▼▼
+      <div class="wait-box">
+        <div class="wait-ic"><svg class="ic"><use href="#i-hourglass"/></svg></div>
+        <div class="wait-t">전문가가 답변을 준비하고 있어요</div>
+        <div class="wait-d">분야별 전문가가 질문을 확인한 뒤 답변을 드려요.</div>
+      </div>
+      (질문 뱃지도 답변대기 버전으로: <span class="q-badge wait"><svg class="ic"><use href="#i-clock"/></svg> 답변대기</span>)
+      ▲▲ 답변대기 상태 끝 ▲▲ -->
+    </div>
+
+    <!-- 더보기 액션 시트 -->
+    <div class="sheet-scrim" id="actionSheet">
+      <div class="action-sheet">
+        <div class="as-group">
+          <button class="as-item" id="asEdit">질문 수정</button>
+          <button class="as-item del" id="asDelete">질문 삭제</button>
+        </div>
+        <button class="as-cancel" id="asCancel">취소</button>
+      </div>
+    </div>
+
+    <!-- 삭제 확인 모달 -->
+    <div class="modal-scrim" id="confirmModal">
+      <div class="modal">
+        <div class="modal-title">질문을 삭제할까요?</div>
+        <div class="modal-desc">삭제하면 받은 답변도 함께<br>사라지며 되돌릴 수 없어요.</div>
+        <div class="modal-actions">
+          <button class="mbtn-ghost" id="confirmCancel">취소</button>
+          <button class="mbtn-danger" id="confirmDelete">삭제</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 삭제 완료 모달 -->
+    <div class="modal-scrim" id="deletedModal">
+      <div class="modal">
+        <div class="modal-ic"><svg class="ic"><use href="#i-check-c"/></svg></div>
+        <div class="modal-title">질문 삭제 완료</div>
+        <div class="modal-desc">질문을 삭제했어요.</div>
+        <button class="modal-btn" id="deletedOk">확인</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 아코디언
+    document.querySelectorAll('.acc-head').forEach(function(h){
+      h.addEventListener('click', function(){ h.parentElement.classList.toggle('open'); });
+    });
+    // 답변 별점 평가
+    var raStars = document.querySelectorAll('.ra-star');
+    var raHint = document.getElementById('raHint');
+    var hints = { 1:'평가해 주셔서 감사해요', 2:'평가해 주셔서 감사해요', 3:'평가해 주셔서 감사해요', 4:'도움이 되었다니 다행이에요', 5:'도움이 되었다니 다행이에요' };
+    raStars.forEach(function(s){
+      s.addEventListener('click', function(){
+        var v = parseInt(s.dataset.v, 10);
+        raStars.forEach(function(x){ x.classList.toggle('on', parseInt(x.dataset.v,10) <= v); });
+        raHint.textContent = hints[v];
+        raHint.classList.add('done');
+      });
+    });
+
+    // 더보기 액션 시트 + 수정/삭제
+    function show(id){ document.getElementById(id).classList.add('show'); }
+    function hide(id){ document.getElementById(id).classList.remove('show'); }
+    document.getElementById('moreBtn').addEventListener('click', function(){ show('actionSheet'); });
+    document.getElementById('asCancel').addEventListener('click', function(){ hide('actionSheet'); });
+    document.getElementById('actionSheet').addEventListener('click', function(e){
+      if (!e.target.closest('.action-sheet')) hide('actionSheet');
+    });
+    document.getElementById('asEdit').addEventListener('click', function(){
+      hide('actionSheet');
+      // 실제: 질문 수정 페이지로 이동
+    });
+    document.getElementById('asDelete').addEventListener('click', function(){
+      hide('actionSheet');
+      setTimeout(function(){ show('confirmModal'); }, 180);
+    });
+    document.getElementById('confirmCancel').addEventListener('click', function(){ hide('confirmModal'); });
+    document.getElementById('confirmDelete').addEventListener('click', function(){
+      hide('confirmModal');
+      setTimeout(function(){ show('deletedModal'); }, 180);
+    });
+    document.getElementById('deletedOk').addEventListener('click', function(){ hide('deletedModal'); });
+  </script>
+</body>
+</html>

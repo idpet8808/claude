@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KS팜 — 탄저병</title>
+<style>
+  :root {
+    --bg: #ECEAE0; --card: #FFFFFF; --ink: #20251D; --ink-2: #45493E; --gray: #76796C;
+    --line: rgba(48,42,30,.08); --field-bg: #F4F4EF;
+    --green: #1F4B3C; --green-2: #163729; --green-soft: #E7EEE6;
+    --sage: #2F6150; --gold: #B08A3E; --clay: #B0612C;
+    --r-lg: 18px; --r-md: 14px; --shadow: 0 1px 2px rgba(36,30,18,.05);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  button { font-family: inherit; }
+  a, button { color: inherit; text-decoration: none; background: none; border: 0; cursor: pointer; }
+  h1,h2,h3,p,span,a { word-break: keep-all; }
+  body {
+    background: #D8D5C9;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Pretendard", "Noto Sans KR", system-ui, sans-serif;
+    color: var(--ink); -webkit-font-smoothing: antialiased;
+    display: flex; justify-content: center; padding: 24px 0 40px;
+  }
+  .ic { width: 1em; height: 1em; display: inline-block; vertical-align: -0.12em; flex-shrink: 0; }
+
+  .phone {
+    position: relative; width: min(390px, 100%); background: var(--bg);
+    border-radius: 30px; overflow: hidden;
+    box-shadow: 0 18px 44px -12px rgba(40,34,22,.42); min-height: 860px;
+    display: flex; flex-direction: column;
+  }
+
+  .status-bar { height: 44px; display: flex; align-items: center; justify-content: space-between; padding: 0 22px; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .status-bar .group { display: inline-flex; gap: 6px; align-items: center; }
+
+  .appbar { display: flex; align-items: center; padding: 4px 12px 0; flex-shrink: 0; }
+  .appbar .back { width: 38px; height: 38px; display: grid; place-items: center; color: var(--ink); }
+  .appbar .back .ic { font-size: 22px; }
+  .appbar .title { flex: 1; text-align: center; font-size: 16px; font-weight: 800; letter-spacing: -0.02em; }
+  .appbar .sp { width: 38px; }
+
+  .scroll { overflow-x: hidden; flex: 1; overflow-y: auto; }
+
+  /* 이미지 갤러리 */
+  .gallery { position: relative; }
+  .gallery .track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; -ms-overflow-style: none; scrollbar-width: none; }
+  .gallery .track::-webkit-scrollbar { display: none; }
+  .gallery .slide { flex: 0 0 100%; scroll-snap-align: start; aspect-ratio: 4/3; background: linear-gradient(150deg, #DCDACC, #CFCDBC); display: grid; place-items: center; }
+  .gallery .slide .ph { color: var(--sage); opacity: .4; }
+  .gallery .slide .ph .ic { font-size: 46px; }
+  .gallery .count { position: absolute; right: 14px; bottom: 14px; font-size: 11.5px; font-weight: 700; color: #fff; background: rgba(20,16,10,.5); padding: 4px 10px; border-radius: 999px; }
+
+  /* 제목 영역 */
+  .head { padding: 18px 20px 0; }
+  .head .nm-row { display: flex; align-items: center; gap: 8px; }
+  .head h1 { font-size: 24px; font-weight: 800; letter-spacing: -0.024em; margin: 0; }
+  .head .tag { font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 999px; }
+  .head .tag.dis { background: #F2E3D6; color: var(--clay); }
+  .head .tag.pst { background: var(--green-soft); color: var(--green); }
+  .head .sci { font-size: 13px; color: var(--gray); font-style: italic; margin-top: 7px; font-weight: 500; }
+  .head .meta { display: flex; gap: 7px; margin-top: 14px; flex-wrap: wrap; }
+  .head .meta .m { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: var(--ink-2); background: var(--field-bg); padding: 6px 12px; border-radius: 999px; }
+  .head .meta .m .ic { font-size: 13px; color: var(--sage); }
+
+  .body { padding: 8px 20px 24px; }
+  .sec { margin-top: 26px; }
+  .sec-title { font-size: 15px; font-weight: 800; letter-spacing: -0.018em; margin: 0 0 11px; display: flex; align-items: center; gap: 7px; }
+  .sec-title .ic { font-size: 17px; color: var(--green); }
+  .sec-card { background: var(--card); border-radius: var(--r-lg); box-shadow: var(--shadow); padding: 16px; }
+  .sec-card p { font-size: 13.5px; color: var(--ink-2); line-height: 1.72; margin: 0; font-weight: 500; }
+  .sec-card p + p { margin-top: 10px; }
+
+  /* 방제법 (단계) */
+  .control { display: flex; flex-direction: column; }
+  .ctrl-item { display: flex; gap: 12px; padding: 14px 16px; background: var(--card); }
+  .ctrl-item:first-child { border-radius: var(--r-lg) var(--r-lg) 0 0; }
+  .ctrl-item:last-child { border-radius: 0 0 var(--r-lg) var(--r-lg); }
+  .ctrl-item + .ctrl-item { border-top: 1px solid var(--line); }
+  .ctrl-item .ci { width: 32px; height: 32px; border-radius: 9px; background: var(--green-soft); color: var(--green); display: grid; place-items: center; flex-shrink: 0; }
+  .ctrl-item .ci .ic { font-size: 17px; }
+  .ctrl-item .ct { flex: 1; }
+  .ctrl-item .ct .k { font-size: 13.5px; font-weight: 800; letter-spacing: -0.012em; }
+  .ctrl-item .ct .v { font-size: 13px; color: var(--ink-2); line-height: 1.65; margin-top: 5px; font-weight: 500; }
+
+  /* 출처 + 면책 */
+  .source { display: flex; gap: 9px; align-items: flex-start; background: var(--field-bg); border-radius: var(--r-md); padding: 13px 14px; margin-top: 24px; }
+  .source .ic { color: var(--gray); font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+  .source p { font-size: 11.5px; color: var(--gray); line-height: 1.6; margin: 0; font-weight: 500; }
+
+  /* 하단 CTA */
+  .foot { padding: 14px 20px calc(16px + env(safe-area-inset-bottom)); background: var(--bg); border-top: 1px solid var(--line); flex-shrink: 0; }
+  .foot .cta { width: 100%; height: 52px; border-radius: var(--r-md); color: #fff; font-size: 15px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    background: linear-gradient(180deg, #2C6150, var(--green) 52%, var(--green-2)); box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 6px 14px -6px rgba(22,55,41,.5); }
+  .foot .cta .ic { font-size: 18px; }
+
+  /* === 360px safety net (v3) === */
+  .phone img, .phone svg { max-width: 100%; height: auto; }
+  .phone { word-break: keep-all; overflow-wrap: break-word; }
+  </style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14 0"/><path d="M8.5 16.05a6 6 0 0 1 7 0"/><path d="M2 8.82a15 15 0 0 1 20 0"/><line x1="12" y1="20" x2="12" y2="20"/></symbol>
+    <symbol id="i-battery" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="8" width="18" height="9" rx="2"/><path d="M22 11v3"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 6 9 12 15 18"/></symbol>
+    <symbol id="i-img" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></symbol>
+    <symbol id="i-spot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="10" cy="10" r="2"/><circle cx="15" cy="14" r="1.4"/></symbol>
+    <symbol id="i-cloud" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 0 0 0-9 6 6 0 0 0-11.5 1.5A3.5 3.5 0 0 0 6.5 19z"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.5" x2="15.4" y2="6.5"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+    <symbol id="i-scissors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></symbol>
+    <symbol id="i-flask" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3l-5-9V3"/><path d="M7 15h10"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="11"/><line x1="12" y1="8" x2="12.01" y2="8"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></symbol>
+  </defs></svg>
+
+  <div class="phone">
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="group"><svg class="ic"><use href="#i-wifi"/></svg> <svg class="ic"><use href="#i-battery"/></svg></span>
+    </div>
+
+    <div class="appbar">
+      <button class="back" aria-label="뒤로"><svg class="ic"><use href="#i-back"/></svg></button>
+      <span class="title">병해충 정보</span>
+      <span class="sp"></span>
+    </div>
+
+    <div class="scroll">
+      <!-- 이미지 갤러리 -->
+      <div class="gallery">
+        <div class="track">
+          <div class="slide"><span class="ph"><svg class="ic"><use href="#i-img"/></svg></span></div>
+          <div class="slide"><span class="ph"><svg class="ic"><use href="#i-img"/></svg></span></div>
+          <div class="slide"><span class="ph"><svg class="ic"><use href="#i-img"/></svg></span></div>
+        </div>
+        <span class="count">1 / 3</span>
+      </div>
+
+      <!-- 제목 -->
+      <div class="head">
+        <div class="nm-row"><h1>탄저병</h1><span class="tag dis">병</span></div>
+        <div class="sci">Colletotrichum acutatum</div>
+        <div class="meta">
+          <span class="m"><svg class="ic"><use href="#i-leaf"/></svg> 고추</span>
+        </div>
+      </div>
+
+      <div class="body">
+        <!-- 증상 -->
+        <div class="sec">
+          <h2 class="sec-title"><svg class="ic"><use href="#i-spot"/></svg> 증상 (병징)</h2>
+          <div class="sec-card">
+            <p>과실에 물에 데친 듯한 둥근 반점이 생기고, 점차 움푹 들어가며 갈색~흑색으로 커집니다.</p>
+            <p>병든 부위에는 둥근 무늬 모양으로 분생포자가 형성되어 분홍빛 점질물이 보이기도 합니다. 습할 때 빠르게 번집니다.</p>
+          </div>
+        </div>
+
+        <!-- 발생 환경 -->
+        <div class="sec">
+          <h2 class="sec-title"><svg class="ic"><use href="#i-cloud"/></svg> 발생 환경</h2>
+          <div class="sec-card">
+            <p>기온 25~30℃, 다습한 조건에서 발생이 많습니다. 비가 잦거나 시설 내 습도가 높을 때 급격히 퍼집니다.</p>
+          </div>
+        </div>
+
+        <!-- 전염 경로 -->
+        <div class="sec">
+          <h2 class="sec-title"><svg class="ic"><use href="#i-share"/></svg> 전염 경로</h2>
+          <div class="sec-card">
+            <p>병든 과실·잔재물에서 균이 겨울을 나며, 이듬해 빗물이나 관수에 튀어 1차 전염원이 됩니다. 포자가 바람·물방울을 타고 주변 포기로 옮겨 가요.</p>
+          </div>
+        </div>
+
+        <!-- 방제법 -->
+        <div class="sec">
+          <h2 class="sec-title"><svg class="ic"><use href="#i-shield"/></svg> 방제법</h2>
+          <div class="control">
+            <div class="ctrl-item">
+              <span class="ci"><svg class="ic"><use href="#i-scissors"/></svg></span>
+              <div class="ct"><div class="k">경종적 방제</div><div class="v">병든 과실과 잔재물을 일찍 제거하고, 배수와 통풍을 좋게 해 습도를 낮춥니다. 건전한 종자·모종을 사용해요.</div></div>
+            </div>
+            <div class="ctrl-item">
+              <span class="ci"><svg class="ic"><use href="#i-flask"/></svg></span>
+              <div class="ct"><div class="k">약제 방제</div><div class="v">발병 초기에 등록 약제를 안전사용기준에 맞춰 살포합니다. 강우 전후 예방 위주로 방제하면 효과적이에요.</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 출처 -->
+        <div class="source">
+          <svg class="ic"><use href="#i-info"/></svg>
+          <p>농촌진흥청 국가농작물병해충관리시스템(NCPMS) 자료를 바탕으로 제공돼요. 약제는 반드시 작물별 등록 여부와 안전사용기준을 확인하세요.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 하단 CTA -->
+    <div class="foot">
+      <button class="cta"><svg class="ic"><use href="#i-camera"/></svg> 사진으로 병해 진단하기</button>
+    </div>
+  </div>
+
+  <script>
+    var track = document.querySelector('.track');
+    var count = document.querySelector('.count');
+    var slides = document.querySelectorAll('.slide').length;
+    track.addEventListener('scroll', function(){
+      var i = Math.round(track.scrollLeft / track.clientWidth) + 1;
+      count.textContent = i + ' / ' + slides;
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KS팜 — 공지사항</title>
+<style>
+  :root {
+    --bg: #ECEAE0; --card: #FFFFFF; --ink: #20251D; --ink-2: #45493E; --gray: #76796C;
+    --line: rgba(48,42,30,.10);
+    --green: #1F4B3C;
+    --r-lg: 18px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  a, button { color: inherit; text-decoration: none; background: none; border: 0; cursor: pointer; }
+  h1,h2,h3,p,span,a,strong { word-break: keep-all; }
+  body {
+    background: #D8D5C9;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Pretendard", "Noto Sans KR", system-ui, sans-serif;
+    color: var(--ink); -webkit-font-smoothing: antialiased;
+    display: flex; justify-content: center; padding: 24px 0 40px;
+  }
+  .ic { width: 1em; height: 1em; display: inline-block; vertical-align: -0.12em; flex-shrink: 0; }
+
+  .phone {
+    width: min(390px, 100%); background: var(--bg);
+    border-radius: 30px; overflow: hidden;
+    box-shadow: 0 18px 44px -12px rgba(40,34,22,.42); min-height: 800px;
+  }
+
+  .status-bar { height: 44px; display: flex; align-items: center; justify-content: space-between; padding: 0 22px; font-size: 13px; font-weight: 700; }
+  .status-bar .group { display: inline-flex; gap: 6px; align-items: center; }
+
+  .appbar { display: flex; align-items: center; padding: 4px 12px 0; }
+  .appbar .back { width: 38px; height: 38px; display: grid; place-items: center; color: var(--ink); }
+  .appbar .back .ic { font-size: 22px; }
+  .appbar .title { flex: 1; text-align: center; font-size: 16px; font-weight: 800; letter-spacing: -0.02em; }
+  .appbar .sp { width: 38px; }
+
+  /* 당근식 담백 리스트 — 카드 없음, 구분선만 */
+  .list { padding: 8px 22px 30px; }
+  .row { display: block; padding: 20px 0; width: 100%; text-align: left; }
+  .row + .row { border-top: 1px solid var(--line); }
+  .row:active { opacity: .6; }
+  .row .ttl { font-size: 16px; font-weight: 600; letter-spacing: -0.018em; color: var(--ink); line-height: 1.42; }
+  .row .ttl .pre { font-weight: 700; }
+  .row .date { margin-top: 12px; font-size: 13px; color: var(--gray); font-weight: 500; }
+</style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14 0"/><path d="M8.5 16.05a6 6 0 0 1 7 0"/><path d="M2 8.82a15 15 0 0 1 20 0"/><line x1="12" y1="20" x2="12" y2="20"/></symbol>
+    <symbol id="i-battery" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="8" width="18" height="9" rx="2"/><path d="M22 11v3"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 6 9 12 15 18"/></symbol>
+  </defs></svg>
+
+  <div class="phone">
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="group"><svg class="ic"><use href="#i-wifi"/></svg> <svg class="ic"><use href="#i-battery"/></svg></span>
+    </div>
+
+    <div class="appbar">
+      <button class="back" aria-label="뒤로"><svg class="ic"><use href="#i-back"/></svg></button>
+      <span class="title">공지사항</span>
+      <span class="sp"></span>
+    </div>
+
+    <div class="list">
+      <a class="row" href="#">
+        <div class="ttl"><span class="pre">[공지]</span> 농사친구 출시 기념 간담회 개최</div>
+        <div class="date">2026.05.19</div>
+      </a>
+      <a class="row" href="#">
+        <div class="ttl"><span class="pre">[공지]</span> 고객센터 운영시간 변경 안내</div>
+        <div class="date">2026.05.17</div>
+      </a>
+      <a class="row" href="#">
+        <div class="ttl"><span class="pre">[공지]</span> 정기 점검 안내 (5월 12일 월요일 03:00~04:00)</div>
+        <div class="date">2026.05.12</div>
+      </a>
+      <a class="row" href="#">
+        <div class="ttl"><span class="pre">[공지]</span> 앱 사용법 안내</div>
+        <div class="date">2026.05.12</div>
+      </a>
+      <a class="row" href="#">
+        <div class="ttl"><span class="pre">[공지]</span> 앱 출시 안내</div>
+        <div class="date">2026.05.12</div>
+      </a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>지원사업 리스트 행 — 비교</title>
+<style>
+:root{--bg:#ECEAE0;--card:#FFFFFF;--ink:#20251D;--ink-2:#45493E;--gray:#76796C;--line:rgba(48,42,30,.08);--field-bg:#F4F4EF;--green:#1F4B3C;--green-2:#163729;--green-soft:#E7EEE6;--sage:#2F6150;--gold:#B08A3E;--clay:#B0612C;--r-lg:18px;--r-md:14px;--shadow:0 1px 2px rgba(36,30,18,.05);}
+*{box-sizing:border-box;}
+.ic{width:1em;height:1em;display:inline-block;vertical-align:-0.12em;flex-shrink:0;}
+body{margin:0;background:#D8D5C9;padding:26px 14px 50px;font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Noto Sans KR",system-ui,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+h3,p,span,div{word-break:keep-all;}
+.row{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;max-width:1320px;margin:0 auto;align-items:flex-start;}
+.col{width:390px;}
+.lab{margin:0 0 10px;text-align:center;}
+.lab .tag{display:inline-block;font-size:11px;font-weight:800;color:var(--green);background:var(--green-soft);padding:3px 10px;border-radius:999px;margin-bottom:6px;}
+.lab h3{font-size:14px;font-weight:800;margin:0 0 3px;letter-spacing:-0.02em;}
+.lab p{font-size:11.5px;color:#5a5d52;margin:0;font-weight:500;line-height:1.4;}
+.demo{background:var(--bg);border-radius:20px;padding:18px;box-shadow:0 10px 28px -12px rgba(40,34,22,.36);}
+
+.list{background:var(--card);border-radius:var(--r-md);box-shadow:var(--shadow);overflow:hidden;}
+
+/* 공통 행 베이스 */
+.item{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:16px;}
+.item+.item{border-top:1px solid var(--line);}
+.ti{font-size:14.5px;font-weight:700;letter-spacing:-0.014em;line-height:1.4;}
+.sub{font-size:12px;color:var(--gray);font-weight:600;margin-top:5px;}
+.cv{color:#C7C8BE;font-size:19px;flex-shrink:0;}
+
+/* D-day 알약 */
+.dday{display:inline-flex;align-items:center;font-size:10.5px;font-weight:800;padding:3px 9px;border-radius:999px;background:var(--field-bg);color:var(--ink-2);}
+.dday.soon{background:#F2E3D6;color:var(--clay);}
+.dday.open{background:var(--green-soft);color:var(--sage);}
+
+/* ===== A: 왼쪽 하단 알약 + 우측 화살표 ===== */
+.A .main{flex:1;min-width:0;}
+.A .dday{margin-top:10px;}
+
+/* ===== B: 기관 줄 우측 알약 + 우측 화살표 ===== */
+.B .main{flex:1;min-width:0;}
+.B .subrow{display:flex;align-items:center;gap:8px;margin-top:5px;}
+.B .subrow .sub{margin-top:0;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+/* B2: 알약이 분야 텍스트 바로 옆에 붙음 (sub가 늘어나지 않음) */
+.B .subrow.b2{gap:7px;}
+.B .subrow.b2 .sub{flex:0 1 auto;}
+</style></head>
+<body>
+<div class="row">
+
+<!-- A -->
+<div class="col">
+  <div class="lab"><span class="tag">A안</span><h3>알약 왼쪽 하단 + 우측 화살표</h3><p>제목→기관→D-day 알약 세로 스택, 우측 chevron</p></div>
+  <div class="demo">
+    <div class="list">
+      <a class="item A"><div class="main"><div class="ti">2026년 청년후계농 영농정착지원사업</div><div class="sub">농림축산식품부 · 청년농</div><span class="dday soon">D-5</span></div><svg class="ic cv"><use href="#i-cv"/></svg></a>
+      <a class="item A"><div class="main"><div class="ti">스마트팜 시설 현대화 지원사업</div><div class="sub">전라북도 완주군 · 시설·현대화</div><span class="dday">D-12</span></div><svg class="ic cv"><use href="#i-cv"/></svg></a>
+      <a class="item A"><div class="main"><div class="ti">농기계 구입 융자 지원</div><div class="sub">농협중앙회 · 농기계</div><span class="dday">D-25</span></div><svg class="ic cv"><use href="#i-cv"/></svg></a>
+      <a class="item A"><div class="main"><div class="ti">농업경영회생자금 지원</div><div class="sub">농림축산식품부 · 경영자금</div><span class="dday open">상시</span></div><svg class="ic cv"><use href="#i-cv"/></svg></a>
+    </div>
+  </div>
+</div>
+
+<!-- B -->
+<div class="col">
+  <div class="lab"><span class="tag">B안</span><h3>기관 줄 우측 알약 + 우측 화살표</h3><p>제목 / 기관·분야 + D-day 알약 한 줄, 우측 chevron</p></div>
+  <div class="demo">
+    <div class="list">
+      <a class="item B"><div class="main"><div class="ti">2026년 청년후계농 영농정착지원사업</div><div class="subrow"><span class="sub">농림축산식품부 · 청년농</span><span class="dday soon">D-5</span></div></div><svg class="ic cv"><use href="#i-cv"/></svg></a>
+      <a class="item B"><div class="main"><div class="ti">스마트팜 시설 현대화 지원사업</div><div class="subrow"><span class="sub">전라북도 완주군 · 시설·현대화</span><span class="dday">D-12</span></div></div><svg class="ic cv"><use href="#i-cv"/></svg></a>
+      <a class="item B"><div class="main"><div class="ti">농기계 구입 융자 지원</div><div class="subrow"><span class="sub">농협중앙회 · 농기계</span><span class="dday">D-25</span></div></div><svg class="ic cv"><use href="#i-cv"/></svg></a>
+      <a class="item B"><div class="main"><div class="ti">농업경영회생자금 지원</div><div class="subrow"><span class="sub">농림축산식품부 · 경영자금</span><span class="dday open">상시</span></div></div><svg class="ic cv"><use href="#i-cv"/></svg></a>
+    </div>
+  </div>
+</div>
+
+<!-- B2 -->
+<div class="col">
+  <div class="lab"><span class="tag">B2안</span><h3>분야 바로 옆 알약</h3><p>D-day를 분야 텍스트 바로 옆에 붙임 (왼쪽 정렬)</p></div>
+  <div class="demo">
+    <div class="list">
+      <a class="item B"><div class="main"><div class="ti">2026년 청년후계농 영농정착지원사업</div><div class="subrow b2"><span class="sub">농림축산식품부 · 청년농</span><span class="dday soon">D-5</span></div></div><svg class="ic cv"><use href="#i-cv"/></svg></a>
+      <a class="item B"><div class="main"><div class="ti">스마트팜 시설 현대화 지원사업</div><div class="subrow b2"><span class="sub">전라북도 완주군 · 시설·현대화</span><span class="dday">D-12</span></div></div><svg class="ic cv"><use href="#i-cv"/></svg></a>
+      <a class="item B"><div class="main"><div class="ti">농기계 구입 융자 지원</div><div class="subrow b2"><span class="sub">농협중앙회 · 농기계</span><span class="dday">D-25</span></div></div><svg class="ic cv"><use href="#i-cv"/></svg></a>
+      <a class="item B"><div class="main"><div class="ti">농업경영회생자금 지원</div><div class="subrow b2"><span class="sub">농림축산식품부 · 경영자금</span><span class="dday open">상시</span></div></div><svg class="ic cv"><use href="#i-cv"/></svg></a>
+    </div>
+  </div>
+</div>
+
+</div>
+<svg width="0" height="0" style="position:absolute"><defs>
+<symbol id="i-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></symbol>
+</defs></svg>
+</body></html>

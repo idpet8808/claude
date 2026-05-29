@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KS팜 — 탈퇴 확인 / 수정 완료</title>
+<style>
+  :root {
+    --bg: #ECEAE0; --card: #FFFFFF; --ink: #20251D; --ink-2: #45493E; --gray: #76796C;
+    --line: rgba(48,42,30,.08); --field-bg: #F4F4EF;
+    --green: #1F4B3C; --green-2: #163729; --green-soft: #E7EEE6;
+    --red: #B0612C; --red-soft: #F3E6D6;
+    --r-lg: 18px; --r-md: 14px;
+    --shadow: 0 1px 2px rgba(36,30,18,.05);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  button { font-family: inherit; }
+  button { color: inherit; background: none; border: 0; cursor: pointer; }
+  h1,h2,h3,p,span { word-break: keep-all; }
+  body {
+    background: #D8D5C9;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Pretendard", "Noto Sans KR", system-ui, sans-serif;
+    color: var(--ink); -webkit-font-smoothing: antialiased;
+    display: flex; gap: 22px; flex-wrap: wrap; justify-content: center; padding: 24px 14px 50px;
+  }
+  .ic { width: 1em; height: 1em; display: inline-block; vertical-align: -0.12em; flex-shrink: 0; }
+  .col { width: 360px; }
+  .cap { margin: 0 0 10px; }
+  .cap .tag { display:inline-block; font-size:11px; font-weight:800; color:var(--green); background:var(--green-soft); padding:3px 9px; border-radius:999px; margin-bottom:7px; }
+  .cap h3 { font-size:15px; font-weight:800; letter-spacing:-0.02em; margin:0 0 4px; }
+  .cap p { font-size:12px; color:#5a5d52; margin:0; line-height:1.5; }
+
+  .phone {
+    position: relative; width: 100%;
+    background: var(--bg); border-radius: 28px; overflow: hidden;
+    box-shadow: 0 16px 38px -12px rgba(40,34,22,.4); height: 540px; min-height: 860px; }
+  /* faint form bg */
+  .bgform { position:absolute; inset:0; padding: 30px 18px; pointer-events:none; }
+  .bgf { background:#fff; border-radius:12px; padding:9px 13px; margin-bottom:12px; opacity:.45; }
+  .bgf .l { font-size:11px; color:var(--gray); font-weight:700; }
+  .bgf .v { font-size:14px; font-weight:600; margin-top:3px; }
+
+  /* ===== dialog (탈퇴 확인) ===== */
+  .scrim { position:absolute; inset:0; background:rgba(24,20,12,.5); z-index:5; display:grid; place-items:center; padding:0 28px; }
+  .dialog { width:100%; max-width:300px; background:var(--card); border-radius:20px; padding:24px 22px 18px; text-align:center; box-shadow:0 18px 40px -10px rgba(36,30,18,.4); }
+  .dlg-title { font-size:17.5px; font-weight:800; letter-spacing:-0.02em; }
+  .dlg-desc { font-size:13px; color:var(--gray); line-height:1.55; margin-top:9px; }
+  .dlg-actions { margin-top:20px; display:flex; flex-direction:column; gap:9px; }
+  .btn { height:48px; border-radius:var(--r-md); font-size:14.5px; font-weight:800; letter-spacing:-0.01em; display:flex; align-items:center; justify-content:center; }
+  /* 탈퇴 = 위험행동 → 약한 경고(클레이 외곽선), 취소 = 안전(딥틸 채움)이 기본 강조 */
+  .btn-danger { background:var(--card); color:var(--red); border:1.5px solid var(--red); }
+  .btn-danger:active { background:var(--red-soft); }
+  .btn-cancel { background:linear-gradient(180deg,#2C6150,var(--green) 52%,var(--green-2)); color:#fff; box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 8px 18px -8px rgba(22,55,41,.5); }
+
+  /* ===== success toast ===== */
+  .toast-wrap { position:absolute; left:0; right:0; bottom:26px; display:flex; justify-content:center; z-index:6; padding:0 20px; }
+  .toast { display:flex; align-items:center; gap:10px; background:var(--green-2); color:#fff; padding:14px 18px; border-radius:14px; box-shadow:0 10px 26px -8px rgba(22,55,41,.55); width:100%; max-width:330px; }
+  .toast .tic { width:24px; height:24px; flex:0 0 24px; border-radius:50%; background:rgba(255,255,255,.18); display:grid; place-items:center; }
+  .toast .tic .ic { font-size:14px; }
+  .toast .tt { font-size:13.5px; font-weight:700; letter-spacing:-0.01em; }
+
+  /* === 360px safety net (v3) === */
+  .phone img, .phone svg { max-width: 100%; height: auto; }
+  .phone { word-break: keep-all; overflow-wrap: break-word; }
+  </style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></symbol>
+  </defs></svg>
+
+  <!-- 탈퇴 확인 다이얼로그 -->
+  <div class="col">
+    <div class="cap"><span class="tag">1</span><h3>회원 탈퇴 확인</h3><p>위험 행동이라 '탈퇴'는 약한 경고(클레이 외곽선), 안전한 '취소'를 기본 강조로. 실수 방지.</p></div>
+    <div class="phone">
+      <div class="bgform" aria-hidden="true">
+        <div class="bgf"><div class="l">이름</div><div class="v">김팜</div></div>
+        <div class="bgf"><div class="l">닉네임</div><div class="v">utii</div></div>
+        <div class="bgf"><div class="l">이메일</div><div class="v">summertoohotplzstop@gmail.com</div></div>
+      </div>
+      <div class="scrim">
+        <div class="dialog" role="alertdialog" aria-labelledby="dt">
+          <div class="dlg-title" id="dt">정말 탈퇴하시겠어요?</div>
+          <div class="dlg-desc">탈퇴하면 회원정보와 그동안의<br>영농일지·진단 기록이 모두 삭제돼요.</div>
+          <div class="dlg-actions">
+            <button class="btn btn-cancel">계속 이용하기</button>
+            <button class="btn btn-danger">탈퇴할게요</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 수정 완료 토스트 -->
+  <div class="col">
+    <div class="cap"><span class="tag">2</span><h3>정보 수정 완료</h3><p>브라우저 기본 alert 대신 hybrid 토스트. 아래에서 잠깐 떴다 사라지는 방식(논블로킹).</p></div>
+    <div class="phone">
+      <div class="bgform" aria-hidden="true">
+        <div class="bgf"><div class="l">이름</div><div class="v">김팜</div></div>
+        <div class="bgf"><div class="l">닉네임</div><div class="v">utii</div></div>
+        <div class="bgf"><div class="l">이메일</div><div class="v">summertoohotplzstop@gmail.com</div></div>
+        <div class="bgf"><div class="l">휴대폰 번호</div><div class="v">010-0020-3003</div></div>
+      </div>
+      <div class="toast-wrap">
+        <div class="toast" role="status">
+          <span class="tic"><svg class="ic"><use href="#i-check"/></svg></span>
+          <span class="tt">회원정보가 수정되었어요</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

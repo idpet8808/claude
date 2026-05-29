@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KS팜 — 전문가에게 물어보기</title>
+<style>
+  :root {
+    --bg: #ECEAE0; --card: #FFFFFF; --ink: #20251D; --ink-2: #45493E; --gray: #76796C;
+    --line: rgba(48,42,30,.08); --field-bg: #F4F4EF;
+    --green: #1F4B3C; --green-2: #163729; --green-soft: #E7EEE6;
+    --sage: #2F6150; --gold: #B08A3E; --clay: #B0612C;
+    --r-lg: 18px; --r-md: 14px; --shadow: 0 1px 2px rgba(36,30,18,.05);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  button, input { font-family: inherit; }
+  a, button { color: inherit; text-decoration: none; background: none; border: 0; cursor: pointer; }
+  h1,h2,h3,p,span,a { word-break: keep-all; }
+  body {
+    background: #D8D5C9;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Pretendard", "Noto Sans KR", system-ui, sans-serif;
+    color: var(--ink); -webkit-font-smoothing: antialiased;
+    display: flex; justify-content: center; padding: 24px 0 40px;
+  }
+  .ic { width: 1em; height: 1em; display: inline-block; vertical-align: -0.12em; flex-shrink: 0; }
+
+  .phone {
+    position: relative; width: min(390px, 100%); background: var(--bg);
+    border-radius: 30px; overflow: hidden;
+    box-shadow: 0 18px 44px -12px rgba(40,34,22,.42); min-height: 860px;
+    display: flex; flex-direction: column;
+  }
+
+  .status-bar { height: 44px; display: flex; align-items: center; justify-content: space-between; padding: 0 22px; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .status-bar .group { display: inline-flex; gap: 6px; align-items: center; }
+
+  .appbar { display: flex; align-items: center; padding: 4px 12px 0; flex-shrink: 0; }
+  .appbar .back { width: 38px; height: 38px; display: grid; place-items: center; color: var(--ink); }
+  .appbar .back .ic { font-size: 22px; }
+  .appbar .title { flex: 1; text-align: center; font-size: 16px; font-weight: 800; letter-spacing: -0.02em; }
+  .appbar .sp { width: 38px; }
+
+  .top { padding: 8px 20px 0; flex-shrink: 0; }
+  /* 검색 */
+  .search { display: flex; align-items: center; gap: 8px; background: var(--field-bg); border-radius: var(--r-md); padding: 0 14px; height: 46px; }
+  .search .ic { color: var(--gray); font-size: 18px; }
+  .search input { flex: 1; border: 0; background: transparent; font-size: 15px; font-weight: 600; color: var(--ink); outline: none; }
+  .search input::placeholder { color: #ADAFa4; font-weight: 500; }
+
+  /* 카테고리 — 슬림 텍스트 탭 */
+  .cats { display: flex; gap: 16px; overflow-x: auto; padding: 14px 20px 0; flex-shrink: 0; -ms-overflow-style: none; scrollbar-width: none; }
+  .cats::-webkit-scrollbar { display: none; }
+  .cat { flex-shrink: 0; font-size: 14.5px; font-weight: 700; color: var(--gray); padding: 4px 0 12px; position: relative; }
+  .cat.on { color: var(--green); font-weight: 800; }
+  .cat.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2.5px; border-radius: 2px; background: var(--green); }
+
+  /* 상태 필터 + 내 질문 */
+  .filter-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 20px 12px; flex-shrink: 0; border-bottom: 1px solid var(--line); }
+  .status-chips { display: flex; gap: 7px; overflow-x: auto; -ms-overflow-style: none; scrollbar-width: none; }
+  .status-chips::-webkit-scrollbar { display: none; }
+  .sc { flex-shrink: 0; display: inline-flex; align-items: center; gap: 5px; padding: 6px 12px; border-radius: 999px; font-size: 12.5px; font-weight: 700; background: transparent; border: 1.5px solid var(--line); color: var(--gray); }
+  .sc .dotc { width: 7px; height: 7px; border-radius: 50%; }
+  .sc.on { background: var(--green-soft); border-color: transparent; color: var(--green); }
+  .sc .d-wait { background: var(--gray); }
+  .sc .d-done { background: var(--green); }
+  .mine-check { flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px; }
+  .mine-check .cbox { width: 18px; height: 18px; border-radius: 6px; border: 1.6px solid #C5C7BC; background: var(--card); display: grid; place-items: center; color: #fff; transition: all .14s; }
+  .mine-check .cbox .ic { font-size: 11px; opacity: 0; transition: opacity .14s; }
+  .mine-check.on .cbox { background: var(--green); border-color: var(--green); }
+  .mine-check.on .cbox .ic { opacity: 1; }
+  .mine-check .mc-lb { font-size: 12.5px; font-weight: 700; color: var(--ink-2); white-space: nowrap; }
+  .mine-check.on .mc-lb { color: var(--green); }
+
+  .scroll { overflow-x: hidden; flex: 1; overflow-y: auto; padding: 14px 20px 14px; }
+
+  /* 질문 카드 (흰 박스) */
+  .q-list { display: flex; flex-direction: column; gap: 10px; }
+  .q-item { background: var(--card); border-radius: var(--r-lg); box-shadow: var(--shadow); padding: 16px; }
+  .q-row { display: flex; align-items: flex-start; gap: 10px; }
+  .q-row .q-titlewrap { flex: 1; min-width: 0; }
+  .q-chk { width: 22px; height: 22px; border-radius: 50%; background: var(--green); color: #fff; display: grid; place-items: center; flex-shrink: 0; margin-top: 1px; }
+  .q-chk .ic { font-size: 13px; }
+  .q-top { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .q-badge { font-size: 10.5px; font-weight: 800; padding: 3px 9px; border-radius: 999px; }
+  .q-badge.done { background: var(--green-soft); color: var(--green); }
+  .q-badge.wait { background: var(--field-bg); color: var(--gray); }
+  .q-title { font-size: 15.5px; font-weight: 700; color: var(--ink); letter-spacing: -0.016em; line-height: 1.4; }
+  .q-preview { font-size: 13px; color: var(--gray); font-weight: 500; line-height: 1.5; margin-top: 7px;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .q-meta { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--gray); font-weight: 600; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+  .q-meta .dot { width: 2.5px; height: 2.5px; border-radius: 50%; background: #C7C8BE; }
+  .q-meta .cat-tag { color: var(--sage); font-weight: 700; }
+  .q-meta .reply { display: inline-flex; align-items: center; gap: 4px; color: var(--green); font-weight: 700; }
+  .q-meta .reply .ic { font-size: 13px; }
+
+  .more-row { text-align: center; padding: 18px 0 4px; }
+  .more-row button { font-size: 13.5px; font-weight: 700; color: var(--gray); display: inline-flex; align-items: center; gap: 4px; }
+  .more-row .ic { font-size: 15px; }
+
+  .fab { position: absolute; right: 18px; bottom: calc(20px + env(safe-area-inset-bottom)); height: 52px; padding: 0 22px; border-radius: 999px; color: #fff; font-size: 15px; font-weight: 800; display: flex; align-items: center; gap: 7px; z-index: 5;
+    background: linear-gradient(180deg, #2C6150 0%, var(--green) 52%, var(--green-2) 100%);
+    box-shadow: 0 10px 24px -8px rgba(22,55,41,.6), inset 0 1px 0 rgba(255,255,255,.2); }
+  .fab .ic { font-size: 18px; }
+
+  /* === 360px safety net (v3) === */
+  .phone img, .phone svg { max-width: 100%; height: auto; }
+  .phone { word-break: keep-all; overflow-wrap: break-word; }
+  </style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14 0"/><path d="M8.5 16.05a6 6 0 0 1 7 0"/><path d="M2 8.82a15 15 0 0 1 20 0"/><line x1="12" y1="20" x2="12" y2="20"/></symbol>
+    <symbol id="i-battery" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="8" width="18" height="9" rx="2"/><path d="M22 11v3"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 6 9 12 15 18"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.8.6-5.1 4.5 1.5 6.6L12 17.3 5.9 20.6l1.5-6.6L2.3 8.9l6.8-.6z"/></symbol>
+    <symbol id="i-chev-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></symbol>
+    <symbol id="i-pencil" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></symbol>
+    <symbol id="i-reply" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7A8.38 8.38 0 0 1 4 11.5 8.5 8.5 0 0 1 12.5 3 8.5 8.5 0 0 1 21 11.5z"/></symbol>
+  </defs></svg>
+
+  <div class="phone">
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="group"><svg class="ic"><use href="#i-wifi"/></svg> <svg class="ic"><use href="#i-battery"/></svg></span>
+    </div>
+
+    <div class="appbar">
+      <button class="back" aria-label="뒤로"><svg class="ic"><use href="#i-back"/></svg></button>
+      <span class="title">전문가에게 물어보기</span>
+      <span class="sp"></span>
+    </div>
+
+    <div class="top">
+      <div class="search">
+        <svg class="ic"><use href="#i-search"/></svg>
+        <input type="text" placeholder="궁금한 내용을 검색해 보세요" />
+      </div>
+    </div>
+
+    <!-- 카테고리 (슬림 텍스트 탭) -->
+    <div class="cats">
+      <button class="cat on">전체</button>
+      <button class="cat">스마트팜</button>
+      <button class="cat">가공</button>
+      <button class="cat">유통</button>
+      <button class="cat">운영</button>
+      <button class="cat">기타</button>
+    </div>
+
+    <!-- 상태 필터 + 내 질문 -->
+    <div class="filter-row">
+      <div class="status-chips">
+        <button class="sc on">전체</button>
+        <button class="sc"><span class="dotc d-wait"></span>답변대기</button>
+        <button class="sc"><span class="dotc d-done"></span>답변완료</button>
+      </div>
+      <button class="mine-check" id="mineCheck">
+        <span class="cbox"><svg class="ic"><use href="#i-check"/></svg></span>
+        <span class="mc-lb">내 질문</span>
+      </button>
+    </div>
+
+    <div class="scroll">
+      <div class="q-list">
+        <div class="q-item">
+          <div class="q-row">
+            <div class="q-titlewrap">
+              <div class="q-top"><span class="q-badge done">답변완료</span></div>
+              <div class="q-title">딸기는 어떻게 재배 하나요?</div>
+              <div class="q-preview">처음 딸기 농사를 시작하는데 환경 설정이 막막합니다. 온도·습도·일조량은 어느 정도로 맞춰야 하고, 토양은 어떻게 준비해야 하나요?</div>
+            </div>
+            <div class="q-chk"><svg class="ic"><use href="#i-check"/></svg></div>
+          </div>
+          <div class="q-meta"><span class="cat-tag">가공</span><span class="dot"></span><span>2026.03.11</span><span class="dot"></span><span>김도하</span></div>
+        </div>
+
+        <div class="q-item">
+          <div class="q-top"><span class="q-badge wait">답변대기</span></div>
+          <div class="q-title">토마토 열과현상을 줄이는 방법</div>
+          <div class="q-preview">토마토 열매가 갈라지는 열과현상이 자주 생깁니다. 물 주기나 온도 관리에서 어떤 점을 신경 써야 줄일 수 있을까요?</div>
+          <div class="q-meta"><span>미분류</span><span class="dot"></span><span>2025.10.16</span><span class="dot"></span><span>kan****</span></div>
+        </div>
+
+        <div class="q-item">
+          <div class="q-top"><span class="q-badge wait">답변대기</span></div>
+          <div class="q-title">질문 테스트 11</div>
+          <div class="q-preview">스마트팜 환경제어 설정값 추천 부탁드립니다. 작물별 권장 온습도와 CO2 농도가 궁금합니다.</div>
+          <div class="q-meta"><span class="cat-tag">스마트팜</span><span class="dot"></span><span>2026.02.24</span><span class="dot"></span><span>utii</span></div>
+        </div>
+
+        <div class="q-item">
+          <div class="q-row">
+            <div class="q-titlewrap">
+              <div class="q-top"><span class="q-badge done">답변완료</span></div>
+              <div class="q-title">오이를 잘 키우는 법 알고 싶습니다.</div>
+              <div class="q-preview">노지에서 오이를 키우는데 잎이 자꾸 누렇게 변합니다. 비료나 물 관리에서 무엇을 점검하면 좋을지 조언 부탁드려요.</div>
+            </div>
+            <div class="q-chk"><svg class="ic"><use href="#i-check"/></svg></div>
+          </div>
+          <div class="q-meta"><span>미분류</span><span class="dot"></span><span>2025.10.10</span><span class="dot"></span><span>오잉</span></div>
+        </div>
+      </div>
+
+      <div class="more-row">
+        <button>더보기 <svg class="ic"><use href="#i-chev-down"/></svg></button>
+      </div>
+    </div>
+
+    <button class="fab"><svg class="ic"><use href="#i-pencil"/></svg> 질문하기</button>
+  </div>
+
+  <script>
+    document.querySelectorAll('.cat').forEach(function(c){
+      c.addEventListener('click', function(){
+        document.querySelectorAll('.cat').forEach(function(x){ x.classList.remove('on'); });
+        c.classList.add('on');
+      });
+    });
+    document.querySelectorAll('.sc').forEach(function(s){
+      s.addEventListener('click', function(){
+        document.querySelectorAll('.sc').forEach(function(x){ x.classList.remove('on'); });
+        s.classList.add('on');
+      });
+    });
+    var mineCheck = document.getElementById('mineCheck');
+    mineCheck.addEventListener('click', function(){ mineCheck.classList.toggle('on'); });
+  </script>
+</body>
+</html>

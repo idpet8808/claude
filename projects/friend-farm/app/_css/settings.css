@@ -1,0 +1,22 @@
+/* settings.css */
+:root { --line: rgba(48,42,30,.08); --red: #B0612C; }
+.phone { min-height: 800px; }
+body { background: #D8D5C9; display: flex; justify-content: center; padding: 24px 0 40px; }
+
+.scroll { padding: 8px 20px 30px; }
+.sec-label { font-size: 11.5px; font-weight: 800; letter-spacing: .02em; color: var(--gray); padding: 18px 4px 8px; }
+
+.s-group { background: var(--card); border-radius: var(--r-lg); box-shadow: var(--shadow); overflow: hidden; }
+.item { display: flex; align-items: center; gap: 13px; padding: 15px 16px; width: 100%; text-align: left; }
+.item + .item { border-top: 1px solid var(--line); }
+.item:active { background: rgba(48,42,30,.03); }
+.item .li { width: 22px; height: 22px; color: var(--ink-2); font-size: 20px; display: grid; place-items: center; flex: 0 0 22px; }
+.item .lbl { flex: 1; font-size: 15px; font-weight: 600; color: var(--ink); }
+.item .val { font-size: 13.5px; color: var(--gray); font-weight: 600; }
+.item .val.on { color: var(--green); font-weight: 700; }
+.item .cv { color: #9DA095; font-size: 15px; }
+
+.logout-wrap { margin-top: 28px; text-align: center; }
+.logout { display: inline-flex; align-items: center; gap: 7px; font-size: 13.5px; font-weight: 700; color: var(--gray); padding: 8px 12px; }
+.logout .ic { font-size: 15px; }
+.ver { margin-top: 10px; font-size: 11.5px; color: #A9AC9F; font-weight: 600; }

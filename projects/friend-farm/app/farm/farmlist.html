@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KS팜 — 농장 정보 조회</title>
+<link rel="stylesheet" href="../_css/common.css"/>
+<link rel="stylesheet" href="../_css/components.css"/>
+<link rel="stylesheet" href="../_css/farmlist.css"/>
+</head>
+<body>
+  <script src="../_js/sprite.js"></script>
+  <div class="phone">
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="group"><svg class="ic"><use href="#i-wifi"/></svg> <svg class="ic"><use href="#i-battery"/></svg></span>
+    </div>
+
+    <div class="appbar">
+      <a class="back" href="../home.html" aria-label="뒤로"><svg class="ic"><use href="#i-back"/></svg></a>
+      <span class="title">농장 정보 조회</span>
+      <span class="sp"></span>
+    </div>
+
+    <div class="scroll">
+      <div class="count-row">
+        <span class="t">내 농장</span>
+        <span class="n">2곳 등록 · 최대 10곳</span>
+      </div>
+
+      <div class="farm-list">
+        <!-- 대표 농장 (사진 있음) -->
+        <a class="farm" href="farm-detail.html">
+          <div class="f-thumb">
+            <img src="https://images.unsplash.com/photo-1592419044706-39796d40f98c?w=300&q=80" alt="농장 사진" onerror="this.parentElement.classList.add('empty');this.remove();"/>
+          </div>
+          <div class="f-main">
+            <div class="f-top"><span class="f-name">강남 역삼 농원</span><span class="f-badge">대표</span></div>
+            <div class="f-sub">서울특별시 종로구 · 오이 (백다다기) · 토경재배</div>
+          </div>
+          <svg class="ic f-cv"><use href="#i-cv"/></svg>
+        </a>
+
+        <!-- 일반 농장 (사진 없음) -->
+        <a class="farm" href="farm-detail.html">
+          <div class="f-thumb empty"><span class="leaf-bg"><svg viewBox="0 0 24 24"><use href="#i-leaf-f"/></svg></span><svg class="ic"><use href="#i-leaf"/></svg></div>
+          <div class="f-main">
+            <div class="f-top"><span class="f-name">양평 비닐하우스</span></div>
+            <div class="f-sub">경기도 양평군 · 토마토 (대저) · 수경재배</div>
+          </div>
+          <svg class="ic f-cv"><use href="#i-cv"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <a class="fab" href="farm-register.html" style="text-decoration:none;"><svg class="ic"><use href="#i-plus"/></svg> 농장 등록</a>
+  </div>
+</body>
+</html>

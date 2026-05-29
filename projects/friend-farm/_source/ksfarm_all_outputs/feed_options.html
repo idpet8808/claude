@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>피드 행 보강 비교</title>
+<style>
+:root{
+  --bg:#ECEAE0;--card:#FFFFFF;--ink:#20251D;--ink-2:#45493E;--gray:#76796C;
+  --line:rgba(48,42,30,.10);
+  --green:#1F4B3C;--green-2:#163729;--green-soft:#E7EEE6;
+  --red:#B0612C;--red-soft:#F3E6D6;
+  --gold:#B08A3E;--gold-soft:#F2E9D2;--clay:#B0612C;--clay-soft:#F3E1D2;
+  --sage:#2F6150;--sage-soft:#E4ECE0;
+  --r-lg:18px;--r-md:14px;--r-sm:10px;--shadow:0 1px 2px rgba(36,30,18,.05);
+}
+*{box-sizing:border-box;}
+a{color:inherit;text-decoration:none;}
+h2,h3,h4,p,strong,span,a,small{word-break:keep-all;}
+.ic{width:1em;height:1em;display:inline-block;vertical-align:-0.14em;flex-shrink:0;}
+body{margin:0;background:#DEDBCF;padding:24px 0 40px;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Pretendard","Noto Sans KR",system-ui,sans-serif;
+  color:var(--ink);-webkit-font-smoothing:antialiased;}
+.wrap{width:min(390px,100%);margin:0 auto;padding:0 22px;}
+.opt-h{margin:30px 0 13px;}
+.opt-h .tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.02em;color:var(--green);
+  background:var(--green-soft);padding:3px 9px;border-radius:999px;margin-bottom:7px;}
+.opt-h h3{font-size:17px;font-weight:800;letter-spacing:-0.02em;margin:0;}
+.opt-h p{font-size:12.5px;color:var(--gray);margin:5px 0 0;line-height:1.5;}
+
+.card{display:block;background:var(--card);border:1px solid var(--line);
+  border-radius:var(--r-lg);box-shadow:var(--shadow);overflow:hidden;}
+.row{display:flex;align-items:center;gap:13px;padding:15px 16px;width:100%;}
+.row+.row{border-top:1px solid var(--line);}
+.row .body{flex:1;min-width:0;}
+.row .body strong{display:block;font-size:14.5px;font-weight:700;color:var(--ink);letter-spacing:-0.014em;}
+.row .body span{display:block;margin-top:2px;font-size:12.5px;color:var(--gray);}
+.row .chev{color:#C4C7C2;font-size:18px;}
+.ftype{width:38px;height:38px;flex:0 0 38px;border-radius:11px;display:grid;place-items:center;
+  font-size:20px;box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 2px 5px -1px rgba(0,0,0,.08);}
+.ftype.dday{background:linear-gradient(160deg,#FBEEE2 0%,var(--clay-soft) 100%);color:var(--clay);
+  font-size:13px;font-weight:800;letter-spacing:-0.02em;box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 2px 5px -1px rgba(176,97,44,.18);}
+.ftype.disease{background:linear-gradient(160deg,#FAF3E1 0%,var(--gold-soft) 100%);color:var(--gold);}
+.ftype.info{background:linear-gradient(160deg,#EEF3EB 0%,var(--sage-soft) 100%);color:var(--sage);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 2px 5px -1px rgba(47,97,80,.14);}
+
+/* ===== 현재 (밋밋) ===== */
+.cur .body strong{font-size:14.5px;}
+
+/* ===== A. 중립 카테고리 아이브로 ===== */
+.A .body small{display:block;font-size:11.5px;font-weight:700;color:var(--gray);
+  letter-spacing:-0.01em;margin-bottom:3px;}
+
+/* ===== B. 제목 강조 + 여백 ===== */
+.B .row{padding:17px 16px;}
+.B .body strong{font-size:15.5px;font-weight:800;letter-spacing:-0.02em;}
+.B .body span{margin-top:3px;}
+.B .chev{font-size:19px;}
+
+/* ===== C. 카테고리 칩 (톤온톤) ===== */
+.C .body .chip{display:inline-flex;align-items:center;height:19px;padding:0 8px;border-radius:999px;
+  font-size:10.5px;font-weight:800;letter-spacing:-0.01em;margin-bottom:5px;}
+.C .chip.gold{background:var(--gold-soft);color:var(--gold);}
+.C .chip.clay{background:var(--clay-soft);color:var(--clay);}
+.C .chip.sage{background:var(--sage-soft);color:var(--sage);}
+</style></head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-chev-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></symbol>
+<symbol id="i-bug" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 9V7a3 3 0 0 1 6 0v2"/><rect x="8" y="9" width="8" height="12" rx="4"/><path d="M19 9l-3 2"/><path d="M5 9l3 2"/><path d="M19 15h-3"/><path d="M8 15H5"/><path d="M19 21l-3-2"/><path d="M5 21l3-2"/></symbol>
+<symbol id="i-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21c.5-4.5 2.5-8 7-10"/><path d="M9 18c6.218 0 10.5-3.288 11-12v-2h-4.014c-9 0-11.986 4-12 9c0 1 0 3 2 5h3z"/></symbol>
+</defs></svg>
+<div class="wrap">
+
+<div class="opt-h"><span class="tag">지금</span><h3>현재 — 라벨 제거 후</h3><p>2줄로 줄면서 위 "확인할 일" 행과 비슷해져 밋밋함.</p></div>
+<div class="card cur">
+  <a class="row" href="#"><span class="ftype dday">D-3</span><div class="body"><strong>스마트팜 기자재 지원</strong><span>최대 5,000만원 · 시설원예 우대</span></div><svg class="ic chev"><use href="#i-chev-right"/></svg></a>
+  <a class="row" href="#"><span class="ftype disease"><svg class="ic"><use href="#i-bug"/></svg></span><div class="body"><strong>잎곰팡이병 예방 가이드</strong><span>통풍·습도 관리가 핵심이에요</span></div><svg class="ic chev"><use href="#i-chev-right"/></svg></a>
+  <a class="row" href="#"><span class="ftype info"><svg class="ic"><use href="#i-leaf"/></svg></span><div class="body"><strong>흰가루병 발생 시기</strong><span>5~6월 집중 관리가 필요해요</span></div><svg class="ic chev"><use href="#i-chev-right"/></svg></a>
+</div>
+
+<div class="opt-h"><span class="tag">A안</span><h3>중립 카테고리 아이브로</h3><p>윗줄을 되살리되 기능 카피 대신 <b>고정 분류명</b>(회색). 개인화 로직과 무관.</p></div>
+<div class="card A">
+  <a class="row" href="#"><span class="ftype dday">D-3</span><div class="body"><small>지원사업</small><strong>스마트팜 기자재 지원</strong><span>최대 5,000만원 · 시설원예 우대</span></div><svg class="ic chev"><use href="#i-chev-right"/></svg></a>
+  <a class="row" href="#"><span class="ftype disease"><svg class="ic"><use href="#i-bug"/></svg></span><div class="body"><small>병해충</small><strong>잎곰팡이병 예방 가이드</strong><span>통풍·습도 관리가 핵심이에요</span></div><svg class="ic chev"><use href="#i-chev-right"/></svg></a>
+  <a class="row" href="#"><span class="ftype info"><svg class="ic"><use href="#i-leaf"/></svg></span><div class="body"><small>재배 가이드</small><strong>흰가루병 발생 시기</strong><span>5~6월 집중 관리가 필요해요</span></div><svg class="ic chev"><use href="#i-chev-right"/></svg></a>
+</div>
+
+<div class="opt-h"><span class="tag">B안</span><h3>제목 강조 + 여백</h3><p>윗줄 없이 <b>제목 키우고(15.5/800) 행 여백</b>을 더 줘서 답답함만 해소. 가장 미니멀.</p></div>
+<div class="card B">
+  <a class="row" href="#"><span class="ftype dday">D-3</span><div class="body"><strong>스마트팜 기자재 지원</strong><span>최대 5,000만원 · 시설원예 우대</span></div><svg class="ic chev"><use href="#i-chev-right"/></svg></a>
+  <a class="row" href="#"><span class="ftype disease"><svg class="ic"><use href="#i-bug"/></svg></span><div class="body"><strong>잎곰팡이병 예방 가이드</strong><span>통풍·습도 관리가 핵심이에요</span></div><svg class="ic chev"><use href="#i-chev-right"/></svg></a>
+  <a class="row" href="#"><span class="ftype info"><svg class="ic"><use href="#i-leaf"/></svg></span><div class="body"><strong>흰가루병 발생 시기</strong><span>5~6월 집중 관리가 필요해요</span></div><svg class="ic chev"><use href="#i-chev-right"/></svg></a>
+</div>
+
+<div class="opt-h"><span class="tag">C안</span><h3>카테고리 칩 (톤온톤)</h3><p>분류명을 <b>색 칩</b>으로. 시각적 입체감 최고지만 색이 늘어남 — 절제 원칙상 신중히.</p></div>
+<div class="card C">
+  <a class="row" href="#"><span class="ftype dday">D-3</span><div class="body"><span class="chip gold">지원사업</span><strong>스마트팜 기자재 지원</strong><span>최대 5,000만원 · 시설원예 우대</span></div><svg class="ic chev"><use href="#i-chev-right"/></svg></a>
+  <a class="row" href="#"><span class="ftype disease"><svg class="ic"><use href="#i-bug"/></svg></span><div class="body"><span class="chip gold">병해충</span><strong>잎곰팡이병 예방 가이드</strong><span>통풍·습도 관리가 핵심이에요</span></div><svg class="ic chev"><use href="#i-chev-right"/></svg></a>
+  <a class="row" href="#"><span class="ftype info"><svg class="ic"><use href="#i-leaf"/></svg></span><div class="body"><span class="chip sage">재배 가이드</span><strong>흰가루병 발생 시기</strong><span>5~6월 집중 관리가 필요해요</span></div><svg class="ic chev"><use href="#i-chev-right"/></svg></a>
+</div>
+
+</div>
+</body></html>

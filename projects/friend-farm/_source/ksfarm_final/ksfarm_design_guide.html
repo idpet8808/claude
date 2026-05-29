@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KS팜 디자인 가이드</title>
+<style>
+  :root {
+    --bg: #ECEAE0; --card: #FFFFFF; --ink: #20251D; --ink-2: #45493E; --gray: #76796C;
+    --line: rgba(48,42,30,.10); --green: #1F4B3C; --green-2: #163729; --green-soft: #E7EEE6;
+    --sage: #2F6150; --clay: #B0612C; --gold: #B08A3E; --field-bg: #F4F4EF;
+    --r-lg: 18px; --r-md: 14px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Noto Sans KR", sans-serif;
+    word-break: keep-all; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 56px 32px 96px; }
+
+  /* Hero */
+  .ds-hero { margin-bottom: 56px; padding-bottom: 32px; border-bottom: 1px solid var(--line); }
+  .ds-hero h1 { font-size: 38px; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 10px; }
+  .ds-hero .sub { color: var(--gray); font-size: 15.5px; line-height: 1.6; max-width: 720px; }
+  .ds-hero .meta { margin-top: 18px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .ds-hero .meta-tag { display: inline-flex; align-items: center; padding: 5px 11px; border-radius: 999px; background: var(--green-soft); color: var(--green); font-size: 12.5px; font-weight: 700; }
+
+  /* Principle box */
+  .principle {
+    background: var(--green); color: #fff;
+    border-radius: var(--r-lg); padding: 28px 32px;
+    margin-bottom: 48px;
+  }
+  .principle h2 { margin: 0 0 12px; font-size: 18px; font-weight: 800; }
+  .principle p { margin: 0; font-size: 14.5px; line-height: 1.7; opacity: 0.92; }
+  .principle strong { font-weight: 800; color: #fff; }
+
+  /* Section */
+  .section { margin-bottom: 64px; }
+  .section-h { margin-bottom: 22px; }
+  .section-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px; border-radius: 50%; background: var(--green);
+    color: #fff; font-size: 13px; font-weight: 800; margin-right: 10px;
+    vertical-align: middle;
+  }
+  .section-h h2 { display: inline-flex; align-items: center; font-size: 24px; font-weight: 800; margin: 0; letter-spacing: -0.01em; }
+  .section-h .desc { color: var(--gray); font-size: 14.5px; margin: 8px 0 0 38px; }
+
+  .panel {
+    background: var(--card); border-radius: var(--r-lg); padding: 28px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 2px rgba(36,30,18,.05);
+  }
+  .panel-h { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 18px; }
+  .panel-h .title { font-size: 13.5px; font-weight: 800; color: var(--gray); text-transform: uppercase; letter-spacing: 0.04em; margin: 0; }
+  .badge-common, .badge-vary {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 3px 9px; border-radius: 6px;
+    font-size: 11.5px; font-weight: 800;
+  }
+  .badge-common { background: var(--green-soft); color: var(--green); }
+  .badge-vary { background: rgba(176,138,62,.12); color: var(--gold); }
+  .badge-common::before { content: "✓"; }
+  .badge-vary::before { content: "~"; }
+
+  /* Color */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+  .sw { border-radius: 12px; overflow: hidden; border: 1px solid var(--line); background: #fff; }
+  .sw .chip { height: 80px; }
+  .sw .m { padding: 12px 14px; }
+  .sw .name { font-size: 13px; font-weight: 800; }
+  .sw .var, .sw .hex { font-size: 11.5px; color: var(--gray); margin-top: 2px; font-family: ui-monospace, "SF Mono", monospace; }
+  .sw .desc { font-size: 11.5px; color: var(--ink-2); margin-top: 4px; }
+
+  /* Variant cards (for things that vary) */
+  .variants { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+  .variant {
+    background: var(--field-bg); border-radius: 12px; padding: 16px;
+  }
+  .variant .vh { font-size: 12.5px; font-weight: 800; color: var(--ink); margin-bottom: 4px; }
+  .variant .vd { font-size: 11.5px; color: var(--gray); margin-bottom: 12px; line-height: 1.5; }
+  .variant code, code {
+    font-family: ui-monospace, "SF Mono", monospace;
+    font-size: 11.5px;
+    background: var(--card); padding: 2px 6px; border-radius: 4px;
+    color: var(--ink-2); display: inline-block;
+  }
+  .variant .freq { font-size: 10.5px; color: var(--green); font-weight: 800; margin-top: 8px; }
+
+  /* Typography */
+  .type-row { display: flex; align-items: baseline; gap: 24px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+  .type-row:last-child { border-bottom: 0; }
+  .type-row .label { width: 200px; flex-shrink: 0; }
+  .type-row .label .name { font-size: 13px; font-weight: 800; }
+  .type-row .label .spec { font-size: 11.5px; color: var(--gray); font-family: ui-monospace, monospace; margin-top: 2px; }
+  .type-row .label .use { font-size: 11.5px; color: var(--gray); margin-top: 4px; line-height: 1.5; }
+
+  /* Buttons */
+  .btn-base {
+    font-weight: 800; display: inline-flex; align-items: center; justify-content: center;
+    border: 0; cursor: pointer; gap: 8px; transition: all .15s;
+  }
+  .b-primary-solid {
+    background: var(--green); color: #fff;
+  }
+  .b-primary-grad {
+    background: linear-gradient(180deg, #2C6150 0%, var(--green) 52%, var(--green-2) 100%);
+    color: #fff;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 2px 8px rgba(22,55,41,.18);
+  }
+  .b-line {
+    background: var(--card); color: var(--ink); border: 1px solid var(--line);
+  }
+  .b-ghost { background: transparent; color: var(--green); border: 0; }
+
+  /* Common patterns */
+  .pattern-row { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+
+  /* Chip examples */
+  .chip-select-eg {
+    padding: 13px 17px; border-radius: 13px; background: #fff;
+    box-shadow: 0 1px 2px rgba(36,30,18,.05);
+    border: 1.5px solid transparent;
+    font-size: 14.5px; font-weight: 700; color: var(--ink-2);
+    display: inline-block; cursor: pointer; transition: all .15s;
+  }
+  .chip-select-eg.on { border-color: var(--green); background: var(--green-soft); color: var(--green); }
+
+  .chip-tag-eg {
+    height: 36px; padding: 0 15px; border-radius: 999px;
+    background: var(--field-bg); color: var(--ink-2);
+    font-size: 13.5px; font-weight: 700;
+    display: inline-flex; align-items: center; gap: 6px; border: 0; cursor: pointer;
+  }
+  .chip-tag-eg.on { background: var(--green); color: #fff; }
+
+  /* Tag */
+  .tag-eg {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 3px 8px; border-radius: 6px;
+    background: var(--green-soft); color: var(--green);
+    font-size: 11.5px; font-weight: 800;
+  }
+  .tag-eg.clay { background: rgba(176,97,44,.10); color: var(--clay); }
+  .tag-eg.gold { background: rgba(176,138,62,.10); color: var(--gold); }
+  .tag-eg.gray { background: var(--field-bg); color: var(--gray); }
+
+  /* Code block */
+  pre {
+    background: #1a1f17; color: #c5d3bf;
+    padding: 16px 18px; border-radius: 10px;
+    font-size: 12.5px; line-height: 1.7;
+    overflow-x: auto;
+    font-family: ui-monospace, "SF Mono", monospace;
+  }
+  pre .c-keyword { color: #93b48f; }
+  pre .c-prop { color: #d8b56a; }
+  pre .c-val { color: #c5d3bf; }
+  pre .c-comment { color: #6f7d6a; font-style: italic; }
+
+  /* Anti-pattern box */
+  .anti {
+    display: grid; grid-template-columns: auto 1fr; gap: 14px;
+    padding: 14px 16px; border-radius: 10px;
+    background: rgba(176,97,44,.06);
+    border-left: 3px solid var(--clay);
+    margin-bottom: 10px;
+  }
+  .anti .ic { color: var(--clay); font-weight: 800; font-size: 18px; }
+  .anti .t { font-size: 13.5px; font-weight: 800; color: var(--ink); margin-bottom: 3px; }
+  .anti .d { font-size: 13px; color: var(--ink-2); line-height: 1.55; }
+
+  .good {
+    display: grid; grid-template-columns: auto 1fr; gap: 14px;
+    padding: 14px 16px; border-radius: 10px;
+    background: var(--green-soft);
+    border-left: 3px solid var(--green);
+    margin-bottom: 10px;
+  }
+  .good .ic { color: var(--green); font-weight: 800; font-size: 18px; }
+  .good .t { font-size: 13.5px; font-weight: 800; color: var(--ink); margin-bottom: 3px; }
+  .good .d { font-size: 13px; color: var(--ink-2); line-height: 1.55; }
+
+  /* Layout pattern */
+  .layout-vis {
+    width: 260px; background: var(--bg);
+    border: 1px dashed var(--line); border-radius: 18px;
+    padding: 8px; flex-shrink: 0;
+  }
+  .layout-vis .lv-appbar { background: rgba(31,75,60,.10); padding: 8px 12px; border-radius: 6px; font-size: 10.5px; color: var(--green); font-weight: 800; margin-bottom: 4px; }
+  .layout-vis .lv-scroll { background: rgba(31,75,60,.04); padding: 30px 16px; border-radius: 6px; text-align: center; font-size: 11px; color: var(--gray); font-weight: 700; }
+  .layout-vis .lv-footer { background: rgba(31,75,60,.10); padding: 8px 12px; border-radius: 6px; font-size: 10.5px; color: var(--green); font-weight: 800; margin-top: 4px; text-align: center; }
+
+  /* Use guide table */
+  table { width: 100%; border-collapse: collapse; }
+  th, td { padding: 12px 8px; text-align: left; border-bottom: 1px solid var(--line); font-size: 13.5px; }
+  th { font-size: 12px; color: var(--gray); font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; }
+  td.var-cell { font-family: ui-monospace, monospace; font-size: 12px; color: var(--ink-2); }
+
+  /* SVG icons */
+  .icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; }
+  .icon-item {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    padding: 16px 8px; background: var(--field-bg); border-radius: 10px;
+  }
+  .icon-item svg { width: 22px; height: 22px; color: var(--ink); stroke: currentColor; fill: none; stroke-width: 1.9; }
+  .icon-item .n { font-size: 10.5px; color: var(--gray); font-weight: 700; font-family: ui-monospace, monospace; }
+
+  /* TOC */
+  .toc {
+    background: var(--card); border-radius: var(--r-lg); padding: 24px 28px;
+    margin-bottom: 48px;
+    box-shadow: 0 1px 2px rgba(36,30,18,.05);
+  }
+  .toc-h { font-size: 13px; font-weight: 800; color: var(--gray); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .toc-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; }
+  .toc-list a { color: var(--ink); text-decoration: none; font-size: 14px; font-weight: 600; padding: 4px 0; display: flex; gap: 10px; }
+  .toc-list a:hover { color: var(--green); }
+  .toc-list a .n { color: var(--gray); font-family: ui-monospace, monospace; font-size: 12px; min-width: 22px; }
+
+  img, svg { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Hero -->
+  <div class="ds-hero">
+    <h1>KS팜 디자인 가이드</h1>
+    <div class="sub">'AI 농사친구' 앱 디자인 시스템. 45개 화면 분석에서 <strong>실제로 거의 모든 화면이 같은 값을 쓰는 것</strong>만 표준으로, 화면마다 의도가 있는 항목은 <strong>변형 예시</strong>로 정리했어요. 토스급 미니멀 + 어스톤 따뜻함 톤.</div>
+    <div class="meta">
+      <span class="meta-tag">미니멀 + 어스톤</span>
+      <span class="meta-tag">모바일 ~390px</span>
+      <span class="meta-tag">한국어 농업 앱</span>
+      <span class="meta-tag">v3 · 2026-05-29</span>
+    </div>
+  </div>
+
+  <!-- Core principle -->
+  <div class="principle">
+    <h2>이 가이드의 사용 원칙</h2>
+    <p><strong>1. 토큰과 공통 컴포넌트는 그대로 따른다.</strong> 컬러·타이포·기본 컨테이너는 모든 화면에서 동일하게.<br>
+    <strong>2. 레이아웃·여백·세부 사이즈는 화면 의도에 맞춰 자유롭게.</strong> 화면마다 정보 위계가 달라서 통일하면 안 된다.<br>
+    <strong>3. 이미 잘 맞춰진 화면을 사후 일괄 통일하지 않는다.</strong> 새 화면 만들 때만 이 가이드 참고.</p>
+  </div>
+
+  <!-- TOC -->
+  <div class="toc">
+    <div class="toc-h">목차</div>
+    <div class="toc-list">
+      <a href="#sec-token"><span class="n">01</span>컬러 토큰 (공통)</a>
+      <a href="#sec-line"><span class="n">02</span>--line 화면별 변형</a>
+      <a href="#sec-type"><span class="n">03</span>타이포그래피</a>
+      <a href="#sec-phone"><span class="n">04</span>폰 프레임 .phone</a>
+      <a href="#sec-appbar"><span class="n">05</span>앱바 .appbar (공통)</a>
+      <a href="#sec-footer"><span class="n">06</span>푸터 .footer (공통)</a>
+      <a href="#sec-scroll"><span class="n">07</span>스크롤 .scroll (변형)</a>
+      <a href="#sec-btn"><span class="n">08</span>버튼 (변형)</a>
+      <a href="#sec-chip"><span class="n">09</span>칩 두 종류</a>
+      <a href="#sec-tag"><span class="n">10</span>작은 배지 .tag</a>
+      <a href="#sec-icon"><span class="n">11</span>아이콘</a>
+      <a href="#sec-layout"><span class="n">12</span>레이아웃 패턴</a>
+      <a href="#sec-special"><span class="n">13</span>특수 규칙</a>
+      <a href="#sec-anti"><span class="n">14</span>해야할 것·하지 말 것</a>
+    </div>
+  </div>
+
+  <!-- 1. Color Tokens -->
+  <div class="section" id="sec-token">
+    <div class="section-h">
+      <h2><span class="section-num">1</span>컬러 토큰</h2>
+      <div class="desc">45개 화면이 모두 공유. 인라인 hex 컬러 금지(그라데이션 stop만 예외).</div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-h">
+        <div class="title">중립 (Neutrals)</div>
+        <span class="badge-common">전 화면 공통</span>
+      </div>
+      <div class="color-grid">
+        <div class="sw"><div class="chip" style="background: #ECEAE0;"></div><div class="m"><div class="name">앱 배경</div><div class="var">--bg</div><div class="hex">#ECEAE0</div></div></div>
+        <div class="sw"><div class="chip" style="background: #FFFFFF; border-bottom: 1px solid var(--line);"></div><div class="m"><div class="name">카드</div><div class="var">--card</div><div class="hex">#FFFFFF</div></div></div>
+        <div class="sw"><div class="chip" style="background: #20251D;"></div><div class="m"><div class="name">본문 진한 텍스트</div><div class="var">--ink</div><div class="hex">#20251D</div></div></div>
+        <div class="sw"><div class="chip" style="background: #45493E;"></div><div class="m"><div class="name">보조 텍스트</div><div class="var">--ink-2</div><div class="hex">#45493E</div></div></div>
+        <div class="sw"><div class="chip" style="background: #76796C;"></div><div class="m"><div class="name">캡션·뮤트</div><div class="var">--gray</div><div class="hex">#76796C</div></div></div>
+        <div class="sw"><div class="chip" style="background: #F4F4EF;"></div><div class="m"><div class="name">입력 필드 배경</div><div class="var">--field-bg</div><div class="hex">#F4F4EF</div></div></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-h">
+        <div class="title">메인 — 딥틸 포레스트</div>
+        <span class="badge-common">전 화면 공통</span>
+      </div>
+      <div class="color-grid">
+        <div class="sw"><div class="chip" style="background: #1F4B3C;"></div><div class="m"><div class="name">주 브랜드·CTA</div><div class="var">--green</div><div class="hex">#1F4B3C</div></div></div>
+        <div class="sw"><div class="chip" style="background: #E7EEE6;"></div><div class="m"><div class="name">그린 배경 (선택·뱃지)</div><div class="var">--green-soft</div><div class="hex">#E7EEE6</div></div></div>
+        <div class="sw"><div class="chip" style="background: #2F6150;"></div><div class="m"><div class="name">세이지 (보조 그린)</div><div class="var">--sage</div><div class="hex">#2F6150</div></div></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-h">
+        <div class="title">어스 액센트</div>
+        <span class="badge-common">전 화면 공통</span>
+      </div>
+      <div class="color-grid">
+        <div class="sw"><div class="chip" style="background: #B0612C;"></div><div class="m"><div class="name">테라코타 (강조·경고)</div><div class="var">--clay</div><div class="hex">#B0612C</div></div></div>
+        <div class="sw"><div class="chip" style="background: #B08A3E;"></div><div class="m"><div class="name">골드 (라벨)</div><div class="var">--gold</div><div class="hex">#B08A3E</div></div></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-h">
+        <div class="title">컬러 사용 가이드</div>
+        <span class="badge-common">사용 원칙</span>
+      </div>
+      <table>
+        <tr><th>용도</th><th>토큰</th></tr>
+        <tr><td>앱 전체 배경</td><td class="var-cell">--bg</td></tr>
+        <tr><td>카드·시트·모달 배경</td><td class="var-cell">--card</td></tr>
+        <tr><td>본문 진한 텍스트 (h1·h2·강조)</td><td class="var-cell">--ink</td></tr>
+        <tr><td>본문 회색 (설명·보조)</td><td class="var-cell">--ink-2</td></tr>
+        <tr><td>캡션·날짜·뮤트</td><td class="var-cell">--gray</td></tr>
+        <tr><td>주요 CTA·강조</td><td class="var-cell">--green</td></tr>
+        <tr><td>그린 배경 (선택·뱃지)</td><td class="var-cell">--green-soft</td></tr>
+        <tr><td>경고·테라코타 강조</td><td class="var-cell">--clay</td></tr>
+        <tr><td>라벨·금색</td><td class="var-cell">--gold</td></tr>
+        <tr><td>입력 필드 배경</td><td class="var-cell">--field-bg</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- 2. --line variant -->
+  <div class="section" id="sec-line">
+    <div class="section-h">
+      <h2><span class="section-num">2</span>--line 화면별 변형</h2>
+      <div class="desc">유일한 토큰 변형. 구분선 강도를 화면 의도에 맞춰 사용.</div>
+    </div>
+    <div class="panel">
+      <div class="panel-h">
+        <div class="title">--line 변형</div>
+        <span class="badge-vary">화면별로 다름</span>
+      </div>
+      <div class="variants">
+        <div class="variant">
+          <div class="vh">아주 연함</div>
+          <div class="vd">은은한 구분, 거의 안 보임</div>
+          <code>rgba(48,42,30,.06)</code>
+          <div style="height: 1px; background: rgba(48,42,30,.06); margin-top: 12px;"></div>
+          <div class="freq">1개 화면</div>
+        </div>
+        <div class="variant">
+          <div class="vh">연함</div>
+          <div class="vd">미니멀 톤에 적합</div>
+          <code>rgba(48,42,30,.08)</code>
+          <div style="height: 1px; background: rgba(48,42,30,.08); margin-top: 12px;"></div>
+          <div class="freq">25개 화면 (가장 많음)</div>
+        </div>
+        <div class="variant">
+          <div class="vh">기본</div>
+          <div class="vd">권장 기본값</div>
+          <code>rgba(48,42,30,.10)</code>
+          <div style="height: 1px; background: rgba(48,42,30,.10); margin-top: 12px;"></div>
+          <div class="freq">17개 화면</div>
+        </div>
+        <div class="variant">
+          <div class="vh">진함</div>
+          <div class="vd">강조 필요한 곳</div>
+          <code>rgba(48,42,30,.12)</code>
+          <div style="height: 1px; background: rgba(48,42,30,.12); margin-top: 12px;"></div>
+          <div class="freq">2개 화면</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Typography -->
+  <div class="section" id="sec-type">
+    <div class="section-h">
+      <h2><span class="section-num">3</span>타이포그래피</h2>
+      <div class="desc">Pretendard / Noto Sans KR. word-break: keep-all 기본. 큰 텍스트엔 letter-spacing -0.01em.</div>
+    </div>
+    <div class="panel">
+      <div class="type-row">
+        <div class="label">
+          <div class="name">h1 큰 제목</div>
+          <div class="spec">24px · 800</div>
+          <div class="use">결과 화면 큰 제목, 환영 메시지</div>
+        </div>
+        <div style="font-size: 24px; font-weight: 800; letter-spacing: -0.01em;">오이 흰가루병</div>
+      </div>
+      <div class="type-row">
+        <div class="label">
+          <div class="name">h2 화면 제목</div>
+          <div class="spec">18~20px · 800</div>
+          <div class="use">화면 제목, 섹션 큰 헤더</div>
+        </div>
+        <div style="font-size: 19px; font-weight: 800;">병해진단 시작하기</div>
+      </div>
+      <div class="type-row">
+        <div class="label">
+          <div class="name">섹션 헤더</div>
+          <div class="spec">14.5px · 800</div>
+          <div class="use">본문 안의 구획 헤더</div>
+        </div>
+        <div style="font-size: 14.5px; font-weight: 800;">증상 설명</div>
+      </div>
+      <div class="type-row">
+        <div class="label">
+          <div class="name">본문</div>
+          <div class="spec">14px · 500 · line-height 1.65</div>
+          <div class="use">설명 텍스트, 본문</div>
+        </div>
+        <div style="font-size: 14px; font-weight: 500; color: var(--ink-2); line-height: 1.65;">잎 표면에 밀가루를 뿌린 듯한 흰색 분생포자가 덮입니다.</div>
+      </div>
+      <div class="type-row">
+        <div class="label">
+          <div class="name">캡션</div>
+          <div class="spec">12.5px · 600</div>
+          <div class="use">날짜, 보조 정보</div>
+        </div>
+        <div style="font-size: 12.5px; font-weight: 600; color: var(--gray);">2026.05.29 진단 결과</div>
+      </div>
+      <div class="type-row">
+        <div class="label">
+          <div class="name">미세 배지</div>
+          <div class="spec">11.5px · 700</div>
+          <div class="use">.tag 라벨</div>
+        </div>
+        <div><span class="tag-eg">진단 신뢰도 높음</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Phone frame -->
+  <div class="section" id="sec-phone">
+    <div class="section-h">
+      <h2><span class="section-num">4</span>폰 프레임 .phone</h2>
+      <div class="desc">전체 화면 컨테이너. 대부분의 속성은 공통이지만 일부 화면(홈·온보딩)은 의도적으로 변형.</div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-h">
+        <div class="title">공통 속성</div>
+        <span class="badge-common">거의 모든 화면 동일</span>
+      </div>
+<pre><span class="c-keyword">.phone</span> {
+  <span class="c-prop">width</span>: <span class="c-val">min(390px, 100%)</span>;
+  <span class="c-prop">background</span>: <span class="c-val">var(--bg)</span>;
+  <span class="c-prop">border-radius</span>: <span class="c-val">30px</span>;
+  <span class="c-prop">overflow</span>: <span class="c-val">hidden</span>;
+  <span class="c-prop">box-shadow</span>: <span class="c-val">0 18px 44px -12px rgba(40,34,22,.42)</span>;
+  <span class="c-prop">display</span>: <span class="c-val">flex</span>;
+  <span class="c-prop">flex-direction</span>: <span class="c-val">column</span>;
+}</pre>
+    </div>
+
+    <div class="panel">
+      <div class="panel-h">
+        <div class="title">화면별로 다름</div>
+        <span class="badge-vary">의도 있는 변형</span>
+      </div>
+      <div class="variants">
+        <div class="variant">
+          <div class="vh">min-height</div>
+          <div class="vd">데스크탑 미리보기용. 화면 콘텐츠 양에 따라.</div>
+          <code>800px ~ 900px</code>
+          <div class="freq">7가지 값 (실 디바이스 무관)</div>
+        </div>
+        <div class="variant">
+          <div class="vh">border-radius</div>
+          <div class="vd">홈 화면 등 특수 디자인은 40px</div>
+          <code>30px (기본) / 40px (홈)</code>
+          <div class="freq">2가지</div>
+        </div>
+        <div class="variant">
+          <div class="vh">background 변형</div>
+          <div class="vd">온보딩 진입은 딥틸 그라데이션</div>
+          <code>linear-gradient(...)</code>
+          <div class="freq">1개 (온보딩)</div>
+        </div>
+        <div class="variant">
+          <div class="vh">border 추가</div>
+          <div class="vd">홈 화면은 border 1px로 윤곽 강조</div>
+          <code>border: 1px solid rgba(0,0,0,.10)</code>
+          <div class="freq">1개 (홈)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Appbar -->
+  <div class="section" id="sec-appbar">
+    <div class="section-h">
+      <h2><span class="section-num">5</span>앱바 .appbar</h2>
+      <div class="desc">상단 고정 영역 (뒤로가기·제목·우측 액션).</div>
+    </div>
+    <div class="panel">
+      <div class="panel-h">
+        <div class="title">표준 정의</div>
+        <span class="badge-common">37/37 화면 동일</span>
+      </div>
+<pre><span class="c-keyword">.appbar</span> {
+  <span class="c-prop">display</span>: <span class="c-val">flex</span>;
+  <span class="c-prop">align-items</span>: <span class="c-val">center</span>;
+  <span class="c-prop">padding</span>: <span class="c-val">4px 12px 0</span>;
+}
+
+<span class="c-comment">/* 스크롤 콘텐츠 많은 화면엔 추가 */</span>
+<span class="c-prop">flex-shrink</span>: <span class="c-val">0</span>;</pre>
+    </div>
+  </div>
+
+  <!-- 6. Footer -->
+  <div class="section" id="sec-footer">
+    <div class="section-h">
+      <h2><span class="section-num">6</span>푸터 .footer</h2>
+      <div class="desc">하단 고정 액션 영역 (다음·확인 버튼 등). 사용하는 화면만 정의.</div>
+    </div>
+    <div class="panel">
+      <div class="panel-h">
+        <div class="title">표준 정의</div>
+        <span class="badge-common">5/5 화면 동일</span>
+      </div>
+<pre><span class="c-keyword">.footer</span> {
+  <span class="c-prop">flex-shrink</span>: <span class="c-val">0</span>;
+  <span class="c-prop">padding</span>: <span class="c-val">14px 20px calc(14px + env(safe-area-inset-bottom))</span>;
+  <span class="c-prop">background</span>: <span class="c-val">var(--bg)</span>;
+  <span class="c-prop">border-top</span>: <span class="c-val">1px solid var(--line)</span>;
+  <span class="c-prop">display</span>: <span class="c-val">flex</span>;
+  <span class="c-prop">gap</span>: <span class="c-val">10px</span>;
+}</pre>
+      <div style="margin-top: 16px;">
+        <div style="background: var(--bg); padding: 14px 20px; border-top: 1px solid var(--line); display: flex; gap: 10px; border-radius: 0 0 12px 12px;">
+          <button class="btn-base b-line" style="flex: 0 0 100px; height: 52px; border-radius: 14px;">이전</button>
+          <button class="btn-base b-primary-solid" style="flex: 1; height: 52px; border-radius: 14px;">다음</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. Scroll -->
+  <div class="section" id="sec-scroll">
+    <div class="section-h">
+      <h2><span class="section-num">7</span>스크롤 .scroll (화면별 변형)</h2>
+      <div class="desc">본문 스크롤 영역. <strong>padding이 화면마다 다른 이유가 있음</strong> — 일괄 통일 ❌.</div>
+    </div>
+    <div class="panel">
+      <div class="panel-h">
+        <div class="title">기본 구조 (공통)</div>
+        <span class="badge-common">공통</span>
+      </div>
+<pre><span class="c-keyword">.scroll</span> {
+  <span class="c-prop">flex</span>: <span class="c-val">1</span>;
+  <span class="c-prop">overflow-y</span>: <span class="c-val">auto</span>;
+}</pre>
+    </div>
+    <div class="panel">
+      <div class="panel-h">
+        <div class="title">padding 변형 — 화면 상황에 맞춰 선택</div>
+        <span class="badge-vary">19가지 변형 존재</span>
+      </div>
+      <div class="variants">
+        <div class="variant">
+          <div class="vh">기본 (footer 있음)</div>
+          <div class="vd">앱바 아래 8px, 좌우 20px, 하단 24px</div>
+          <code>8px 20px 24px</code>
+          <div class="freq">9개 화면 (가장 많음)</div>
+        </div>
+        <div class="variant">
+          <div class="vh">상단 여유 (히어로 화면)</div>
+          <div class="vd">앱바 없이 시작, 상단 여백 큼</div>
+          <code>14px 22px 40px</code>
+          <div class="freq">4개 화면</div>
+        </div>
+        <div class="variant">
+          <div class="vh">FAB 있는 화면</div>
+          <div class="vd">하단 떠 있는 버튼 가림 방지</div>
+          <code>8px 20px 90px</code>
+          <div class="freq">1개 화면</div>
+        </div>
+        <div class="variant">
+          <div class="vh">사진/풀너비 콘텐츠</div>
+          <div class="vd">하단 여유 더 확보</div>
+          <code>16px 20px 32px</code>
+          <div class="freq">1개 화면 (진단 결과)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. Buttons -->
+  <div class="section" id="sec-btn">
+    <div class="section-h">
+      <h2><span class="section-num">8</span>버튼 (화면 의도대로)</h2>
+      <div class="desc">기본 원칙만 공유. <strong>height·radius·font-size는 CTA 비중에 따라 자유</strong>.</div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-h">
+        <div class="title">기본 원칙 (공통)</div>
+        <span class="badge-common">공통</span>
+      </div>
+<pre><span class="c-keyword">.btn</span> {
+  <span class="c-prop">font-weight</span>: <span class="c-val">800</span>;
+  <span class="c-prop">display</span>: <span class="c-val">flex</span>;
+  <span class="c-prop">align-items</span>: <span class="c-val">center</span>;
+  <span class="c-prop">justify-content</span>: <span class="c-val">center</span>;
+}</pre>
+    </div>
+
+    <div class="panel">
+      <div class="panel-h">
+        <div class="title">Primary CTA — 단색 vs 그라데이션</div>
+        <span class="badge-vary">화면 비중에 따라</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+        <div class="variant">
+          <div class="vh">단색 (기본)</div>
+          <div class="vd">일반 CTA, 일지 작성 등</div>
+          <button class="btn-base b-primary-solid" style="height: 52px; padding: 0 32px; border-radius: 14px; margin: 12px 0 8px; width: 100%;">다음</button>
+          <code>background: var(--green)</code>
+          <div class="freq">2개 화면</div>
+        </div>
+        <div class="variant">
+          <div class="vh">그라데이션 (히어로급)</div>
+          <div class="vd">온보딩 진입, 강한 강조</div>
+          <button class="btn-base b-primary-grad" style="height: 52px; padding: 0 32px; border-radius: 14px; margin: 12px 0 8px; width: 100%;">시작하기</button>
+          <code>linear-gradient(180deg, ...)</code>
+          <div class="freq">1개 화면 (온보딩)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-h">
+        <div class="title">버튼 사이즈 변형</div>
+        <span class="badge-vary">CTA 비중에 따라</span>
+      </div>
+      <div class="variants">
+        <div class="variant">
+          <div class="vh">큰 CTA (히어로)</div>
+          <button class="btn-base b-primary-solid" style="height: 54px; padding: 0 24px; border-radius: 15px; margin: 8px 0; font-size: 16px;">시작하기</button>
+          <code>54px · 15px · 16px</code>
+          <div class="freq">3개 화면</div>
+        </div>
+        <div class="variant">
+          <div class="vh">기본 CTA</div>
+          <button class="btn-base b-primary-solid" style="height: 52px; padding: 0 24px; border-radius: 14px; margin: 8px 0; font-size: 15px;">다음</button>
+          <code>52px · 14px · 15px</code>
+          <div class="freq">3개 화면</div>
+        </div>
+        <div class="variant">
+          <div class="vh">작은 CTA (보조)</div>
+          <button class="btn-base b-primary-solid" style="height: 48px; padding: 0 20px; border-radius: 14px; margin: 8px 0; font-size: 14.5px;">확인</button>
+          <code>48px · 14px · 14.5px</code>
+          <div class="freq">1개 화면</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-h">
+        <div class="title">버튼 종류</div>
+        <span class="badge-common">패턴 공통</span>
+      </div>
+      <div class="pattern-row">
+        <button class="btn-base b-primary-solid" style="height: 52px; padding: 0 28px; border-radius: 14px;">Primary</button>
+        <button class="btn-base b-line" style="height: 52px; padding: 0 28px; border-radius: 14px;">Line (보조)</button>
+        <button class="btn-base b-ghost" style="height: 52px; padding: 0 16px;">Ghost (텍스트 링크)</button>
+        <button class="btn-base b-primary-solid" disabled style="height: 52px; padding: 0 28px; border-radius: 14px; background: var(--field-bg); color: var(--gray); cursor: not-allowed;">Disabled</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. Chips -->
+  <div class="section" id="sec-chip">
+    <div class="section-h">
+      <h2><span class="section-num">9</span>칩 두 종류</h2>
+      <div class="desc">의도적 구분. 사이즈·radius 디테일은 화면 의도대로.</div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-h">
+        <div class="title">선택형 (.chip-select) — 작물·증상·옵션</div>
+        <span class="badge-common">큰 카드형</span>
+      </div>
+      <div style="font-size: 13.5px; color: var(--ink-2); margin-bottom: 14px; line-height: 1.6;">"이 중에서 하나 골라" 상황. 카드형 큰 사이즈. 선택 시 딥틸 테두리 + 그린-소프트 배경.</div>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+        <div class="chip-select-eg">토마토</div>
+        <div class="chip-select-eg on">오이</div>
+        <div class="chip-select-eg">고추</div>
+        <div class="chip-select-eg">딸기</div>
+        <div class="chip-select-eg">배추</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-h">
+        <div class="title">태그형 (.chip-tag) — 필터·키워드</div>
+        <span class="badge-common">pill형</span>
+      </div>
+      <div style="font-size: 13.5px; color: var(--ink-2); margin-bottom: 14px; line-height: 1.6;">"이 카테고리·필터로 보여줘" 상황. pill 작은 사이즈. 선택 시 딥틸 배경 + 흰 글자.</div>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+        <button class="chip-tag-eg on">전체</button>
+        <button class="chip-tag-eg">청년농</button>
+        <button class="chip-tag-eg">시설하우스</button>
+        <button class="chip-tag-eg">방제</button>
+        <button class="chip-tag-eg">병해충</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. Tags -->
+  <div class="section" id="sec-tag">
+    <div class="section-h">
+      <h2><span class="section-num">10</span>작은 배지 .tag</h2>
+      <div class="desc">라벨·상태 표시용. 선택 불가. 색으로 의미 구분.</div>
+    </div>
+    <div class="panel">
+      <div class="panel-h">
+        <div class="title">색 변형</div>
+        <span class="badge-common">패턴 공통</span>
+      </div>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+        <span class="tag-eg">● 진단 신뢰도 높음</span>
+        <span class="tag-eg clay">● 진단 신뢰도 중간</span>
+        <span class="tag-eg gray">● 진단 신뢰도 낮음</span>
+        <span class="tag-eg gold">베스트</span>
+        <span class="tag-eg">NEW</span>
+        <span class="tag-eg clay">마감 임박</span>
+        <span class="tag-eg gray">대기중</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 11. Icons -->
+  <div class="section" id="sec-icon">
+    <div class="section-h">
+      <h2><span class="section-num">11</span>아이콘 (SVG, stroke 1.8~2.2)</h2>
+      <div class="desc">defs+symbol 재사용. width/height 직접 지정. font-size 사용 ❌.</div>
+    </div>
+    <div class="panel">
+      <div class="icon-grid">
+        <div class="icon-item"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span class="n">home</span></div>
+        <div class="icon-item"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 6 9 12 15 18"/></svg><span class="n">back</span></div>
+        <div class="icon-item"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg><span class="n">forward</span></div>
+        <div class="icon-item"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg><span class="n">menu</span></div>
+        <div class="icon-item"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="n">search</span></div>
+        <div class="icon-item"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/></svg><span class="n">leaf</span></div>
+        <div class="icon-item"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="3"/><path d="M9 4h6l1.5 2H21a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h4.5z"/></svg><span class="n">camera</span></div>
+        <div class="icon-item"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span class="n">file</span></div>
+        <div class="icon-item"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="n">calendar</span></div>
+        <div class="icon-item"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span class="n">chat</span></div>
+        <div class="icon-item"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="n">user</span></div>
+        <div class="icon-item"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="n">check</span></div>
+        <div class="icon-item"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span class="n">close</span></div>
+        <div class="icon-item"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><span class="n">plus</span></div>
+        <div class="icon-item"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span class="n">settings</span></div>
+        <div class="icon-item"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg><span class="n">refresh</span></div>
+      </div>
+      <p style="margin-top: 16px; font-size: 12.5px; color: var(--gray);">사용: <code>&lt;svg width="18" height="18"&gt;&lt;use href="#i-leaf"/&gt;&lt;/svg&gt;</code> · CSS: <code>.ic { width: 18px; height: 18px; }</code></p>
+    </div>
+  </div>
+
+  <!-- 12. Layout pattern -->
+  <div class="section" id="sec-layout">
+    <div class="section-h">
+      <h2><span class="section-num">12</span>레이아웃 패턴</h2>
+      <div class="desc">.phone → .appbar → .scroll → .footer 표준 구조.</div>
+    </div>
+    <div class="panel">
+      <div style="display: flex; gap: 32px; align-items: flex-start; flex-wrap: wrap;">
+        <div class="layout-vis">
+          <div class="lv-appbar">.appbar (고정)</div>
+          <div class="lv-scroll">.scroll<br>(콘텐츠 영역)</div>
+          <div class="lv-footer">.footer (고정)</div>
+        </div>
+        <div style="flex: 1; min-width: 320px;">
+<pre><span class="c-keyword">&lt;div</span> <span class="c-prop">class=</span><span class="c-val">"phone"</span><span class="c-keyword">&gt;</span>
+  <span class="c-keyword">&lt;div</span> <span class="c-prop">class=</span><span class="c-val">"appbar"</span><span class="c-keyword">&gt;</span>...<span class="c-keyword">&lt;/div&gt;</span>
+  <span class="c-keyword">&lt;div</span> <span class="c-prop">class=</span><span class="c-val">"scroll"</span><span class="c-keyword">&gt;</span>
+    ...본문...
+  <span class="c-keyword">&lt;/div&gt;</span>
+  <span class="c-keyword">&lt;div</span> <span class="c-prop">class=</span><span class="c-val">"footer"</span><span class="c-keyword">&gt;</span>
+    <span class="c-keyword">&lt;button&gt;</span>이전<span class="c-keyword">&lt;/button&gt;</span>
+    <span class="c-keyword">&lt;button&gt;</span>다음<span class="c-keyword">&lt;/button&gt;</span>
+  <span class="c-keyword">&lt;/div&gt;</span>
+<span class="c-keyword">&lt;/div&gt;</span></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 13. Special rules -->
+  <div class="section" id="sec-special">
+    <div class="section-h">
+      <h2><span class="section-num">13</span>특수 규칙</h2>
+      <div class="desc">KS팜 특유의 도메인 규칙.</div>
+    </div>
+    <div class="panel">
+      <div class="panel-h">
+        <div class="title">시세 등락 색 — 농민 관점 반전</div>
+        <span class="badge-common">앱 전체 규칙</span>
+      </div>
+      <div style="font-size: 13.5px; color: var(--ink-2); line-height: 1.7;">
+        일반 주식 앱은 <strong style="color: #d92b2b;">상승 = 빨강</strong>, <strong style="color: #2b78d9;">하락 = 파랑</strong>이지만, 농민 관점에선 <strong style="color: var(--clay);">가격 상승 = 어스 톤 강조(테라코타)</strong>, <strong style="color: var(--sage);">가격 하락 = 차분한 그린(농민에게 우호적이지 않음을 의도적으로 차분히 표현)</strong>.
+      </div>
+      <div style="margin-top: 16px; display: flex; gap: 20px;">
+        <div style="background: var(--card); padding: 16px 20px; border-radius: 10px; box-shadow: 0 1px 2px rgba(36,30,18,.05); flex: 1;">
+          <div style="font-size: 13px; color: var(--gray); margin-bottom: 4px;">오이</div>
+          <div style="font-size: 18px; font-weight: 800;">32,400원 <span style="color: var(--clay); font-size: 13px;">↗ 6.2%</span></div>
+        </div>
+        <div style="background: var(--card); padding: 16px 20px; border-radius: 10px; box-shadow: 0 1px 2px rgba(36,30,18,.05); flex: 1;">
+          <div style="font-size: 13px; color: var(--gray); margin-bottom: 4px;">딸기</div>
+          <div style="font-size: 18px; font-weight: 800;">18,900원 <span style="color: var(--sage); font-size: 13px;">↘ 2.1%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-h">
+        <div class="title">한국어 처리</div>
+        <span class="badge-common">앱 전체 규칙</span>
+      </div>
+<pre><span class="c-prop">word-break</span>: <span class="c-val">keep-all</span>;  <span class="c-comment">/* 단어 단위 줄바꿈 */</span>
+<span class="c-prop">-webkit-font-smoothing</span>: <span class="c-val">antialiased</span>;
+<span class="c-prop">font-family</span>: <span class="c-val">-apple-system, BlinkMacSystemFont,
+             "Pretendard", "Noto Sans KR", sans-serif</span>;</pre>
+    </div>
+
+    <div class="panel">
+      <div class="panel-h">
+        <div class="title">디자인 톤 원칙</div>
+        <span class="badge-common">앱 전체 규칙</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; font-size: 13.5px; line-height: 1.6;">
+        <div><strong>주인공 하나에 집중</strong><br><span style="color: var(--gray);">정보 나열 금지. 한 화면에 하나의 명확한 메시지.</span></div>
+        <div><strong>비율·위계·호흡으로 채움</strong><br><span style="color: var(--gray);">텍스트 크기·여백·정렬로 위계 표현.</span></div>
+        <div><strong>위계: 새 정보가 주인공</strong><br><span style="color: var(--gray);">이미 아는 정보는 작게, 새 정보 강조.</span></div>
+        <div><strong>장식은 의미 있을 때만</strong><br><span style="color: var(--gray);">그라데이션·그림자·아이콘은 목적이 있을 때.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 14. Do / Don't -->
+  <div class="section" id="sec-anti">
+    <div class="section-h">
+      <h2><span class="section-num">14</span>해야할 것 · 하지 말 것</h2>
+      <div class="desc">자주 실수하는 패턴 + 권장 패턴.</div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-h"><div class="title">✅ 권장 패턴</div></div>
+      <div class="good">
+        <span class="ic">✓</span>
+        <div>
+          <div class="t">토큰 변수로 컬러 참조</div>
+          <div class="d"><code>color: var(--ink-2)</code> ◯ &nbsp; <code>color: #45493E</code> ✗</div>
+        </div>
+      </div>
+      <div class="good">
+        <span class="ic">✓</span>
+        <div>
+          <div class="t">SVG 아이콘 width/height로 크기</div>
+          <div class="d"><code>&lt;svg width="18" height="18"&gt;</code> ◯ &nbsp; <code>font-size: 18px</code> ✗ (안 먹음)</div>
+        </div>
+      </div>
+      <div class="good">
+        <span class="ic">✓</span>
+        <div>
+          <div class="t">자동 다음 진행보다 명시적 "다음" 버튼</div>
+          <div class="d">자동 진행은 사용자 실수·당황 유발. 다음 버튼으로 통일.</div>
+        </div>
+      </div>
+      <div class="good">
+        <span class="ic">✓</span>
+        <div>
+          <div class="t">카드 4개 이상 연속 → 텍스트 흐름</div>
+          <div class="d">border-top 구분선 + 헤더 + 본문 패턴으로 가독성 확보.</div>
+        </div>
+      </div>
+      <div class="good">
+        <span class="ic">✓</span>
+        <div>
+          <div class="t">선택지 많거나 검색 → 바텀시트, 확인·안내 → 중앙 모달</div>
+          <div class="d">토스·당근 패턴. 의도적 구분.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-h"><div class="title">❌ 회피 패턴</div></div>
+      <div class="anti">
+        <span class="ic">✗</span>
+        <div>
+          <div class="t">인라인 hex 컬러 (그라데이션 stop 외)</div>
+          <div class="d">토큰 변수로 통일. 그래야 일관성 유지·수정 용이.</div>
+        </div>
+      </div>
+      <div class="anti">
+        <span class="ic">✗</span>
+        <div>
+          <div class="t">본문에 진하지 않은 회색 (#999 등)</div>
+          <div class="d">가독성·접근성 문제. <code>--ink-2</code>/<code>--gray</code> 사용.</div>
+        </div>
+      </div>
+      <div class="anti">
+        <span class="ic">✗</span>
+        <div>
+          <div class="t">아이콘 폰트 사이즈로 크기 조절</div>
+          <div class="d">SVG는 font-size 안 먹음. width/height로 명시.</div>
+        </div>
+      </div>
+      <div class="anti">
+        <span class="ic">✗</span>
+        <div>
+          <div class="t">그림자 진하게</div>
+          <div class="d"><code>0 1px 2px rgba(36,30,18,.05)</code> 미니멀하게.</div>
+        </div>
+      </div>
+      <div class="anti">
+        <span class="ic">✗</span>
+        <div>
+          <div class="t" style="color: var(--clay);">이미 잘 맞춰진 화면을 사후 일괄 통일 ← 이번 세션 교훈</div>
+          <div class="d">화면마다 비율·여백 의도가 있음. 디자인 시스템은 <strong>새 화면 만들 때</strong>만 참고. 기존 화면 자동 통일 금지.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div style="margin-top: 80px; padding-top: 32px; border-top: 1px solid var(--line);">
+    <div style="color: var(--gray); font-size: 13px;">KS팜 'AI 농사친구' · 디자인 가이드 · 45개 화면 분석 기반</div>
+    <div style="color: var(--gray); font-size: 12px; margin-top: 4px;">동반 문서: KSFARM_DESIGN_SYSTEM.md · 새 화면 만들 땐 가장 비슷한 기존 화면을 참고</div>
+  </div>
+
+</div>
+</body>
+</html>

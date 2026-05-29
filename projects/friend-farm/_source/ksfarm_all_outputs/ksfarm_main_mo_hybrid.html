@@ -1,0 +1,597 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KS팜 메인 MO - 미니멀(토스풍)</title>
+  <style>
+    :root {
+      --bg: #ECEAE0;
+      --card: #FFFFFF;
+      --ink: #20251D;
+      --ink-2: #45493E;
+      --gray: #76796C;
+      --line: rgba(48,42,30,.08);
+      /* deep teal-forest (primary) */
+      --green: #1F4B3C;
+      --green-2: #163729;
+      --green-soft: #E7EEE6;
+      /* warm signal: keep red only for true warnings, but warmed to terracotta */
+      --red: #B0612C;
+      --red-soft: #F3E6D6;
+      /* earth multi-accent (for icon tiles) */
+      --gold: #B08A3E;
+      --gold-soft: #F2E9D2;
+      --clay: #B0612C;
+      --clay-soft: #F3E1D2;
+      --sage: #2F6150;
+      --sage-soft: #E4ECE0;
+      --r-lg: 18px;
+      --r-md: 14px;
+      --r-sm: 10px;
+      --shadow: 0 1px 2px rgba(36,30,18,.05);
+    }
+    * { box-sizing: border-box; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; }
+    h1,h2,h3,h4,p { margin: 0; }
+    h2,h3,h4,p,strong,span,a { word-break: keep-all; }
+
+    .ic { width: 1em; height: 1em; display: inline-block; vertical-align: -0.14em; flex-shrink: 0; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      background: #DEDBCF;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Pretendard", "Noto Sans KR", system-ui, sans-serif;
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      font-feature-settings: "kern","liga","ss01";
+      padding: 28px;
+    }
+    .sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); }
+
+    .phone {
+      width: min(390px, 100%);
+      min-height: 860px;
+      border-radius: 40px;
+      background: var(--bg);
+      border: 1px solid rgba(0,0,0,.10);
+      overflow: hidden;
+      box-shadow: 0 30px 90px rgba(20,24,18,.18), inset 0 0 0 8px rgba(255,255,255,.5);
+      position: relative;
+    }
+    .app {
+      min-height: calc(844px - 84px);
+      padding-bottom: 84px;
+      background: var(--bg);
+    }
+
+    .status-bar {
+      height: 34px;
+      padding: 0 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .status-bar .group { display: inline-flex; align-items: center; gap: 6px; }
+    .status-bar .ic { font-size: 15px; }
+
+    /* Header */
+    .nav-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 18px 0;
+    }
+    .head-left { display: flex; align-items: center; gap: 4px; min-width: 0; }
+    .icon-btn {
+      width: 40px; height: 40px; border: 0; background: transparent;
+      color: var(--ink); display: grid; place-items: center; position: relative; border-radius: 10px;
+    }
+    .icon-btn .ic { font-size: 23px; }
+    .head-left .icon-btn:first-child { margin-left: -8px; }
+    .head-actions .icon-btn:last-child { margin-right: -8px; }
+    .icon-btn.has-dot::after {
+      content:""; position:absolute; top:8px; right:9px; width:7px; height:7px;
+      border-radius:999px; background:var(--red); border:2px solid var(--bg);
+    }
+    .location-btn {
+      display: inline-flex; align-items: center; gap: 4px; border: 0; background: transparent;
+      padding: 6px 4px; font-size: 15px; font-weight: 700; color: var(--ink); letter-spacing: -0.01em;
+    }
+    .location-btn .pin { font-size: 16px; color: var(--green); }
+    .location-btn .chev { font-size: 15px; color: var(--gray); }
+
+    /* Hero — card-less, bold type */
+    .hero { padding: 68px 22px 0; }
+    .hero .hi { font-size: 14px; font-weight: 700; color: var(--gray); margin-bottom: 9px; }
+    .hero h2 {
+      font-size: 26px; line-height: 1.36; letter-spacing: -0.026em; font-weight: 800; color: var(--ink);
+    }
+    .hero .sub { margin-top: 12px; font-size: 14px; line-height: 1.55; color: var(--ink-2); }
+    .wx { margin-top: 18px; }
+    .wx .pill {
+      display: inline-flex; align-items: center; gap: 9px; height: 32px; padding: 0 14px;
+      border-radius: 999px; background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow);
+      font-size: 13px; font-weight: 600; color: var(--ink-2);
+    }
+    .wx .ic { font-size: 15px; color: var(--green); }
+    .wx .dotsep { width: 3px; height: 3px; border-radius: 999px; background: #C9CCC7; }
+
+    .cta {
+      margin: 24px 22px 0;
+      width: calc(100% - 44px);
+      display: flex; align-items: center; gap: 13px;
+      color: #fff; border: 0; border-radius: 16px;
+      padding: 16px 18px;
+      background: linear-gradient(180deg, #2C6150 0%, var(--green) 52%, var(--green-2) 100%);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.28),
+        inset 0 -2px 4px rgba(0,0,0,.14),
+        0 8px 18px -4px rgba(15,126,64,.42),
+        0 2px 5px rgba(15,126,64,.24);
+    }
+    .cta .c-ic {
+      font-size: 21px; display: grid; place-items: center;
+      width: 38px; height: 38px; border-radius: 11px;
+      background: rgba(255,255,255,.16);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.25);
+    }
+    .cta .c-tx { flex: 1; text-align: left; }
+    .cta .c-tx strong { display: block; font-size: 16px; font-weight: 700; letter-spacing: -0.014em; }
+    .cta .c-tx span { display: block; font-size: 12.5px; opacity: .85; margin-top: 2px; font-weight: 500; }
+    .cta > .ic { font-size: 18px; opacity: .9; }
+
+    /* Sections */
+    .sec { padding: 28px 20px 0; }
+    .sec:last-of-type { padding-bottom: 30px; }
+    .sec-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 13px; }
+    .sec-head .title-wrap { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+    .sec-head h3 { font-size: 18px; font-weight: 800; letter-spacing: -0.022em; color: var(--ink); line-height: 1.1; }
+    .sec-head .date { font-size: 12px; font-weight: 600; color: var(--gray); letter-spacing: -0.01em; white-space: nowrap; align-self: baseline; }
+    .sec-head a { font-size: 13px; font-weight: 600; color: var(--gray); white-space: nowrap; align-self: flex-start; }
+
+    .card {
+      display: block;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--r-lg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    /* generic list row */
+    .row { display: flex; align-items: center; gap: 13px; padding: 15px 16px; width: 100%; }
+    .row + .row { border-top: 1px solid var(--line); }
+    .token {
+      width: 38px; height: 38px; flex: 0 0 38px; border-radius: 50%;
+      display: grid; place-items: center; font-size: 19px;
+      background: linear-gradient(160deg, #FBFBFA 0%, #EEEFEC 100%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 2px 5px -1px rgba(0,0,0,.10);
+    }
+    .ic-circle {
+      width: 38px; height: 38px; flex: 0 0 38px; border-radius: 11px;
+      display: grid; place-items: center; font-size: 20px;
+      background: linear-gradient(160deg, #F2F9F4 0%, var(--green-soft) 100%); color: var(--green);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 2px 5px -1px rgba(20,146,75,.14);
+    }
+    .ic-circle.neutral {
+      background: linear-gradient(160deg, #F7F8F5 0%, #EDEEEA 100%); color: var(--gray);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.8), 0 2px 5px -1px rgba(0,0,0,.07);
+    }
+    .row .body { flex: 1; min-width: 0; }
+    .row .body strong { display: block; font-size: 15px; font-weight: 700; color: var(--ink); letter-spacing: -0.014em; }
+    .row .body span { display: block; margin-top: 2px; font-size: 12.5px; color: var(--gray); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .row .chev { color: #C4C7C2; font-size: 18px; }
+    .badge { padding: 5px 10px; border-radius: 999px; background: #F1F2EF; color: var(--ink-2); font-size: 11.5px; font-weight: 700; }
+    .more-row {
+      display: flex; align-items: center; justify-content: center; gap: 4px;
+      padding: 13px 16px; border-top: 1px solid var(--line);
+      font-size: 13px; font-weight: 600; color: var(--gray);
+    }
+    .more-row .ic { font-size: 15px; }
+    /* 시나리오 2: 관심/추천 작물 구분 */
+    .group-label {
+      display: flex; align-items: center; gap: 6px;
+      padding: 11px 16px 7px; font-size: 11.5px; font-weight: 700;
+      color: var(--gray); letter-spacing: -0.01em;
+    }
+    .group-label .ic { font-size: 13px; }
+    .group-label.fav { color: var(--gold); }
+    .row .body .name-line { display: flex; align-items: center; gap: 5px; }
+    .row .body .name-line .star { font-size: 12px; color: var(--gold); }
+    .row.is-rec .token { opacity: .92; }
+    .group-divider { height: 1px; background: var(--line); margin: 2px 0; }
+
+    /* 시세 */
+    .ai { display: flex; gap: 9px; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+    .ai .ic { font-size: 16px; color: var(--green); margin-top: 1px; flex: 0 0 auto; }
+    .ai p { font-size: 13px; line-height: 1.5; color: var(--ink-2); }
+    .ai b { color: var(--ink); font-weight: 700; }
+    .amount { text-align: right; flex-shrink: 0; }
+    .amount .p { font-size: 15px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; }
+    .amount .p .won { font-size: 11px; font-weight: 700; }
+    .amount .d { font-size: 12px; font-weight: 700; margin-top: 2px; display: inline-flex; align-items: center; gap: 1px; }
+    .amount .d .ic { font-size: 11px; }
+    .amount .d.up { color: #2A7A52; }
+    .amount .d.down { color: var(--clay); }
+
+    /* 카테고리 (quick) */
+    .cats { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 12px; }
+    .cat {
+      background: var(--card); border: 1px solid var(--line); border-radius: var(--r-md);
+      box-shadow: var(--shadow);
+      padding: 14px 8px 12px; display: flex; flex-direction: column; align-items: center; gap: 9px; text-align: center;
+    }
+    .cat .ci {
+      width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center;
+      font-size: 20px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 2px 6px -1px rgba(46,34,20,.14);
+    }
+    .cat.c-gold .ci { background: linear-gradient(160deg, #FAF3E1 0%, var(--gold-soft) 100%); color: var(--gold); }
+    .cat.c-clay .ci { background: linear-gradient(160deg, #FBEEE2 0%, var(--clay-soft) 100%); color: var(--clay); }
+    .cat.c-sage .ci { background: linear-gradient(160deg, #EEF3EB 0%, var(--sage-soft) 100%); color: var(--sage); }
+    .cat strong { font-size: 13px; font-weight: 700; color: var(--ink); letter-spacing: -0.012em; }
+    .cat span { font-size: 11px; color: var(--gray); }
+
+    /* feed */
+    .ftype {
+      width: 38px; height: 38px; flex: 0 0 38px; border-radius: 11px;
+      display: grid; place-items: center; font-size: 20px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 2px 5px -1px rgba(0,0,0,.08);
+    }
+    .ftype.dday { background: linear-gradient(160deg, #FBEEE2 0%, var(--clay-soft) 100%); color: var(--clay); font-size: 13px; font-weight: 800; letter-spacing: -0.02em; box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 2px 5px -1px rgba(176,97,44,.18); }
+    .ftype.disease { background: linear-gradient(160deg, #FAF3E1 0%, var(--gold-soft) 100%); color: var(--gold); }
+    .ftype.info { background: linear-gradient(160deg, #EEF3EB 0%, var(--sage-soft) 100%); color: var(--sage); box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 2px 5px -1px rgba(47,97,80,.14); }
+    .feed .body strong { font-size: 14.5px; }
+    .feed .kw { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 7px; }
+    .feed .kw .k {
+      display: inline-flex; align-items: center; height: 21px; padding: 0 9px;
+      border-radius: 7px; background: #F2F3F0; color: var(--ink-2);
+      font-size: 11.5px; font-weight: 600; letter-spacing: -0.01em;
+    }
+
+    /* 전문가 */
+    .q { padding: 16px; }
+    .q-top { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+    .pill { display: inline-flex; align-items: center; height: 23px; padding: 0 10px; border-radius: 999px; font-size: 11.5px; font-weight: 700; }
+    .pill.green { background: var(--green-soft); color: var(--green); }
+    .q-top .meta { font-size: 11.5px; color: var(--gray); font-weight: 500; }
+    .q h4 { font-size: 15.5px; line-height: 1.4; font-weight: 700; letter-spacing: -0.018em; color: var(--ink); }
+    .answer { margin-top: 11px; padding: 12px 13px; border-radius: 12px; background: #F6F7F4; color: var(--ink-2); font-size: 12.5px; line-height: 1.5; }
+
+    /* Bottom nav */
+    .bottom-nav {
+      position: sticky; bottom: 0; left: 0; right: 0; height: 84px;
+      padding: 8px 14px 16px; display: grid; grid-template-columns: repeat(5,1fr);
+      background: rgba(255,255,255,.9); border-top: 1px solid var(--line);
+      backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px);
+    }
+    .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: #A2A6A1; font-size: 10.5px; font-weight: 600; }
+    .nav-item .ic { font-size: 24px; }
+    .nav-item.active { color: var(--green); }
+    .nav-item.cam .cc {
+      width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center;
+      background: var(--green); color: #fff; font-size: 23px; margin-top: -2px;
+      box-shadow: 0 6px 14px rgba(20,146,75,.28);
+    }
+    .nav-item.cam span { color: var(--green); }
+
+    @media (max-width: 430px) {
+      body { padding: 0; background: var(--bg); display: block; }
+      .phone { width: 100%; min-height: 100dvh; border-radius: 0; border: 0; box-shadow: none; }
+      .app { min-height: calc(100dvh - 84px); }
+    }
+  
+  /* === 360px safety net (v3) === */
+  .phone img, .phone svg { max-width: 100%; height: auto; }
+  .phone { word-break: keep-all; overflow-wrap: break-word; }
+  </style>
+</head>
+<body>
+  <h1 class="sr-only">KS팜 메인 화면 - 미니멀 버전</h1>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <!-- wifi (outline) -->
+      <symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="18" r="0.5" fill="currentColor" stroke="none"/>
+        <path d="M9.17 15.17a4 4 0 0 1 5.66 0"/>
+        <path d="M6.34 12.34a8 8 0 0 1 11.32 0"/>
+        <path d="M3.51 9.51a12 12 0 0 1 16.98 0"/>
+      </symbol>
+      <!-- battery vertical filled -->
+      <symbol id="i-battery" viewBox="0 0 24 24" fill="currentColor">
+        <rect x="9" y="3" width="6" height="2.5" rx="1"/>
+        <rect x="5.5" y="5.5" width="13" height="16" rx="2.5"/>
+      </symbol>
+      <!-- leaf -->
+      <symbol id="i-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 21c.5-4.5 2.5-8 7-10"/>
+        <path d="M9 18c6.218 0 10.5-3.288 11-12v-2h-4.014c-9 0-11.986 4-12 9c0 1 0 3 2 5h3z"/>
+      </symbol>
+      <!-- leaf filled -->
+      <symbol id="i-leaf-fill" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M20 4h-4.014c-9 0-11.986 4-12 9c0 1 0 3 2 5h.5c.6-3.5 2.5-6.4 6.5-8.3l.4.8C8.6 12.7 6.5 16 6 21h2l.2-1.5c.1-.4.3-.8.5-1.2C16 17.5 19.5 13 20 5z"/>
+      </symbol>
+      <!-- map-pin filled (with hollow center) -->
+      <symbol id="i-pin-fill" viewBox="0 0 24 24" fill="currentColor">
+        <path fill-rule="evenodd" d="M12 2a8 8 0 0 1 8 8c0 4.418-3.582 12-8 12s-8-7.582-8-12a8 8 0 0 1 8-8zm0 5a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" clip-rule="evenodd"/>
+      </symbol>
+      <!-- chevron-down -->
+      <symbol id="i-chev-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"/>
+      </symbol>
+      <!-- chevron-right -->
+      <symbol id="i-chev-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 6 15 12 9 18"/>
+      </symbol>
+      <!-- bell -->
+      <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3H4a4 4 0 0 0 2-3v-3a7 7 0 0 1 4-6"/>
+        <path d="M9 17v1a3 3 0 0 0 6 0v-1"/>
+      </symbol>
+      <!-- message circle (chat) -->
+      <symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 20l1.3-3.9A9 8 0 1 1 7.7 19L3 20"/>
+      </symbol>
+      <!-- alert triangle filled -->
+      <symbol id="i-warn-fill" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 1.67c.96 0 1.85.47 2.39 1.25l.11.16l8.11 13.55c.51.88.5 2.04-.07 3a2.92 2.92 0 0 1-2.43 1.37H3.89a2.92 2.92 0 0 1-2.5-1.42a3.21 3.21 0 0 1-.03-3.07l8.11-13.54A2.91 2.91 0 0 1 12 1.67zm.01 13.33a1 1 0 0 0 0 2l.12-.01a1 1 0 0 0 0-1.98L12.01 15zm-.01-7a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V9a1 1 0 0 0-1-1z"/>
+      </symbol>
+      <!-- cloud rain -->
+      <symbol id="i-cloud-rain" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M7 16a4.6 4.4 0 0 1 0-9a5 4.5 0 0 1 11 2h1a3.5 3.5 0 0 1 0 7"/>
+        <path d="M10 19l-1 2"/>
+        <path d="M14 19l-1 2"/>
+        <path d="M12 21l-1 1"/>
+      </symbol>
+      <!-- droplet filled -->
+      <symbol id="i-drop-fill" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2.3l-.55.85l-4.9 7.27c-1.98 3.31-1.22 7.46 1.77 9.88c2.97 2.4 7.29 2.4 10.25 0c2.99-2.42 3.75-6.57 1.8-9.84l-4.92-7.3L12 2.3z"/>
+      </symbol>
+      <!-- bug -->
+      <symbol id="i-bug" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 9V7a3 3 0 0 1 6 0v2"/>
+        <rect x="8" y="9" width="8" height="12" rx="4"/>
+        <path d="M19 9l-3 2"/>
+        <path d="M5 9l3 2"/>
+        <path d="M19 15h-3"/>
+        <path d="M8 15H5"/>
+        <path d="M19 21l-3-2"/>
+        <path d="M5 21l3-2"/>
+      </symbol>
+      <!-- camera -->
+      <symbol id="i-camera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 7h2a2 2 0 0 0 2-2a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1a2 2 0 0 0 2 2h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2"/>
+        <circle cx="12" cy="13" r="3"/>
+      </symbol>
+      <!-- message chatbot -->
+      <symbol id="i-chatbot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 4h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-4l-4 4l-4-4H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2"/>
+        <circle cx="9.5" cy="10" r="0.6" fill="currentColor"/>
+        <circle cx="14.5" cy="10" r="0.6" fill="currentColor"/>
+      </symbol>
+      <!-- notebook -->
+      <symbol id="i-notebook" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 4h11a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/>
+        <path d="M13 8h3"/>
+        <path d="M13 12h3"/>
+        <path d="M8 8h2"/>
+        <path d="M8 12h2"/>
+        <path d="M8 16h2"/>
+      </symbol>
+      <!-- user check -->
+      <symbol id="i-user-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="9" cy="7" r="4"/>
+        <path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/>
+        <polyline points="16 11 18 13 22 9"/>
+      </symbol>
+      <!-- circle check filled -->
+      <symbol id="i-check-fill" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2a10 10 0 1 1 0 20a10 10 0 0 1 0-20zm4.71 7.29a1 1 0 0 0-1.42 0L11 13.59l-2.29-2.3a1 1 0 0 0-1.42 1.42l3 3a1 1 0 0 0 1.42 0l5-5a1 1 0 0 0 0-1.42z"/>
+      </symbol>
+      <!-- home filled -->
+      <symbol id="i-home-fill" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12.71 2.29a1 1 0 0 0-1.42 0l-9 9a1 1 0 0 0 1.42 1.42L4 12.41V20a2 2 0 0 0 2 2h3v-7h6v7h3a2 2 0 0 0 2-2v-7.59l.29.3a1 1 0 0 0 1.42-1.42l-9-9z"/>
+      </symbol>
+      <!-- user -->
+      <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="7" r="4"/>
+        <path d="M4 21v-2a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v2"/>
+      </symbol>
+      <!-- sparkle (AI) -->
+      <symbol id="i-sparkle" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2l1.6 4.9a4 4 0 0 0 2.5 2.5L21 11l-4.9 1.6a4 4 0 0 0-2.5 2.5L12 20l-1.6-4.9a4 4 0 0 0-2.5-2.5L3 11l4.9-1.6a4 4 0 0 0 2.5-2.5L12 2z"/>
+        <path d="M19 3l.6 1.7a1.6 1.6 0 0 0 1 1L22 6.3l-1.4.6a1.6 1.6 0 0 0-1 1L19 9.4l-.6-1.5a1.6 1.6 0 0 0-1-1L16 6.3l1.4-.6a1.6 1.6 0 0 0 1-1L19 3z"/>
+      </symbol>
+      <symbol id="i-star-fill" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2.5l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 18.6 6.1 21.3l1.2-6.6L2.5 9.5l6.6-.9L12 2.5z"/>
+      </symbol>
+      <!-- arrow up-right (price up) -->
+      <symbol id="i-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M7 17L17 7"/>
+        <path d="M8 7h9v9"/>
+      </symbol>
+      <!-- arrow down-right (price down) -->
+      <symbol id="i-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M7 7l10 10"/>
+        <path d="M17 8v9H8"/>
+      </symbol>
+      <!-- gift (지원사업) -->
+      <symbol id="i-gift" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3.5" y="8" width="17" height="4" rx="1"/>
+        <path d="M4.5 12v7.5a1 1 0 0 0 1 1h13a1 1 0 0 0 1-1V12"/>
+        <path d="M12 8v12.5"/>
+        <path d="M12 8C12 8 11 3.5 8 3.5a2.3 2.3 0 0 0 0 4.5h4"/>
+        <path d="M12 8C12 8 13 3.5 16 3.5a2.3 2.3 0 0 1 0 4.5h-4"/>
+      </symbol>
+      <!-- sprout (재배 가이드) -->
+      <symbol id="i-sprout" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 21v-9.5"/>
+        <path d="M12 11.5C12 7.5 9 5.5 4 5.5c0 4 2.2 6.8 8 6.8z"/>
+        <path d="M12 13.5c0-3 2.4-5 7-5c0 3.4-2 5.8-7 5.8z"/>
+      </symbol>
+      <!-- hamburger menu -->
+      <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 7h16"/>
+        <path d="M4 12h16"/>
+        <path d="M4 17h16"/>
+      </symbol>
+    </defs>
+  </svg>
+
+
+  <main class="phone" aria-label="KS팜 미니멀 미리보기">
+    <div class="app">
+      <div class="status-bar">
+        <span>9:41</span>
+        <span class="group"><svg class="ic"><use href="#i-wifi"/></svg> <svg class="ic"><use href="#i-battery"/></svg></span>
+      </div>
+
+      <header class="nav-head">
+        <div class="head-left">
+          <button class="icon-btn" aria-label="메뉴"><svg class="ic"><use href="#i-menu"/></svg></button>
+          <button class="location-btn" aria-label="위치 변경">
+            <svg class="ic pin"><use href="#i-pin-fill"/></svg>
+            <span class="place">강남구 역삼동</span>
+            <svg class="ic chev"><use href="#i-chev-down"/></svg>
+          </button>
+        </div>
+        <div class="head-actions">
+          <button class="icon-btn has-dot" aria-label="알림"><svg class="ic"><use href="#i-bell"/></svg></button>
+        </div>
+      </header>
+
+      <section class="hero">
+        <div class="hi">김팜님, 안녕하세요</div>
+        <h2 id="heroTitle">오늘 작물은<br>잘 지내고 있나요?</h2>
+        <p class="sub" id="heroSub">궁금한 건 언제든 농사친구에게 물어보세요.</p>
+        <div class="wx" id="heroWx">
+          <span class="pill"><svg class="ic"><use href="#i-cloud-rain"/></svg> 23.1°<span class="dotsep"></span>습도 82%<span class="dotsep"></span>강수 60%</span>
+        </div>
+      </section>
+
+      <button class="cta" aria-label="사진으로 물어보기">
+        <span class="c-ic"><svg class="ic"><use href="#i-camera"/></svg></span>
+        <span class="c-tx">
+          <strong>사진으로 물어보기</strong>
+          <span>사진 한 장이면 작물 상태를 살펴봐 드려요</span>
+        </span>
+        <svg class="ic"><use href="#i-chev-right"/></svg>
+      </button>
+
+      <section class="sec">
+        <div class="sec-head"><h3>오늘의 작물 시세</h3><span class="date">5월 22일 기준</span></div>
+        <div class="card">
+          <div class="row">
+            <span class="token">🥒</span>
+            <div class="body"><div class="name-line"><strong>오이</strong><svg class="ic star"><use href="#i-star-fill"/></svg></div><span>도매 · 10kg</span></div>
+            <div class="amount"><div class="p">32,400<span class="won">원</span></div><div class="d up"><svg class="ic"><use href="#i-up"/></svg> 6.2%</div></div>
+          </div>
+          <div class="row">
+            <span class="token">🍓</span>
+            <div class="body"><div class="name-line"><strong>딸기</strong><svg class="ic star"><use href="#i-star-fill"/></svg></div><span>도매 · 2kg</span></div>
+            <div class="amount"><div class="p">18,900<span class="won">원</span></div><div class="d down"><svg class="ic"><use href="#i-down"/></svg> 2.1%</div></div>
+          </div>
+          <a class="more-row" href="#">전체 시세 보기 <svg class="ic"><use href="#i-chev-right"/></svg></a>
+        </div>
+      </section>
+
+      <section class="sec">
+        <div class="sec-head"><h3>확인할 일 2건</h3></div>
+        <div class="card">
+          <a class="row" href="#">
+            <span class="ic-circle neutral"><svg class="ic"><use href="#i-notebook"/></svg></span>
+            <div class="body"><strong>미작성 영농일지</strong><span>최근 3일간 작성하지 않았어요</span></div>
+            <span class="badge">3건</span>
+          </a>
+          <a class="row" href="#">
+            <span class="ic-circle"><svg class="ic"><use href="#i-check-fill"/></svg></span>
+            <div class="body"><strong>내 질문에 답변 도착</strong><span>"오이 양액 pH" 질문 답변완료</span></div>
+            <svg class="ic chev"><use href="#i-chev-right"/></svg>
+          </a>
+        </div>
+      </section>
+
+      <section class="sec">
+        <div class="sec-head"><h3>오늘의 맞춤 정보</h3></div>
+        <div class="cats">
+          <a class="cat c-gold" href="#"><span class="ci"><svg class="ic"><use href="#i-gift"/></svg></span><strong>지원사업</strong><span>지역·작물</span></a>
+          <a class="cat c-clay" href="#"><span class="ci"><svg class="ic"><use href="#i-bug"/></svg></span><strong>병해충 정보</strong><span>예방·방제</span></a>
+          <a class="cat c-sage" href="#"><span class="ci"><svg class="ic"><use href="#i-sprout"/></svg></span><strong>재배 가이드</strong><span>작물별</span></a>
+        </div>
+        <div class="card feed">
+          <a class="row" href="#">
+            <span class="ftype dday">D-3</span>
+            <div class="body"><strong>스마트팜 기자재 지원</strong><div class="kw"><span class="k">최대 5,000만원</span><span class="k">시설원예 우대</span></div></div>
+            <svg class="ic chev"><use href="#i-chev-right"/></svg>
+          </a>
+          <a class="row" href="#">
+            <span class="ftype disease"><svg class="ic"><use href="#i-bug"/></svg></span>
+            <div class="body"><strong>잎곰팡이병 예방 가이드</strong><div class="kw"><span class="k">통풍 관리</span><span class="k">습도 조절</span></div></div>
+            <svg class="ic chev"><use href="#i-chev-right"/></svg>
+          </a>
+          <a class="row" href="#">
+            <span class="ftype info"><svg class="ic"><use href="#i-leaf"/></svg></span>
+            <div class="body"><strong>흰가루병 발생 시기</strong><div class="kw"><span class="k">5~6월 발생</span><span class="k">집중 관리</span></div></div>
+            <svg class="ic chev"><use href="#i-chev-right"/></svg>
+          </a>
+        </div>
+      </section>
+
+      <section class="sec">
+        <div class="sec-head"><h3>전문가 질문 현황</h3><a href="#">전체보기</a></div>
+        <a class="card q" href="#">
+          <div class="q-top"><span class="pill green">답변완료</span><span class="meta">스마트팜 · 환경제어 · 2일 전</span></div>
+          <h4>딸기 하우스 적정 온습도가 궁금합니다</h4>
+          <div class="answer">생육 단계에 따라 주간·야간 온도 기준을 분리해 관리하는 것이 좋습니다.</div>
+        </a>
+      </section>
+    </div>
+
+    <nav class="bottom-nav" aria-label="하단 메뉴">
+      <a class="nav-item active" href="#"><svg class="ic"><use href="#i-home-fill"/></svg><span>홈</span></a>
+      <a class="nav-item" href="#"><svg class="ic"><use href="#i-chatbot"/></svg><span>AI상담</span></a>
+      <a class="nav-item cam" href="#"><div class="cc"><svg class="ic"><use href="#i-camera"/></svg></div><span>진단</span></a>
+      <a class="nav-item" href="#"><svg class="ic"><use href="#i-notebook"/></svg><span>일지</span></a>
+      <a class="nav-item" href="#"><svg class="ic"><use href="#i-user"/></svg><span>MY</span></a>
+    </nav>
+  </main>
+
+  <script>
+  /* ─────────────────────────────────────────────────────────────
+     히어로(4안 · 진단 행동 직결)
+     - 병해 '위험 등급'에 의존하지 않는다. (NCPMS 예측 데이터 불확실 → 단정 회피)
+     - 제목/안내는 '사진 진단'을 유도하는 고정 카피.
+     - 날씨 한 줄은 우리가 확실히 가질 수 있는 기상 데이터(기온·습도·강수)만 표시.
+     아래 wx 객체만 실제 기상 API 값으로 채우면 날씨줄이 자동 갱신됨.
+  ───────────────────────────────────────────────────────────────*/
+  const wx = {
+    temp: 23.1,      // 기상 API: 기온(°C)
+    humidity: 82,    // 기상 API: 습도(%)
+    rainProb: 60     // 기상 API: 강수확률(%)
+  };
+
+  function renderHero(w) {
+    // 제목/안내는 고정(행동 유도형)이라 JS에서 바꾸지 않는다 — 마크업 그대로 유지.
+    // 날씨 한 줄 = 오늘의 조건만, 알약 하나로(C안). 병해 위험 라벨 없음.
+    const dot = '<span class="dotsep"></span>';
+    document.getElementById('heroWx').innerHTML =
+      '<span class="pill"><svg class="ic"><use href="#i-cloud-rain"/></svg> ' + w.temp + '°' + dot +
+      '습도 ' + w.humidity + '%' + dot +
+      '강수 ' + w.rainProb + '%</span>';
+  }
+
+  renderHero(wx);
+  </script>
+</body>
+</html>

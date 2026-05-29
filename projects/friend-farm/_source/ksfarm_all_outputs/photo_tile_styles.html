@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>사진 타일 비율 — 5장 꽉 찬 상태</title>
+<style>
+:root{--bg:#ECEAE0;--card:#FFFFFF;--ink:#20251D;--ink-2:#45493E;--gray:#76796C;--line:rgba(48,42,30,.10);--field-bg:#F4F4EF;--green:#1F4B3C;--green-2:#163729;--green-soft:#E7EEE6;}
+*{box-sizing:border-box;} a,button{color:inherit;background:none;border:0;cursor:pointer;}
+.ic{width:1em;height:1em;display:inline-block;vertical-align:-0.12em;}
+body{margin:0;background:#D8D5C9;padding:26px 16px 50px;font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Noto Sans KR",system-ui,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+.wrap{max-width:390px;margin:0 auto;}
+.intro{font-size:13px;color:#5a5d52;margin:0 0 22px;line-height:1.6;}
+.opt{background:var(--bg);border-radius:18px;padding:18px;box-shadow:0 8px 22px -12px rgba(40,34,22,.4);margin-bottom:16px;}
+.opt-head{display:flex;align-items:baseline;gap:9px;margin-bottom:14px;}
+.opt-head .tag{font-size:11px;font-weight:800;color:var(--green);background:var(--green-soft);padding:3px 9px;border-radius:999px;}
+.opt-head h3{font-size:14px;font-weight:800;letter-spacing:-0.02em;margin:0;}
+.opt-head p{font-size:11.5px;color:var(--gray);margin:0;font-weight:500;}
+.note{font-size:11px;color:var(--gray);margin-top:10px;}
+
+.photo-row{display:flex;gap:7px;}
+.add-tile{min-width:0;border-radius:11px;background:var(--field-bg);border:1.5px dashed rgba(31,75,60,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;color:var(--green);}
+.add-tile .ic{font-size:16px;}
+.add-tile .cnt{font-size:9px;font-weight:700;color:var(--gray);}
+.pthumb{position:relative;min-width:0;border-radius:11px;overflow:hidden;background:linear-gradient(155deg,#3A6B57,var(--green) 65%,var(--green-2));}
+.pthumb .x{position:absolute;top:2px;right:2px;width:15px;height:15px;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;display:grid;place-items:center;}
+.pthumb .x .ic{font-size:8px;}
+.pthumb .rep-tag{position:absolute;left:0;right:0;bottom:0;text-align:center;font-size:7.5px;font-weight:800;color:#fff;background:rgba(0,0,0,.4);padding:1px 0;}
+
+.A .photo-row>*{flex:1;aspect-ratio:1;}
+.B .photo-row>*{flex:1;aspect-ratio:4/3;}
+.C .photo-row>*{flex:1;aspect-ratio:3/4;}
+.D .photo-row{overflow-x:auto;padding-bottom:6px;}
+.D .photo-row>*{flex:0 0 88px;aspect-ratio:4/3;}
+</style></head>
+<body>
+<div class="wrap">
+<p class="intro">사진 5장 + 추가 타일 = <b>6칸이 꽉 찬 상태</b>입니다. (앱 폭 390px 기준)</p>
+
+<div class="opt A">
+  <div class="opt-head"><span class="tag">A안</span><h3>정사각 1:1 · 6칸</h3></div>
+  <div class="photo-row">
+    <button class="add-tile"><svg class="ic"><use href="#i-camera"/></svg><span class="cnt">5/5</span></button>
+    <div class="pthumb"><button class="x"><svg class="ic"><use href="#i-x"/></svg></button><span class="rep-tag">대표</span></div>
+    <div class="pthumb"><button class="x"><svg class="ic"><use href="#i-x"/></svg></button></div>
+    <div class="pthumb"><button class="x"><svg class="ic"><use href="#i-x"/></svg></button></div>
+    <div class="pthumb"><button class="x"><svg class="ic"><use href="#i-x"/></svg></button></div>
+    <div class="pthumb"><button class="x"><svg class="ic"><use href="#i-x"/></svg></button></div>
+  </div>
+  <p class="note">한 칸 약 53px. 작지만 6칸 다 들어감.</p>
+</div>
+
+<div class="opt B">
+  <div class="opt-head"><span class="tag">B안</span><h3>가로형 4:3 · 6칸</h3></div>
+  <div class="photo-row">
+    <button class="add-tile"><svg class="ic"><use href="#i-camera"/></svg><span class="cnt">5/5</span></button>
+    <div class="pthumb"><button class="x"><svg class="ic"><use href="#i-x"/></svg></button><span class="rep-tag">대표</span></div>
+    <div class="pthumb"><button class="x"><svg class="ic"><use href="#i-x"/></svg></button></div>
+    <div class="pthumb"><button class="x"><svg class="ic"><use href="#i-x"/></svg></button></div>
+    <div class="pthumb"><button class="x"><svg class="ic"><use href="#i-x"/></svg></button></div>
+    <div class="pthumb"><button class="x"><svg class="ic"><use href="#i-x"/></svg></button></div>
+  </div>
+  <p class="note">높이가 약 40px로 납작해짐. 가로 비율이라 사진 안 짤리지만 좀 작음.</p>
+</div>
+
+<div class="opt C">
+  <div class="opt-head"><span class="tag">C안</span><h3>세로형 3:4 · 6칸</h3></div>
+  <div class="photo-row">
+    <button class="add-tile"><svg class="ic"><use href="#i-camera"/></svg><span class="cnt">5/5</span></button>
+    <div class="pthumb"><button class="x"><svg class="ic"><use href="#i-x"/></svg></button><span class="rep-tag">대표</span></div>
+    <div class="pthumb"><button class="x"><svg class="ic"><use href="#i-x"/></svg></button></div>
+    <div class="pthumb"><button class="x"><svg class="ic"><use href="#i-x"/></svg></button></div>
+    <div class="pthumb"><button class="x"><svg class="ic"><use href="#i-x"/></svg></button></div>
+    <div class="pthumb"><button class="x"><svg class="ic"><use href="#i-x"/></svg></button></div>
+  </div>
+  <p class="note">한 칸 약 53px폭에 세로로 길어 약 70px 높이. 길쭉.</p>
+</div>
+
+<div class="opt D">
+  <div class="opt-head"><span class="tag">D안</span><h3>가로형 4:3 · 가로 스크롤</h3></div>
+  <div class="photo-row">
+    <button class="add-tile" style="flex:0 0 88px;aspect-ratio:4/3;"><svg class="ic"><use href="#i-camera"/></svg><span class="cnt">5/5</span></button>
+    <div class="pthumb"><button class="x"><svg class="ic"><use href="#i-x"/></svg></button><span class="rep-tag">대표</span></div>
+    <div class="pthumb"><button class="x"><svg class="ic"><use href="#i-x"/></svg></button></div>
+    <div class="pthumb"><button class="x"><svg class="ic"><use href="#i-x"/></svg></button></div>
+    <div class="pthumb"><button class="x"><svg class="ic"><use href="#i-x"/></svg></button></div>
+    <div class="pthumb"><button class="x"><svg class="ic"><use href="#i-x"/></svg></button></div>
+  </div>
+  <p class="note">타일 크게(88px). 6칸이 화면 넘어 옆으로 스크롤됨(→ 밀어서 봄).</p>
+</div>
+
+</div>
+<svg width="0" height="0" style="position:absolute"><defs>
+<symbol id="i-camera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.2"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></symbol>
+</defs></svg>
+</body></html>

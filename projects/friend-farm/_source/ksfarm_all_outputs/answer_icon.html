@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>전문가 답변 아이콘 비교</title>
+<style>
+:root{
+  --bg:#ECEAE0;--card:#FFFFFF;--ink:#20251D;--ink-2:#45493E;--gray:#76796C;
+  --line:rgba(48,42,30,.10);
+  --green:#1F4B3C;--green-2:#163729;--green-soft:#E7EEE6;
+  --gold:#B08A3E;--gold-soft:#F2E9D2;--clay:#B0612C;--clay-soft:#F3E1D2;
+  --sage:#2F6150;--sage-soft:#E4ECE0;
+  --r-lg:18px;--shadow:0 1px 2px rgba(36,30,18,.05);
+}
+*{box-sizing:border-box;}
+a{color:inherit;text-decoration:none;}
+h3,h4,p,strong,span{word-break:keep-all;}
+.ic{width:1em;height:1em;display:inline-block;vertical-align:-0.14em;flex-shrink:0;}
+body{margin:0;background:#DEDBCF;padding:24px 0 44px;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Pretendard","Noto Sans KR",system-ui,sans-serif;
+  color:var(--ink);-webkit-font-smoothing:antialiased;}
+.wrap{width:min(390px,100%);margin:0 auto;padding:0 20px;}
+.opt-h{margin:30px 0 12px;}
+.opt-h .tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.02em;color:var(--green);
+  background:var(--green-soft);padding:3px 9px;border-radius:999px;margin-bottom:7px;}
+.opt-h h3{font-size:17px;font-weight:800;letter-spacing:-0.02em;margin:0;}
+.opt-h p{font-size:12.5px;color:var(--gray);margin:5px 0 0;line-height:1.55;}
+
+.card{display:block;background:var(--card);border:1px solid var(--line);
+  border-radius:var(--r-lg);box-shadow:var(--shadow);overflow:hidden;}
+.q{padding:16px;}
+.q-top{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.pill{display:inline-flex;align-items:center;height:23px;padding:0 10px;border-radius:999px;font-size:11.5px;font-weight:700;}
+.pill.green{background:var(--green-soft);color:var(--green);}
+.q-top .meta{font-size:11.5px;color:var(--gray);font-weight:500;}
+.q h4{font-size:15.5px;line-height:1.4;font-weight:700;letter-spacing:-0.018em;color:var(--ink);margin:0;}
+
+.answer{margin-top:11px;padding:12px 13px;border-radius:12px;background:#F6F7F4;
+  color:var(--ink-2);font-size:12.5px;line-height:1.5;}
+
+/* A. 인라인 말풍선 */
+.A .answer{display:flex;gap:9px;align-items:flex-start;}
+.A .answer .lead{color:var(--green);font-size:16px;flex:0 0 auto;margin-top:1px;}
+
+/* B. 원형 토큰 말풍선 */
+.B .answer{display:flex;gap:10px;align-items:flex-start;}
+.B .answer .tok{width:26px;height:26px;flex:0 0 26px;border-radius:50%;display:grid;place-items:center;
+  font-size:14px;color:var(--green);
+  background:linear-gradient(160deg,#F2F9F4 0%,var(--green-soft) 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 2px 5px -1px rgba(20,146,75,.14);margin-top:1px;}
+
+/* C. 전문가 뱃지(체크) 토큰 */
+.C .answer{display:flex;gap:10px;align-items:flex-start;}
+.C .answer .tok{width:26px;height:26px;flex:0 0 26px;border-radius:50%;display:grid;place-items:center;
+  font-size:15px;color:var(--green);
+  background:linear-gradient(160deg,#F2F9F4 0%,var(--green-soft) 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 2px 5px -1px rgba(20,146,75,.14);margin-top:1px;}
+
+/* D. 따옴표 인라인 */
+.D .answer{display:flex;gap:8px;align-items:flex-start;}
+.D .answer .lead{color:var(--green);font-size:19px;flex:0 0 auto;line-height:1;margin-top:-1px;opacity:.55;}
+</style></head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20l1.3-3.9A9 8 0 1 1 7.7 19L3 20"/></symbol>
+<symbol id="i-user-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><polyline points="16 11 18 13 22 9"/></symbol>
+<symbol id="i-quote" viewBox="0 0 24 24" fill="currentColor"><path d="M7.5 6C5 6 3.2 8 3.2 10.6c0 2.4 1.7 4.2 4 4.2c.4 0 .8-.05 1.1-.15C7.9 16.3 6.6 17.4 5 18l.9 1.6c3.4-1.3 5.6-4.2 5.6-8.2C11.5 7.9 9.8 6 7.5 6zm9 0C14 6 12.2 8 12.2 10.6c0 2.4 1.7 4.2 4 4.2c.4 0 .8-.05 1.1-.15c-.4 1.65-1.7 2.75-3.3 3.35l.9 1.6c3.4-1.3 5.6-4.2 5.6-8.2C20.5 7.9 18.8 6 16.5 6z"/></symbol>
+</defs></svg>
+<div class="wrap">
+
+<div class="opt-h"><span class="tag">A안</span><h3>인라인 말풍선</h3><p>가장 가벼움. 사양서 .ai 패턴(그린 아이콘+텍스트) 그대로. 답변=대화 뉘앙스.</p></div>
+<div class="card A"><div class="q">
+  <div class="q-top"><span class="pill green">답변완료</span><span class="meta">스마트팜 · 환경제어 · 2일 전</span></div>
+  <h4>딸기 하우스 적정 온습도가 궁금합니다</h4>
+  <div class="answer"><svg class="ic lead"><use href="#i-chat"/></svg><span>생육 단계에 따라 주간·야간 온도 기준을 분리해 관리하는 것이 좋습니다.</span></div>
+</div></div>
+
+<div class="opt-h"><span class="tag">B안</span><h3>원형 토큰 말풍선</h3><p>그린 소프트 원형 토큰 안에 아이콘. 답변 영역이 더 또렷하게 구분됨.</p></div>
+<div class="card B"><div class="q">
+  <div class="q-top"><span class="pill green">답변완료</span><span class="meta">스마트팜 · 환경제어 · 2일 전</span></div>
+  <h4>딸기 하우스 적정 온습도가 궁금합니다</h4>
+  <div class="answer"><span class="tok"><svg class="ic"><use href="#i-chat"/></svg></span><span>생육 단계에 따라 주간·야간 온도 기준을 분리해 관리하는 것이 좋습니다.</span></div>
+</div></div>
+
+<div class="opt-h"><span class="tag">C안</span><h3>전문가 뱃지 토큰</h3><p>체크 표시된 사람 아이콘 → "검증된 전문가 답변" 의미를 직접 전달.</p></div>
+<div class="card C"><div class="q">
+  <div class="q-top"><span class="pill green">답변완료</span><span class="meta">스마트팜 · 환경제어 · 2일 전</span></div>
+  <h4>딸기 하우스 적정 온습도가 궁금합니다</h4>
+  <div class="answer"><span class="tok"><svg class="ic"><use href="#i-user-check"/></svg></span><span>생육 단계에 따라 주간·야간 온도 기준을 분리해 관리하는 것이 좋습니다.</span></div>
+</div></div>
+
+<div class="opt-h"><span class="tag">D안</span><h3>따옴표 인라인</h3><p>인용부호로 "답변 내용 인용" 뉘앙스. 가장 은은하고 에디토리얼한 느낌.</p></div>
+<div class="card D"><div class="q">
+  <div class="q-top"><span class="pill green">답변완료</span><span class="meta">스마트팜 · 환경제어 · 2일 전</span></div>
+  <h4>딸기 하우스 적정 온습도가 궁금합니다</h4>
+  <div class="answer"><svg class="ic lead"><use href="#i-quote"/></svg><span>생육 단계에 따라 주간·야간 온도 기준을 분리해 관리하는 것이 좋습니다.</span></div>
+</div></div>
+
+</div>
+</body></html>

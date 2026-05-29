@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>전문가 질문 카드 — 비교</title>
+<style>
+:root{--bg:#ECEAE0;--card:#FFFFFF;--ink:#20251D;--ink-2:#45493E;--gray:#76796C;--line:rgba(48,42,30,.08);--field-bg:#F4F4EF;--green:#1F4B3C;--green-2:#163729;--green-soft:#E7EEE6;--sage:#2F6150;--gold:#B08A3E;--clay:#B0612C;--r-lg:18px;--shadow:0 1px 2px rgba(36,30,18,.05);}
+*{box-sizing:border-box;} button{background:none;border:0;}
+.ic{width:1em;height:1em;display:inline-block;vertical-align:-0.12em;flex-shrink:0;}
+body{margin:0;background:#D8D5C9;padding:26px 16px 50px;font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Noto Sans KR",system-ui,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+.wrap{max-width:390px;margin:0 auto;}
+.intro{font-size:13px;color:#5a5d52;margin:0 0 22px;line-height:1.6;}
+.opt{margin-bottom:22px;}
+.opt-head{display:flex;align-items:baseline;gap:9px;margin-bottom:11px;}
+.opt-head .tag{font-size:11px;font-weight:800;color:var(--green);background:var(--green-soft);padding:3px 9px;border-radius:999px;}
+.opt-head h3{font-size:14px;font-weight:800;letter-spacing:-0.02em;margin:0;}
+.opt-head p{font-size:11.5px;color:var(--gray);margin:0;font-weight:500;}
+
+.q-card{background:var(--card);border-radius:var(--r-lg);box-shadow:var(--shadow);padding:16px;}
+.q-badge{font-size:10.5px;font-weight:800;padding:3px 9px;border-radius:999px;}
+.q-badge.done{background:var(--green-soft);color:var(--green);}
+.q-badge.ing{background:#EDE6D4;color:var(--gold);}
+.q-title{font-size:15.5px;font-weight:700;color:var(--ink);letter-spacing:-0.016em;line-height:1.4;}
+.q-meta{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--gray);font-weight:600;}
+.q-meta .dot{width:2.5px;height:2.5px;border-radius:50%;background:#C7C8BE;}
+.q-meta .cat{color:var(--sage);font-weight:700;}
+.q-meta .rate{display:inline-flex;align-items:center;gap:2px;color:var(--gold);font-weight:800;}
+.q-meta .rate .ic{font-size:12px;}
+.ava{width:30px;height:30px;border-radius:50%;background:var(--field-bg);color:var(--gray);display:grid;place-items:center;flex-shrink:0;}
+.ava .ic{font-size:16px;}
+.chk{width:24px;height:24px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;flex-shrink:0;}
+.chk .ic{font-size:14px;}
+
+/* A: 현재 (아바타X, 체크X) */
+.A .q-top{display:flex;align-items:center;gap:8px;margin-bottom:9px;}
+.A .q-meta{margin-top:11px;}
+
+/* B: 아바타(왼쪽) + 체크(오른쪽) */
+.B .q-card{display:flex;gap:13px;align-items:flex-start;}
+.B .ava{margin-top:2px;}
+.B .body{flex:1;min-width:0;}
+.B .q-top{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.B .q-row{display:flex;align-items:flex-start;gap:10px;}
+.B .q-title{flex:1;}
+.B .q-meta{margin-top:10px;}
+
+/* C: 이미지 느낌 (아바타+체크+별점+시기) */
+.C .q-card{display:flex;gap:13px;align-items:flex-start;}
+.C .ava{margin-top:2px;}
+.C .body{flex:1;min-width:0;}
+.C .q-top{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.C .q-row{display:flex;align-items:flex-start;gap:10px;}
+.C .q-title{flex:1;}
+.C .q-meta{margin-top:10px;}
+
+/* D: 체크만 (아바타X) */
+.D .q-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:9px;}
+.D .q-titlewrap{flex:1;}
+.D .q-top{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.D .q-meta{margin-top:0;}
+</style></head>
+<body>
+<div class="wrap">
+<p class="intro">전문가 질문 카드 스타일 비교입니다. 답변완료 카드 기준이에요.</p>
+
+<div class="opt A">
+  <div class="opt-head"><span class="tag">A안</span><h3>현재 (담백)</h3><p>아바타·체크 없음. 뱃지+제목+메타만.</p></div>
+  <div class="q-card">
+    <div class="q-top"><span class="q-badge done">답변완료</span></div>
+    <div class="q-title">딸기는 어떻게 재배 하나요?</div>
+    <div class="q-meta"><span class="cat">가공</span><span class="dot"></span><span>2026.03.11</span><span class="dot"></span><span class="rate"><svg class="ic"><use href="#i-star"/></svg> 4.8</span></div>
+  </div>
+</div>
+
+<div class="opt B">
+  <div class="opt-head"><span class="tag">B안</span><h3>아바타 + 완료 체크</h3><p>왼쪽 질문자 아바타 + 우측 완료 체크. 별점·시기 없음.</p></div>
+  <div class="q-card">
+    <div class="ava"><svg class="ic"><use href="#i-user"/></svg></div>
+    <div class="body">
+      <div class="q-row">
+        <div class="q-title">딸기는 어떻게 재배 하나요?</div>
+        <div class="chk"><svg class="ic"><use href="#i-check"/></svg></div>
+      </div>
+      <div class="q-meta"><span class="q-badge done">답변완료</span><span class="cat">가공</span><span class="dot"></span><span>2026.03.11</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="opt C">
+  <div class="opt-head"><span class="tag">C안</span><h3>이미지 느낌 (아바타+체크+별점+시기)</h3><p>기존 앱과 가장 비슷. 정보 많음.</p></div>
+  <div class="q-card">
+    <div class="ava"><svg class="ic"><use href="#i-user"/></svg></div>
+    <div class="body">
+      <div class="q-top"><span class="q-badge done">답변완료</span></div>
+      <div class="q-row">
+        <div class="q-title">딸기는 어떻게 재배 하나요?</div>
+        <div class="chk"><svg class="ic"><use href="#i-check"/></svg></div>
+      </div>
+      <div class="q-meta"><span class="cat">가공</span><span class="dot"></span><span>2026.03.11</span></div>
+      <div class="q-meta" style="margin-top:6px"><span class="rate"><svg class="ic"><use href="#i-star"/></svg> 4.8</span><span class="dot"></span><span>답변 1일 전</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="opt D">
+  <div class="opt-head"><span class="tag">D안</span><h3>완료 체크만 (아바타X)</h3><p>아바타 없이 우측 체크만. A보다 완료감↑, 깔끔.</p></div>
+  <div class="q-card">
+    <div class="q-row">
+      <div class="q-titlewrap">
+        <div class="q-top"><span class="q-badge done">답변완료</span></div>
+        <div class="q-title">딸기는 어떻게 재배 하나요?</div>
+      </div>
+      <div class="chk"><svg class="ic"><use href="#i-check"/></svg></div>
+    </div>
+    <div class="q-meta" style="margin-top:11px"><span class="cat">가공</span><span class="dot"></span><span>2026.03.11</span><span class="dot"></span><span class="rate"><svg class="ic"><use href="#i-star"/></svg> 4.8</span></div>
+  </div>
+</div>
+
+</div>
+<svg width="0" height="0" style="position:absolute"><defs>
+<symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.8.6-5.1 4.5 1.5 6.6L12 17.3 5.9 20.6l1.5-6.6L2.3 8.9l6.8-.6z"/></symbol>
+</defs></svg>
+</body></html>

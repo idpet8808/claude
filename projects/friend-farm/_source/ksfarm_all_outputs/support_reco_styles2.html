@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>맞춤 추천 — 비카드 비교</title>
+<style>
+:root{--bg:#ECEAE0;--card:#FFFFFF;--ink:#20251D;--ink-2:#45493E;--gray:#76796C;--line:rgba(48,42,30,.08);--field-bg:#F4F4EF;--green:#1F4B3C;--green-2:#163729;--green-soft:#E7EEE6;--sage:#2F6150;--gold:#B08A3E;--clay:#B0612C;--r-lg:18px;--r-md:14px;--shadow:0 1px 2px rgba(36,30,18,.05);}
+*{box-sizing:border-box;}
+.ic{width:1em;height:1em;display:inline-block;vertical-align:-0.12em;flex-shrink:0;}
+body{margin:0;background:#D8D5C9;padding:26px 14px 50px;font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Noto Sans KR",system-ui,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+h3,p,span,div{word-break:keep-all;}
+.row{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;max-width:1200px;margin:0 auto;align-items:flex-start;}
+.col{width:360px;}
+.lab{margin:0 0 10px;text-align:center;}
+.lab .tag{display:inline-block;font-size:11px;font-weight:800;color:var(--green);background:var(--green-soft);padding:3px 10px;border-radius:999px;margin-bottom:6px;}
+.lab h3{font-size:14px;font-weight:800;margin:0 0 3px;letter-spacing:-0.02em;}
+.lab p{font-size:11.5px;color:#5a5d52;margin:0;font-weight:500;line-height:1.4;}
+.demo{background:var(--bg);border-radius:20px;padding:18px;box-shadow:0 10px 28px -12px rgba(40,34,22,.36);min-height:320px;}
+
+.dday{flex-shrink:0;font-size:10px;font-weight:800;padding:2px 8px;border-radius:999px;background:var(--field-bg);color:var(--ink-2);}
+.dday.soon{background:var(--clay);color:#fff;}
+
+/* 공통 토스식 목록 (전체) */
+.list{background:var(--card);border-radius:var(--r-md);box-shadow:var(--shadow);overflow:hidden;}
+.item{display:flex;align-items:center;gap:11px;padding:15px 16px;}
+.item+.item{border-top:1px solid var(--line);}
+.im{flex:1;min-width:0;}
+.it{font-size:14px;font-weight:700;letter-spacing:-0.014em;line-height:1.4;}
+.is{display:flex;align-items:center;gap:7px;margin-top:5px;}
+.io{font-size:11.5px;color:var(--gray);font-weight:600;}
+.cv{color:#C7C8BE;font-size:18px;flex-shrink:0;}
+.sec-h{font-size:13px;font-weight:800;letter-spacing:-0.014em;margin:18px 2px 11px;display:flex;align-items:center;gap:6px;}
+.sec-h:first-child{margin-top:2px;}
+.sec-h .ic{font-size:15px;color:var(--green);}
+
+/* ===== C: 멘트형 (친구가 말 검) ===== */
+.C-msg{display:flex;gap:11px;padding:2px 2px 4px;}
+.C-msg .av{width:36px;height:36px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;flex-shrink:0;}
+.C-msg .av .ic{font-size:19px;}
+.C-msg .mt{flex:1;font-size:13.5px;color:var(--ink-2);line-height:1.6;font-weight:600;}
+.C-msg .mt b{color:var(--green);font-weight:800;}
+.C-pick{margin-top:11px;display:flex;align-items:center;gap:10px;background:var(--green-soft);border-radius:var(--r-md);padding:13px 14px;}
+.C-pick .pm{flex:1;}
+.C-pick .pt{font-size:13.5px;font-weight:800;color:var(--green-2);letter-spacing:-0.014em;line-height:1.36;}
+.C-pick .po{font-size:11px;color:var(--sage);font-weight:700;margin-top:4px;}
+.C-pick .cv{color:var(--sage);opacity:.6;}
+
+/* ===== D: 맞춤/전체 토글 ===== */
+.D-seg{display:flex;gap:4px;background:var(--field-bg);border-radius:11px;padding:4px;margin-bottom:14px;}
+.D-seg button{flex:1;height:36px;border:0;border-radius:8px;font-size:13px;font-weight:700;color:var(--gray);background:transparent;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:5px;}
+.D-seg button.on{background:var(--card);color:var(--green);font-weight:800;box-shadow:var(--shadow);}
+.D-seg button .ic{font-size:14px;}
+.D-note{font-size:11.5px;color:var(--gray);font-weight:600;margin:0 2px 11px;display:flex;align-items:center;gap:5px;}
+.D-note .ic{font-size:13px;color:var(--sage);}
+
+/* ===== E: 가로 텍스트 칩 ===== */
+.E-lead{font-size:13px;font-weight:700;color:var(--ink-2);margin:2px 2px 11px;}
+.E-lead b{color:var(--green);font-weight:800;}
+.E-chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin:0 -18px 4px;padding-left:18px;padding-right:18px;scrollbar-width:none;}
+.E-chips::-webkit-scrollbar{display:none;}
+.E-chip{flex-shrink:0;display:flex;align-items:center;gap:7px;background:var(--card);box-shadow:var(--shadow);border-radius:999px;padding:9px 14px;border-left:3px solid var(--green);}
+.E-chip .ct{font-size:13px;font-weight:700;letter-spacing:-0.012em;}
+</style></head>
+<body>
+<div class="row">
+
+<!-- C 멘트형 -->
+<div class="col">
+  <div class="lab"><span class="tag">C안</span><h3>멘트형 (친구가 말 검)</h3><p>한 문장 추천 + 사업 1개. 농사친구 톤</p></div>
+  <div class="demo">
+    <div class="C-msg">
+      <span class="av"><svg class="ic"><use href="#i-leaf"/></svg></span>
+      <span class="mt"><b>완주군 청년 농업인</b>이라면, 이 사업을 놓치지 마세요!</span>
+    </div>
+    <a class="C-pick">
+      <span class="pm"><span class="pt">2026년 청년후계농 영농정착지원사업</span><span class="po">농림축산식품부 · 만 18~40세</span></span>
+      <span class="dday soon">D-5</span>
+      <svg class="ic cv"><use href="#i-cv"/></svg>
+    </a>
+  </div>
+</div>
+
+<!-- D 토글 -->
+<div class="col">
+  <div class="lab"><span class="tag">D안</span><h3>맞춤/전체 토글</h3><p>추천을 '보기 모드'로. 카드 없음, 목록 통합</p></div>
+  <div class="demo">
+    <div class="D-seg">
+      <button class="on"><svg class="ic"><use href="#i-star"/></svg> 내 농장 맞춤</button>
+      <button>전체 보기</button>
+    </div>
+    <div class="D-note"><svg class="ic"><use href="#i-pin"/></svg> 완주군 · 시설채소 기준</div>
+    <div class="list">
+      <a class="item"><div class="im"><div class="it">청년후계농 영농정착지원사업</div><div class="is"><span class="io">농림축산식품부 · 청년농</span><span class="dday soon">D-5</span></div></div><svg class="ic cv"><use href="#i-cv"/></svg></a>
+      <a class="item"><div class="im"><div class="it">스마트팜 시설 현대화 지원사업</div><div class="is"><span class="io">완주군 · 시설·현대화</span><span class="dday">D-12</span></div></div><svg class="ic cv"><use href="#i-cv"/></svg></a>
+      <a class="item"><div class="im"><div class="it">농업인 안전재해보험 가입 지원</div><div class="is"><span class="io">전라북도 · 재해·보험</span><span class="dday">상시</span></div></div><svg class="ic cv"><use href="#i-cv"/></svg></a>
+    </div>
+  </div>
+</div>
+
+<!-- E 칩 -->
+<div class="col">
+  <div class="lab"><span class="tag">E안</span><h3>가로 텍스트 칩</h3><p>"맞춤 사업" + 칩 가로 스크롤. 초경량</p></div>
+  <div class="demo">
+    <div class="E-lead"><b>완주군·시설채소</b> 맞춤 사업</div>
+    <div class="E-chips">
+      <a class="E-chip"><span class="ct">청년후계농 영농정착</span><span class="dday soon">D-5</span></a>
+      <a class="E-chip"><span class="ct">스마트팜 현대화</span><span class="dday">D-12</span></a>
+      <a class="E-chip"><span class="ct">재해보험 가입</span></a>
+    </div>
+    <div class="sec-h" style="margin-top:20px"><svg class="ic"><use href="#i-list"/></svg> 전체 지원사업</div>
+    <div class="list">
+      <a class="item"><div class="im"><div class="it">농기계 구입 융자 지원</div><div class="is"><span class="io">농협중앙회 · 농기계</span><span class="dday">D-25</span></div></div><svg class="ic cv"><use href="#i-cv"/></svg></a>
+    </div>
+  </div>
+</div>
+
+</div>
+<svg width="0" height="0" style="position:absolute"><defs>
+<symbol id="i-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15 9 22 9.5 17 14.5 18.5 21.5 12 17.5 5.5 21.5 7 14.5 2 9.5 9 9"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+<symbol id="i-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></symbol>
+<symbol id="i-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></symbol>
+</defs></svg>
+</body></html>

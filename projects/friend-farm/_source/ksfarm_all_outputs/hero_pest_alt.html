@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>히어로 병해 표현 대안 비교</title>
+<style>
+:root{
+  --bg:#ECEAE0;--card:#FFFFFF;--ink:#20251D;--ink-2:#45493E;--gray:#76796C;
+  --line:rgba(48,42,30,.10);
+  --green:#1F4B3C;--green-2:#163729;--green-soft:#E7EEE6;
+  --red:#B0612C;--red-soft:#F3E6D6;
+  --gold:#B08A3E;--gold-soft:#F2E9D2;--clay:#B0612C;--clay-soft:#F3E1D2;
+  --sage:#2F6150;--sage-soft:#E4ECE0;
+  --r-lg:18px;--shadow:0 1px 2px rgba(36,30,18,.05);
+}
+*{box-sizing:border-box;}
+h1,h2,h3,p,span,div,strong{word-break:keep-all;}
+.ic{width:1em;height:1em;display:inline-block;vertical-align:-0.12em;flex-shrink:0;}
+body{margin:0;background:#D8D5C9;padding:24px 14px 50px;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Pretendard","Noto Sans KR",system-ui,sans-serif;
+  color:var(--ink);-webkit-font-smoothing:antialiased;}
+.row-wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;max-width:1300px;margin:0 auto;}
+.col{width:330px;}
+.lab{margin:0 0 10px;}
+.lab .tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.02em;color:var(--green);
+  background:var(--green-soft);padding:3px 9px;border-radius:999px;margin-bottom:7px;}
+.lab h3{font-size:15px;font-weight:800;letter-spacing:-0.02em;margin:0 0 4px;}
+.lab p{font-size:12px;color:#5a5d52;margin:0;line-height:1.5;}
+
+.phone{background:var(--bg);border-radius:26px;overflow:hidden;box-shadow:0 16px 36px -12px rgba(40,34,22,.38);border:1px solid rgba(0,0,0,.06);}
+.status{height:30px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;font-size:11px;font-weight:700;}
+.tb{display:flex;align-items:center;justify-content:space-between;padding:6px 14px 0;}
+.tb .left{display:flex;align-items:center;gap:3px;}
+.tb .hb,.tb .bell{width:32px;height:32px;display:grid;place-items:center;color:var(--ink);position:relative;}
+.tb .loc{display:flex;align-items:center;gap:3px;font-size:14px;font-weight:700;color:var(--ink);letter-spacing:-0.02em;padding:5px 3px;}
+.tb .loc .pin{color:var(--green);font-size:15px;} .tb .loc .cv{color:var(--gray);font-size:12px;}
+.tb .bell .dot{position:absolute;top:7px;right:8px;width:6px;height:6px;border-radius:50%;background:var(--red);border:1.5px solid var(--bg);}
+
+.hero{padding:18px 20px 0;}
+.hi{font-size:13px;font-weight:700;color:var(--gray);margin-bottom:7px;}
+.htitle{font-size:23px;font-weight:800;line-height:1.36;letter-spacing:-0.026em;color:var(--ink);margin:0;}
+.hsub{font-size:13px;line-height:1.6;color:var(--ink-2);margin-top:13px;}
+.wx{margin-top:20px;display:flex;align-items:center;flex-wrap:wrap;gap:7px;row-gap:5px;font-size:12px;font-weight:600;color:var(--gray);}
+.wx .ic{color:var(--green);font-size:13px;} .wx .dotsep{width:3px;height:3px;border-radius:999px;background:#C9CCC7;}
+.wx .warn{color:var(--clay);} .wx .warn .ic{color:var(--clay);}
+
+.cta{margin:22px 20px 20px;border-radius:var(--r-lg);padding:16px 17px;display:flex;align-items:center;gap:13px;
+  background:linear-gradient(180deg,#2C6150,#1F4B3C 52%,#163729);color:#fff;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 10px 20px -8px rgba(22,55,41,.5);}
+.cta .tile{width:40px;height:40px;border-radius:11px;background:rgba(255,255,255,.16);display:grid;place-items:center;font-size:19px;}
+.cta .t{flex:1;} .cta .t b{display:block;font-size:14.5px;font-weight:800;letter-spacing:-0.02em;}
+.cta .t span{font-size:11px;opacity:.82;}
+.cta .chev{opacity:.8;}
+
+/* 정보성 카드 (안 3) */
+.infocard{margin:18px 20px 0;background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow);padding:14px 15px;display:flex;gap:12px;align-items:flex-start;}
+.infocard .itile{width:38px;height:38px;flex:0 0 38px;border-radius:11px;display:grid;place-items:center;font-size:19px;color:var(--clay);
+  background:linear-gradient(160deg,#FBEEE2,var(--clay-soft));box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 2px 5px -1px rgba(176,97,44,.16);}
+.infocard .ib{flex:1;}
+.infocard .ib .ttl{font-size:11.5px;font-weight:700;color:var(--gray);}
+.infocard .ib strong{display:block;font-size:14.5px;font-weight:700;color:var(--ink);margin-top:2px;letter-spacing:-0.015em;}
+.infocard .ib span{display:block;font-size:12px;color:var(--gray);margin-top:3px;line-height:1.5;}
+.infocard .chev{color:#C4C7C2;font-size:17px;align-self:center;}
+</style></head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+<symbol id="i-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></symbol>
+<symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></symbol>
+<symbol id="i-cloud-rain" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 13a4 4 0 0 0 0-8a5 5 0 0 0-9.6 1.5A3.5 3.5 0 0 0 7 13"/><line x1="8" y1="18" x2="8" y2="20"/><line x1="12" y1="18" x2="12" y2="21"/><line x1="16" y1="18" x2="16" y2="20"/></symbol>
+<symbol id="i-cam" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.2"/></symbol>
+<symbol id="i-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21c.5-4.5 2.5-8 7-10"/><path d="M9 18c6.218 0 10.5-3.288 11-12v-2h-4.014c-9 0-11.986 4-12 9c0 1 0 3 2 5h3z"/></symbol>
+</defs></svg>
+
+<div class="row-wrap">
+
+<!-- 안 2 -->
+<div class="col">
+  <div class="lab"><span class="tag">2안</span><h3>조건부 주의 톤</h3><p>위험 등급 단정 X. 날씨(확실한 데이터) 위에 "이런 날엔 ~ 쉬워요" 상식 톤으로만. 날씨줄 끝은 '참고' 수준의 환기.</p></div>
+  <div class="phone">
+    <div class="status"><span>9:41</span><span>📶 🔋</span></div>
+    <div class="tb"><div class="left"><span class="hb"><svg class="ic"><use href="#i-menu"/></svg></span><span class="loc"><svg class="ic pin"><use href="#i-pin"/></svg>강남구 역삼동<svg class="ic cv"><use href="#i-cv"/></svg></span></div><span class="bell"><svg class="ic"><use href="#i-bell"/></svg><span class="dot"></span></span></div>
+    <div class="hero">
+      <div class="hi">김팜님, 안녕하세요</div>
+      <h2 class="htitle">습하고 따뜻한<br>날씨가 이어져요</h2>
+      <p class="hsub">이런 날엔 곰팡이병이 번지기 쉬워요. 잎이 무르거나 반점이 보이면 일찍 살펴보는 게 좋아요.</p>
+      <div class="wx"><span><svg class="ic"><use href="#i-cloud-rain"/></svg> 23.1°</span><span class="dotsep"></span><span>습도 82%</span><span class="dotsep"></span><span>강수 60%</span></div>
+    </div>
+    <div class="cta"><span class="tile"><svg class="ic"><use href="#i-cam"/></svg></span><span class="t"><b>사진으로 병해 진단</b><span>잎·줄기 사진 1장으로 의심 병해 확인</span></span><span class="chev">›</span></div>
+  </div>
+</div>
+
+<!-- 안 3 -->
+<div class="col">
+  <div class="lab"><span class="tag">3안</span><h3>정보성 카드 (이맘때 병해)</h3><p>실시간 위험 등급 대신 NCPMS 콘텐츠 기반 '시기성 정보'를 별도 카드로. 히어로는 날씨만, 병해는 정보 카드로 분리.</p></div>
+  <div class="phone">
+    <div class="status"><span>9:41</span><span>📶 🔋</span></div>
+    <div class="tb"><div class="left"><span class="hb"><svg class="ic"><use href="#i-menu"/></svg></span><span class="loc"><svg class="ic pin"><use href="#i-pin"/></svg>강남구 역삼동<svg class="ic cv"><use href="#i-cv"/></svg></span></div><span class="bell"><svg class="ic"><use href="#i-bell"/></svg><span class="dot"></span></span></div>
+    <div class="hero">
+      <div class="hi">김팜님, 안녕하세요</div>
+      <h2 class="htitle">오늘도 좋은<br>하루 보내세요</h2>
+      <p class="hsub">하루 한 번 둘러보는 작은 습관이 큰 피해를 막아줘요.</p>
+      <div class="wx"><span><svg class="ic"><use href="#i-cloud-rain"/></svg> 23.1°</span><span class="dotsep"></span><span>습도 82%</span><span class="dotsep"></span><span>강수 60%</span></div>
+    </div>
+    <div class="infocard">
+      <span class="itile"><svg class="ic"><use href="#i-leaf"/></svg></span>
+      <div class="ib"><div class="ttl">이맘때 주의 병해</div><strong>흰가루병 · 잿빛곰팡이병</strong><span>5~6월 시설재배에서 자주 발생해요</span></div>
+      <svg class="ic chev"><use href="#i-cv" /></svg>
+    </div>
+    <div class="cta"><span class="tile"><svg class="ic"><use href="#i-cam"/></svg></span><span class="t"><b>사진으로 병해 진단</b><span>잎·줄기 사진 1장으로 의심 병해 확인</span></span><span class="chev">›</span></div>
+  </div>
+</div>
+
+<!-- 안 4 -->
+<div class="col">
+  <div class="lab"><span class="tag">4안</span><h3>진단 행동 직결</h3><p>위험 표시 자체를 없앰. 못 가진 위험 데이터를 '사용자가 직접 찍어 확인'하는 행동으로 대체. 가장 정직하고 핵심기능과 직결.</p></div>
+  <div class="phone">
+    <div class="status"><span>9:41</span><span>📶 🔋</span></div>
+    <div class="tb"><div class="left"><span class="hb"><svg class="ic"><use href="#i-menu"/></svg></span><span class="loc"><svg class="ic pin"><use href="#i-pin"/></svg>강남구 역삼동<svg class="ic cv"><use href="#i-cv"/></svg></span></div><span class="bell"><svg class="ic"><use href="#i-bell"/></svg><span class="dot"></span></span></div>
+    <div class="hero">
+      <div class="hi">김팜님, 안녕하세요</div>
+      <h2 class="htitle">작물에 이상이<br>보이시나요?</h2>
+      <p class="hsub">잎·줄기 사진 한 장이면 AI가 1분 만에 의심 병해를 확인해드려요.</p>
+      <div class="wx"><span><svg class="ic"><use href="#i-cloud-rain"/></svg> 23.1°</span><span class="dotsep"></span><span>습도 82%</span><span class="dotsep"></span><span>강수 60%</span></div>
+    </div>
+    <div class="cta"><span class="tile"><svg class="ic"><use href="#i-cam"/></svg></span><span class="t"><b>지금 병해 진단하기</b><span>사진 찍으면 바로 결과 확인</span></span><span class="chev">›</span></div>
+  </div>
+</div>
+
+</div>
+</body></html>

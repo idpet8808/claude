@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KS팜 — 1:1 문의 내역</title>
+<link rel="stylesheet" href="../_css/common.css"/>
+<link rel="stylesheet" href="../_css/components.css"/>
+<link rel="stylesheet" href="../_css/inquiry-list.css"/>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14 0"/><path d="M8.5 16.05a6 6 0 0 1 7 0"/><path d="M2 8.82a15 15 0 0 1 20 0"/><line x1="12" y1="20" x2="12" y2="20"/></symbol>
+    <symbol id="i-battery" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="8" width="18" height="9" rx="2"/><path d="M22 11v3"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 6 9 12 15 18"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
+  </defs></svg>
+
+  <div class="phone">
+    <div class="status-bar"><span>9:41</span><span class="group"><svg class="ic"><use href="#i-wifi"/></svg> <svg class="ic"><use href="#i-battery"/></svg></span></div>
+    <div class="appbar"><a class="back" href="../mypage/mypage.html"><svg class="ic"><use href="#i-back"/></svg></a><span class="title">1:1 문의 내역</span><span class="sp"></span></div>
+
+    <div class="scroll">
+      <div class="filter">
+        <button class="f-chip on" data-filter="all">전체</button>
+        <button class="f-chip" data-filter="wait">답변 대기</button>
+        <button class="f-chip" data-filter="done">답변 완료</button>
+      </div>
+      <div class="list">
+        <a class="card" href="inquiry-detail.html" data-status="done">
+          <div class="c-top"><span class="status done"><span class="dot"></span>답변 완료</span><span class="c-date">2026.05.20</span></div>
+          <div class="c-title">진단 결과가 실제와 다른 것 같아요</div>
+          <div class="c-preview">오이 잎 사진을 올렸는데 진단된 병해가 제가 보기엔…</div>
+        </a>
+        <a class="card" href="inquiry-detail.html" data-status="wait">
+          <div class="c-top"><span class="status wait"><span class="dot"></span>답변 대기</span><span class="c-date">2026.05.18</span></div>
+          <div class="c-title">휴대폰 번호를 바꿨는데 인증이 안 돼요</div>
+          <div class="c-preview">기기를 변경한 뒤로 본인인증 단계에서 계속 막혀서…</div>
+        </a>
+        <a class="card" href="inquiry-detail.html" data-status="done">
+          <div class="c-top"><span class="status done"><span class="dot"></span>답변 완료</span><span class="c-date">2026.05.11</span></div>
+          <div class="c-title">영농일지 작성 중 사진이 안 올라가요</div>
+          <div class="c-preview">갤러리에서 사진을 선택하면 한참 로딩만 되고…</div>
+        </a>
+      </div>
+    </div>
+
+    <a class="fab" href="inquiry-write.html"><svg class="ic"><use href="#i-plus"/></svg> 문의하기</a>
+  </div>
+
+  <script>
+    var chips = document.querySelectorAll('.f-chip'), cards = document.querySelectorAll('.card');
+    chips.forEach(function(chip){
+      chip.addEventListener('click', function(){
+        chips.forEach(function(c){ c.classList.remove('on'); });
+        chip.classList.add('on');
+        var f = chip.getAttribute('data-filter');
+        cards.forEach(function(card){ var st = card.getAttribute('data-status'); card.style.display = (f === 'all' || f === st) ? '' : 'none'; });
+      });
+    });
+  </script>
+</body>
+</html>

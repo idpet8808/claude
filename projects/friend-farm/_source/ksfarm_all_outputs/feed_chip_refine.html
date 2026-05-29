@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>카테고리 칩 정제안</title>
+<style>
+:root{
+  --bg:#ECEAE0;--card:#FFFFFF;--ink:#20251D;--ink-2:#45493E;--gray:#76796C;
+  --line:rgba(48,42,30,.10);
+  --green:#1F4B3C;--green-2:#163729;--green-soft:#E7EEE6;
+  --red:#B0612C;--red-soft:#F3E6D6;
+  --gold:#B08A3E;--gold-soft:#F2E9D2;--clay:#B0612C;--clay-soft:#F3E1D2;
+  --sage:#2F6150;--sage-soft:#E4ECE0;
+  --r-lg:18px;--r-md:14px;--r-sm:10px;--shadow:0 1px 2px rgba(36,30,18,.05);
+}
+*{box-sizing:border-box;}
+a{color:inherit;text-decoration:none;}
+h2,h3,h4,p,strong,span,a,small{word-break:keep-all;}
+.ic{width:1em;height:1em;display:inline-block;vertical-align:-0.14em;flex-shrink:0;}
+body{margin:0;background:#DEDBCF;padding:24px 0 44px;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Pretendard","Noto Sans KR",system-ui,sans-serif;
+  color:var(--ink);-webkit-font-smoothing:antialiased;}
+.wrap{width:min(390px,100%);margin:0 auto;padding:0 20px;}
+.opt-h{margin:32px 0 13px;}
+.opt-h .tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.02em;color:var(--green);
+  background:var(--green-soft);padding:3px 9px;border-radius:999px;margin-bottom:7px;}
+.opt-h h3{font-size:17px;font-weight:800;letter-spacing:-0.02em;margin:0;}
+.opt-h p{font-size:12.5px;color:var(--gray);margin:5px 0 0;line-height:1.55;}
+.sec-mini{font-size:18px;font-weight:800;letter-spacing:-0.022em;margin:0 0 13px;}
+
+/* category tiles (위 내비) */
+.cats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px;}
+.cat{background:var(--card);border:1px solid var(--line);border-radius:var(--r-md);box-shadow:var(--shadow);
+  padding:14px 8px 12px;display:flex;flex-direction:column;align-items:center;gap:9px;text-align:center;}
+.cat .ci{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-size:20px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 2px 6px -1px rgba(46,34,20,.14);}
+.cat.c-gold .ci{background:linear-gradient(160deg,#FAF3E1 0%,var(--gold-soft) 100%);color:var(--gold);}
+.cat.c-clay .ci{background:linear-gradient(160deg,#FBEEE2 0%,var(--clay-soft) 100%);color:var(--clay);}
+.cat.c-sage .ci{background:linear-gradient(160deg,#EEF3EB 0%,var(--sage-soft) 100%);color:var(--sage);}
+.cat strong{font-size:13px;font-weight:700;color:var(--ink);letter-spacing:-0.012em;}
+.cat span{font-size:11px;color:var(--gray);}
+
+.card{display:block;background:var(--card);border:1px solid var(--line);
+  border-radius:var(--r-lg);box-shadow:var(--shadow);overflow:hidden;}
+.row{display:flex;align-items:center;gap:13px;padding:15px 16px;width:100%;}
+.row+.row{border-top:1px solid var(--line);}
+.row .body{flex:1;min-width:0;}
+.row .body strong{display:block;font-size:14.5px;font-weight:700;color:var(--ink);letter-spacing:-0.014em;}
+.row .body span.s{display:block;margin-top:2px;font-size:12.5px;color:var(--gray);}
+.row .chev{color:#C4C7C2;font-size:18px;}
+
+/* feed icon tiles */
+.ftype{width:38px;height:38px;flex:0 0 38px;border-radius:11px;display:grid;place-items:center;
+  font-size:20px;box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 2px 5px -1px rgba(0,0,0,.08);}
+.ftype.dday{background:linear-gradient(160deg,#FBEEE2 0%,var(--clay-soft) 100%);color:var(--clay);
+  font-size:13px;font-weight:800;letter-spacing:-0.02em;box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 2px 5px -1px rgba(176,97,44,.18);}
+.ftype.disease{background:linear-gradient(160deg,#FAF3E1 0%,var(--gold-soft) 100%);color:var(--gold);}
+.ftype.info{background:linear-gradient(160deg,#EEF3EB 0%,var(--sage-soft) 100%);color:var(--sage);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 2px 5px -1px rgba(47,97,80,.14);}
+/* neutral feed tile */
+.ftype.neutral{background:linear-gradient(160deg,#F7F8F5 0%,#EDEEEA 100%);color:var(--gray);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 2px 5px -1px rgba(0,0,0,.07);}
+
+/* chips */
+.chip{display:inline-flex;align-items:center;height:19px;padding:0 8px;border-radius:999px;
+  font-size:10.5px;font-weight:800;letter-spacing:-0.01em;margin-bottom:5px;}
+.chip.gold{background:var(--gold-soft);color:var(--gold);}
+.chip.clay{background:var(--clay-soft);color:var(--clay);}
+.chip.sage{background:var(--sage-soft);color:var(--sage);}
+.chip.neutral{background:#F1F2EF;color:var(--ink-2);}
+
+.note{font-size:11.5px;color:var(--gray);margin:9px 2px 0;line-height:1.5;}
+</style></head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-chev-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></symbol>
+<symbol id="i-bug" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 9V7a3 3 0 0 1 6 0v2"/><rect x="8" y="9" width="8" height="12" rx="4"/><path d="M19 9l-3 2"/><path d="M5 9l3 2"/><path d="M19 15h-3"/><path d="M8 15H5"/><path d="M19 21l-3-2"/><path d="M5 21l3-2"/></symbol>
+<symbol id="i-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21c.5-4.5 2.5-8 7-10"/><path d="M9 18c6.218 0 10.5-3.288 11-12v-2h-4.014c-9 0-11.986 4-12 9c0 1 0 3 2 5h3z"/></symbol>
+<symbol id="i-gift" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="8" width="17" height="4" rx="1"/><path d="M4.5 12v7.5a1 1 0 0 0 1 1h13a1 1 0 0 0 1-1V12"/><path d="M12 8v12.5"/><path d="M12 8C12 8 11 3.5 8 3.5a2.3 2.3 0 0 0 0 4.5h4"/><path d="M12 8C12 8 13 3.5 16 3.5a2.3 2.3 0 0 1 0 4.5h-4"/></symbol>
+<symbol id="i-sprout" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-9.5"/><path d="M12 11.5C12 7.5 9 5.5 4 5.5c0 4 2.2 6.8 8 6.8z"/><path d="M12 13.5c0-3 2.4-5 7-5c0 3.4-2 5.8-7 5.8z"/></symbol>
+</defs></svg>
+<div class="wrap">
+
+<!-- 정제안 ㉮ -->
+<div class="opt-h"><span class="tag">㉮안 (추천)</span><h3>색은 칩에만 — 피드 아이콘은 중립</h3>
+<p>피드 아이콘 타일을 회색으로 통일하고, 분류 색은 <b>칩 하나만</b> 담당.
+한 행에 색 1개 → 위 컬러 타일과 시각적으로 명확히 분리돼 중복감이 사라져요.
+칩 색은 분류 규칙대로(지원사업=골드 / 병해충=클레이 / 재배=세이지).</p></div>
+<h3 class="sec-mini">오늘의 맞춤 정보</h3>
+<div class="cats">
+  <a class="cat c-gold" href="#"><span class="ci"><svg class="ic"><use href="#i-gift"/></svg></span><strong>지원사업</strong><span>지역·작물</span></a>
+  <a class="cat c-clay" href="#"><span class="ci"><svg class="ic"><use href="#i-bug"/></svg></span><strong>병해충 정보</strong><span>예방·방제</span></a>
+  <a class="cat c-sage" href="#"><span class="ci"><svg class="ic"><use href="#i-sprout"/></svg></span><strong>재배 가이드</strong><span>작물별</span></a>
+</div>
+<div class="card">
+  <a class="row" href="#"><span class="ftype neutral"><svg class="ic"><use href="#i-gift"/></svg></span><div class="body"><span class="chip gold">지원사업</span><strong>스마트팜 기자재 지원</strong><span class="s">최대 5,000만원 · 시설원예 우대</span></div><svg class="ic chev"><use href="#i-chev-right"/></svg></a>
+  <a class="row" href="#"><span class="ftype neutral"><svg class="ic"><use href="#i-bug"/></svg></span><div class="body"><span class="chip clay">병해충</span><strong>잎곰팡이병 예방 가이드</strong><span class="s">통풍·습도 관리가 핵심이에요</span></div><svg class="ic chev"><use href="#i-chev-right"/></svg></a>
+  <a class="row" href="#"><span class="ftype neutral"><svg class="ic"><use href="#i-leaf"/></svg></span><div class="body"><span class="chip sage">재배 가이드</span><strong>흰가루병 발생 시기</strong><span class="s">5~6월 집중 관리가 필요해요</span></div><svg class="ic chev"><use href="#i-chev-right"/></svg></a>
+</div>
+<p class="note">↑ 위 타일은 컬러, 아래 행 아이콘은 회색 → 두 영역이 안 겹쳐 보임. 색은 칩에서만 한 번.</p>
+
+<!-- 정제안 ㉯ -->
+<div class="opt-h"><span class="tag">㉯안</span><h3>뉴트럴 칩 — 색 안 늘리기</h3>
+<p>피드 아이콘 타일은 지금처럼 컬러 유지하고, 칩만 <b>회색 무채색</b>으로.
+칩의 알약 모양으로 입체감·구조감은 살리되 색은 추가 안 함. 가장 안전한 절제안.</p></div>
+<h3 class="sec-mini">오늘의 맞춤 정보</h3>
+<div class="cats">
+  <a class="cat c-gold" href="#"><span class="ci"><svg class="ic"><use href="#i-gift"/></svg></span><strong>지원사업</strong><span>지역·작물</span></a>
+  <a class="cat c-clay" href="#"><span class="ci"><svg class="ic"><use href="#i-bug"/></svg></span><strong>병해충 정보</strong><span>예방·방제</span></a>
+  <a class="cat c-sage" href="#"><span class="ci"><svg class="ic"><use href="#i-sprout"/></svg></span><strong>재배 가이드</strong><span>작물별</span></a>
+</div>
+<div class="card">
+  <a class="row" href="#"><span class="ftype dday">D-3</span><div class="body"><span class="chip neutral">지원사업</span><strong>스마트팜 기자재 지원</strong><span class="s">최대 5,000만원 · 시설원예 우대</span></div><svg class="ic chev"><use href="#i-chev-right"/></svg></a>
+  <a class="row" href="#"><span class="ftype disease"><svg class="ic"><use href="#i-bug"/></svg></span><div class="body"><span class="chip neutral">병해충</span><strong>잎곰팡이병 예방 가이드</strong><span class="s">통풍·습도 관리가 핵심이에요</span></div><svg class="ic chev"><use href="#i-chev-right"/></svg></a>
+  <a class="row" href="#"><span class="ftype info"><svg class="ic"><use href="#i-leaf"/></svg></span><div class="body"><span class="chip neutral">재배 가이드</span><strong>흰가루병 발생 시기</strong><span class="s">5~6월 집중 관리가 필요해요</span></div><svg class="ic chev"><use href="#i-chev-right"/></svg></a>
+</div>
+<p class="note">↑ 색은 컬러 타일에만, 칩은 회색 → 단어는 같아도 칩이 조용해서 경쟁 안 함.</p>
+
+</div>
+</body></html>

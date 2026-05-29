@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KS팜 — 아이디·비밀번호 찾기</title>
+<link rel="stylesheet" href="../_css/common.css"/>
+<link rel="stylesheet" href="../_css/components.css"/>
+<link rel="stylesheet" href="../_css/find-account.css"/>
+</head>
+<body>
+  <script src="../_js/sprite.js"></script>
+  <div class="phone">
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="group"><svg class="ic"><use href="#i-wifi"/></svg> <svg class="ic"><use href="#i-battery"/></svg></span>
+    </div>
+
+    <div class="appbar">
+      <a class="back" href="login.html" aria-label="뒤로"><svg class="ic"><use href="#i-back"/></svg></a>
+      <span class="title">계정 찾기</span>
+      <span class="sp"></span>
+    </div>
+
+    <div class="tabs">
+      <button class="tab on" data-tab="id">아이디 찾기</button>
+      <button class="tab" data-tab="pw">비밀번호 찾기</button>
+    </div>
+    <div class="tabline"></div>
+
+    <!-- 아이디 찾기 -->
+    <div class="scroll pane-id">
+      <h2 class="lead">가입 시 등록한<br>정보로 아이디를 찾아요</h2>
+      <p class="lead-sub">본인 확인 후 아이디를 알려드릴게요.</p>
+
+      <div class="field" id="id-name">
+        <label class="lab">이름</label>
+        <div class="box"><input class="inp" type="text" placeholder="이름" /></div>
+        <p class="err-msg">이름을 입력해 주세요.</p>
+      </div>
+      <div class="field" id="id-email">
+        <label class="lab">이메일</label>
+        <div class="row2">
+          <div class="box"><input class="inp" type="email" placeholder="가입한 이메일" /></div>
+          <button class="mini" data-req-email="id-email,id-name">인증요청</button>
+        </div>
+        <p class="err-msg">올바른 이메일 형식을 입력해 주세요.</p>
+      </div>
+      <div class="field">
+        <label class="lab">인증번호</label>
+        <div class="row2">
+          <div class="box"><input class="inp" type="number" placeholder="인증번호 6자리" /></div>
+          <button class="mini">확인</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 비밀번호 찾기 -->
+    <div class="scroll pane-pw hidden">
+      <h2 class="lead">본인 확인 후<br>비밀번호를 재설정해요</h2>
+      <p class="lead-sub">가입한 아이디와 이메일로 본인 확인해요.</p>
+
+      <div class="field" id="pw-id">
+        <label class="lab">아이디</label>
+        <div class="box"><input class="inp" type="text" placeholder="아이디" /></div>
+        <p class="err-msg">아이디를 입력해 주세요.</p>
+      </div>
+      <div class="field" id="pw-email">
+        <label class="lab">이메일</label>
+        <div class="row2">
+          <div class="box"><input class="inp" type="email" placeholder="가입한 이메일" /></div>
+          <button class="mini" data-req-email="pw-email,pw-id">인증요청</button>
+        </div>
+        <p class="err-msg">올바른 이메일 형식을 입력해 주세요.</p>
+      </div>
+      <div class="field">
+        <label class="lab">인증번호</label>
+        <div class="row2">
+          <div class="box"><input class="inp" type="number" placeholder="인증번호 6자리" /></div>
+          <button class="mini">확인</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot">
+      <button class="btn-submit" id="submitBtn">아이디 찾기</button>
+    </div>
+  </div>
+
+  <script src="../_js/find-account.js"></script>
+</body>
+</html>

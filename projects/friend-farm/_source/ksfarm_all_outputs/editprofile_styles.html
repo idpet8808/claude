@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>회원정보 수정 — 입력 스타일 비교</title>
+<style>
+:root{
+  --bg:#ECEAE0;--card:#FFFFFF;--ink:#20251D;--ink-2:#45493E;--gray:#76796C;
+  --line:rgba(48,42,30,.10);--field-line:rgba(48,42,30,.16);
+  --green:#1F4B3C;--green-2:#163729;--green-soft:#E7EEE6;--red:#B0612C;
+  --r-lg:18px;--r-md:14px;--shadow:0 1px 2px rgba(36,30,18,.05);
+}
+*{box-sizing:border-box;} button,input{font-family:inherit;} a,button{color:inherit;background:none;border:0;cursor:pointer;text-decoration:none;}
+h1,h2,h3,p,span,label{word-break:keep-all;}
+.ic{width:1em;height:1em;display:inline-block;vertical-align:-0.12em;flex-shrink:0;}
+body{margin:0;background:#D8D5C9;padding:24px 14px 50px;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Pretendard","Noto Sans KR",system-ui,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+.row-wrap{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;max-width:760px;margin:0 auto;}
+.col{width:350px;}
+.lab2{margin:0 0 10px;}
+.lab2 .tag{display:inline-block;font-size:11px;font-weight:800;color:var(--green);background:var(--green-soft);padding:3px 9px;border-radius:999px;margin-bottom:7px;}
+.lab2 h3{font-size:15px;font-weight:800;letter-spacing:-0.02em;margin:0 0 4px;}
+.lab2 p{font-size:12px;color:#5a5d52;margin:0;line-height:1.5;}
+
+.phone{width:100%;background:var(--bg);border-radius:28px;overflow:hidden;box-shadow:0 16px 38px -12px rgba(40,34,22,.4);}
+.status{height:38px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:12px;font-weight:700;}
+.appbar{display:flex;align-items:center;padding:2px 12px 0;}
+.appbar .back{width:36px;height:36px;display:grid;place-items:center;color:var(--ink);font-size:21px;}
+.appbar .title{flex:1;text-align:center;font-size:15.5px;font-weight:800;letter-spacing:-0.02em;}
+.appbar .sp{width:36px;}
+.scroll{padding:8px 18px 18px;}
+.lead{font-size:19px;font-weight:800;letter-spacing:-0.022em;margin:8px 2px 16px;}
+
+/* ============ STYLE A: 묶음 카드 + 포커스 딥틸 ============ */
+.A .fc{background:var(--card);border-radius:var(--r-lg);box-shadow:var(--shadow);overflow:hidden;}
+.A .field{padding:13px 16px;position:relative;}
+.A .field+.field{border-top:1px solid var(--line);}
+.A .field .lab{display:block;font-size:12px;font-weight:700;color:var(--gray);margin-bottom:6px;}
+.A .field .inp{width:100%;border:0;background:transparent;padding:2px 0;font-size:15.5px;font-weight:600;color:var(--ink);outline:none;}
+/* focused state */
+.A .field.focus{background:#F4F8F4;}
+.A .field.focus .lab{color:var(--green);}
+.A .field.focus::after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--green);}
+.A .field.focus .inp{caret-color:var(--green);}
+.A .field.readonly{background:#FAFAF7;}
+.A .field.readonly .val{font-size:15.5px;font-weight:600;color:var(--ink-2);display:flex;align-items:center;gap:7px;}
+.A .field.readonly .lock{font-size:13px;color:#A9AC9F;}
+
+/* ============ STYLE B: 개별 입력 박스 + 포커스 테두리 ============ */
+.B .field{margin-bottom:13px;}
+.B .field .lab{display:block;font-size:12.5px;font-weight:700;color:var(--gray);margin-bottom:7px;padding-left:2px;}
+.B .field .box{background:var(--card);border:1.5px solid transparent;border-radius:var(--r-md);box-shadow:var(--shadow);padding:13px 15px;}
+.B .field .inp{width:100%;border:0;background:transparent;padding:0;font-size:15.5px;font-weight:600;color:var(--ink);outline:none;}
+.B .field.focus .box{border-color:var(--green);box-shadow:0 0 0 3px rgba(31,75,60,.10);}
+.B .field.focus .lab{color:var(--green);}
+.B .field.readonly .box{background:#FAFAF7;}
+.B .field.readonly .val{font-size:15.5px;font-weight:600;color:var(--ink-2);display:flex;align-items:center;gap:7px;}
+.B .field.readonly .lock{font-size:13px;color:#A9AC9F;}
+
+.note{font-size:11px;font-weight:700;color:var(--green);background:var(--green-soft);display:inline-block;padding:3px 9px;border-radius:999px;margin:0 2px 10px;}
+.foot{padding:12px 18px 18px;display:flex;gap:10px;border-top:1px solid var(--line);}
+.btn{height:50px;border-radius:var(--r-md);font-size:15px;font-weight:800;display:flex;align-items:center;justify-content:center;}
+.bq{flex:0 0 38%;background:#EFEEE8;color:var(--gray);}
+.bs{flex:1;color:#fff;background:linear-gradient(180deg,#2C6150,var(--green) 52%,var(--green-2));box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 8px 18px -8px rgba(22,55,41,.5);}
+</style></head>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs>
+<symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14 0"/><path d="M8.5 16.05a6 6 0 0 1 7 0"/><path d="M2 8.82a15 15 0 0 1 20 0"/></symbol>
+<symbol id="i-bat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="8" width="18" height="9" rx="2"/><path d="M22 11v3"/></symbol>
+<symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 6 9 12 15 18"/></symbol>
+<symbol id="i-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+</defs></svg>
+
+<div class="row-wrap">
+
+<!-- A -->
+<div class="col">
+  <div class="lab2"><span class="tag">A안</span><h3>묶음 카드 + 포커스 강조</h3><p>필드를 한 카드에 묶고, 수정 중인 칸만 딥틸 좌측바+옅은 배경+초록 라벨로 강조. (이름 필드 포커스 상태)</p></div>
+  <div class="phone A">
+    <div class="status"><span>9:41</span><span><svg class="ic"><use href="#i-wifi"/></svg> <svg class="ic"><use href="#i-bat"/></svg></span></div>
+    <div class="appbar"><span class="back"><svg class="ic"><use href="#i-back"/></svg></span><span class="title">회원정보 수정</span><span class="sp"></span></div>
+    <div class="scroll">
+      <div class="lead">회원정보를 수정해 주세요</div>
+      <div class="fc">
+        <div class="field readonly"><span class="lab">아이디</span><div class="val">test4 <svg class="ic lock"><use href="#i-lock"/></svg></div></div>
+        <div class="field"><span class="lab">비밀번호</span><div style="display:flex;align-items:center"><span style="flex:1;font-size:15.5px;font-weight:600">••••••••</span><span style="font-size:13px;font-weight:700;color:var(--green)">변경 ›</span></div></div>
+        <div class="field focus"><span class="lab">이름</span><input class="inp" value="김팜" /></div>
+        <div class="field"><span class="lab">닉네임</span><input class="inp" value="utii" /></div>
+        <div class="field"><span class="lab">이메일</span><input class="inp" value="summertoohotplzstop@gmail.com" /></div>
+        <div class="field"><span class="lab">휴대폰 번호</span><input class="inp" value="010-0020-3003" /></div>
+      </div>
+    </div>
+    <div class="foot"><button class="btn bq">회원 탈퇴</button><button class="btn bs">정보 수정</button></div>
+  </div>
+</div>
+
+<!-- B -->
+<div class="col">
+  <div class="lab2"><span class="tag">B안</span><h3>개별 입력 박스 + 포커스 테두리</h3><p>기존 구조처럼 필드마다 박스. 수정 중인 칸은 딥틸 테두리+글로우. 입력칸임이 가장 또렷. (이름 필드 포커스 상태)</p></div>
+  <div class="phone B">
+    <div class="status"><span>9:41</span><span><svg class="ic"><use href="#i-wifi"/></svg> <svg class="ic"><use href="#i-bat"/></svg></span></div>
+    <div class="appbar"><span class="back"><svg class="ic"><use href="#i-back"/></svg></span><span class="title">회원정보 수정</span><span class="sp"></span></div>
+    <div class="scroll">
+      <div class="lead">회원정보를 수정해 주세요</div>
+      <div class="field readonly"><span class="lab">아이디</span><div class="box"><div class="val">test4 <svg class="ic lock"><use href="#i-lock"/></svg></div></div></div>
+      <div class="field"><span class="lab">비밀번호</span><div class="box" style="display:flex;align-items:center"><span style="flex:1;font-size:15.5px;font-weight:600">••••••••</span><span style="font-size:13px;font-weight:700;color:var(--green)">변경 ›</span></div></div>
+      <div class="field focus"><span class="lab">이름</span><div class="box"><input class="inp" value="김팜" /></div></div>
+      <div class="field"><span class="lab">닉네임</span><div class="box"><input class="inp" value="utii" /></div></div>
+      <div class="field"><span class="lab">이메일</span><div class="box"><input class="inp" value="summertoohotplzstop@gmail.com" /></div></div>
+      <div class="field"><span class="lab">휴대폰 번호</span><div class="box"><input class="inp" value="010-0020-3003" /></div></div>
+    </div>
+    <div class="foot"><button class="btn bq">회원 탈퇴</button><button class="btn bs">정보 수정</button></div>
+  </div>
+</div>
+
+</div>
+</body></html>

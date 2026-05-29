@@ -1,0 +1,404 @@
+================================================================================
+KS팜 hybrid 컴포넌트 변형 감사
+대상: 45개 HTML 파일
+================================================================================
+
+
+### .phone  (총 45회 정의, 14가지 변형)
+
+  [변형 1] 18개 파일
+    position: relative; width: min(390px, 100%); background: var(--bg); border-radius: 30px;
+    overflow: hidden; box-shadow: 0 18px 44px -12px rgba(40,34,22,.42); min-height: 860px; display: flex;
+    flex-direction: column;
+    → 파일:
+      - cropguide_detail
+      - cropguide_list
+      - diagnose_followup
+      - diagnose_input
+      - diagnose_result
+      - diary_list
+      - diary_write2
+      - diary_write
+      - expert_detail
+      - expert_list
+      - expert_write
+      - pestsearch_detail
+      - pestsearch_home
+      - pestsearch_search
+      - pricehome
+      - pricesearch
+      - support_detail
+      - support_list
+  [변형 2] 10개 파일
+    width: min(390px, 100%); background: var(--bg); border-radius: 30px; overflow: hidden;
+    box-shadow: 0 18px 44px -12px rgba(40,34,22,.42); min-height: 800px;
+    → 파일:
+      - inquiry_detail
+      - location_view
+      - marketing_consent
+      - mypage
+      - noti_setting
+      - notice_detail
+      - notice
+      - privacy_view
+      - settings
+      - terms_view
+  [변형 3] 2개 파일
+    position: relative; width: min(390px, 100%); background: var(--bg); border-radius: 30px;
+    overflow: hidden; box-shadow: 0 18px 44px -12px rgba(40,34,22,.42); min-height: 820px; display: flex;
+    flex-direction: column;
+    → 파일:
+      - editprofile
+      - inquiry_write
+  [변형 4] 2개 파일
+    position: relative; width: min(390px, 100%); background: var(--bg); border-radius: 30px;
+    overflow: hidden; box-shadow: 0 18px 44px -12px rgba(40,34,22,.42); min-height: 900px; display: flex;
+    flex-direction: column;
+    → 파일:
+      - farm_edit
+      - farm_register
+  [변형 5] 2개 파일
+    position: relative; width: min(390px, 100%); background: var(--bg); border-radius: 30px;
+    overflow: hidden; box-shadow: 0 18px 44px -12px rgba(40,34,22,.42); min-height: 800px;
+    → 파일:
+      - farmlist
+      - inquiry_list
+  [변형 6] 2개 파일
+    width: min(390px, 100%); background: var(--bg); border-radius: 30px; overflow: hidden;
+    box-shadow: 0 18px 44px -12px rgba(40,34,22,.42); min-height: 820px; display: flex;
+    flex-direction: column;
+    → 파일:
+      - findaccount
+      - signup_terms
+  [변형 7] 2개 파일
+    width: min(390px, 100%); background: var(--bg); border-radius: 30px; overflow: hidden;
+    box-shadow: 0 18px 44px -12px rgba(40,34,22,.42); min-height: 820px; display: flex;
+    flex-direction: column; position: relative;
+    → 파일:
+      - login
+      - onboarding_entry
+  [변형 8] 1개 파일
+    position: relative; width: min(390px, 100%);
+    background: linear-gradient(180deg, #1F4B3C 0%, #143028 100%); border-radius: 30px; overflow: hidden;
+    box-shadow: 0 18px 44px -12px rgba(40,34,22,.42); min-height: 860px; display: flex;
+    flex-direction: column; color: #fff;
+    → 파일:
+      - diagnose_loading
+  [변형 9] 1개 파일
+    position: relative; width: 100%; background: var(--bg); border-radius: 28px; overflow: hidden;
+    box-shadow: 0 16px 38px -12px rgba(40,34,22,.4); height: 540px;
+    → 파일:
+      - dialogs
+  [변형 10] 1개 파일
+    position: relative; width: min(390px, 100%); background: var(--bg); border-radius: 30px;
+    overflow: hidden; box-shadow: 0 18px 44px -12px rgba(40,34,22,.42); min-height: 840px; display: flex;
+    flex-direction: column;
+    → 파일:
+      - farm_detail
+  [변형 11] 1개 파일
+    width: min(390px, 100%); min-height: 844px; border-radius: 40px; background: var(--bg);
+    border: 1px solid rgba(0,0,0,.10); overflow: hidden;
+    box-shadow: 0 30px 90px rgba(20,24,18,.18), inset 0 0 0 8px rgba(255,255,255,.5); position: relative;
+    → 파일:
+      - main
+  [변형 12] 1개 파일
+    position: relative; width: min(390px, 100%); height: 820px; overflow: hidden; border-radius: 30px;
+    box-shadow: 0 18px 44px -12px rgba(40,34,22,.42); background: var(--bg);
+    → 파일:
+      - menu
+  [변형 13] 1개 파일
+    position: relative; width: min(390px, 100%); background: var(--bg); border-radius: 30px;
+    overflow: hidden; box-shadow: 0 18px 44px -12px rgba(40,34,22,.42); height: 820px;
+    → 파일:
+      - pwchange
+  [변형 14] 1개 파일
+    width: min(390px, 100%); background: var(--bg); border-radius: 30px; overflow: hidden;
+    box-shadow: 0 18px 44px -12px rgba(40,34,22,.42); min-height: 880px; display: flex;
+    flex-direction: column;
+    → 파일:
+      - signup
+
+
+### .scroll  (총 37회 정의, 21가지 변형)
+
+  [변형 1] 9개 파일
+    flex: 1; overflow-y: auto; padding: 8px 20px 24px;
+    → 파일:
+      - cropguide_list
+      - diary_write2
+      - diary_write
+      - editprofile
+      - expert_write
+      - farm_edit
+      - farm_register
+      - pricehome
+      - support_list
+  [변형 2] 4개 파일
+    padding: 14px 22px 40px;
+    → 파일:
+      - location_view
+      - notice_detail
+      - privacy_view
+      - terms_view
+  [변형 3] 3개 파일
+    flex: 1; overflow-y: auto;
+    → 파일:
+      - cropguide_detail
+      - pestsearch_detail
+      - support_detail
+  [변형 4] 3개 파일
+    padding: 8px 20px 30px;
+    → 파일:
+      - marketing_consent
+      - noti_setting
+      - settings
+  [변형 5] 2개 파일
+    flex: 1; overflow-y: auto; padding: 16px 20px 24px;
+    → 파일:
+      - signup
+      - signup_terms
+  [변형 6] 1개 파일
+    flex: 1; overflow-y: auto; padding: 30px 22px 24px; display: flex; flex-direction: column;
+    → 파일:
+      - diagnose_followup
+  [변형 7] 1개 파일
+    flex: 1; overflow-y: auto; padding: 30px 22px 24px;
+    → 파일:
+      - diagnose_input
+  [변형 8] 1개 파일
+    flex: 1; overflow-y: auto; overflow-x: hidden; padding: 16px 20px 32px;
+    → 파일:
+      - diagnose_result
+  [변형 9] 1개 파일
+    flex: 1; overflow-y: auto; padding: 8px 20px 90px;
+    → 파일:
+      - diary_list
+  [변형 10] 1개 파일
+    flex: 1; overflow-y: auto; padding: 8px 20px 20px;
+    → 파일:
+      - expert_detail
+  [변형 11] 1개 파일
+    flex: 1; overflow-y: auto; padding: 14px 20px 14px;
+    → 파일:
+      - expert_list
+  [변형 12] 1개 파일
+    flex: 1; overflow-y: auto; padding: 8px 20px calc(32px + env(safe-area-inset-bottom));
+    → 파일:
+      - farm_detail
+  [변형 13] 1개 파일
+    padding: 8px 22px 100px;
+    → 파일:
+      - farmlist
+  [변형 14] 1개 파일
+    flex: 1; overflow-y: auto; padding: 22px 20px 24px;
+    → 파일:
+      - findaccount
+  [변형 15] 1개 파일
+    padding: 14px 20px 40px;
+    → 파일:
+      - inquiry_detail
+  [변형 16] 1개 파일
+    padding: 8px 20px 100px;
+    → 파일:
+      - inquiry_list
+  [변형 17] 1개 파일
+    flex: 1; overflow-y: auto; padding: 14px 20px 24px;
+    → 파일:
+      - inquiry_write
+  [변형 18] 1개 파일
+    padding: 6px 20px 30px;
+    → 파일:
+      - mypage
+  [변형 19] 1개 파일
+    flex: 1; overflow-y: auto; padding: 0 24px 24px; display: flex; flex-direction: column;
+    → 파일:
+      - pestsearch_home
+  [변형 20] 1개 파일
+    flex: 1; overflow-y: auto; padding: 4px 20px 20px;
+    → 파일:
+      - pestsearch_search
+  [변형 21] 1개 파일
+    flex: 1; overflow-y: auto; padding: 4px 20px 24px;
+    → 파일:
+      - pricesearch
+
+
+### .appbar  (총 37회 정의, 3가지 변형)
+
+  [변형 1] 24개 파일
+    display: flex; align-items: center; padding: 4px 12px 0; flex-shrink: 0;
+    → 파일:
+      - cropguide_detail
+      - cropguide_list
+      - diagnose_followup
+      - diagnose_input
+      - diagnose_result
+      - diary_list
+      - diary_write2
+      - diary_write
+      - editprofile
+      - expert_detail
+      - expert_list
+      - expert_write
+      - farm_detail
+      - farm_edit
+      - farm_register
+      - findaccount
+      - inquiry_write
+      - pestsearch_detail
+      - pestsearch_home
+      - pricehome
+      - signup
+      - signup_terms
+      - support_detail
+      - support_list
+  [변형 2] 12개 파일
+    display: flex; align-items: center; padding: 4px 12px 0;
+    → 파일:
+      - farmlist
+      - inquiry_detail
+      - inquiry_list
+      - location_view
+      - marketing_consent
+      - mypage
+      - noti_setting
+      - notice_detail
+      - notice
+      - privacy_view
+      - settings
+      - terms_view
+  [변형 3] 1개 파일
+    display: flex; align-items: center; padding: 4px 12px 0; flex-shrink: 0; position: relative;
+    z-index: 1;
+    → 파일:
+      - login
+
+
+### .footer  (총 5회 정의, 2가지 변형)
+
+  [변형 1] 4개 파일
+    flex-shrink: 0; padding: 14px 20px calc(14px + env(safe-area-inset-bottom)); background: var(--bg);
+    border-top: 1px solid var(--line); display: flex; gap: 10px;
+    → 파일:
+      - diagnose_followup
+      - diagnose_input
+      - diary_write2
+      - diary_write
+  [변형 2] 1개 파일
+    flex-shrink: 0; padding: 14px 20px calc(14px + env(safe-area-inset-bottom)); background: var(--bg);
+    border-top: 1px solid var(--line);
+    → 파일:
+      - diagnose_result
+
+
+### .btn  (총 7회 정의, 6가지 변형)
+
+  [변형 1] 2개 파일
+    height: 54px; border-radius: 15px; font-size: 16px; font-weight: 800; display: inline-flex;
+    align-items: center; justify-content: center; gap: 7px;
+    → 파일:
+      - diagnose_followup
+      - diagnose_input
+  [변형 2] 1개 파일
+    height:48px; border-radius:var(--r-md); font-size:14.5px; font-weight:800; letter-spacing:-0.01em;
+    display:flex; align-items:center; justify-content:center;
+    → 파일:
+      - dialogs
+  [변형 3] 1개 파일
+    height: 52px; border-radius: 14px; font-size: 15px; font-weight: 800; display: inline-flex;
+    align-items: center; justify-content: center; gap: 6px;
+    → 파일:
+      - diary_write2
+  [변형 4] 1개 파일
+    flex: 1; height: 52px; border-radius: 14px; font-size: 15px; font-weight: 800; display: inline-flex;
+    align-items: center; justify-content: center; gap: 6px;
+    → 파일:
+      - diary_write
+  [변형 5] 1개 파일
+    height: 52px; border-radius: var(--r-md); font-size: 15px; font-weight: 800; letter-spacing: -0.01em;
+    display: flex; align-items: center; justify-content: center;
+    → 파일:
+      - editprofile
+  [변형 6] 1개 파일
+    width: 100%; height: 54px; border-radius: var(--r-md); font-size: 15px; font-weight: 700;
+    letter-spacing: -0.01em; display: flex; align-items: center; justify-content: center; gap: 9px;
+    margin-bottom: 10px; position: relative;
+    → 파일:
+      - onboarding_entry
+
+
+### .btn-primary  (총 3회 정의, 3가지 변형)
+
+  [변형 1] 1개 파일
+    flex: 1; background: var(--green); color: #fff;
+    → 파일:
+      - diary_write2
+  [변형 2] 1개 파일
+    background: var(--green); color: #fff;
+    → 파일:
+      - diary_write
+  [변형 3] 1개 파일
+    background: linear-gradient(180deg, #2C6150, var(--green) 52%, var(--green-2)); color: #fff;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 8px 18px -8px rgba(22,55,41,.5);
+    → 파일:
+      - onboarding_entry
+
+
+### .card  (총 2회 정의, 2가지 변형)
+
+  [변형 1] 1개 파일
+    display: block; background: var(--card); border-radius: var(--r-lg); box-shadow: var(--shadow);
+    padding: 16px 17px; width: 100%; text-align: left;
+    → 파일:
+      - inquiry_list
+  [변형 2] 1개 파일
+    display: block; background: var(--card); border: 1px solid var(--line); border-radius: var(--r-lg);
+    box-shadow: var(--shadow); overflow: hidden;
+    → 파일:
+      - main
+
+
+### .chip  (총 2회 정의, 2가지 변형)
+
+  [변형 1] 1개 파일
+    padding: 13px 17px; border-radius: 13px; background: var(--card); box-shadow: var(--shadow);
+    border: 1.5px solid transparent; font-size: 14.5px; font-weight: 700; color: var(--ink-2);
+    transition: all .15s;
+    → 파일:
+      - diagnose_input
+  [변형 2] 1개 파일
+    height: 36px; padding: 0 15px; border-radius: 999px; background: var(--field-bg);
+    color: var(--ink-2); font-size: 13.5px; font-weight: 700; letter-spacing: -0.01em;
+    display: inline-flex; align-items: center; transition: all .12s;
+    → 파일:
+      - inquiry_write
+
+
+### .input  (총 1회 정의, 1가지 변형)
+
+  [변형 1] 1개 파일
+    flex: 1;
+    → 파일:
+      - diary_write2
+
+
+### .tag  (총 4회 정의, 4가지 변형)
+
+  [변형 1] 1개 파일
+    display:inline-block; font-size:11px; font-weight:800; color:var(--green);
+    background:var(--green-soft); padding:3px 9px; border-radius:999px; margin-bottom:7px;
+    → 파일:
+      - dialogs
+  [변형 2] 1개 파일
+    font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 999px;
+    → 파일:
+      - pestsearch_detail
+  [변형 3] 1개 파일
+    font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 999px; flex-shrink: 0;
+    → 파일:
+      - pestsearch_search
+  [변형 4] 1개 파일
+    font-size: 11px; font-weight: 800; padding: 4px 11px; border-radius: 999px;
+    background: var(--green-soft); color: var(--green);
+    → 파일:
+      - support_detail

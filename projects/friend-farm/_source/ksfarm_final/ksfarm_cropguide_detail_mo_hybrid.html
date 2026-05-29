@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KS팜 — 토마토 재배 가이드</title>
+<style>
+  :root {
+    --bg: #ECEAE0; --card: #FFFFFF; --ink: #20251D; --ink-2: #45493E; --gray: #76796C;
+    --line: rgba(48,42,30,.08); --field-bg: #F4F4EF;
+    --green: #1F4B3C; --green-2: #163729; --green-soft: #E7EEE6;
+    --sage: #2F6150; --gold: #B08A3E; --clay: #B0612C;
+    --r-lg: 18px; --r-md: 14px; --shadow: 0 1px 2px rgba(36,30,18,.05);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  button { font-family: inherit; }
+  a, button { color: inherit; text-decoration: none; background: none; border: 0; cursor: pointer; }
+  h1,h2,h3,p,span,a { word-break: keep-all; }
+  body {
+    background: #D8D5C9;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Pretendard", "Noto Sans KR", system-ui, sans-serif;
+    color: var(--ink); -webkit-font-smoothing: antialiased;
+    display: flex; justify-content: center; padding: 24px 0 40px;
+  }
+  .ic { width: 1em; height: 1em; display: inline-block; vertical-align: -0.12em; flex-shrink: 0; }
+
+  .phone {
+    position: relative; width: min(390px, 100%); background: var(--bg);
+    border-radius: 30px; overflow: hidden;
+    box-shadow: 0 18px 44px -12px rgba(40,34,22,.42); min-height: 860px;
+    display: flex; flex-direction: column;
+  }
+
+  .status-bar { height: 44px; display: flex; align-items: center; justify-content: space-between; padding: 0 22px; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .status-bar .group { display: inline-flex; gap: 6px; align-items: center; }
+
+  .appbar { display: flex; align-items: center; padding: 4px 12px 0; flex-shrink: 0; }
+  .appbar .back { width: 38px; height: 38px; display: grid; place-items: center; color: var(--ink); }
+  .appbar .back .ic { font-size: 22px; }
+  .appbar .title { flex: 1; text-align: center; font-size: 16px; font-weight: 800; letter-spacing: -0.02em; }
+  .appbar .sp { width: 38px; }
+
+  .scroll { flex: 1; overflow-y: auto; }
+
+  /* 작물 헤더 */
+  .crop-hero { background: linear-gradient(150deg, #3A6B57, var(--green) 70%, var(--green-2)); padding: 20px; position: relative; overflow: hidden; }
+  .crop-hero .h-crop { position: absolute; top: 50%; right: -6px; transform: translateY(-50%); width: 130px; height: 130px; opacity: .9; filter: drop-shadow(0 4px 10px rgba(0,0,0,.22)); }
+  .crop-hero .h-crop svg { width: 100%; height: 100%; }
+  .crop-hero .h-name { display: flex; align-items: center; gap: 8px; }
+  .crop-hero .h-name h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.024em; color: #fff; margin: 0; }
+  .crop-hero .h-tag { font-size: 11px; font-weight: 800; color: #fff; background: rgba(255,255,255,.2); padding: 4px 11px; border-radius: 999px; }
+  .crop-hero .h-desc { font-size: 13px; color: rgba(255,255,255,.9); line-height: 1.6; margin-top: 12px; font-weight: 500; max-width: 78%; }
+
+  /* 탭 */
+  .tabs { display: flex; gap: 4px; overflow-x: auto; background: var(--card); padding: 0 12px; flex-shrink: 0; border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 5; -ms-overflow-style: none; scrollbar-width: none; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab { flex-shrink: 0; padding: 14px 10px; font-size: 13.5px; font-weight: 700; color: var(--gray); position: relative; white-space: nowrap; }
+  .tab.on { color: var(--green); font-weight: 800; }
+  .tab.on::after { content: ""; position: absolute; left: 10px; right: 10px; bottom: -1px; height: 2.5px; border-radius: 2px; background: var(--green); }
+
+  .body { padding: 20px; }
+  .sec-title { font-size: 15px; font-weight: 800; letter-spacing: -0.018em; margin: 0 0 13px; display: flex; align-items: center; gap: 7px; }
+  .sec-title .ic { font-size: 17px; color: var(--green); }
+
+  /* 작물 개요 (정의형 카드) */
+  .overview { background: var(--card); border-radius: var(--r-lg); box-shadow: var(--shadow); padding: 4px 16px; margin-bottom: 24px; }
+  .ov-row { display: flex; gap: 14px; padding: 13px 0; }
+  .ov-row + .ov-row { border-top: 1px solid var(--line); }
+  .ov-row .k { flex: 0 0 72px; font-size: 13px; color: var(--gray); font-weight: 700; }
+  .ov-row .v { flex: 1; font-size: 13.5px; color: var(--ink); font-weight: 600; line-height: 1.5; letter-spacing: -0.01em; }
+
+  /* 핵심 포인트 */
+  .points { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .pt { background: var(--card); border-radius: var(--r-md); box-shadow: var(--shadow); padding: 16px 8px 14px; text-align: center; }
+  .pt .pic { width: 42px; height: 42px; border-radius: 50%; background: var(--green-soft); color: var(--green); display: grid; place-items: center; margin: 0 auto 9px; }
+  .pt .pic .ic { font-size: 21px; }
+  .pt .pk { font-size: 11.5px; color: var(--gray); font-weight: 700; }
+  .pt .pv { font-size: 12.5px; color: var(--ink); font-weight: 800; margin-top: 3px; line-height: 1.35; letter-spacing: -0.01em; }
+
+  /* 패널 전환 */
+  .panel { display: none; }
+  .panel.on { display: block; }
+
+  /* 생육 단계 (타임라인) */
+  .steps { position: relative; }
+  .step { display: flex; gap: 14px; }
+  .step-dot { position: relative; flex: 0 0 32px; display: flex; flex-direction: column; align-items: center; }
+  .step-dot span { width: 32px; height: 32px; border-radius: 50%; background: var(--green); color: #fff; font-size: 14px; font-weight: 800; display: grid; place-items: center; flex-shrink: 0; z-index: 1; }
+  .step-dot::after { content: ""; position: absolute; top: 32px; bottom: -4px; width: 2px; background: var(--line); }
+  .step-dot.last::after { display: none; }
+  .step-body { flex: 1; padding-bottom: 22px; }
+  .step-t { font-size: 14.5px; font-weight: 800; letter-spacing: -0.014em; margin-top: 4px; }
+  .step-d { font-size: 13px; color: var(--ink-2); line-height: 1.65; margin-top: 7px; font-weight: 500; }
+
+  /* 재배 관리 아코디언 */
+  .acc { background: var(--card); border-radius: var(--r-lg); box-shadow: var(--shadow); overflow: hidden; }
+  .acc-item + .acc-item { border-top: 1px solid var(--line); }
+  .acc-head { display: flex; align-items: center; gap: 11px; width: 100%; text-align: left; padding: 15px 16px; }
+  .acc-ic { width: 30px; height: 30px; border-radius: 9px; background: var(--green-soft); color: var(--green); display: grid; place-items: center; flex-shrink: 0; }
+  .acc-ic .ic { font-size: 16px; }
+  .acc-title { flex: 1; font-size: 14.5px; font-weight: 700; color: var(--ink); letter-spacing: -0.014em; }
+  .acc-cv { color: var(--gray); font-size: 18px; transition: transform .2s; }
+  .acc-item.open .acc-cv { transform: rotate(180deg); }
+  .acc-body { display: none; padding: 0 16px 16px 57px; font-size: 13px; color: var(--ink-2); line-height: 1.7; }
+  .acc-item.open .acc-body { display: block; }
+
+  /* 병해충 리스트 */
+  .pest-list { display: flex; flex-direction: column; gap: 10px; }
+  .pest { background: var(--card); border-radius: var(--r-lg); box-shadow: var(--shadow); padding: 15px 16px; }
+  .pest-top { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .pest-nm { font-size: 14.5px; font-weight: 800; letter-spacing: -0.014em; }
+  .pest-tag { font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 999px; }
+  .pest-tag.dis { background: #F2E3D6; color: var(--clay); }
+  .pest-tag.pst { background: var(--green-soft); color: var(--green); }
+  .pest-d { font-size: 13px; color: var(--ink-2); line-height: 1.65; font-weight: 500; }
+
+  /* 팁 박스 */
+  .tip-box { display: flex; gap: 10px; align-items: flex-start; background: var(--green-soft); border-radius: var(--r-md); padding: 14px 15px; margin-top: 14px; }
+  .tip-box .tip-ic { color: var(--green); flex-shrink: 0; }
+  .tip-box .tip-ic .ic { font-size: 18px; }
+  .tip-box .tip-tx { font-size: 13px; color: var(--green-2); line-height: 1.6; font-weight: 600; }
+</style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14 0"/><path d="M8.5 16.05a6 6 0 0 1 7 0"/><path d="M2 8.82a15 15 0 0 1 20 0"/><line x1="12" y1="20" x2="12" y2="20"/></symbol>
+    <symbol id="i-battery" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="8" width="18" height="9" rx="2"/><path d="M22 11v3"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 6 9 12 15 18"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="11"/><line x1="12" y1="8" x2="12.01" y2="8"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15 9 22 9.5 17 14.5 18.5 21.5 12 17.5 5.5 21.5 7 14.5 2 9.5 9 9"/></symbol>
+    <symbol id="i-sprout" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V11"/><path d="M12 11c0-3-2-5-5-5-1 0-2 .3-2 .3s.2 4 3 5c2 .7 4-.3 4-.3z"/><path d="M12 12c0-3 2-5 5-5 1 0 2 .3 2 .3s-.2 4-3 5c-2 .7-4-.3-4-.3z"/></symbol>
+    <symbol id="i-thermo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V5a2 2 0 0 0-4 0v9.76a4 4 0 1 0 4 0z"/></symbol>
+    <symbol id="i-drop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.7s6 6.6 6 10.3a6 6 0 0 1-12 0c0-3.7 6-10.3 6-10.3z"/></symbol>
+    <symbol id="i-bug" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="6" width="8" height="14" rx="4"/><path d="M12 6V3M5 9l3 1M19 9l-3 1M4 14h4M16 14h4M5 19l3-2M19 19l-3-2"/></symbol>
+    <symbol id="i-basket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11l2-7M19 11l-2-7M3 11h18l-1.5 9.5a1 1 0 0 1-1 .5H5.5a1 1 0 0 1-1-.5z"/><path d="M9 15v3M15 15v3"/></symbol>
+    <symbol id="i-cv-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></symbol>
+    <symbol id="i-leaf-s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></symbol>
+    <symbol id="i-scissors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></symbol>
+    <symbol id="c-tomato" viewBox="0 0 64 64"><circle cx="32" cy="38" r="20" fill="#C2502E"/><circle cx="32" cy="38" r="20" fill="none" stroke="#A23F22" stroke-width="1.5"/><path d="M32 20c-2-6-7-8-7-8s1 6 5 8c-3-1-7 0-7 0s3 4 9 3c-4 1-6 5-6 5s5 1 8-3c0 4 5 6 5 6s1-5-2-8c4 2 9 1 9 1s-3-5-9-5c5-2 6-7 6-7s-6 0-8 4c0-4-6-7-6-7s2 5 0 11z" fill="#3E7A3A"/><circle cx="25" cy="35" r="4" fill="#D8714F" opacity=".6"/></symbol>
+  </defs></svg>
+
+  <div class="phone">
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="group"><svg class="ic"><use href="#i-wifi"/></svg> <svg class="ic"><use href="#i-battery"/></svg></span>
+    </div>
+
+    <div class="appbar">
+      <button class="back" aria-label="뒤로"><svg class="ic"><use href="#i-back"/></svg></button>
+      <span class="title">재배 가이드</span>
+      <span class="sp"></span>
+    </div>
+
+    <div class="scroll">
+      <!-- 작물 헤더 -->
+      <div class="crop-hero">
+        <span class="h-crop"><svg viewBox="0 0 64 64"><use href="#c-tomato"/></svg></span>
+        <div class="h-name"><h1>토마토</h1><span class="h-tag">시설/노지 재배</span></div>
+        <p class="h-desc">생육 단계별 관리부터 병해충 방제, 수확 후 관리까지 토마토 재배의 모든 정보를 확인하세요.</p>
+      </div>
+
+      <!-- 탭 -->
+      <div class="tabs">
+        <button class="tab on">개요</button>
+        <button class="tab">생육 단계별 관리</button>
+        <button class="tab">재배 관리</button>
+        <button class="tab">병해충 방제</button>
+        <button class="tab">수확 및 저장</button>
+      </div>
+
+      <div class="body">
+        <!-- 개요 패널 -->
+        <div class="panel on" data-panel="0">
+          <h2 class="sec-title"><svg class="ic"><use href="#i-info"/></svg> 작물 개요</h2>
+          <div class="overview">
+            <div class="ov-row"><span class="k">작물명</span><span class="v">토마토 (Solanum lycopersicum)</span></div>
+            <div class="ov-row"><span class="k">재배 형태</span><span class="v">시설 재배, 노지 재배</span></div>
+            <div class="ov-row"><span class="k">적정 온도</span><span class="v">낮 20~28℃ / 밤 15~18℃</span></div>
+            <div class="ov-row"><span class="k">토양 조건</span><span class="v">배수가 잘되는 비옥한 토양 (pH 6.0~6.8)</span></div>
+            <div class="ov-row"><span class="k">주요 품종</span><span class="v">TY엔덱, 슈퍼도태랑, 완숙토마토 등</span></div>
+            <div class="ov-row"><span class="k">재배 기간</span><span class="v">정식 후 90~120일 (품종·환경에 따라 상이)</span></div>
+          </div>
+
+          <h2 class="sec-title"><svg class="ic"><use href="#i-star"/></svg> 한눈에 보는 재배 핵심</h2>
+          <div class="points">
+            <div class="pt"><span class="pic"><svg class="ic"><use href="#i-sprout"/></svg></span><div class="pk">정식 시기</div><div class="pv">2~3월<br>(시설)</div></div>
+            <div class="pt"><span class="pic"><svg class="ic"><use href="#i-thermo"/></svg></span><div class="pk">적정 온도</div><div class="pv">20~28℃</div></div>
+            <div class="pt"><span class="pic"><svg class="ic"><use href="#i-drop"/></svg></span><div class="pk">물 관리</div><div class="pv">과습<br>주의</div></div>
+            <div class="pt"><span class="pic"><svg class="ic"><use href="#i-bug"/></svg></span><div class="pk">주요 병해충</div><div class="pv">역병·<br>잎곰팡이병</div></div>
+            <div class="pt"><span class="pic"><svg class="ic"><use href="#i-basket"/></svg></span><div class="pk">수확 시기</div><div class="pv">정식 후<br>90~120일</div></div>
+          </div>
+        </div>
+
+        <!-- 생육 단계별 관리 패널 -->
+        <div class="panel" data-panel="1">
+          <h2 class="sec-title"><svg class="ic"><use href="#i-sprout"/></svg> 생육 단계별 관리</h2>
+          <div class="steps">
+            <div class="step">
+              <div class="step-dot"><span>1</span></div>
+              <div class="step-body">
+                <div class="step-t">파종 · 육묘</div>
+                <div class="step-d">25~28℃에서 발아시키고, 본잎 2~3매가 나오면 포트에 옮겨 모종을 키웁니다. 정식 전 4~5일은 외부 환경에 적응시켜요.</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-dot"><span>2</span></div>
+              <div class="step-body">
+                <div class="step-t">정식</div>
+                <div class="step-d">본잎 7~8매, 첫 꽃송이가 보일 때 정식합니다. 포기 간격은 40~50cm를 유지하고 깊게 심지 않도록 주의해요.</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-dot"><span>3</span></div>
+              <div class="step-body">
+                <div class="step-t">생육 · 착과</div>
+                <div class="step-d">곁순을 제거하고 줄기를 유인합니다. 첫 화방이 잘 달리도록 착과를 돕고, 웃거름을 나눠 주세요.</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-dot last"><span>4</span></div>
+              <div class="step-body">
+                <div class="step-t">비대 · 수확</div>
+                <div class="step-d">열매가 굵어지면 물 관리를 일정하게 유지해 열과를 막습니다. 색이 충분히 들면 수확해요.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 재배 관리 패널 -->
+        <div class="panel" data-panel="2">
+          <h2 class="sec-title"><svg class="ic"><use href="#i-drop"/></svg> 재배 관리</h2>
+          <div class="acc">
+            <div class="acc-item open">
+              <button class="acc-head"><span class="acc-ic"><svg class="ic"><use href="#i-drop"/></svg></span><span class="acc-title">물 관리</span><svg class="ic acc-cv"><use href="#i-cv-down"/></svg></button>
+              <div class="acc-body">토양이 마르면 충분히 주되 과습은 피합니다. 열매 비대기에는 수분이 일정해야 열과(갈라짐)를 줄일 수 있어요. 점적관수가 유리합니다.</div>
+            </div>
+            <div class="acc-item">
+              <button class="acc-head"><span class="acc-ic"><svg class="ic"><use href="#i-leaf-s"/></svg></span><span class="acc-title">비료 · 양분</span><svg class="ic acc-cv"><use href="#i-cv-down"/></svg></button>
+              <div class="acc-body">밑거름을 충분히 넣고, 1화방 착과 후부터 웃거름을 2~3주 간격으로 나눠 줍니다. 질소 과다는 웃자람을 유발하니 주의해요.</div>
+            </div>
+            <div class="acc-item">
+              <button class="acc-head"><span class="acc-ic"><svg class="ic"><use href="#i-scissors"/></svg></span><span class="acc-title">곁순 제거 · 유인</span><svg class="ic acc-cv"><use href="#i-cv-down"/></svg></button>
+              <div class="acc-body">잎겨드랑이에서 나오는 곁순은 일찍 제거해 양분 집중을 돕습니다. 줄기가 쓰러지지 않게 끈이나 지주로 유인해 주세요.</div>
+            </div>
+            <div class="acc-item">
+              <button class="acc-head"><span class="acc-ic"><svg class="ic"><use href="#i-thermo"/></svg></span><span class="acc-title">온도 · 환기</span><svg class="ic acc-cv"><use href="#i-cv-down"/></svg></button>
+              <div class="acc-body">낮 20~28℃, 밤 15~18℃를 유지합니다. 시설 재배 시 한낮 고온과 다습을 막기 위해 환기를 충분히 해주세요.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 병해충 방제 패널 -->
+        <div class="panel" data-panel="3">
+          <h2 class="sec-title"><svg class="ic"><use href="#i-bug"/></svg> 병해충 방제</h2>
+          <div class="pest-list">
+            <div class="pest">
+              <div class="pest-top"><span class="pest-nm">잎곰팡이병</span><span class="pest-tag dis">병해</span></div>
+              <div class="pest-d">잎 뒷면에 회갈색 곰팡이가 생깁니다. 다습할 때 잘 발생하니 환기를 늘리고 잎이 젖지 않도록 관리해요.</div>
+            </div>
+            <div class="pest">
+              <div class="pest-top"><span class="pest-nm">역병</span><span class="pest-tag dis">병해</span></div>
+              <div class="pest-d">잎·줄기·열매에 갈색 반점이 번집니다. 배수를 좋게 하고 병든 부위는 즉시 제거해 확산을 막아요.</div>
+            </div>
+            <div class="pest">
+              <div class="pest-top"><span class="pest-nm">담배가루이</span><span class="pest-tag pst">충해</span></div>
+              <div class="pest-d">잎 즙을 빨아 생육을 약하게 하고 바이러스를 옮깁니다. 노란 끈끈이 트랩으로 예찰하고 초기에 방제해요.</div>
+            </div>
+            <div class="pest">
+              <div class="pest-top"><span class="pest-nm">진딧물</span><span class="pest-tag pst">충해</span></div>
+              <div class="pest-d">새순과 잎 뒷면에 모여 즙을 빱니다. 발생 초기에 천적이나 약제로 방제하고 주변 잡초를 정리해요.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 수확 및 저장 패널 -->
+        <div class="panel" data-panel="4">
+          <h2 class="sec-title"><svg class="ic"><use href="#i-basket"/></svg> 수확 및 저장</h2>
+          <div class="overview">
+            <div class="ov-row"><span class="k">수확 시기</span><span class="v">정식 후 90~120일, 과실 표면에 색이 충분히 들었을 때</span></div>
+            <div class="ov-row"><span class="k">수확 방법</span><span class="v">꼭지째 가위로 따며, 아침 서늘할 때 수확하면 신선도가 좋아요</span></div>
+            <div class="ov-row"><span class="k">저장 온도</span><span class="v">10~13℃ (저온 장해 주의, 냉장 과도 시 맛 저하)</span></div>
+            <div class="ov-row"><span class="k">보관 기간</span><span class="v">완숙 기준 약 5~7일, 후숙용은 실온 보관</span></div>
+          </div>
+          <div class="tip-box">
+            <span class="tip-ic"><svg class="ic"><use href="#i-info"/></svg></span>
+            <span class="tip-tx">완전히 익기 전 약간 단단할 때 수확해 실온에서 후숙하면 물러짐 없이 더 오래 보관할 수 있어요.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var tabs = document.querySelectorAll('.tab');
+    var panels = document.querySelectorAll('.panel');
+    tabs.forEach(function(t, i){
+      t.addEventListener('click', function(){
+        tabs.forEach(function(x){ x.classList.remove('on'); });
+        t.classList.add('on');
+        panels.forEach(function(p){ p.classList.toggle('on', p.dataset.panel == i); });
+        document.querySelector('.scroll').scrollTop = 0;
+      });
+    });
+    // 재배 관리 아코디언
+    document.querySelectorAll('.acc-head').forEach(function(h){
+      h.addEventListener('click', function(){ h.parentElement.classList.toggle('open'); });
+    });
+  </script>
+</body>
+</html>

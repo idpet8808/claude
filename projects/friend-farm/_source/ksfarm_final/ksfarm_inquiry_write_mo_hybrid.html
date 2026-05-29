@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KS팜 — 문의 작성</title>
+<style>
+  :root {
+    --bg: #ECEAE0; --card: #FFFFFF; --ink: #20251D; --ink-2: #45493E; --gray: #76796C;
+    --line: rgba(48,42,30,.10); --field-bg: #F4F4EF;
+    --green: #1F4B3C; --green-2: #163729; --green-soft: #E7EEE6;
+    --red: #B0612C; --red-soft: #F3E6D6;
+    --r-lg: 18px; --r-md: 14px;
+    --shadow: 0 1px 2px rgba(36,30,18,.05);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  button, input, textarea { font-family: inherit; }
+  a, button { color: inherit; text-decoration: none; background: none; border: 0; cursor: pointer; }
+  h1,h2,h3,p,span,a,label { word-break: keep-all; }
+  body {
+    background: #D8D5C9;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Pretendard", "Noto Sans KR", system-ui, sans-serif;
+    color: var(--ink); -webkit-font-smoothing: antialiased;
+    display: flex; justify-content: center; padding: 24px 0 40px;
+  }
+  .ic { width: 1em; height: 1em; display: inline-block; vertical-align: -0.12em; flex-shrink: 0; }
+
+  .phone {
+    position: relative; width: min(390px, 100%); background: var(--bg);
+    border-radius: 30px; overflow: hidden;
+    box-shadow: 0 18px 44px -12px rgba(40,34,22,.42);
+    min-height: 820px; display: flex; flex-direction: column;
+  }
+
+  .status-bar { height: 44px; display: flex; align-items: center; justify-content: space-between; padding: 0 22px; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .status-bar .group { display: inline-flex; gap: 6px; align-items: center; }
+
+  .appbar { display: flex; align-items: center; padding: 4px 12px 0; flex-shrink: 0; }
+  .appbar .back { width: 38px; height: 38px; display: grid; place-items: center; color: var(--ink); }
+  .appbar .back .ic { font-size: 22px; }
+  .appbar .title { flex: 1; text-align: center; font-size: 16px; font-weight: 800; letter-spacing: -0.02em; }
+  .appbar .sp { width: 38px; }
+
+  .scroll { flex: 1; overflow-y: auto; padding: 14px 20px 24px; }
+
+  .field { margin-bottom: 20px; }
+  .field .lab { display: block; font-size: 13px; font-weight: 700; color: var(--ink-2); margin-bottom: 9px; padding-left: 2px; letter-spacing: -0.01em; }
+
+  /* category chips */
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    height: 36px; padding: 0 15px; border-radius: 999px;
+    background: var(--field-bg); color: var(--ink-2);
+    font-size: 13.5px; font-weight: 700; letter-spacing: -0.01em;
+    display: inline-flex; align-items: center; transition: all .12s;
+  }
+  .chip.on { background: var(--green); color: #fff; box-shadow: 0 4px 10px -4px rgba(31,75,60,.5); }
+
+  /* text input / textarea */
+  .box { background: var(--field-bg); border: 1.5px solid transparent; border-radius: var(--r-md); padding: 0 14px; height: 52px; display: flex; align-items: center; transition: border-color .12s, background .12s, box-shadow .12s; }
+  .box:focus-within { background: var(--card); border-color: var(--green); box-shadow: 0 0 0 3px rgba(31,75,60,.10); }
+  .box .inp { flex: 1; border: 0; background: transparent; font-size: 16px; font-weight: 600; color: var(--ink); outline: none; letter-spacing: -0.014em; }
+  .box .inp::placeholder { color: #ADAFa4; font-weight: 500; }
+
+  .area { background: var(--field-bg); border: 1.5px solid transparent; border-radius: var(--r-md); padding: 13px 14px; transition: border-color .12s, background .12s, box-shadow .12s; }
+  .area:focus-within { background: var(--card); border-color: var(--green); box-shadow: 0 0 0 3px rgba(31,75,60,.10); }
+  .area textarea { width: 100%; border: 0; background: transparent; font-size: 15px; font-weight: 500; color: var(--ink); outline: none; resize: none; line-height: 1.6; min-height: 120px; letter-spacing: -0.012em; }
+  .area textarea::placeholder { color: #ADAFa4; }
+  .count { text-align: right; font-size: 11.5px; color: var(--gray); margin-top: 6px; font-weight: 600; }
+
+  /* photo attach */
+  .photos { display: flex; gap: 10px; }
+  .photo-add {
+    width: 72px; height: 72px; border-radius: var(--r-md);
+    background: var(--field-bg); border: 1.5px dashed rgba(48,42,30,.2);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+    color: var(--gray);
+  }
+  .photo-add .ic { font-size: 20px; }
+  .photo-add .n { font-size: 11px; font-weight: 700; }
+
+  .help { font-size: 11.5px; color: var(--gray); margin: -8px 2px 0; line-height: 1.5; }
+
+  .foot { flex-shrink: 0; padding: 14px 20px calc(16px + env(safe-area-inset-bottom)); background: var(--bg); border-top: 1px solid var(--line); }
+  .btn-submit { width: 100%; height: 54px; border-radius: var(--r-md); color: #fff; font-size: 15.5px; font-weight: 800; letter-spacing: -0.01em;
+    background: linear-gradient(180deg, #2C6150 0%, var(--green) 52%, var(--green-2) 100%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 8px 18px -8px rgba(22,55,41,.5); }
+
+  /* 유효성 에러 */
+  .box.err, .area.err { border-color: var(--red, #B0612C); background: var(--card); }
+  .err-msg { display: none; font-size: 11.5px; color: var(--red, #B0612C); font-weight: 600; margin: 6px 2px 0; padding-left: 2px; }
+  .field.show-err .err-msg { display: block; }
+
+  /* 접수 완료 모달 */
+  .scrim { position: absolute; inset: 0; background: rgba(24,20,12,.5); z-index: 30; display: none; place-items: center; padding: 0 28px; }
+  .scrim.show { display: grid; }
+  .dialog { width: 100%; max-width: 300px; background: var(--card); border-radius: 20px; padding: 26px 22px 18px; text-align: center; box-shadow: 0 18px 40px -10px rgba(36,30,18,.4); }
+  .dlg-ic { width: 52px; height: 52px; border-radius: 50%; background: var(--green-soft); color: var(--green); display: grid; place-items: center; margin: 0 auto 14px; }
+  .dlg-ic .ic { font-size: 26px; }
+  .dlg-title { font-size: 17.5px; font-weight: 800; letter-spacing: -0.02em; }
+  .dlg-desc { font-size: 13px; color: var(--gray); line-height: 1.55; margin-top: 9px; }
+  .dlg-btn { margin-top: 20px; width: 100%; height: 48px; border-radius: var(--r-md); font-size: 14.5px; font-weight: 800; color: #fff;
+    background: linear-gradient(180deg,#2C6150,var(--green) 52%,var(--green-2)); box-shadow: inset 0 1px 0 rgba(255,255,255,.22),0 8px 18px -8px rgba(22,55,41,.5); }
+</style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14 0"/><path d="M8.5 16.05a6 6 0 0 1 7 0"/><path d="M2 8.82a15 15 0 0 1 20 0"/><line x1="12" y1="20" x2="12" y2="20"/></symbol>
+    <symbol id="i-battery" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="8" width="18" height="9" rx="2"/><path d="M22 11v3"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 6 9 12 15 18"/></symbol>
+    <symbol id="i-cam" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.2"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></symbol>
+  </defs></svg>
+
+  <div class="phone">
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="group"><svg class="ic"><use href="#i-wifi"/></svg> <svg class="ic"><use href="#i-battery"/></svg></span>
+    </div>
+
+    <div class="appbar">
+      <button class="back" aria-label="뒤로"><svg class="ic"><use href="#i-back"/></svg></button>
+      <span class="title">문의하기</span>
+      <span class="sp"></span>
+    </div>
+
+    <div class="scroll">
+      <!-- title -->
+      <div class="field" id="field-title">
+        <label class="lab" for="q-title">제목</label>
+        <div class="box"><input class="inp" id="q-title" type="text" placeholder="문의 제목을 입력해 주세요" /></div>
+        <p class="err-msg">제목을 입력해 주세요.</p>
+      </div>
+
+      <!-- content -->
+      <div class="field" id="field-body">
+        <label class="lab" for="q-body">문의 내용</label>
+        <div class="area"><textarea id="q-body" placeholder="어떤 점이 궁금하신가요? 자세히 적어주시면 더 정확하게 답변드릴 수 있어요." maxlength="1000"></textarea></div>
+        <div class="count">0 / 1000</div>
+        <p class="err-msg">문의 내용을 10자 이상 입력해 주세요.</p>
+      </div>
+
+      <!-- photo -->
+      <div class="field">
+        <label class="lab">사진 첨부 <span style="color:var(--gray);font-weight:600">(선택)</span></label>
+        <div class="photos">
+          <button class="photo-add"><svg class="ic"><use href="#i-cam"/></svg><span class="n">0/3</span></button>
+        </div>
+      </div>
+
+      <p class="help">답변은 등록하신 알림과 ‘1:1 문의 내역’에서 확인할 수 있어요.</p>
+    </div>
+
+    <div class="foot">
+      <button class="btn-submit" id="btnSubmit">문의 접수하기</button>
+    </div>
+
+    <!-- 접수 완료 모달 -->
+    <div class="scrim" id="doneDialog">
+      <div class="dialog" role="alertdialog" aria-labelledby="ddt">
+        <div class="dlg-ic"><svg class="ic"><use href="#i-check"/></svg></div>
+        <div class="dlg-title" id="ddt">문의가 접수되었어요</div>
+        <div class="dlg-desc">답변이 등록되면 알림으로 알려드릴게요.<br>‘1:1 문의 내역’에서도 확인할 수 있어요.</div>
+        <button class="dlg-btn" id="doneOk">확인</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 글자수 카운트
+    var ta = document.getElementById('q-body');
+    var cnt = document.querySelector('.count');
+    if (ta && cnt) ta.addEventListener('input', function(){ cnt.textContent = ta.value.length + ' / 1000'; });
+
+    // 유효성 + 접수 완료
+    var iTitle = document.getElementById('q-title');
+    var fTitle = document.getElementById('field-title');
+    var fBody = document.getElementById('field-body');
+    var dialog = document.getElementById('doneDialog');
+
+    function setErr(field, box, on){
+      field.classList.toggle('show-err', on);
+      box.classList.toggle('err', on);
+    }
+    document.getElementById('btnSubmit').addEventListener('click', function(){
+      var okTitle = iTitle.value.trim().length > 0;
+      var okBody = ta.value.trim().length >= 10;
+      setErr(fTitle, fTitle.querySelector('.box'), !okTitle);
+      setErr(fBody, fBody.querySelector('.area'), !okBody);
+      if (okTitle && okBody) { dialog.classList.add('show'); /* 실제 전송은 개발에서 */ }
+    });
+    // 입력 시 에러 해제
+    iTitle.addEventListener('input', function(){ if (fTitle.classList.contains('show-err')) setErr(fTitle, fTitle.querySelector('.box'), false); });
+    ta.addEventListener('input', function(){ if (fBody.classList.contains('show-err')) setErr(fBody, fBody.querySelector('.area'), false); });
+    // 완료 모달 닫기
+    document.getElementById('doneOk').addEventListener('click', function(){ dialog.classList.remove('show'); /* 목록으로 이동은 개발에서 */ });
+  </script>
+</body>
+</html>

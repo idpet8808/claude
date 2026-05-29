@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>병해충 메인 — 비교</title>
+<style>
+:root{--bg:#ECEAE0;--card:#FFFFFF;--ink:#20251D;--ink-2:#45493E;--gray:#76796C;--line:rgba(48,42,30,.08);--field-bg:#F4F4EF;--green:#1F4B3C;--green-2:#163729;--green-soft:#E7EEE6;--sage:#2F6150;--gold:#B08A3E;--clay:#B0612C;--r-lg:18px;--r-md:14px;--shadow:0 1px 2px rgba(36,30,18,.05);}
+*{box-sizing:border-box;}
+.ic{width:1em;height:1em;display:inline-block;vertical-align:-0.12em;flex-shrink:0;}
+body{margin:0;background:#D8D5C9;padding:26px 14px 50px;font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Noto Sans KR",system-ui,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+h1,h2,h3,p,span,a,div{word-break:keep-all;}
+.row{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;max-width:1240px;margin:0 auto;align-items:flex-start;}
+.col{width:380px;}
+.lab{margin:0 0 10px;text-align:center;}
+.lab .tag{display:inline-block;font-size:11px;font-weight:800;color:var(--green);background:var(--green-soft);padding:3px 10px;border-radius:999px;margin-bottom:6px;}
+.lab h3{font-size:14px;font-weight:800;margin:0 0 3px;letter-spacing:-0.02em;}
+.lab p{font-size:11.5px;color:#5a5d52;margin:0;font-weight:500;line-height:1.4;}
+.demo{background:var(--bg);border-radius:24px;padding:20px;box-shadow:0 10px 28px -12px rgba(40,34,22,.36);min-height:560px;}
+
+/* 공통 */
+.basis{display:flex;align-items:center;gap:6px;margin:0 0 4px;font-size:12.5px;color:var(--gray);font-weight:600;}
+.basis .ic{font-size:14px;color:var(--sage);}
+.basis b{color:var(--ink);font-weight:700;}
+.headline{font-size:24px;font-weight:800;letter-spacing:-0.024em;line-height:1.32;margin:8px 0 18px;}
+.headline b{color:var(--green);}
+.search{display:flex;align-items:center;gap:9px;background:var(--card);border-radius:14px;box-shadow:var(--shadow);padding:14px 15px;margin-bottom:22px;}
+.search .ic{font-size:19px;color:var(--gray);}
+.search span{font-size:14px;color:var(--gray);font-weight:500;}
+.sec-h{font-size:14px;font-weight:800;letter-spacing:-0.016em;margin:0 0 12px;display:flex;align-items:center;gap:6px;}
+.sec-h .ic{font-size:16px;color:var(--green);}
+.sec-h2{margin-top:24px;}
+
+/* 내 작물 병해충 카드 (썸네일+이름+태그) */
+.pcard-list{display:flex;flex-direction:column;gap:10px;}
+.pcard{display:flex;align-items:center;gap:13px;background:var(--card);border-radius:14px;box-shadow:var(--shadow);padding:12px 14px;}
+.pcard .thumb{width:48px;height:48px;border-radius:10px;background:linear-gradient(150deg,#DCDACC,#CFCDBC);display:grid;place-items:center;flex-shrink:0;color:var(--sage);opacity:.55;}
+.pcard .thumb .ic{font-size:22px;}
+.pcard .pm{flex:1;min-width:0;}
+.pcard .pn{font-size:14.5px;font-weight:800;letter-spacing:-0.014em;display:flex;align-items:center;gap:7px;}
+.pcard .ptag{font-size:9.5px;font-weight:800;padding:2px 7px;border-radius:999px;}
+.pcard .ptag.dis{background:#F2E3D6;color:var(--clay);}
+.pcard .ptag.pst{background:var(--green-soft);color:var(--green);}
+.pcard .psci{font-size:11.5px;color:var(--gray);font-style:italic;margin-top:3px;font-weight:500;}
+.pcard .cv{color:#C7C8BE;font-size:18px;flex-shrink:0;}
+
+/* 작물 탭 (내 작물) */
+.crop-tabs{display:flex;gap:8px;margin-bottom:14px;}
+.crop-tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 0;background:var(--card);border-radius:12px;box-shadow:var(--shadow);font-size:13px;font-weight:700;}
+.crop-tab.on{background:var(--green);color:#fff;}
+.crop-tab .ci{width:30px;height:30px;border-radius:50%;background:var(--green-soft);display:grid;place-items:center;color:var(--green);}
+.crop-tab.on .ci{background:rgba(255,255,255,.2);color:#fff;}
+.crop-tab .ci .ic{font-size:16px;}
+
+/* 인기 순위 */
+.rank{background:var(--card);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;}
+.rank-item{display:flex;align-items:center;gap:12px;padding:13px 15px;}
+.rank-item+.rank-item{border-top:1px solid var(--line);}
+.rank-item .no{font-size:14px;font-weight:800;color:var(--green);width:16px;}
+.rank-item .rn{flex:1;font-size:14px;font-weight:700;letter-spacing:-0.012em;}
+.rank-item .rtag{font-size:9.5px;font-weight:800;padding:2px 7px;border-radius:999px;}
+.rank-item .rtag.dis{background:#F2E3D6;color:var(--clay);}
+.rank-item .rtag.pst{background:var(--green-soft);color:var(--green);}
+
+/* 작물 칩 (B용) */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px;}
+.chip{padding:9px 15px;border-radius:999px;background:var(--card);box-shadow:var(--shadow);font-size:13px;font-weight:700;color:var(--ink-2);}
+.chip.mine{background:var(--green-soft);color:var(--green);}
+.subt{font-size:11.5px;color:var(--gray);font-weight:700;margin:0 0 9px;}
+</style></head>
+<body>
+<div class="row">
+
+<!-- 1. 내 작물 주인공 -->
+<div class="col">
+  <div class="lab"><span class="tag">1안</span><h3>내 작물 주인공</h3><p>헤드라인 + 작물 탭 + 그 작물 병해충 카드</p></div>
+  <div class="demo">
+    <div class="basis"><svg class="ic"><use href="#i-pin"/></svg> <b>완주 청년농원</b> · 오이 · 딸기</div>
+    <h1 class="headline">우리 작물에<br><b>조심할 병해충</b>이에요</h1>
+    <div class="search"><svg class="ic"><use href="#i-search"/></svg><span>작물 또는 병해충 이름 검색</span></div>
+    <div class="crop-tabs">
+      <div class="crop-tab on"><span class="ci"><svg class="ic"><use href="#i-leaf"/></svg></span>오이</div>
+      <div class="crop-tab"><span class="ci"><svg class="ic"><use href="#i-leaf"/></svg></span>딸기</div>
+    </div>
+    <div class="pcard-list">
+      <div class="pcard"><span class="thumb"><svg class="ic"><use href="#i-img"/></svg></span><div class="pm"><div class="pn">노균병 <span class="ptag dis">병</span></div><div class="psci">Pseudoperonospora cubensis</div></div><svg class="ic cv"><use href="#i-cv"/></svg></div>
+      <div class="pcard"><span class="thumb"><svg class="ic"><use href="#i-img"/></svg></span><div class="pm"><div class="pn">흰가루병 <span class="ptag dis">병</span></div><div class="psci">Sphaerotheca fuliginea</div></div><svg class="ic cv"><use href="#i-cv"/></svg></div>
+      <div class="pcard"><span class="thumb"><svg class="ic"><use href="#i-img"/></svg></span><div class="pm"><div class="pn">총채벌레 <span class="ptag pst">해충</span></div><div class="psci">Frankliniella occidentalis</div></div><svg class="ic cv"><use href="#i-cv"/></svg></div>
+    </div>
+  </div>
+</div>
+
+<!-- 2. 검색 중심 보강 -->
+<div class="col">
+  <div class="lab"><span class="tag">2안</span><h3>검색 중심 + 보강</h3><p>지금 구조 유지, 헤드라인 키우고 인기에 썸네일</p></div>
+  <div class="demo">
+    <h1 class="headline">어떤 병해충이<br><b>궁금하세요?</b></h1>
+    <div class="search"><svg class="ic"><use href="#i-search"/></svg><span>작물 또는 병해충 이름 검색</span></div>
+    <div class="sec-h"><svg class="ic"><use href="#i-leaf"/></svg> 작물로 찾기</div>
+    <p class="subt">내 농장 작물</p>
+    <div class="chips"><span class="chip mine">오이</span><span class="chip mine">딸기</span></div>
+    <p class="subt" style="margin-top:12px">주요 작물</p>
+    <div class="chips"><span class="chip">고추</span><span class="chip">토마토</span><span class="chip">사과</span><span class="chip">배추</span></div>
+    <div class="sec-h sec-h2"><svg class="ic"><use href="#i-fire"/></svg> 많이 찾는 병해충</div>
+    <div class="pcard-list">
+      <div class="pcard"><span class="thumb"><svg class="ic"><use href="#i-img"/></svg></span><div class="pm"><div class="pn">탄저병 <span class="ptag dis">병</span></div><div class="psci">Colletotrichum acutatum</div></div><svg class="ic cv"><use href="#i-cv"/></svg></div>
+      <div class="pcard"><span class="thumb"><svg class="ic"><use href="#i-img"/></svg></span><div class="pm"><div class="pn">진딧물 <span class="ptag pst">해충</span></div><div class="psci">Myzus persicae</div></div><svg class="ic cv"><use href="#i-cv"/></svg></div>
+    </div>
+  </div>
+</div>
+
+<!-- 3. 섹션 풍성 -->
+<div class="col">
+  <div class="lab"><span class="tag">3안</span><h3>섹션 여러 개 (풍성)</h3><p>헤드라인 + 검색 + 내 작물 + 인기 순위</p></div>
+  <div class="demo">
+    <div class="basis"><svg class="ic"><use href="#i-pin"/></svg> <b>완주 청년농원</b> · 오이 · 딸기</div>
+    <h1 class="headline">병해충, <b>미리</b> 알아두세요</h1>
+    <div class="search"><svg class="ic"><use href="#i-search"/></svg><span>작물 또는 병해충 이름 검색</span></div>
+    <div class="sec-h"><svg class="ic"><use href="#i-leaf"/></svg> 내 작물 병해충</div>
+    <div class="pcard-list">
+      <div class="pcard"><span class="thumb"><svg class="ic"><use href="#i-img"/></svg></span><div class="pm"><div class="pn">노균병 <span class="ptag dis">병</span></div><div class="psci">오이 · Pseudoperonospora</div></div><svg class="ic cv"><use href="#i-cv"/></svg></div>
+      <div class="pcard"><span class="thumb"><svg class="ic"><use href="#i-img"/></svg></span><div class="pm"><div class="pn">잿빛곰팡이병 <span class="ptag dis">병</span></div><div class="psci">딸기 · Botrytis cinerea</div></div><svg class="ic cv"><use href="#i-cv"/></svg></div>
+    </div>
+    <div class="sec-h sec-h2"><svg class="ic"><use href="#i-fire"/></svg> 많이 찾는 병해충</div>
+    <div class="rank">
+      <div class="rank-item"><span class="no">1</span><span class="rn">탄저병</span><span class="rtag dis">병</span></div>
+      <div class="rank-item"><span class="no">2</span><span class="rn">진딧물</span><span class="rtag pst">해충</span></div>
+      <div class="rank-item"><span class="no">3</span><span class="rn">노균병</span><span class="rtag dis">병</span></div>
+    </div>
+  </div>
+</div>
+
+</div>
+<svg width="0" height="0" style="position:absolute"><defs>
+<symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+<symbol id="i-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></symbol>
+<symbol id="i-img" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></symbol>
+<symbol id="i-fire" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></symbol>
+<symbol id="i-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></symbol>
+</defs></svg>
+</body></html>

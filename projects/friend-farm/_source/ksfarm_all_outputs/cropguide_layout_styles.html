@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>작물 가이드 레이아웃 — 비교</title>
+<style>
+:root{--bg:#ECEAE0;--card:#FFFFFF;--ink:#20251D;--ink-2:#45493E;--gray:#76796C;--line:rgba(48,42,30,.08);--field-bg:#F4F4EF;--green:#1F4B3C;--green-2:#163729;--green-soft:#E7EEE6;--sage:#2F6150;--gold:#B08A3E;--clay:#B0612C;--r-lg:18px;--r-md:14px;--shadow:0 1px 2px rgba(36,30,18,.05);}
+*{box-sizing:border-box;} button{background:none;border:0;cursor:pointer;}
+.ic{width:1em;height:1em;display:inline-block;vertical-align:-0.12em;flex-shrink:0;}
+body{margin:0;background:#D8D5C9;padding:26px 14px 60px;font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Noto Sans KR",system-ui,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+h3,p,span,div{word-break:keep-all;}
+.row{display:flex;gap:22px;flex-wrap:wrap;justify-content:center;max-width:1320px;margin:0 auto;align-items:flex-start;}
+.col{width:380px;}
+.lab{margin:0 0 10px;text-align:center;}
+.lab .tag{display:inline-block;font-size:11px;font-weight:800;color:var(--green);background:var(--green-soft);padding:3px 10px;border-radius:999px;margin-bottom:6px;}
+.lab h3{font-size:14px;font-weight:800;margin:0 0 3px;letter-spacing:-0.02em;}
+.lab p{font-size:11.5px;color:#5a5d52;margin:0;font-weight:500;line-height:1.4;}
+.phone{position:relative;width:100%;background:var(--bg);border-radius:28px;overflow:hidden;box-shadow:0 14px 36px -12px rgba(40,34,22,.4);height:720px;display:flex;flex-direction:column;}
+.sb{height:40px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;font-size:12px;font-weight:700;flex-shrink:0;}
+.appbar{display:flex;align-items:center;padding:2px 10px 0;flex-shrink:0;}
+.appbar .bk{width:34px;height:34px;display:grid;place-items:center;}.appbar .bk .ic{font-size:20px;}
+.appbar .tt{flex:1;text-align:center;font-size:15px;font-weight:800;letter-spacing:-0.02em;}
+.appbar .sp{width:34px;}
+.scroll{flex:1;overflow-y:auto;padding:6px 16px 20px;}
+.leaf{color:var(--sage);opacity:.5;}
+
+/* 카테고리 칩 (공통, 슬림) */
+.cats{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:14px;scrollbar-width:none;}
+.cats::-webkit-scrollbar{display:none;}
+.cat{flex-shrink:0;padding:6px 12px;border-radius:999px;background:var(--card);box-shadow:var(--shadow);font-size:12px;font-weight:700;color:var(--ink-2);}
+.cat.on{background:var(--green);color:#fff;box-shadow:none;}
+
+.sec-h{font-size:13px;font-weight:800;letter-spacing:-0.014em;margin:6px 2px 11px;display:flex;align-items:center;gap:6px;}
+.sec-h .mo{margin-left:auto;font-size:11.5px;color:var(--gray);font-weight:600;}
+
+/* ===== A 매거진 ===== */
+.feature{border-radius:var(--r-lg);overflow:hidden;position:relative;aspect-ratio:16/10;background:linear-gradient(150deg,#3A6B57,var(--green) 70%,var(--green-2));margin-bottom:16px;display:flex;align-items:flex-end;}
+.feature .fbadge{position:absolute;top:12px;left:12px;font-size:10.5px;font-weight:800;color:var(--green);background:rgba(255,255,255,.92);padding:4px 10px;border-radius:999px;}
+.feature .fleaf{position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);color:rgba(255,255,255,.18);}.feature .fleaf .ic{font-size:80px;}
+.feature .fcap{position:relative;padding:16px;color:#fff;}
+.feature .fcap .ft{font-size:19px;font-weight:800;letter-spacing:-0.02em;}
+.feature .fcap .fd{font-size:12px;opacity:.9;margin-top:4px;font-weight:500;}
+.mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.mini{background:var(--card);border-radius:var(--r-md);box-shadow:var(--shadow);overflow:hidden;}
+.mini .mt{aspect-ratio:3/2;background:linear-gradient(150deg,#EAE8DC,#E0DECF);display:grid;place-items:center;}.mini .mt .ic{font-size:28px;}
+.mini .mi{padding:9px 11px 11px;}
+.mini .mn{font-size:13.5px;font-weight:800;letter-spacing:-0.014em;}
+.mini .mtype{font-size:10.5px;color:var(--gray);font-weight:600;margin-top:3px;}
+
+/* ===== B 가로 캐러셀 ===== */
+.carousel{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;margin-bottom:18px;scrollbar-width:none;}
+.carousel::-webkit-scrollbar{display:none;}
+.cc{flex:0 0 128px;background:var(--card);border-radius:var(--r-md);box-shadow:var(--shadow);overflow:hidden;}
+.cc .ct{aspect-ratio:1/1;background:linear-gradient(150deg,#EAE8DC,#E0DECF);display:grid;place-items:center;}.cc .ct .ic{font-size:30px;}
+.cc .ci{padding:9px 10px 11px;}
+.cc .cn{font-size:13.5px;font-weight:800;letter-spacing:-0.014em;}
+.cc .ctype{font-size:10.5px;color:var(--gray);font-weight:600;margin-top:3px;}
+
+/* ===== C 시즌/내작물 ===== */
+.my-strip{display:flex;gap:9px;overflow-x:auto;padding-bottom:8px;margin-bottom:18px;scrollbar-width:none;}
+.my-strip::-webkit-scrollbar{display:none;}
+.myc{flex:0 0 auto;display:flex;align-items:center;gap:9px;background:var(--green);color:#fff;border-radius:var(--r-md);padding:11px 14px;}
+.myc .mci{width:34px;height:34px;border-radius:9px;background:rgba(255,255,255,.16);display:grid;place-items:center;color:#fff;}.myc .mci .ic{font-size:18px;}
+.myc .mcn{font-size:14px;font-weight:800;}
+.myc .mcd{font-size:10.5px;opacity:.85;margin-top:2px;}
+.season-card{background:var(--card);border-radius:var(--r-lg);box-shadow:var(--shadow);overflow:hidden;}
+.scrop{display:flex;align-items:center;gap:12px;padding:13px 14px;}
+.scrop+.scrop{border-top:1px solid var(--line);}
+.scrop .sth{width:48px;height:48px;border-radius:11px;background:linear-gradient(150deg,#EAE8DC,#E0DECF);display:grid;place-items:center;flex-shrink:0;}.scrop .sth .ic{font-size:22px;}
+.scrop .sin{flex:1;min-width:0;}
+.scrop .snm{font-size:14.5px;font-weight:800;letter-spacing:-0.014em;}
+.scrop .stype{font-size:11px;color:var(--gray);font-weight:600;margin-top:3px;}
+.scrop .sbadge{font-size:10px;font-weight:800;color:var(--clay);background:#F2E3D6;padding:3px 8px;border-radius:999px;flex-shrink:0;}
+
+/* ===== D 큰 가로 리스트 ===== */
+.list{display:flex;flex-direction:column;gap:11px;}
+.lc{display:flex;gap:13px;background:var(--card);border-radius:var(--r-lg);box-shadow:var(--shadow);padding:13px;align-items:center;}
+.lc .lth{width:76px;height:76px;border-radius:13px;background:linear-gradient(150deg,#EAE8DC,#E0DECF);display:grid;place-items:center;flex-shrink:0;}.lc .lth .ic{font-size:32px;}
+.lc .lin{flex:1;min-width:0;}
+.lc .lnm{font-size:16px;font-weight:800;letter-spacing:-0.018em;}
+.lc .ltype{font-size:11.5px;color:var(--gray);font-weight:600;margin-top:4px;}
+.lc .lmeta{font-size:11.5px;color:var(--sage);font-weight:700;margin-top:7px;}
+.lc .lcv{color:#C7C8BE;font-size:20px;}
+</style></head>
+<body>
+<div class="row">
+
+<!-- A 매거진 -->
+<div class="col">
+  <div class="lab"><span class="tag">A안</span><h3>매거진형</h3><p>큰 피처 + 작은 카드. 위계로 잡지처럼.</p></div>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="appbar"><button class="bk"><svg class="ic"><use href="#i-back"/></svg></button><span class="tt">재배 가이드</span><span class="sp"></span></div>
+    <div class="scroll">
+      <div class="cats"><button class="cat on">전체</button><button class="cat">과채류</button><button class="cat">엽채류</button><button class="cat">근채류</button><button class="cat">곡류</button></div>
+      <div class="feature">
+        <span class="fbadge">이번 달 추천</span>
+        <span class="fleaf"><svg class="ic"><use href="#i-leaf"/></svg></span>
+        <div class="fcap"><div class="ft">토마토</div><div class="fd">지금이 정식하기 딱 좋은 시기예요</div></div>
+      </div>
+      <div class="sec-h">전체 작물</div>
+      <div class="mini-grid">
+        <div class="mini"><div class="mt"><span class="leaf"><svg class="ic"><use href="#i-leaf"/></svg></span></div><div class="mi"><div class="mn">고추</div><div class="mtype">시설/노지</div></div></div>
+        <div class="mini"><div class="mt"><span class="leaf"><svg class="ic"><use href="#i-leaf"/></svg></span></div><div class="mi"><div class="mn">오이</div><div class="mtype">시설/노지</div></div></div>
+        <div class="mini"><div class="mt"><span class="leaf"><svg class="ic"><use href="#i-leaf"/></svg></span></div><div class="mi"><div class="mn">가지</div><div class="mtype">시설</div></div></div>
+        <div class="mini"><div class="mt"><span class="leaf"><svg class="ic"><use href="#i-leaf"/></svg></span></div><div class="mi"><div class="mn">배추</div><div class="mtype">노지</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- B 가로 캐러셀 -->
+<div class="col">
+  <div class="lab"><span class="tag">B안</span><h3>가로 캐러셀</h3><p>분류별 가로 줄(→→). 넷플릭스식 탐색.</p></div>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="appbar"><button class="bk"><svg class="ic"><use href="#i-back"/></svg></button><span class="tt">재배 가이드</span><span class="sp"></span></div>
+    <div class="scroll">
+      <div class="sec-h">과채류 <span class="mo">더보기 ›</span></div>
+      <div class="carousel">
+        <div class="cc"><div class="ct"><span class="leaf"><svg class="ic"><use href="#i-leaf"/></svg></span></div><div class="ci"><div class="cn">토마토</div><div class="ctype">시설/노지</div></div></div>
+        <div class="cc"><div class="ct"><span class="leaf"><svg class="ic"><use href="#i-leaf"/></svg></span></div><div class="ci"><div class="cn">고추</div><div class="ctype">시설/노지</div></div></div>
+        <div class="cc"><div class="ct"><span class="leaf"><svg class="ic"><use href="#i-leaf"/></svg></span></div><div class="ci"><div class="cn">오이</div><div class="ctype">시설/노지</div></div></div>
+      </div>
+      <div class="sec-h">엽채류 <span class="mo">더보기 ›</span></div>
+      <div class="carousel">
+        <div class="cc"><div class="ct"><span class="leaf"><svg class="ic"><use href="#i-leaf"/></svg></span></div><div class="ci"><div class="cn">배추</div><div class="ctype">노지</div></div></div>
+        <div class="cc"><div class="ct"><span class="leaf"><svg class="ic"><use href="#i-leaf"/></svg></span></div><div class="ci"><div class="cn">대파</div><div class="ctype">노지</div></div></div>
+        <div class="cc"><div class="ct"><span class="leaf"><svg class="ic"><use href="#i-leaf"/></svg></span></div><div class="ci"><div class="cn">상추</div><div class="ctype">시설/노지</div></div></div>
+      </div>
+      <div class="sec-h">근채류 <span class="mo">더보기 ›</span></div>
+      <div class="carousel">
+        <div class="cc"><div class="ct"><span class="leaf"><svg class="ic"><use href="#i-leaf"/></svg></span></div><div class="ci"><div class="cn">무</div><div class="ctype">노지</div></div></div>
+        <div class="cc"><div class="ct"><span class="leaf"><svg class="ic"><use href="#i-leaf"/></svg></span></div><div class="ci"><div class="cn">감자</div><div class="ctype">노지</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- C 시즌/내작물 -->
+<div class="col">
+  <div class="lab"><span class="tag">C안</span><h3>시즌 / 내 작물 결합</h3><p>내 농장 작물 + 제철 강조. 농업 앱답게.</p></div>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="appbar"><button class="bk"><svg class="ic"><use href="#i-back"/></svg></button><span class="tt">재배 가이드</span><span class="sp"></span></div>
+    <div class="scroll">
+      <div class="sec-h">🌱 내 농장 작물</div>
+      <div class="my-strip">
+        <div class="myc"><span class="mci"><svg class="ic"><use href="#i-leaf"/></svg></span><div><div class="mcn">오이</div><div class="mcd">시설/노지 재배</div></div></div>
+        <div class="myc"><span class="mci"><svg class="ic"><use href="#i-leaf"/></svg></span><div><div class="mcn">딸기</div><div class="mcd">시설 재배</div></div></div>
+      </div>
+      <div class="sec-h">지금 심기 좋은 작물</div>
+      <div class="season-card">
+        <div class="scrop"><span class="sth"><span class="leaf"><svg class="ic"><use href="#i-leaf"/></svg></span></span><div class="sin"><div class="snm">토마토</div><div class="stype">시설/노지 재배</div></div><span class="sbadge">정식 적기</span></div>
+        <div class="scrop"><span class="sth"><span class="leaf"><svg class="ic"><use href="#i-leaf"/></svg></span></span><div class="sin"><div class="snm">고추</div><div class="stype">시설/노지 재배</div></div><span class="sbadge">정식 적기</span></div>
+        <div class="scrop"><span class="sth"><span class="leaf"><svg class="ic"><use href="#i-leaf"/></svg></span></span><div class="sin"><div class="snm">가지</div><div class="stype">시설 재배</div></div><span class="sbadge">파종기</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- D 큰 가로 리스트 -->
+<div class="col">
+  <div class="lab"><span class="tag">D안</span><h3>큰 가로 리스트</h3><p>한 줄에 하나. 사진 크게 + 정보 한 줄.</p></div>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="appbar"><button class="bk"><svg class="ic"><use href="#i-back"/></svg></button><span class="tt">재배 가이드</span><span class="sp"></span></div>
+    <div class="scroll">
+      <div class="cats"><button class="cat on">전체</button><button class="cat">과채류</button><button class="cat">엽채류</button><button class="cat">근채류</button></div>
+      <div class="list">
+        <div class="lc"><span class="lth"><span class="leaf"><svg class="ic"><use href="#i-leaf"/></svg></span></span><div class="lin"><div class="lnm">토마토</div><div class="ltype">시설/노지 재배</div><div class="lmeta">적정 20~28℃ · 정식 90~120일</div></div><svg class="ic lcv"><use href="#i-cv"/></svg></div>
+        <div class="lc"><span class="lth"><span class="leaf"><svg class="ic"><use href="#i-leaf"/></svg></span></span><div class="lin"><div class="lnm">고추</div><div class="ltype">시설/노지 재배</div><div class="lmeta">적정 25~28℃ · 정식 100일</div></div><svg class="ic lcv"><use href="#i-cv"/></svg></div>
+        <div class="lc"><span class="lth"><span class="leaf"><svg class="ic"><use href="#i-leaf"/></svg></span></span><div class="lin"><div class="lnm">오이</div><div class="ltype">시설/노지 재배</div><div class="lmeta">적정 22~28℃ · 정식 50~60일</div></div><svg class="ic lcv"><use href="#i-cv"/></svg></div>
+        <div class="lc"><span class="lth"><span class="leaf"><svg class="ic"><use href="#i-leaf"/></svg></span></span><div class="lin"><div class="lnm">배추</div><div class="ltype">노지 재배</div><div class="lmeta">적정 18~20℃ · 정식 70~90일</div></div><svg class="ic lcv"><use href="#i-cv"/></svg></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+<svg width="0" height="0" style="position:absolute"><defs>
+<symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 6 9 12 15 18"/></symbol>
+<symbol id="i-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></symbol>
+<symbol id="i-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></symbol>
+</defs></svg>
+</body></html>
