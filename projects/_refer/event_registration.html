@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>참가 신청 · 접수 및 결제</title>
+<style>
+  :root{
+    --bg:#fff; --ink:#16181d; --sub:#5b616e; --line:#e7e9ee;
+    --brand:#2f5bff; --brand-ink:#1a3fd4; --soft:#f4f6fb;
+    --event:#11a36b; --race:#ff6a00; --warn:#ff3b54;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Pretendard","Apple SD Gothic Neo",-apple-system,sans-serif;color:var(--ink);background:#fafbfc;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+
+  header{background:#fff;border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;height:60px}
+  .logo{font-weight:800;font-size:19px;letter-spacing:-.5px}
+  .logo span{color:var(--brand)}
+  .steps{margin-left:auto;display:flex;gap:10px;font-size:13px;color:#b7bcc6;font-weight:700}
+  .steps .on{color:var(--brand)}
+
+  .ptitle{font-size:24px;font-weight:800;letter-spacing:-.6px;padding:28px 0 4px}
+  .pdesc{font-size:14px;color:var(--sub);padding-bottom:20px}
+
+  .grid{display:grid;grid-template-columns:1fr 340px;gap:28px;padding-bottom:80px;align-items:start}
+
+  .block{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;margin-bottom:16px}
+  .block h3{font-size:16px;font-weight:800;margin-bottom:4px}
+  .block .sub{font-size:13px;color:var(--sub);margin-bottom:18px}
+
+  /* event summary */
+  .ev{display:flex;gap:16px;align-items:flex-start}
+  .ev-thumb{width:84px;height:84px;border-radius:12px;background:#eceef3;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#b7bcc6;font-size:24px}
+  .badges{display:flex;gap:6px;margin-bottom:8px}
+  .pill{font-size:11px;font-weight:800;padding:4px 9px;border-radius:7px}
+  .pill.race{background:#fff1e8;color:var(--race)}
+  .pill.event{background:#e7f8f0;color:var(--event)}
+  .pill.ing{background:#eef3ff;color:var(--brand-ink)}
+  .ev h2{font-size:17px;font-weight:800;letter-spacing:-.3px;margin-bottom:6px;line-height:1.4}
+  .ev-meta{font-size:13px;color:var(--sub);line-height:1.7}
+  .ev-meta b{color:#3b3f47;font-weight:600}
+
+  /* form */
+  .field{margin-bottom:16px}
+  .field:last-child{margin-bottom:0}
+  label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}
+  label .req{color:var(--warn);margin-left:3px}
+  input,select,textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:14px;font-family:inherit;color:var(--ink);background:#fff}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--brand)}
+  input::placeholder{color:#b7bcc6}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .row-phone{display:grid;grid-template-columns:1fr auto;gap:8px}
+  .vbtn{border:1px solid var(--line);background:var(--soft);border-radius:10px;padding:0 16px;font-size:13px;font-weight:700;color:#3b3f47;cursor:pointer;white-space:nowrap}
+  .vbtn:hover{border-color:var(--brand);color:var(--brand)}
+
+  /* segmented (개인/팀, 부문) */
+  .seg{display:flex;gap:8px;flex-wrap:wrap}
+  .seg label{display:flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:10px;padding:11px 16px;font-size:14px;font-weight:600;cursor:pointer;margin:0;flex:1;justify-content:center}
+  .seg input{width:auto;display:none}
+  .seg input:checked + span{color:var(--brand)}
+  .seg label:has(input:checked){border-color:var(--brand);background:#f5f8ff}
+
+  /* qty */
+  .qty{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .qty button{width:42px;height:44px;border:none;background:#fff;font-size:18px;color:var(--sub);cursor:pointer}
+  .qty button:hover{background:var(--soft)}
+  .qty input{width:54px;text-align:center;border:none;border-left:1px solid var(--line);border-right:1px solid var(--line);border-radius:0;padding:12px 0}
+
+  /* options */
+  .opt{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+  .opt:last-child{border-bottom:none}
+  .opt input[type=checkbox]{width:18px;height:18px;flex-shrink:0}
+  .opt .name{font-size:14px;font-weight:600;flex:1}
+  .opt .price{font-size:13px;color:var(--sub);font-weight:600}
+
+  /* pay methods */
+  .pays{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .pays label{border:1px solid var(--line);border-radius:10px;padding:14px 8px;text-align:center;font-size:13px;font-weight:700;cursor:pointer;margin:0}
+  .pays input{display:none}
+  .pays label:has(input:checked){border-color:var(--brand);background:#f5f8ff;color:var(--brand)}
+
+  /* agree */
+  .agree-all{display:flex;align-items:center;gap:10px;padding:14px;background:var(--soft);border-radius:10px;font-weight:700;font-size:14px;margin-bottom:12px}
+  .agree{display:flex;align-items:center;gap:10px;padding:9px 4px;font-size:13px;color:#3b3f47}
+  .agree .view{margin-left:auto;font-size:12px;color:var(--sub);text-decoration:underline;cursor:pointer}
+  .agree .opt-tag{color:var(--sub)}
+  .agree .req-tag{color:var(--warn)}
+  input[type=checkbox]{accent-color:var(--brand);cursor:pointer}
+
+  /* sticky summary */
+  aside{position:sticky;top:20px}
+  .sum{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 4px 24px rgba(20,24,29,.06)}
+  .sum h3{font-size:16px;font-weight:800;margin-bottom:16px}
+  .sline{display:flex;justify-content:space-between;font-size:14px;color:#3b3f47;padding:8px 0}
+  .sline.disc{color:var(--warn)}
+  .sdiv{border-top:1px dashed var(--line);margin:8px 0}
+  .total{display:flex;justify-content:space-between;align-items:baseline;padding:12px 0 4px}
+  .total .lbl{font-size:15px;font-weight:800}
+  .total .val{font-size:24px;font-weight:800;letter-spacing:-.5px;color:var(--brand)}
+  .paybtn{width:100%;background:var(--brand);color:#fff;font-size:16px;font-weight:800;border:none;border-radius:12px;padding:16px;cursor:pointer;margin-top:14px}
+  .paybtn:hover{background:var(--brand-ink)}
+  .paybtn:disabled{background:#c7ccd6;cursor:not-allowed}
+  .deadline{display:flex;align-items:center;gap:6px;justify-content:center;font-size:12px;color:var(--warn);font-weight:700;margin-top:12px}
+
+  footer{background:#16181d;color:#9aa0ac;text-align:center;padding:36px;font-size:13px;margin-top:20px}
+
+  @media(max-width:840px){
+    .grid{grid-template-columns:1fr}
+    aside{position:static}
+    .pays{grid-template-columns:repeat(2,1fr)}
+    .steps{display:none}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="logo">Mensa <span>Academy</span></div>
+    <div class="steps"><span class="on">1 신청정보</span> › <span class="on">2 결제</span> › <span>3 완료</span></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="ptitle">참가 신청</div>
+  <div class="pdesc">신청 정보를 입력하고 결제하면 접수가 완료됩니다.</div>
+
+  <form class="grid" onsubmit="return false">
+    <!-- LEFT -->
+    <div>
+      <!-- 신청 대상 행사 -->
+      <div class="block">
+        <div class="ev">
+          <div class="ev-thumb">🏆</div>
+          <div>
+            <div class="badges">
+              <span class="pill race">대회</span>
+              <span class="pill ing">접수중</span>
+            </div>
+            <h2>2025 멘사 두뇌 챌린지 대회</h2>
+            <div class="ev-meta">
+              <b>일시</b> 2025.08.16(토) 10:00<br>
+              <b>장소</b> 서울 코엑스 컨퍼런스룸 401<br>
+              <b>접수마감</b> 2025.08.01(금) 18:00
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 참가 구분 -->
+      <div class="block">
+        <h3>참가 구분</h3>
+        <div class="sub">대회 부문과 참가 형태를 선택하세요.</div>
+
+        <div class="field">
+          <label>참가 형태 <span class="req">*</span></label>
+          <div class="seg">
+            <label><input type="radio" name="type" checked><span>개인전</span></label>
+            <label><input type="radio" name="type"><span>팀전 (2~4인)</span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>참가 부문 <span class="req">*</span></label>
+          <select>
+            <option>선택해주세요</option>
+            <option>수리 추론</option>
+            <option>공간 지각</option>
+            <option>언어 논리</option>
+            <option>종합 (전 부문)</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>참가 인원</label>
+          <div class="qty">
+            <button type="button" onclick="step(-1)">−</button>
+            <input id="qty" value="1" readonly>
+            <button type="button" onclick="step(1)">+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 신청자 정보 -->
+      <div class="block">
+        <h3>신청자 정보</h3>
+        <div class="sub">대표 신청자 기준으로 입력합니다.</div>
+
+        <div class="field row2">
+          <div>
+            <label>이름 <span class="req">*</span></label>
+            <input placeholder="홍길동">
+          </div>
+          <div>
+            <label>생년월일 <span class="req">*</span></label>
+            <input placeholder="2000.01.01">
+          </div>
+        </div>
+
+        <div class="field">
+          <label>휴대폰 번호 <span class="req">*</span></label>
+          <div class="row-phone">
+            <input placeholder="010-0000-0000">
+            <button type="button" class="vbtn">인증번호 받기</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>이메일 <span class="req">*</span></label>
+          <input placeholder="example@mensa.kr">
+          <div class="sub" style="margin:6px 0 0">참가 안내·확인서가 이 주소로 발송됩니다.</div>
+        </div>
+
+        <div class="field">
+          <label>멘사 회원번호 <span style="color:var(--sub);font-weight:500">(선택)</span></label>
+          <input placeholder="회원이면 입력 시 할인 적용">
+        </div>
+      </div>
+
+      <!-- 추가 옵션 -->
+      <div class="block">
+        <h3>추가 옵션</h3>
+        <div class="sub">필요한 항목만 선택하세요.</div>
+        <div class="opt">
+          <input type="checkbox" onchange="calc()" data-p="15000">
+          <span class="name">기념 티셔츠 (M/L/XL 택1)</span>
+          <span class="price">+15,000원</span>
+        </div>
+        <div class="opt">
+          <input type="checkbox" onchange="calc()" data-p="8000">
+          <span class="name">중식 도시락</span>
+          <span class="price">+8,000원</span>
+        </div>
+        <div class="opt">
+          <input type="checkbox" onchange="calc()" data-p="0">
+          <span class="name">주차 등록 (무료, 차량번호 별도 안내)</span>
+          <span class="price">무료</span>
+        </div>
+      </div>
+
+      <!-- 결제 수단 -->
+      <div class="block">
+        <h3>결제 수단</h3>
+        <div class="sub" style="margin-bottom:14px">결제는 안전한 외부 결제창에서 진행됩니다.</div>
+        <div class="pays">
+          <label><input type="radio" name="pay" checked>신용·체크카드</label>
+          <label><input type="radio" name="pay">계좌이체</label>
+          <label><input type="radio" name="pay">가상계좌</label>
+          <label><input type="radio" name="pay">카카오페이</label>
+          <label><input type="radio" name="pay">네이버페이</label>
+          <label><input type="radio" name="pay">토스페이</label>
+        </div>
+      </div>
+
+      <!-- 약관 동의 -->
+      <div class="block">
+        <h3>약관 동의</h3>
+        <div class="sub">&nbsp;</div>
+        <label class="agree-all"><input type="checkbox" id="all" onchange="toggleAll(this)">전체 동의</label>
+        <label class="agree"><input type="checkbox" class="ag" onchange="syncAll();chk()"> <span class="req-tag">[필수]</span> 참가 신청 약관 동의 <span class="view">보기</span></label>
+        <label class="agree"><input type="checkbox" class="ag" onchange="syncAll();chk()"> <span class="req-tag">[필수]</span> 개인정보 수집·이용 동의 <span class="view">보기</span></label>
+        <label class="agree"><input type="checkbox" class="ag" onchange="syncAll();chk()"> <span class="req-tag">[필수]</span> 환불 규정 확인 <span class="view">보기</span></label>
+        <label class="agree"><input type="checkbox" onchange="syncAll()"> <span class="opt-tag">[선택]</span> 마케팅 정보 수신 동의 <span class="view">보기</span></label>
+      </div>
+    </div>
+
+    <!-- RIGHT SUMMARY -->
+    <aside>
+      <div class="sum">
+        <h3>결제 금액</h3>
+        <div class="sline"><span>참가비 × <span id="qtxt">1</span></span><span id="base">50,000원</span></div>
+        <div class="sline disc"><span>멘사 회원 할인</span><span>−0원</span></div>
+        <div class="sline" id="optline" style="display:none"><span>추가 옵션</span><span id="optval">0원</span></div>
+        <div class="sdiv"></div>
+        <div class="total"><span class="lbl">총 결제금액</span><span class="val" id="total">50,000원</span></div>
+        <button class="paybtn" id="paybtn" disabled>약관에 동의해주세요</button>
+        <div class="deadline">⏳ 접수마감까지 D-12</div>
+      </div>
+    </aside>
+  </form>
+</div>
+
+<footer>Footer · Mensa Academy</footer>
+
+<script>
+  const FEE=50000;
+  let qty=1;
+  function step(d){qty=Math.max(1,Math.min(4,qty+d));document.getElementById('qty').value=qty;document.getElementById('qtxt').textContent=qty;calc();}
+  function calc(){
+    const opts=[...document.querySelectorAll('.opt input:checked')].reduce((s,el)=>s+ +el.dataset.p,0);
+    const base=FEE*qty;
+    document.getElementById('base').textContent=base.toLocaleString()+'원';
+    const ol=document.getElementById('optline');
+    if(opts>0){ol.style.display='flex';document.getElementById('optval').textContent='+'+opts.toLocaleString()+'원';}
+    else ol.style.display='none';
+    document.getElementById('total').textContent=(base+opts).toLocaleString()+'원';
+  }
+  function toggleAll(el){document.querySelectorAll('.agree input').forEach(c=>c.checked=el.checked);chk();}
+  function syncAll(){const all=[...document.querySelectorAll('.agree input')].every(c=>c.checked);document.getElementById('all').checked=all;}
+  function chk(){
+    const req=[...document.querySelectorAll('.ag')].every(c=>c.checked);
+    const b=document.getElementById('paybtn');
+    b.disabled=!req;
+    b.textContent=req? document.getElementById('total').textContent.replace('원','')+'원 결제하기':'약관에 동의해주세요';
+  }
+  calc();
+</script>
+</body>
+</html>
