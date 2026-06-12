@@ -9,7 +9,7 @@ body { background: #E8E6DF; display: flex; justify-content: center; padding: 24p
 
 .top { flex-shrink: 0; max-height: 0; overflow: hidden; padding: 0 20px; opacity: 0; transition: max-height .26s ease, opacity .22s ease, padding .26s ease; }
 .top.open { max-height: 70px; padding: 10px 20px 4px; opacity: 1; }
-.search { display: flex; align-items: center; gap: 8px; background: var(--field-bg); border: 1px solid var(--line); border-radius: var(--r-md); padding: 0 14px; height: 46px; }
+.search { display: flex; align-items: center; gap: 8px; background: var(--card); border: 1px solid rgba(0,0,0,.14); border-radius: var(--r-md); padding: 0 14px; height: 46px; box-shadow: 0 1px 3px rgba(0,0,0,.05); }
 .search .ic { color: var(--gray); font-size: 18px; }
 .search input { flex: 1; border: 0; background: transparent; font-size: 15px; font-weight: 600; color: var(--ink); outline: none; }
 .search input::placeholder { color: #ADAFa4; font-weight: 500; }
