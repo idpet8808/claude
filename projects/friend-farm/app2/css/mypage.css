@@ -35,14 +35,21 @@ body { background: #E8E6DF; display: flex; justify-content: center; padding: 24p
 .td-cv { color: #9DA095; font-size: 15px; }
 .td-badge { min-width: 19px; height: 19px; padding: 0 6px; border-radius: 999px; background: var(--red); color: #fff; font-size: 11px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; }
 
-.farm { margin-top: 14px; border-radius: var(--r-lg); padding: 18px; color: #fff; background: linear-gradient(155deg, #45BC38 0%, var(--green) 55%, var(--green-2) 100%); box-shadow: 0 8px 18px -8px rgba(40,150,28,.5); }
-.farm-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
-.farm-head .t { font-size: 13.5px; font-weight: 800; opacity: .95; display: inline-flex; align-items: center; gap: 6px; }
-.farm-head .mng { font-size: 12px; font-weight: 700; color: #fff; opacity: .82; }
-.farm-info { display: flex; flex-direction: column; gap: 11px; }
-.fc-row { display: flex; align-items: baseline; gap: 12px; font-size: 13.5px; }
-.fc-row .k { flex: 0 0 60px; color: rgba(255,255,255,.62); font-weight: 600; }
-.fc-row .v { flex: 1; color: #fff; font-weight: 700; }
+.farm { margin-top: 14px; }
+.farm-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.farm-head .t { font-size: 13.5px; font-weight: 800; color: var(--ink); display: inline-flex; align-items: center; gap: 6px; }
+.farm-head .t .ic { color: var(--green); }
+.farm-head .mng { font-size: 12px; font-weight: 700; color: var(--gray); }
+
+/* home 대표 농장 카드 이식 */
+.farm-card { display: flex; align-items: center; gap: 13px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); padding: 14px; text-decoration: none; }
+.farm-thumb { width: 58px; height: 58px; flex: 0 0 58px; border-radius: 14px; display: grid; place-items: center; background: linear-gradient(160deg,#F2F9F4 0%,var(--green-soft) 100%); box-shadow: inset 0 1px 0 rgba(255,255,255,.7),0 2px 6px -1px rgba(52,171,42,.16); overflow: hidden; }
+.farm-thumb .ic { font-size: 27px; color: var(--green); }
+.farm-meta { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px; }
+.farm-name-row { display: inline-flex; align-items: center; gap: 7px; min-width: 0; }
+.farm-name { font-size: 17px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; line-height: 1.15; white-space: nowrap; }
+.rep-badge { display: inline-flex; align-items: center; height: 18px; padding: 0 6px; border-radius: 5px; background: var(--green-soft); color: var(--green); font-size: 10.5px; font-weight: 800; letter-spacing: -0.01em; flex-shrink: 0; }
+.farm-sub { font-size: 12px; color: var(--gray); letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
 
 .myprice { margin-top: 14px; }
 .mp-head { display: flex; align-items: baseline; justify-content: space-between; padding: 0 4px 10px; }

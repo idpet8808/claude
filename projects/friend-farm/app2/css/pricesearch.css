@@ -1,0 +1,52 @@
+/* pricesearch.css — 작물 시세 검색 (KAMIS) */
+:root { --line: rgba(48,42,30,.08); --up: #B0612C; --down: #2F6150; }
+.phone { position: relative; min-height: 860px; }
+body { background: #E8E6DF; display: flex; justify-content: center; padding: 24px 0 40px; }
+
+/* 검색 앱바 */
+.search-appbar { display: flex; align-items: center; gap: 8px; padding: 4px 12px 12px; flex-shrink: 0; }
+.search-appbar .back { width: 38px; height: 38px; display: grid; place-items: center; color: var(--ink); flex-shrink: 0; }
+.search-appbar .back .ic { font-size: 22px; }
+.search-appbar .input-wrap { flex: 1; display: flex; align-items: center; gap: 9px; background: var(--field-bg); border-radius: 12px; padding: 10px 14px; transition: background .15s, box-shadow .15s; }
+.search-appbar .input-wrap:focus-within { background: var(--card); box-shadow: 0 0 0 3px rgba(31,75,60,.1); }
+.search-appbar .input-wrap .ic { font-size: 17px; color: var(--gray); }
+.search-appbar input { flex: 1; border: 0; background: none; font-size: 14.5px; font-weight: 500; color: var(--ink); outline: none; }
+.search-appbar input::placeholder { color: var(--gray); font-weight: 500; }
+.search-appbar .clear { padding: 2px; color: var(--gray); display: none; }
+.search-appbar .clear.show { display: inline-flex; }
+.search-appbar .clear .ic { font-size: 16px; }
+
+.scroll { overflow-x: hidden; flex: 1; overflow-y: auto; padding: 4px 20px 24px; }
+
+/* 초기 상태: 인기/최근 */
+.sec-h { font-size: 13.5px; color: var(--gray); font-weight: 700; margin: 14px 2px 11px; }
+.pchips { display: flex; flex-wrap: wrap; gap: 7px; }
+.pchip { display: inline-flex; align-items: center; gap: 5px; padding: 7px 13px; border-radius: 999px; background: var(--card); box-shadow: var(--shadow); font-size: 13px; font-weight: 700; color: var(--ink-2); }
+.pchip .rk { font-size: 11px; font-weight: 800; color: var(--green); }
+
+/* 결과 상태 */
+.result-head { font-size: 13.5px; color: var(--gray); font-weight: 600; margin: 6px 2px 12px; }
+.result-head b { color: var(--ink); font-weight: 800; }
+.price-list { display: flex; flex-direction: column; gap: 10px; }
+.pcard { display: flex; align-items: center; gap: 12px; background: var(--card); border-radius: var(--r-md); box-shadow: var(--shadow); padding: 14px 16px; }
+.pcard .pi { width: 40px; height: 40px; border-radius: 10px; background: var(--green-soft); color: var(--green); display: grid; place-items: center; flex-shrink: 0; font-size: 19px; }
+.pcard .pm { flex: 1; min-width: 0; }
+.pcard .pn-row { display: flex; align-items: baseline; gap: 6px; }
+.pcard .pn { font-size: 14.5px; font-weight: 800; letter-spacing: -0.014em; }
+.pcard .pu { font-size: 11px; color: var(--gray); font-weight: 600; }
+.pcard .pp-row { display: flex; align-items: baseline; gap: 8px; margin-top: 4px; }
+.pcard .pp { font-size: 15.5px; font-weight: 800; }
+.pcard .pd { font-size: 11.5px; font-weight: 800; display: inline-flex; align-items: center; gap: 2px; }
+.pcard .pd.up { color: var(--up); }
+.pcard .pd.down { color: var(--down); }
+.pcard .pd .arr { font-size: 9px; }
+.pcard .cv { color: #C7C8BE; font-size: 17px; flex-shrink: 0; }
+
+.empty { text-align: center; padding: 60px 20px; color: var(--gray); }
+.empty .em { font-size: 13.5px; font-weight: 600; }
+.empty .es { font-size: 12px; margin-top: 6px; }
+.hidden { display: none !important; }
+
+/* === 360px safety net === */
+.phone img, .phone svg { max-width: 100%; height: auto; }
+.phone { word-break: keep-all; overflow-wrap: break-word; }

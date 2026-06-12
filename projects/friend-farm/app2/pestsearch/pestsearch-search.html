@@ -32,14 +32,6 @@
       <!-- 초기 상태: 최근 + 추천 -->
       <div id="initState">
         <div class="blk">
-          <div class="blk-h"><span class="t">최근 검색</span><button class="clr">전체 삭제</button></div>
-          <div class="recent">
-            <button class="rchip">탄저병 <span class="x"><svg class="ic"><use href="#i-x"/></svg></span></button>
-            <button class="rchip">고추 <span class="x"><svg class="ic"><use href="#i-x"/></svg></span></button>
-            <button class="rchip">진딧물 <span class="x"><svg class="ic"><use href="#i-x"/></svg></span></button>
-          </div>
-        </div>
-        <div class="blk">
           <div class="blk-h"><span class="t">많이 찾는 병해충</span></div>
           <div class="pop-list">
             <div class="pop"><span class="rank">1</span><span class="pnm">탄저병</span><span class="ptag">병</span></div>
@@ -179,13 +171,7 @@
     }
     input.addEventListener('input', update);
     clearBtn.addEventListener('click', function(){ input.value = ''; input.focus(); update(); });
-    // 최근/추천 클릭 → 입력
-    document.querySelectorAll('.rchip').forEach(function(c){
-      c.addEventListener('click', function(e){
-        if (e.target.closest('.x')) { c.remove(); return; }
-        input.value = c.childNodes[0].textContent.trim(); update();
-      });
-    });
+    // 추천(많이 찾는 병해충) 클릭 → 입력
     document.querySelectorAll('.pop').forEach(function(p){
       p.addEventListener('click', function(){ input.value = p.querySelector('.pnm').textContent; update(); });
     });

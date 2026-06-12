@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="../css/pricehome.css"/>
 </head>
 <body>
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14 0"/><path d="M8.5 16.05a6 6 0 0 1 7 0"/><path d="M2 8.82a15 15 0 0 1 20 0"/><line x1="12" y1="20" x2="12" y2="20"/></symbol><symbol id="i-battery" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="8" width="18" height="9" rx="2"/><path d="M22 11v3"/></symbol><symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 6 9 12 15 18"/></symbol><symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></symbol><symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-5.6 7-11a7 7 0 0 0-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol><symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol></defs></svg>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14 0"/><path d="M8.5 16.05a6 6 0 0 1 7 0"/><path d="M2 8.82a15 15 0 0 1 20 0"/><line x1="12" y1="20" x2="12" y2="20"/></symbol><symbol id="i-battery" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="8" width="18" height="9" rx="2"/><path d="M22 11v3"/></symbol><symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 6 9 12 15 18"/></symbol><symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></symbol><symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-5.6 7-11a7 7 0 0 0-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol><symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol><symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol></defs></svg>
   <div class="phone">
     <div class="status-bar"><span>9:41</span><span class="group"><svg class="ic"><use href="#i-wifi"/></svg> <svg class="ic"><use href="#i-battery"/></svg></span></div>
     <div class="appbar"><a class="back" href="../home.html" aria-label="뒤로"><svg class="ic"><use href="#i-back"/></svg></a><span class="title">작물 시세</span><a class="menu" href="../menu.html" aria-label="메뉴"><svg class="ic"><use href="#i-menu"/></svg></a></div>
@@ -18,38 +18,55 @@
       <h1 class="headline" id="headline"><b>오이</b> 도매 시세<br>3건이에요</h1>
       <p class="head-sub">2026.05.27 기준</p>
 
-      <!-- 작물 탭 -->
+      <!-- 작물 탭 (JS 생성) -->
       <div class="tabs" id="tabs">
-        <button class="tab on" data-c="오이">오이</button>
-        <button class="tab" data-c="딸기">딸기</button>
-        <a class="tab-add" href="pricesearch.html" aria-label="작물 추가"><svg class="ic"><use href="#i-plus"/></svg></a>
+        <button class="tab-add" id="addCrop" aria-label="작물 추가"><svg class="ic"><use href="#i-plus"/></svg></button>
       </div>
 
       <!-- 그래프 카드 + 단위/품종 리스트 -->
       <div id="pane"></div>
     </div>
+
+    <!-- 작물 추가 바텀시트 -->
+    <div class="cp-scrim" id="cpScrim">
+      <div class="cp-sheet" id="cpSheet">
+        <div class="cp-grip"></div>
+        <h3 class="cp-head">작물 추가</h3>
+        <div class="cp-search"><svg class="ic"><use href="#i-search"/></svg><input id="cpInput" type="text" placeholder="작물 검색" autocomplete="off"/></div>
+        <div class="cp-list" id="cpList"></div>
+      </div>
+    </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
-    // KAMIS daily_sales_list — 작물별 단위/품종 항목들 (도매)
-    var CROPS = {
-      '오이': {
-        repr: { unit: '10kg · 백다다기', now: 38400, dir: 'up', val: '3.2' },
-        chart: { y1: 32100, m1: 35800, d1: 37200, now: 38400 },
-        items: [
-          { meta: '10kg · 백다다기', price: 38400, dir: 'up', val: '3.2' },
-          { meta: '10kg · 가시',     price: 41200, dir: 'up', val: '2.8' },
-          { meta: '100개',          price: 25600, dir: 'down', val: '1.2' }
-        ]
-      },
-      '딸기': {
-        repr: { unit: '2kg · 상품', now: 24800, dir: 'down', val: '1.5' },
-        chart: { y1: 26900, m1: 28400, d1: 25180, now: 24800 },
-        items: [
-          { meta: '2kg · 상품', price: 24800, dir: 'down', val: '1.5' },
-          { meta: '2kg · 중품', price: 19500, dir: 'down', val: '2.1' }
-        ]
-      }
+    // KAMIS daily_sales_list — 작물 라이브러리 (도매 데모 데이터)
+    var LIB = {
+      '오이': { repr:{unit:'10kg · 백다다기', now:38400, dir:'up', val:'3.2'}, chart:{y1:32100,m1:35800,d1:37200,now:38400}, items:[
+        {meta:'10kg · 백다다기', price:38400, dir:'up', val:'3.2'}, {meta:'10kg · 가시', price:41200, dir:'up', val:'2.8'}, {meta:'100개', price:25600, dir:'down', val:'1.2'} ] },
+      '딸기': { repr:{unit:'2kg · 상품', now:24800, dir:'down', val:'1.5'}, chart:{y1:26900,m1:28400,d1:25180,now:24800}, items:[
+        {meta:'2kg · 상품', price:24800, dir:'down', val:'1.5'}, {meta:'2kg · 중품', price:19500, dir:'down', val:'2.1'} ] },
+      '토마토': { repr:{unit:'10kg · 완숙', now:28500, dir:'down', val:'2.7'}, chart:{y1:31200,m1:30100,d1:29300,now:28500}, items:[
+        {meta:'10kg · 완숙', price:28500, dir:'down', val:'2.7'}, {meta:'5kg · 중품', price:18200, dir:'down', val:'1.5'} ] },
+      '고추': { repr:{unit:'10kg · 청양', now:52000, dir:'up', val:'7.8'}, chart:{y1:44800,m1:48200,d1:49500,now:52000}, items:[
+        {meta:'10kg · 청양', price:52000, dir:'up', val:'7.8'}, {meta:'10kg · 홍고추', price:68400, dir:'up', val:'9.2'} ] },
+      '가지': { repr:{unit:'10kg · 상품', now:24800, dir:'up', val:'3.2'}, chart:{y1:21500,m1:22800,d1:24000,now:24800}, items:[
+        {meta:'10kg · 상품', price:24800, dir:'up', val:'3.2'} ] },
+      '배추': { repr:{unit:'10kg · 상품', now:12200, dir:'down', val:'5.4'}, chart:{y1:15600,m1:13900,d1:12900,now:12200}, items:[
+        {meta:'10kg · 상품', price:12200, dir:'down', val:'5.4'}, {meta:'10kg · 절임', price:18500, dir:'down', val:'2.1'} ] },
+      '무': { repr:{unit:'20kg · 상품', now:18600, dir:'up', val:'2.1'}, chart:{y1:16800,m1:17500,d1:18200,now:18600}, items:[
+        {meta:'20kg · 상품', price:18600, dir:'up', val:'2.1'} ] },
+      '대파': { repr:{unit:'1kg · 상품', now:2800, dir:'up', val:'4.5'}, chart:{y1:2300,m1:2550,d1:2680,now:2800}, items:[
+        {meta:'1kg · 상품', price:2800, dir:'up', val:'4.5'} ] },
+      '양파': { repr:{unit:'20kg · 상품', now:34500, dir:'up', val:'1.8'}, chart:{y1:31200,m1:33100,d1:33900,now:34500}, items:[
+        {meta:'20kg · 상품', price:34500, dir:'up', val:'1.8'}, {meta:'1kg', price:2180, dir:'up', val:'2.4'} ] },
+      '감자': { repr:{unit:'20kg · 수미', now:36400, dir:'up', val:'1.2'}, chart:{y1:33800,m1:35100,d1:36000,now:36400}, items:[
+        {meta:'20kg · 수미', price:36400, dir:'up', val:'1.2'} ] },
+      '상추': { repr:{unit:'4kg · 청상추', now:16500, dir:'down', val:'3.0'}, chart:{y1:19200,m1:17800,d1:17100,now:16500}, items:[
+        {meta:'4kg · 청상추', price:16500, dir:'down', val:'3.0'} ] },
+      '마늘': { repr:{unit:'1kg · 깐마늘', now:12400, dir:'down', val:'0.8'}, chart:{y1:13100,m1:12800,d1:12500,now:12400}, items:[
+        {meta:'1kg · 깐마늘', price:12400, dir:'down', val:'0.8'}, {meta:'1kg · 통마늘', price:8200, dir:'down', val:'1.3'} ] }
     };
+    var added = ['오이', '딸기'];   // 사용자가 추가한 작물 탭
+    var current = '오이';
 
     function fmt(n){ return n.toLocaleString('ko-KR') + '원'; }
 
@@ -109,7 +126,7 @@
     }
 
     function render(name){
-      var c = CROPS[name];
+      var c = LIB[name];
       var R = c.repr;
       var rArr = R.dir==='up' ? '▲' : '▼';
 
@@ -132,10 +149,8 @@
       + c.items.map(function(it){
           var arr = it.dir==='up' ? '▲' : '▼';
           return '<div class="prow">'
-            + '<div class="pm">'
-            +   '<div class="meta">'+it.meta+'</div>'
-            +   '<div class="pp-row"><span class="pp">'+fmt(it.price)+'</span><span class="pd '+it.dir+'"><span class="arr">'+arr+'</span>'+it.val+'%</span></div>'
-            + '</div>'
+            + '<div class="pm"><div class="meta">'+it.meta+'</div></div>'
+            + '<div class="amount"><span class="pp">'+fmt(it.price)+'</span><span class="pd '+it.dir+'"><span class="arr">'+arr+'</span>'+it.val+'%</span></div>'
             + '</div>';
         }).join('')
       + '</div>';
@@ -144,13 +159,67 @@
       drawChart(c.chart, R.dir);
     }
 
-    document.querySelectorAll('.tab[data-c]').forEach(function(t){
-      t.addEventListener('click', function(){
-        document.querySelectorAll('.tab[data-c]').forEach(function(x){ x.classList.remove('on'); });
-        t.classList.add('on');
-        render(t.dataset.c);
+    var tabsEl = document.getElementById('tabs');
+    var addBtn = document.getElementById('addCrop');
+
+    // 작물 탭 동적 생성 (＋ 버튼 앞에 삽입)
+    function buildTabs(){
+      tabsEl.querySelectorAll('.tab[data-c]').forEach(function(t){ t.remove(); });
+      added.forEach(function(name){
+        var b = document.createElement('button');
+        b.className = 'tab' + (name === current ? ' on' : '');
+        b.setAttribute('data-c', name);
+        b.textContent = name;
+        tabsEl.insertBefore(b, addBtn);
       });
+    }
+    function setActive(name){
+      current = name;
+      tabsEl.querySelectorAll('.tab[data-c]').forEach(function(x){ x.classList.toggle('on', x.dataset.c === name); });
+      render(name);
+    }
+    tabsEl.addEventListener('click', function(e){
+      var t = e.target.closest('.tab[data-c]');
+      if (t) setActive(t.dataset.c);
     });
+
+    // 작물 추가 바텀시트
+    var scrim = document.getElementById('cpScrim');
+    var sheet = document.getElementById('cpSheet');
+    var cpInput = document.getElementById('cpInput');
+    var cpList = document.getElementById('cpList');
+
+    function renderCpList(){
+      var q = (cpInput.value || '').trim();
+      var keys = Object.keys(LIB).filter(function(k){ return !q || k.indexOf(q) !== -1; });
+      if (!keys.length){ cpList.innerHTML = '<div class="cp-empty">검색 결과가 없어요</div>'; return; }
+      cpList.innerHTML = keys.map(function(k){
+        var on = added.indexOf(k) !== -1;
+        return '<button class="cp-item" data-k="' + k + '"' + (on ? ' disabled' : '') + '>'
+          + '<span class="cp-nm">' + k + '</span>'
+          + (on ? '<span class="cp-added">추가됨</span>' : '<svg class="ic cp-add"><use href="#i-plus"/></svg>')
+          + '</button>';
+      }).join('');
+    }
+    function openSheet(){ renderCpList(); scrim.classList.add('on'); sheet.classList.add('on'); }
+    function closeSheet(){ scrim.classList.remove('on'); sheet.classList.remove('on'); cpInput.value = ''; }
+
+    addBtn.addEventListener('click', openSheet);
+    scrim.addEventListener('click', function(e){ if (!e.target.closest('.cp-sheet')) closeSheet(); });
+    cpInput.addEventListener('input', renderCpList);
+    cpList.addEventListener('click', function(e){
+      var it = e.target.closest('.cp-item');
+      if (!it || it.disabled) return;
+      var k = it.dataset.k;
+      if (added.indexOf(k) === -1){
+        added.push(k);
+        buildTabs();
+        setActive(k);      // 추가한 작물로 전환 (시트는 열린 채 유지)
+        renderCpList();
+      }
+    });
+
+    buildTabs();
     render('오이');
   </script>
 

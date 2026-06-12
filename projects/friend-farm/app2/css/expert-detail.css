@@ -34,9 +34,11 @@ body { background: #E8E6DF; display: flex; justify-content: center; padding: 24p
 .scroll { flex: 1; overflow-y: auto; padding: 8px 20px 20px; }
 
 .q-head { padding: 8px 2px 16px; border-bottom: 1px solid var(--line); }
-.q-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 800; padding: 3px 9px; border-radius: 999px; background: var(--green-soft); color: var(--green); flex-shrink: 0; }
+.q-badge { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 600; letter-spacing: -.01em; padding: 6px 13px; border-radius: 999px; background: var(--green-soft); color: var(--green-2); margin-bottom: 12px; margin-left: -13px; }
+.q-badge .bchk { width: 15px; height: 15px; border-radius: 50%; background: var(--green); display: grid; place-items: center; flex-shrink: 0; box-shadow: 0 0 0 3px rgba(52,171,42,.18); }
+.q-badge .bchk .ic { width: 9px; height: 9px; color: #fff; }
 .q-badge.wait { background: var(--field-bg); color: var(--gray); }
-.q-badge .ic { font-size: 13px; }
+.q-badge.wait .bchk { background: var(--gray); box-shadow: 0 0 0 3px rgba(138,142,147,.18); }
 .q-title { font-size: 20px; font-weight: 800; line-height: 1.4; }
 .q-meta { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--gray); font-weight: 600; margin-top: 12px; }
 .q-meta .cat { color: var(--sage); font-weight: 700; }

@@ -6,7 +6,7 @@ body { background: #E8E6DF; display: flex; justify-content: center; padding: 24p
 .scroll { overflow-x: hidden; flex: 1; overflow-y: auto; padding: 0 24px 24px; display: flex; flex-direction: column; }
 
 /* 검색 히어로 (주인공) */
-.hero { padding-top: 112px; }
+.hero { padding-top: 48px; }
 .hero h1 { font-size: 33px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.3; margin: 0 0 12px; }
 .hero h1 b { color: var(--green); }
 .hero .sub { font-size: 15px; color: var(--gray); font-weight: 500; margin: 0 0 40px; line-height: 1.62; }
