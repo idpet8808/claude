@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KS팜 — 농장 수정</title>
+<link rel="stylesheet" href="../css/common.css"/>
+<link rel="stylesheet" href="../css/components.css"/>
+<link rel="stylesheet" href="../css/farm-register.css"/>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14 0"/><path d="M8.5 16.05a6 6 0 0 1 7 0"/><path d="M2 8.82a15 15 0 0 1 20 0"/><line x1="12" y1="20" x2="12" y2="20"/></symbol><symbol id="i-battery" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="8" width="18" height="9" rx="2"/><path d="M22 11v3"/></symbol><symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 6 9 12 15 18"/></symbol><symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></symbol><symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-5.6 7-11a7 7 0 0 0-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol><symbol id="i-cv-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></symbol><symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol><symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></symbol><symbol id="i-camera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7h2a2 2 0 0 0 2-2a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1a2 2 0 0 0 2 2h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2"/><circle cx="12" cy="13" r="3"/></symbol><symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol><symbol id="i-check-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></symbol></defs></svg>
+  <div class="phone">
+    <div class="status-bar"><span>9:41</span><span class="group"><svg class="ic"><use href="#i-wifi"/></svg> <svg class="ic"><use href="#i-battery"/></svg></span></div>
+    <div class="appbar"><a class="back" href="../farm/farm-detail.html" aria-label="뒤로"><svg class="ic"><use href="#i-back"/></svg></a><span class="title">농장 수정</span><a class="menu" href="../menu.html" aria-label="메뉴"><svg class="ic"><use href="#i-menu"/></svg></a></div>
+<div class="scroll">
+      <h2 class="lead">농장 정보를<br>수정해 주세요</h2>
+
+      <!-- 농장정보 -->
+      <div class="sec-label">농장정보</div>
+      <div class="field">
+        <label class="lab">농장이름 <span class="req">*</span></label>
+        <div class="box"><input class="inp" type="text" value="강남 역삼 농원" /></div>
+      </div>
+      <div class="field">
+        <label class="lab">농장위치 <span class="req">*</span></label>
+        <button class="select-box" id="openRegion"><svg class="ic pin" style="margin-right:6px"><use href="#i-pin"/></svg><span class="val">서울특별시 종로구</span><svg class="ic cv"><use href="#i-cv-down"/></svg></button>
+      </div>
+      <div class="field">
+        <label class="lab">재배방법</label>
+        <div class="radio-row">
+          <button class="radio on" data-radio="method"><span class="dot"></span>토경재배</button>
+          <button class="radio" data-radio="method"><span class="dot"></span>수경재배</button>
+        </div>
+      </div>
+
+      <!-- 면적정보 -->
+      <div class="sec-label">면적정보</div>
+      <div class="unit-toggle">
+        <button class="on" data-unit>㎡</button>
+        <button data-unit>평</button>
+      </div>
+      <div class="field">
+        <label class="lab">재배면적</label>
+        <div class="box"><input class="inp" type="number" value="1200" /></div>
+      </div>
+
+      <!-- 재배작물 -->
+      <div class="sec-label">재배작물 정보</div>
+      <p class="sec-guide">재배 중인 작물을 최소 1가지 이상 추가해 주세요.</p>
+      <button class="btn-add" id="openCrop"><svg class="ic"><use href="#i-plus"/></svg> 작물 추가</button>
+
+      <div class="added-wrap">
+        <div class="added-label">추가된 작물 <span class="added-n">2</span></div>
+        <div class="added-list">
+          <div class="added-item">
+            <div class="ai-main"><span class="ai-name">오이 (백다다기)</span><span class="ai-meta">500주</span></div>
+            <button class="ai-x"><svg class="ic"><use href="#i-x"/></svg></button>
+          </div>
+          <div class="added-item">
+            <div class="ai-main"><span class="ai-name">딸기</span></div>
+            <button class="ai-x"><svg class="ic"><use href="#i-x"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider-line"></div>
+
+      <!-- 기타 -->
+      <div class="sec-label">기타</div>
+      <div class="field">
+        <label class="lab">대표 재배작물</label>
+        <div class="select-box"><span class="val">오이 (백다다기)</span><svg class="ic cv"><use href="#i-cv-down"/></svg></div>
+      </div>
+
+      <div class="field">
+        <label class="lab">농장 사진 (선택)</label>
+        <p class="photo-help">농장 사진을 등록하면 한눈에 알아보기 좋아요. 최대 5장.</p>
+        <div class="photo-row">
+          <button class="add-tile">
+            <svg class="ic"><use href="#i-camera"/></svg>
+            <span class="cnt">3 / 5</span>
+          </button>
+          <div class="pthumb"><button class="x"><svg class="ic"><use href="#i-x"/></svg></button><span class="rep-tag">대표</span></div>
+          <div class="pthumb"><button class="x"><svg class="ic"><use href="#i-x"/></svg></button></div>
+          <div class="pthumb"><button class="x"><svg class="ic"><use href="#i-x"/></svg></button></div>
+        </div>
+      </div>
+
+      <div class="rep-row">
+        <span class="t">대표농장으로 설정</span>
+        <button class="toggle on" data-toggle><span class="knob"></span></button>
+      </div>
+    </div>
+
+    <div class="foot">
+      <button class="btn-submit">수정 완료</button>
+    </div>
+
+    <!-- 작물 선택 바텀시트 -->
+    <div class="sheet-scrim" id="cropSheet">
+      <div class="sheet">
+        <div class="sheet-handle"></div>
+        <div class="sheet-title">재배작물 선택</div>
+        <div class="sheet-search"><div class="box"><svg class="ic"><use href="#i-search"/></svg><input type="text" placeholder="작물 이름 검색" id="cropSearch" /></div></div>
+        <div class="two-col">
+          <div class="col-item" id="cropCol">
+            <button class="ci on" data-crop="오이">오이</button>
+            <button class="ci" data-crop="토마토">토마토</button>
+            <button class="ci" data-crop="딸기">딸기</button>
+            <button class="ci" data-crop="상추">상추</button>
+            <button class="ci" data-crop="고추">고추</button>
+            <button class="ci" data-crop="파프리카">파프리카</button>
+            <button class="ci" data-crop="배추">배추</button>
+            <button class="ci" data-crop="감자">감자</button>
+            <button class="ci" data-crop="고구마">고구마</button>
+            <button class="ci" data-crop="옥수수">옥수수</button>
+          </div>
+          <div class="col-variety" id="varietyCol"></div>
+        </div>
+        <div class="sheet-foot">
+          <div class="sf-selected" id="sfSelected">오이 선택됨</div>
+          <div class="sf-row">
+            <div class="sf-jusu"><input type="number" id="sfJusu" placeholder="재식주수 (선택)" /><span class="unit">주</span></div>
+            <button class="sf-add" id="sfAdd">추가</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 지역 선택 바텀시트 -->
+    <div class="sheet-scrim" id="regionSheet">
+      <div class="sheet">
+        <div class="sheet-handle"></div>
+        <div class="sheet-title">농장 지역 선택</div>
+        <div class="two-col">
+          <div class="col-item" id="sidoCol">
+            <button class="ci on" data-sido="서울특별시">서울특별시</button>
+            <button class="ci" data-sido="경기도">경기도</button>
+            <button class="ci" data-sido="강원특별자치도">강원특별자치도</button>
+            <button class="ci" data-sido="충청북도">충청북도</button>
+            <button class="ci" data-sido="충청남도">충청남도</button>
+            <button class="ci" data-sido="전북특별자치도">전북특별자치도</button>
+            <button class="ci" data-sido="전라남도">전라남도</button>
+            <button class="ci" data-sido="경상북도">경상북도</button>
+            <button class="ci" data-sido="경상남도">경상남도</button>
+            <button class="ci" data-sido="제주특별자치도">제주특별자치도</button>
+          </div>
+          <div class="col-variety" id="sigunguCol"></div>
+        </div>
+        <div class="sheet-foot">
+          <div class="sf-selected" id="regionSelected">지역을 선택해 주세요</div>
+          <button class="sf-confirm" id="regionConfirm" disabled>확인</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 수정 완료 모달 -->
+    <div class="modal-scrim" id="doneModal">
+      <div class="modal">
+        <div class="modal-ic"><svg class="ic"><use href="#i-check-c"/></svg></div>
+        <div class="modal-title">농장 정보 수정 완료</div>
+        <div class="modal-desc">농장 정보를 수정했어요.</div>
+        <button class="modal-btn" id="doneOk">확인</button>
+      </div>
+    </div>
+<script src="../js/farm-register.js"></script>
+
+  </div>
+
+</body>
+</html>

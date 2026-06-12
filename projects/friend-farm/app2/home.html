@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KS팜 메인 MO - 미니멀(토스풍)</title>
+  <link rel="stylesheet" href="css/common.css"/>
+  <link rel="stylesheet" href="css/components.css"/>
+  <link rel="stylesheet" href="css/home.css"/>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="i-wifi-dot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="18" r="0.5" fill="currentColor" stroke="none"/><path d="M9.17 15.17a4 4 0 0 1 5.66 0"/><path d="M6.34 12.34a8 8 0 0 1 11.32 0"/><path d="M3.51 9.51a12 12 0 0 1 16.98 0"/></symbol><symbol id="i-battery-fill" viewBox="0 0 24 24" fill="currentColor"><rect x="9" y="3" width="6" height="2.5" rx="1"/><rect x="5.5" y="5.5" width="13" height="16" rx="2.5"/></symbol><symbol id="i-pin-fill" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M12 2a8 8 0 0 1 8 8c0 4.418-3.582 12-8 12s-8-7.582-8-12a8 8 0 0 1 8-8zm0 5a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" clip-rule="evenodd"/></symbol><symbol id="i-chev-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></symbol><symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3H4a4 4 0 0 0 2-3v-3a7 7 0 0 1 4-6"/><path d="M9 17v1a3 3 0 0 0 6 0v-1"/></symbol><symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></symbol><symbol id="i-cloud-rain" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 16a4.6 4.4 0 0 1 0-9a5 4.5 0 0 1 11 2h1a3.5 3.5 0 0 1 0 7"/><path d="M10 19l-1 2"/><path d="M14 19l-1 2"/><path d="M12 21l-1 1"/></symbol><symbol id="i-camera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7h2a2 2 0 0 0 2-2a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1a2 2 0 0 0 2 2h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2"/><circle cx="12" cy="13" r="3"/></symbol><symbol id="i-video" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2.6"/><path d="M10.4 9.6l4 2.4-4 2.4z" fill="currentColor" stroke="none"/></symbol><symbol id="i-talk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H9l-4 4v-4H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1"/><path d="M8 9h8"/><path d="M8 12.5h5"/></symbol><symbol id="i-plant" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 14h9l-1.1 6H8.6z"/><path d="M12 14c0-3.2-.4-5.2-3.2-6.2"/><path d="M12 14c0-2.2 1-4.2 3.8-4.6"/></symbol><symbol id="i-chev-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></symbol><symbol id="i-star-fill" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 18.6 6.1 21.3l1.2-6.6L2.5 9.5l6.6-.9L12 2.5z"/></symbol><symbol id="i-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M8 7h9v9"/></symbol><symbol id="i-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7l10 10"/><path d="M17 8v9H8"/></symbol><symbol id="i-notebook" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h11a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path d="M13 8h3"/><path d="M13 12h3"/><path d="M8 8h2"/><path d="M8 12h2"/><path d="M8 16h2"/></symbol><symbol id="i-check-fill" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 1 0 20a10 10 0 0 1 0-20zm4.71 7.29a1 1 0 0 0-1.42 0L11 13.59l-2.29-2.3a1 1 0 0 0-1.42 1.42l3 3a1 1 0 0 0 1.42 0l5-5a1 1 0 0 0 0-1.42z"/></symbol><symbol id="i-gift" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="8" width="17" height="4" rx="1"/><path d="M4.5 12v7.5a1 1 0 0 0 1 1h13a1 1 0 0 0 1-1V12"/><path d="M12 8v12.5"/><path d="M12 8C12 8 11 3.5 8 3.5a2.3 2.3 0 0 0 0 4.5h4"/><path d="M12 8C12 8 13 3.5 16 3.5a2.3 2.3 0 0 1 0 4.5h-4"/></symbol><symbol id="i-bug" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 9V7a3 3 0 0 1 6 0v2"/><rect x="8" y="9" width="8" height="12" rx="4"/><path d="M19 9l-3 2"/><path d="M5 9l3 2"/><path d="M19 15h-3"/><path d="M8 15H5"/><path d="M19 21l-3-2"/><path d="M5 21l3-2"/></symbol><symbol id="i-sprout" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-9.5"/><path d="M12 11.5C12 7.5 9 5.5 4 5.5c0 4 2.2 6.8 8 6.8z"/><path d="M12 13.5c0-3 2.4-5 7-5c0 3.4-2 5.8-7 5.8z"/></symbol><symbol id="i-leaf-grow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21c.5-4.5 2.5-8 7-10"/><path d="M9 18c6.218 0 10.5-3.288 11-12v-2h-4.014c-9 0-11.986 4-12 9c0 1 0 3 2 5h3z"/></symbol><symbol id="i-home-fill" viewBox="0 0 24 24" fill="currentColor"><path d="M12.71 2.29a1 1 0 0 0-1.42 0l-9 9a1 1 0 0 0 1.42 1.42L4 12.41V20a2 2 0 0 0 2 2h3v-7h6v7h3a2 2 0 0 0 2-2v-7.59l.29.3a1 1 0 0 0 1.42-1.42l-9-9z"/></symbol><symbol id="i-chatbot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-4l-4 4l-4-4H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2"/><circle cx="9.5" cy="10" r="0.6" fill="currentColor"/><circle cx="14.5" cy="10" r="0.6" fill="currentColor"/></symbol><symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M4 21v-2a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v2"/></symbol></defs></svg>
+
+  <h1 class="sr-only">KS팜 메인 화면 - 미니멀 버전</h1>
+
+  <main class="phone" aria-label="KS팜 미니멀 미리보기">
+    <div class="app">
+      <header class="app-head">
+      <div class="status-bar">
+        <span>9:41</span>
+        <span class="group"><svg class="ic"><use href="#i-wifi-dot"/></svg> <svg class="ic"><use href="#i-battery-fill"/></svg></span>
+      </div>
+
+      <div class="tabs" role="tablist">
+        <button class="tab-btn active" data-tab="friend" aria-current="page">농사친구</button>
+        <button class="tab-btn" data-tab="farm">내 농장 관리</button>
+        <a class="icon-btn tab-menu" href="menu.html" aria-label="전체 메뉴"><svg class="ic"><use href="#i-menu"/></svg></a>
+      </div>
+      </header>
+
+      <div class="tab-panel" id="panel-friend">
+<section class="hero hero-img">
+        <div class="hi">김팜님, 안녕하세요</div>
+        <h2 id="heroTitle">농사 고민,<br>같이 풀어드릴게요</h2>
+        <img class="hero-mascot" src="img/home-hero-mascot.png" alt="농사친구 마스코트">
+      </section>
+
+<a class="cta" href="chat/ask.html" aria-label="농사친구에게 질문하기">
+        <span class="c-ic"><svg class="ic"><use href="#i-talk"/></svg></span>
+        <span class="c-tx">
+          <strong>농사친구에게 질문하기</strong>
+          <span>작물 · 재배 · 병해충 무엇이든 물어보세요</span>
+        </span>
+        <svg class="ic"><use href="#i-chev-right"/></svg>
+      </a>
+      <a class="cta cta-photo" href="diagnose/diagnose-input.html" aria-label="작물 병해진단">
+        <span class="c-ic"><svg class="ic"><use href="#i-camera"/></svg></span>
+        <span class="c-tx">
+          <strong>작물 병해진단</strong>
+          <span>사진 한 장이면 작물 상태를 살펴봐 드려요</span>
+        </span>
+        <svg class="ic"><use href="#i-chev-right"/></svg>
+      </a>
+
+      <section class="sec">
+        <div class="sec-head"><h3>오늘의 맞춤 정보</h3></div>
+        <div class="cats">
+          <a class="cat c-gold" href="support/support-list.html"><span class="ci"><svg class="ic"><use href="#i-gift"/></svg></span><strong>지원사업</strong></a>
+          <a class="cat c-clay" href="pestsearch/pestsearch-home.html"><span class="ci"><svg class="ic"><use href="#i-bug"/></svg></span><strong>병해충</strong></a>
+          <a class="cat c-sage" href="cropguide/cropguide-list.html"><span class="ci"><svg class="ic"><use href="#i-sprout"/></svg></span><strong>재배 가이드</strong></a>
+          <a class="cat c-green" href="community/board.html"><span class="ci"><svg class="ic"><use href="#i-talk"/></svg></span><strong>영농 이야기</strong></a>
+          <a class="cat c-blue" href="video/video-list.html"><span class="ci"><svg class="ic"><use href="#i-video"/></svg></span><strong>농업 영상</strong></a>
+        </div>
+        <div class="card feed">
+          <a class="row" href="support/support-list.html">
+            <span class="ftype dday">D-3</span>
+            <div class="body"><strong>스마트팜 기자재 지원</strong><div class="kw"><span class="k">최대 5,000만원</span><span class="k">시설원예 우대</span></div></div>
+            <svg class="ic chev"><use href="#i-chev-right"/></svg>
+          </a>
+          <a class="row" href="pestsearch/pestsearch-home.html">
+            <span class="ftype disease"><svg class="ic"><use href="#i-bug"/></svg></span>
+            <div class="body"><strong>잎곰팡이병 예방 가이드</strong><div class="kw"><span class="k">통풍 관리</span><span class="k">습도 조절</span></div></div>
+            <svg class="ic chev"><use href="#i-chev-right"/></svg>
+          </a>
+          <a class="row" href="pestsearch/pestsearch-home.html">
+            <span class="ftype info"><svg class="ic"><use href="#i-leaf-grow"/></svg></span>
+            <div class="body"><strong>흰가루병 발생 시기</strong><div class="kw"><span class="k">5~6월 발생</span><span class="k">집중 관리</span></div></div>
+            <svg class="ic chev"><use href="#i-chev-right"/></svg>
+          </a>
+        </div>
+      </section>
+
+      <section class="sec">
+        <div class="sec-head"><h3>영농 이야기</h3><a class="all-link" href="community/board.html">전체보기 <svg class="ic"><use href="#i-chev-right"/></svg></a></div>
+        <div class="story-row">
+          <a class="post-card" href="community/board.html">
+            <span class="post-img" style="background:url('https://loremflickr.com/300/300/strawberry,harvest?lock=11') center/cover no-repeat, linear-gradient(150deg,#EBDCC4 0%,#C97E58 58%,#8A4F33 100%)"><span class="post-like"><i class="hrt">♥</i>42</span></span>
+            <span class="post-cap">올해 첫 딸기 수확했어요</span>
+            <span class="post-user">딸기농부 · 2시간</span>
+          </a>
+          <a class="post-card" href="community/board.html">
+            <span class="post-img" style="background:url('https://loremflickr.com/300/300/tomato,seedling?lock=22') center/cover no-repeat, linear-gradient(150deg,#D9E4C5 0%,#8FB36E 58%,#4F7E45 100%)"><span class="post-like"><i class="hrt">♥</i>18</span></span>
+            <span class="post-cap">토마토 모종 심는 중입니다</span>
+            <span class="post-user">양평비닐 · 5시간</span>
+          </a>
+          <a class="post-card" href="community/board.html">
+            <span class="post-img" style="background:url('https://loremflickr.com/300/300/plant,leaf?lock=33') center/cover no-repeat, linear-gradient(150deg,#E3E7D0 0%,#A7B97E 55%,#5E7A3E 100%)"><span class="post-like"><i class="hrt">♥</i>7</span></span>
+            <span class="post-cap">이 잎 왜 이런지 아시는 분?</span>
+            <span class="post-user">초보농부 · 1일</span>
+          </a>
+          <a class="post-card" href="community/board.html">
+            <span class="post-img" style="background:url('https://loremflickr.com/300/300/melon,field?lock=44') center/cover no-repeat, linear-gradient(150deg,#E7DFC9 0%,#B99A5E 55%,#7A5E2E 100%)"><span class="post-like"><i class="hrt">♥</i>31</span></span>
+            <span class="post-cap">참외 밭 정리 끝!</span>
+            <span class="post-user">성주참외 · 1일</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="sec">
+        <div class="sec-head"><h3>농업 영상</h3><a class="all-link" href="video/video-list.html">전체보기 <svg class="ic"><use href="#i-chev-right"/></svg></a></div>
+        <a class="video-card" href="video/video-list.html">
+          <span class="video-thumb" style="background:url('https://loremflickr.com/320/200/greenhouse,strawberry?lock=55') center/cover no-repeat, linear-gradient(135deg,#D5E2C7 0%,#9CC07E 45%,#5C8E50 100%)"><i class="video-play"></i></span>
+          <div class="video-body">
+            <strong>딸기 수확량 늘리는 스마트 관수 노하우</strong>
+            <span class="video-meta">전문가 영상 · 12:34</span>
+          </div>
+        </a>
+      </section>
+      </div>
+
+      <div class="tab-panel" id="panel-farm" hidden>
+      <section class="sec sec-first">
+        <div class="sec-head"><h3>내 농장</h3><a class="all-link" href="farm/farmlist.html">전체보기 <svg class="ic"><use href="#i-chev-right"/></svg></a></div>
+        <div class="wx-pill">
+          <span class="wx-left">
+            <svg class="ic wx-cloud"><use href="#i-cloud-rain"/></svg>
+            <b class="wx-temp">23.1°</b>
+          </span>
+          <span class="wx-right">
+            <span class="wx-m"><em>습도</em><b>82%</b></span>
+            <span class="wx-m"><em>강수</em><b>60%</b></span>
+          </span>
+        </div>
+        <a class="farm-card" href="farm/farm-detail.html">
+          <span class="farm-thumb has-photo" style="background:url('https://loremflickr.com/120/120/cucumber,greenhouse?lock=66') center/cover no-repeat, linear-gradient(160deg,#F2F9F4 0%,var(--green-soft) 100%)"></span>
+          <div class="farm-meta">
+            <span class="farm-name-row">
+              <strong class="farm-name">강남 역삼 농원</strong>
+              <span class="rep-badge">대표</span>
+            </span>
+            <span class="farm-sub">서울특별시 종로구 · 오이(백다다기) · 토경재배</span>
+          </div>
+        </a>
+      </section>
+
+
+
+<section class="sec">
+        <div class="sec-head"><h3>오늘의 작물 시세</h3><span class="date">5월 22일 기준</span></div>
+        <div class="card">
+          <div class="row">
+            <span class="token">🥒</span>
+            <div class="body"><div class="name-line"><strong>오이</strong><svg class="ic star"><use href="#i-star-fill"/></svg></div><span>도매 · 10kg</span></div>
+            <div class="amount"><div class="p">32,400<span class="won">원</span></div><div class="d up"><svg class="ic"><use href="#i-up"/></svg> 6.2%</div></div>
+          </div>
+          <div class="row">
+            <span class="token">🍓</span>
+            <div class="body"><div class="name-line"><strong>딸기</strong><svg class="ic star"><use href="#i-star-fill"/></svg></div><span>도매 · 2kg</span></div>
+            <div class="amount"><div class="p">18,900<span class="won">원</span></div><div class="d down"><svg class="ic"><use href="#i-down"/></svg> 2.1%</div></div>
+          </div>
+          <a class="more-row" href="price/pricehome.html">전체 시세 보기 <svg class="ic"><use href="#i-chev-right"/></svg></a>
+        </div>
+      </section>
+
+      <section class="sec">
+        <div class="sec-head"><h3>전문가 질문 현황</h3><a href="expert/expert-list.html">전체보기</a></div>
+        <a class="card q" href="expert/expert-detail.html">
+          <div class="q-top"><span class="pill gold">미답변</span><span class="meta">노지재배 · 병해충 · 3시간 전</span></div>
+          <h4>고추 잎이 노랗게 변하는데 원인이 뭘까요?</h4>
+          <div class="answer waiting">전문가 답변을 기다리고 있어요</div>
+        </a>
+        <a class="card q" href="expert/expert-detail.html">
+          <div class="q-top"><span class="pill green">답변완료</span><span class="meta">스마트팜 · 환경제어 · 2일 전</span></div>
+          <h4>딸기 하우스 적정 온습도가 궁금합니다</h4>
+          <div class="answer">생육 단계에 따라 주간·야간 온도 기준을 분리해 관리하는 것이 좋습니다.</div>
+        </a>
+      </section>
+      </div>
+    </div>
+
+    <nav class="bottom-nav" aria-label="하단 메뉴">
+      <a class="nav-item active" href="home.html"><svg class="ic"><use href="#i-home-fill"/></svg><span>홈</span></a>
+      <a class="nav-item" href="#"><svg class="ic"><use href="#i-chatbot"/></svg><span>AI상담</span></a>
+      <a class="nav-item cam" href="diagnose/diagnose-input.html"><div class="cc"><svg class="ic"><use href="#i-camera"/></svg></div><span>진단</span></a>
+      <a class="nav-item" href="diary/diary-list.html"><svg class="ic"><use href="#i-notebook"/></svg><span>일지</span></a>
+      <a class="nav-item" href="mypage/mypage.html"><svg class="ic"><use href="#i-user"/></svg><span>MY</span></a>
+    </nav>
+  </main>
+
+  <script src="js/home.js"></script>
+</body>
+</html>

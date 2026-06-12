@@ -1,0 +1,86 @@
+<!--META {"title":"농장 정보 조회","back":"farm/farmlist.html","menu":false,"right":"<button class=\"more\" id=\"moreBtn\" aria-label=\"더보기\"><svg class=\"ic\"><use href=\"#i-more\"/></svg></button>","css":"farm-detail.css"} -->
+<div class="scroll">
+      <!-- 농장 제목 -->
+      <div class="farm-head">
+        <span class="fh-badge">대표농장</span>
+        <h1 class="fh-name">강남 역삼 농원</h1>
+      </div>
+
+      <!-- 사진 스와이프 -->
+      <div class="gallery">
+        <div class="track" id="track">
+          <div class="slide"><img src="https://images.unsplash.com/photo-1592419044706-39796d40f98c?w=800&q=80" onerror="this.parentElement.classList.add('empty');this.parentElement.innerHTML='<svg class=&quot;ic&quot;><use href=&quot;#i-leaf&quot;/></svg>';"/></div>
+          <div class="slide"><img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800&q=80" onerror="this.parentElement.classList.add('empty');this.parentElement.innerHTML='<svg class=&quot;ic&quot;><use href=&quot;#i-leaf&quot;/></svg>';"/></div>
+          <div class="slide"><img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&q=80" onerror="this.parentElement.classList.add('empty');this.parentElement.innerHTML='<svg class=&quot;ic&quot;><use href=&quot;#i-leaf&quot;/></svg>';"/></div>
+        </div>
+        <span class="counter" id="counter">1 / 3</span>
+        <div class="dots" id="dots">
+          <span class="dot on"></span><span class="dot"></span><span class="dot"></span>
+        </div>
+      </div>
+
+      <!-- 농장 정보 -->
+      <div class="sec">
+        <div class="info-row">
+          <span class="k">농장위치</span>
+          <span class="v loc"><svg class="ic"><use href="#i-pin"/></svg> 서울특별시 종로구</span>
+        </div>
+        <div class="info-row">
+          <span class="k">재배방법</span>
+          <span class="v">토경재배</span>
+        </div>
+        <div class="info-row">
+          <span class="k">재배면적</span>
+          <span class="v">1,200 ㎡ <span class="sub">· 363 평</span></span>
+        </div>
+      </div>
+
+      <!-- 재배작물 -->
+      <div class="sec-title-out">재배작물 2종</div>
+      <div class="crop-list">
+        <div class="crop-item">
+          <span class="ci-dot"></span>
+          <span class="ci-name">오이 (백다다기)</span>
+          <span class="rep-mini">대표</span>
+          <span class="ci-meta">500주</span>
+        </div>
+        <div class="crop-item">
+          <span class="ci-dot"></span>
+          <span class="ci-name">딸기</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 더보기 액션 시트 -->
+    <div class="sheet-scrim" id="actionSheet">
+      <div class="action-sheet">
+        <div class="as-group">
+          <button class="as-item" id="asEdit">농장 수정</button>
+          <button class="as-item del" id="asDelete">농장 삭제</button>
+        </div>
+        <button class="as-cancel" id="asCancel">취소</button>
+      </div>
+    </div>
+
+    <!-- 삭제 확인 모달 -->
+    <div class="modal-scrim" id="confirmModal">
+      <div class="modal">
+        <div class="modal-title">농장을 삭제할까요?</div>
+        <div class="modal-desc">삭제하면 농장 정보와 작성한<br>일지를 되돌릴 수 없어요.</div>
+        <div class="modal-actions">
+          <button class="mbtn-ghost" id="confirmCancel">취소</button>
+          <button class="mbtn-danger" id="confirmDelete">삭제</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 삭제 완료 모달 -->
+    <div class="modal-scrim" id="deletedModal">
+      <div class="modal">
+        <div class="modal-ic"><svg class="ic"><use href="#i-check-c"/></svg></div>
+        <div class="modal-title">농장 정보 삭제 완료</div>
+        <div class="modal-desc">농장 정보를 삭제했어요.</div>
+        <button class="modal-btn" id="deletedOk">확인</button>
+      </div>
+    </div>
+<script src="{{A}}js/farm-detail.js"></script>

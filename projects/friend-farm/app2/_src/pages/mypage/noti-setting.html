@@ -1,0 +1,16 @@
+<!--META {"title":"알림 설정","back":"mypage/settings.html","menu":true,"css":"noti-setting.css"} -->
+<div class="scroll">
+      <div class="sec-label">전체 알림</div>
+      <div class="master"><span class="t">푸시 알림 받기</span><button class="toggle on" data-toggle><span class="knob"></span></button></div>
+      <p class="help">전체 알림을 끄면 아래 개별 알림도 받지 않아요.</p>
+
+      <div class="sec-label">알림 종류</div>
+      <div class="n-group">
+        <div class="row"><div class="txt"><div class="t">전문가 답변</div><div class="d">질문에 답변이 등록되면 알려드려요</div></div><button class="toggle on" data-toggle><span class="knob"></span></button></div>
+        <div class="row"><div class="txt"><div class="t">1:1 문의 답변</div><div class="d">문의하신 내용에 답변이 오면 알려드려요</div></div><button class="toggle on" data-toggle><span class="knob"></span></button></div>
+        <div class="row"><div class="txt"><div class="t">맞춤 정보 · 지원사업</div><div class="d">내 농장에 맞는 새 정보를 알려드려요</div></div><button class="toggle" data-toggle><span class="knob"></span></button></div>
+      </div>
+    </div>
+<script>
+    document.querySelectorAll('[data-toggle]').forEach(function(t){ t.addEventListener('click', function(){ t.classList.toggle('on'); }); });
+  </script>

@@ -1,0 +1,162 @@
+/* farmlist.css — 농장 정보 조회 페이지 고유 스타일
+ * 원본: _source/ksfarm_final/ksfarm_farmlist_mo_hybrid.html
+ * 공통 자산: _css/common.css
+ */
+
+/* --line .10 (common 기본값 유지) */
+
+/* §4 .phone 페이지 의도 */
+.phone {
+  position: relative;
+  min-height: 800px;
+  display: block;             /* common flex 해제 — farmlist는 FAB이 absolute */
+}
+
+/* body — 페이지 배경·여백 */
+body {
+  background: #E8E6DF;
+  display: flex;
+  justify-content: center;
+  padding: 24px 0 40px;
+}
+
+/* 상태바 */
+.status-bar {
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 22px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.status-bar .group { display: inline-flex; gap: 6px; align-items: center; }
+
+/* §5 .appbar 페이지별 디테일 */
+.appbar .back {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  color: var(--ink);
+}
+.appbar .back .ic { font-size: 22px; }
+.appbar .title {
+  flex: 1;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.appbar .sp { width: 38px; }
+
+/* 스크롤 영역 */
+.scroll { padding: 8px 22px 100px; }
+.count-row { padding: 12px 2px 6px; }
+.count-row .t {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.024em;
+}
+.count-row .n {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray);
+  margin-top: 5px;
+}
+
+.farm-list { display: flex; flex-direction: column; }
+
+.farm {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 20px 2px;
+  width: 100%;
+  text-align: left;
+  position: relative;
+}
+.farm + .farm { border-top: 1px solid var(--line); }
+
+.f-thumb {
+  flex: 0 0 54px;
+  width: 54px;
+  height: 54px;
+  border-radius: 13px;
+  overflow: hidden;
+  background: linear-gradient(155deg, #3A6B57, var(--green) 65%, var(--green-2));
+}
+.f-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.f-thumb.empty {
+  position: relative;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(155deg, #3A6B57, var(--green) 70%, var(--green-2));
+  color: rgba(255, 255, 255, .92);
+}
+.f-thumb.empty .leaf-bg {
+  position: absolute;
+  inset: 0;
+  opacity: .14;
+  overflow: hidden;
+}
+.f-thumb.empty .leaf-bg svg {
+  position: absolute;
+  width: 46px;
+  height: 46px;
+  right: -8px;
+  bottom: -8px;
+  color: #fff;
+}
+.f-thumb.empty .ic { font-size: 25px; position: relative; }
+
+.f-main { flex: 1; min-width: 0; }
+.f-top { display: flex; align-items: center; gap: 7px; }
+.f-name {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.f-badge {
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--green-soft);
+  color: var(--green);
+}
+.f-sub {
+  font-size: 13px;
+  color: var(--gray);
+  font-weight: 500;
+  margin-top: 6px;
+  letter-spacing: -0.01em;
+  line-height: 1.45;
+}
+
+.f-cv { color: #C2C3BA; font-size: 18px; align-self: center; flex-shrink: 0; }
+
+/* FAB 농장 등록 */
+.fab {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: calc(20px + env(safe-area-inset-bottom));
+  height: 54px;
+  border-radius: var(--r-md);
+  color: #fff;
+  font-size: 15.5px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  background: linear-gradient(180deg, #45BC38 0%, var(--green) 52%, var(--green-2) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .22),
+              0 10px 22px -8px rgba(40,150,28, .55);
+}
+.fab .ic { font-size: 18px; }

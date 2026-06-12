@@ -1,0 +1,53 @@
+/* support-list.css — 지원사업 목록 (맞춤/전체 탭) */
+:root { --line: rgba(48,42,30,.08); }
+.phone { position: relative; min-height: 860px; }
+body { background: #E8E6DF; display: flex; justify-content: center; padding: 24px 0 40px; }
+
+.appbar .act { width: 38px; height: 38px; display: grid; place-items: center; color: var(--ink-2); }
+.appbar .act .ic { font-size: 19px; }
+
+.scroll { overflow-x: hidden; flex: 1; overflow-y: auto; padding: 8px 20px 24px; }
+
+/* 상단 농장 기준 한 줄 */
+.basis { display: flex; align-items: center; gap: 6px; margin: 6px 2px 4px; font-size: 12.5px; color: var(--gray); font-weight: 600; }
+.basis .ic { font-size: 14px; color: var(--sage); }
+.basis b { color: var(--ink); font-weight: 700; }
+
+/* 큰 헤드라인 */
+.headline { font-size: 26px; font-weight: 800; letter-spacing: -0.026em; line-height: 1.32; margin: 12px 2px 20px; }
+.headline b { color: var(--green); }
+
+/* 맞춤 / 전체 탭 (밑줄식) */
+.tabs { display: flex; gap: 22px; border-bottom: 1px solid var(--line); margin: 0 0 18px; }
+.tab { padding: 0 2px 11px; font-size: 14.5px; font-weight: 700; color: var(--gray); position: relative; }
+.tab.on { color: var(--ink); font-weight: 800; }
+.tab.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2.5px; background: var(--green); border-radius: 2px; }
+
+/* 섹션 헤더 */
+.sec-h { font-size: 14px; font-weight: 800; letter-spacing: -0.016em; margin: 30px 2px 13px; display: flex; align-items: center; }
+.sec-h .more { margin-left: auto; font-size: 12px; color: var(--gray); font-weight: 600; }
+
+/* 분야 칩 */
+.cats { display: flex; gap: 7px; overflow-x: auto; margin: 0 -20px 14px; padding: 2px 20px 4px; -ms-overflow-style: none; scrollbar-width: none; }
+.cats::-webkit-scrollbar { display: none; }
+.cat { flex-shrink: 0; padding: 8px 15px; border-radius: 999px; background: var(--card); box-shadow: var(--shadow); font-size: 13px; font-weight: 700; color: var(--ink-2); }
+.cat.on { background: var(--green); color: #fff; box-shadow: none; }
+
+/* 지원사업 리스트 (가벼운 리스트) */
+.list { background: var(--card); border-radius: var(--r-md); box-shadow: var(--shadow); overflow: hidden; }
+.srow-item { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; padding: 16px; }
+.srow-item + .srow-item { border-top: 1px solid var(--line); }
+.srow-item .si-main { flex: 1; min-width: 0; }
+.srow-item .si-ti { font-size: 14.5px; font-weight: 700; letter-spacing: -0.014em; line-height: 1.4; }
+.srow-item .si-sub { display: flex; align-items: center; gap: 7px; margin-top: 6px; }
+.srow-item .si-org { font-size: 12px; color: var(--gray); font-weight: 600; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.srow-item .si-dday { flex-shrink: 0; font-size: 10.5px; font-weight: 800; padding: 2px 8px; border-radius: 999px; background: var(--field-bg); color: var(--ink-2); }
+.srow-item .si-dday.soon { background: var(--clay); color: #fff; }
+.srow-item .si-dday.open { background: var(--green-soft); color: var(--sage); }
+.srow-item .si-cv { color: #C7C8BE; font-size: 19px; flex-shrink: 0; }
+.more-btn { width: 100%; height: 48px; margin-top: 12px; border-radius: var(--r-md); background: var(--card); box-shadow: var(--shadow); font-size: 14px; font-weight: 700; color: var(--ink-2); display: inline-flex; align-items: center; justify-content: center; gap: 5px; }
+.more-btn .ic { font-size: 16px; color: var(--gray); }
+
+/* === 360px safety net === */
+.phone img, .phone svg { max-width: 100%; height: auto; }
+.phone { word-break: keep-all; overflow-wrap: break-word; }

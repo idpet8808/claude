@@ -1,0 +1,38 @@
+<!--META {"title":"1:1 문의 내역","back":"mypage/mypage.html","menu":true,"css":"inquiry-list.css"} -->
+<div class="scroll">
+      <div class="filter">
+        <button class="f-chip on" data-filter="all">전체</button>
+        <button class="f-chip" data-filter="wait">답변 대기</button>
+        <button class="f-chip" data-filter="done">답변 완료</button>
+      </div>
+      <div class="list">
+        <a class="card" href="inquiry-detail.html" data-status="done">
+          <div class="c-top"><span class="status done"><span class="dot"></span>답변 완료</span><span class="c-date">2026.05.20</span></div>
+          <div class="c-title">진단 결과가 실제와 다른 것 같아요</div>
+          <div class="c-preview">오이 잎 사진을 올렸는데 진단된 병해가 제가 보기엔…</div>
+        </a>
+        <a class="card" href="inquiry-detail.html" data-status="wait">
+          <div class="c-top"><span class="status wait"><span class="dot"></span>답변 대기</span><span class="c-date">2026.05.18</span></div>
+          <div class="c-title">휴대폰 번호를 바꿨는데 인증이 안 돼요</div>
+          <div class="c-preview">기기를 변경한 뒤로 본인인증 단계에서 계속 막혀서…</div>
+        </a>
+        <a class="card" href="inquiry-detail.html" data-status="done">
+          <div class="c-top"><span class="status done"><span class="dot"></span>답변 완료</span><span class="c-date">2026.05.11</span></div>
+          <div class="c-title">영농일지 작성 중 사진이 안 올라가요</div>
+          <div class="c-preview">갤러리에서 사진을 선택하면 한참 로딩만 되고…</div>
+        </a>
+      </div>
+    </div>
+
+    <a class="fab" href="inquiry-write.html"><svg class="ic"><use href="#i-plus"/></svg> 문의하기</a>
+<script>
+    var chips = document.querySelectorAll('.f-chip'), cards = document.querySelectorAll('.card');
+    chips.forEach(function(chip){
+      chip.addEventListener('click', function(){
+        chips.forEach(function(c){ c.classList.remove('on'); });
+        chip.classList.add('on');
+        var f = chip.getAttribute('data-filter');
+        cards.forEach(function(card){ var st = card.getAttribute('data-status'); card.style.display = (f === 'all' || f === st) ? '' : 'none'; });
+      });
+    });
+  </script>

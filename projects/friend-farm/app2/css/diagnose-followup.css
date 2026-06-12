@@ -1,0 +1,46 @@
+/* diagnose-followup.css — 추가 질문 (확신 부족 시) */
+:root { --line: rgba(48,42,30,.08); }
+.phone { position: relative; min-height: 860px; }
+body { background: #E8E6DF; display: flex; justify-content: center; padding: 24px 0 40px; }
+
+.appbar .rt { width: 38px; }
+
+/* 진행 인디케이터 (N/N) */
+.qprog { padding: 18px 24px 8px; flex-shrink: 0; }
+.qprog .qpinfo { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 9px; }
+.qprog .qplabel { font-size: 12px; font-weight: 800; color: var(--sage); letter-spacing: .04em; }
+.qprog .qpcount { font-size: 12.5px; font-weight: 800; color: var(--ink); }
+.qprog .qpcount b { color: var(--green); }
+.qprog .qpbar { height: 5px; border-radius: 3px; background: #D6D3C7; position: relative; overflow: hidden; }
+.qprog .qpfill { position: absolute; inset: 0; background: var(--green); transform-origin: left; transform: scaleX(0.4); transition: transform .35s cubic-bezier(.4,0,.2,1); border-radius: 3px; }
+
+.scroll { overflow-x: hidden; flex: 1; overflow-y: auto; padding: 30px 22px 24px; display: flex; flex-direction: column; }
+
+/* AI 안내 카드 */
+.ai-intro { display: flex; gap: 11px; padding: 14px 16px; border-radius: 14px; background: var(--green-soft); border: 1px solid rgba(52,171,42,.12); margin-bottom: 28px; }
+.ai-intro .av { width: 36px; height: 36px; border-radius: 10px; background: var(--green); color: #fff; display: grid; place-items: center; flex-shrink: 0; }
+.ai-intro .av .ic { font-size: 18px; }
+.ai-intro .at { flex: 1; }
+.ai-intro .at b { display: block; font-size: 13px; font-weight: 800; color: var(--green); margin-bottom: 3px; }
+.ai-intro .at p { font-size: 12.5px; color: var(--ink-2); font-weight: 600; margin: 0; line-height: 1.5; }
+
+/* 큰 질문 */
+.bigq { font-size: 26px; font-weight: 800; line-height: 1.28; letter-spacing: -0.025em; margin: 0 0 11px; }
+.bigsub { font-size: 14px; color: var(--ink-2); font-weight: 600; margin: 0 0 30px; line-height: 1.55; }
+
+/* 예/아니오 답 (진단 입력의 .ans 패턴 일관) */
+.yesno { display: flex; flex-direction: column; gap: 10px; }
+.ans { display: flex; align-items: center; gap: 14px; padding: 17px 18px; border-radius: 15px; background: var(--card); box-shadow: var(--shadow); border: 1.5px solid transparent; font-size: 15.5px; font-weight: 700; color: var(--ink); transition: all .15s; }
+.ans .arrow { margin-left: auto; color: #C7C8BE; font-size: 16px; }
+.ans.on { background: var(--green-soft); border-color: var(--green); color: var(--green); font-weight: 800; }
+.ans.on .arrow { color: var(--green); }
+
+/* 하단 버튼 */
+.btn { height: 54px; border-radius: 15px; font-size: 16px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; gap: 7px; }
+.btn-ghost { flex: 0 0 30%; background: var(--field-bg); color: var(--ink-2); }
+.btn-next { flex: 1; background: var(--green); color: #fff; }
+.btn .ic { font-size: 19px; }
+
+/* === 360px safety net === */
+.phone img, .phone svg { max-width: 100%; height: auto; }
+.phone { word-break: keep-all; overflow-wrap: break-word; }

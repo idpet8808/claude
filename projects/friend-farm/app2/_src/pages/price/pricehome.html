@@ -1,0 +1,141 @@
+<!--META {"title":"작물 시세","back":"home.html","menu":true,"css":"pricehome.css"} -->
+<div class="scroll">
+      <div class="basis"><svg class="ic"><use href="#i-pin"/></svg> <b>완주 청년농원</b> 기준 · 완주군 · 시설채소</div>
+      <h1 class="headline" id="headline"><b>오이</b> 도매 시세<br>3건이에요</h1>
+      <p class="head-sub">2026.05.27 기준</p>
+
+      <!-- 작물 탭 -->
+      <div class="tabs" id="tabs">
+        <button class="tab on" data-c="오이">오이</button>
+        <button class="tab" data-c="딸기">딸기</button>
+        <a class="tab-add" href="pricesearch.html" aria-label="작물 추가"><svg class="ic"><use href="#i-plus"/></svg></a>
+      </div>
+
+      <!-- 그래프 카드 + 단위/품종 리스트 -->
+      <div id="pane"></div>
+    </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+    // KAMIS daily_sales_list — 작물별 단위/품종 항목들 (도매)
+    var CROPS = {
+      '오이': {
+        repr: { unit: '10kg · 백다다기', now: 38400, dir: 'up', val: '3.2' },
+        chart: { y1: 32100, m1: 35800, d1: 37200, now: 38400 },
+        items: [
+          { meta: '10kg · 백다다기', price: 38400, dir: 'up', val: '3.2' },
+          { meta: '10kg · 가시',     price: 41200, dir: 'up', val: '2.8' },
+          { meta: '100개',          price: 25600, dir: 'down', val: '1.2' }
+        ]
+      },
+      '딸기': {
+        repr: { unit: '2kg · 상품', now: 24800, dir: 'down', val: '1.5' },
+        chart: { y1: 26900, m1: 28400, d1: 25180, now: 24800 },
+        items: [
+          { meta: '2kg · 상품', price: 24800, dir: 'down', val: '1.5' },
+          { meta: '2kg · 중품', price: 19500, dir: 'down', val: '2.1' }
+        ]
+      }
+    };
+
+    function fmt(n){ return n.toLocaleString('ko-KR') + '원'; }
+
+
+    var COLOR = { up: '#B0612C', down: '#2F6150' };
+    var chartInstance = null;
+
+    function drawChart(P, dir){
+      var canvas = document.getElementById('priceChart');
+      if (!canvas) return;
+      var ctx = canvas.getContext('2d');
+      var color = dir === 'up' ? COLOR.up : COLOR.down;
+
+      // chartArea 기준 그라데이션 (그릴 때 실제 영역으로 생성)
+      function areaGradient(context){
+        var chart = context.chart;
+        var chartArea = chart.chartArea;
+        if (!chartArea) return color + '14';
+        var g = chart.ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+        g.addColorStop(0, color + '2B');    // ~0.17 (선 근처만 은은)
+        g.addColorStop(0.5, color + '12');  // ~0.07
+        g.addColorStop(1, color + '00');    // 완전 투명 (바닥)
+        return g;
+      }
+
+      if (chartInstance) chartInstance.destroy();
+      chartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['1년 전', '1개월 전', '1일 전', '오늘'],
+          datasets: [{
+            data: [P.y1, P.m1, P.d1, P.now],
+            borderColor: color,
+            backgroundColor: areaGradient,
+            fill: true,
+            tension: 0.35,
+            borderWidth: 2.6,
+            pointRadius: [4, 4, 4, 6],
+            pointBackgroundColor: ['#fff', '#fff', '#fff', color],
+            pointBorderColor: color,
+            pointBorderWidth: 2.2,
+            pointHoverRadius: [4, 4, 4, 6]
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          layout: { padding: { top: 16, bottom: 2, left: 4, right: 4 } },
+          plugins: { legend: { display: false }, tooltip: { enabled: false } },
+          scales: {
+            x: { display: false, offset: false },
+            y: { display: false, grace: '20%' }
+          },
+          animation: { duration: 500 }
+        }
+      });
+    }
+
+    function render(name){
+      var c = CROPS[name];
+      var R = c.repr;
+      var rArr = R.dir==='up' ? '▲' : '▼';
+
+      // 헤드라인 업데이트
+      document.getElementById('headline').innerHTML = '<b>'+name+'</b> 도매 시세<br>'+c.items.length+'건이에요';
+
+      // 그래프 카드
+      var chartHTML =
+        '<div class="chart-card">'
+      +   '<div class="cc-top"><span class="cc-name"><b>'+name+'</b> · '+R.unit+'</span></div>'
+      +   '<div class="cc-price-row"><span class="cc-price">'+fmt(R.now)+'</span><span class="cc-pd '+R.dir+'"><span class="arr">'+rArr+'</span>'+R.val+'%</span></div>'
+      +   '<div class="spark"><canvas id="priceChart"></canvas></div>'
+      +   '<div class="spark-labels"><span class="lb">1년 전</span><span class="lb">1개월 전</span><span class="lb">1일 전</span><span class="lb now">오늘</span></div>'
+      + '</div>';
+
+      // 단위/품종 리스트
+      var listHTML =
+        '<h2 class="sec-h">단위 · 품종별 시세</h2>'
+      + '<div class="list">'
+      + c.items.map(function(it){
+          var arr = it.dir==='up' ? '▲' : '▼';
+          return '<div class="prow">'
+            + '<div class="pm">'
+            +   '<div class="meta">'+it.meta+'</div>'
+            +   '<div class="pp-row"><span class="pp">'+fmt(it.price)+'</span><span class="pd '+it.dir+'"><span class="arr">'+arr+'</span>'+it.val+'%</span></div>'
+            + '</div>'
+            + '</div>';
+        }).join('')
+      + '</div>';
+
+      document.getElementById('pane').innerHTML = chartHTML + listHTML;
+      drawChart(c.chart, R.dir);
+    }
+
+    document.querySelectorAll('.tab[data-c]').forEach(function(t){
+      t.addEventListener('click', function(){
+        document.querySelectorAll('.tab[data-c]').forEach(function(x){ x.classList.remove('on'); });
+        t.classList.add('on');
+        render(t.dataset.c);
+      });
+    });
+    render('오이');
+  </script>

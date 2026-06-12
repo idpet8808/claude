@@ -1,0 +1,61 @@
+/* pestsearch-detail.css — 병해충 상세 (갤러리 + 증상/방제) */
+:root { --line: rgba(48,42,30,.08); }
+.phone { position: relative; min-height: 860px; }
+body { background: #E8E6DF; display: flex; justify-content: center; padding: 24px 0 40px; }
+
+.scroll { overflow-x: hidden; flex: 1; overflow-y: auto; }
+
+/* 이미지 갤러리 */
+.gallery { position: relative; }
+.gallery .track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; -ms-overflow-style: none; scrollbar-width: none; }
+.gallery .track::-webkit-scrollbar { display: none; }
+.gallery .slide { flex: 0 0 100%; scroll-snap-align: start; aspect-ratio: 4/3; background: linear-gradient(150deg, #DCDACC, #CFCDBC); display: grid; place-items: center; }
+.gallery .slide .ph { color: var(--sage); opacity: .4; }
+.gallery .slide .ph .ic { font-size: 46px; }
+.gallery .count { position: absolute; right: 14px; bottom: 14px; font-size: 11.5px; font-weight: 700; color: #fff; background: rgba(20,16,10,.5); padding: 4px 10px; border-radius: 999px; }
+
+/* 제목 영역 */
+.head { padding: 18px 20px 0; }
+.head .nm-row { display: flex; align-items: center; gap: 8px; }
+.head h1 { font-size: 24px; font-weight: 800; letter-spacing: -0.024em; margin: 0; }
+.head .tag { font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 999px; }
+.head .tag.dis { background: #F2E3D6; color: var(--clay); }
+.head .tag.pst { background: var(--green-soft); color: var(--green); }
+.head .sci { font-size: 13px; color: var(--gray); font-style: italic; margin-top: 7px; font-weight: 500; }
+.head .meta { display: flex; gap: 7px; margin-top: 14px; flex-wrap: wrap; }
+.head .meta .m { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: var(--ink-2); background: var(--field-bg); padding: 6px 12px; border-radius: 999px; }
+.head .meta .m .ic { font-size: 13px; color: var(--sage); }
+
+.body { padding: 8px 20px 24px; }
+.sec { margin-top: 26px; }
+.sec-title { font-size: 15px; font-weight: 800; letter-spacing: -0.018em; margin: 0 0 11px; display: flex; align-items: center; gap: 7px; }
+.sec-title .ic { font-size: 17px; color: var(--green); }
+.sec-card { background: var(--card); border-radius: var(--r-lg); box-shadow: var(--shadow); padding: 16px; }
+.sec-card p { font-size: 13.5px; color: var(--ink-2); line-height: 1.72; margin: 0; font-weight: 500; }
+.sec-card p + p { margin-top: 10px; }
+
+/* 방제법 (단계) */
+.control { display: flex; flex-direction: column; }
+.ctrl-item { display: flex; gap: 12px; padding: 14px 16px; background: var(--card); }
+.ctrl-item:first-child { border-radius: var(--r-lg) var(--r-lg) 0 0; }
+.ctrl-item:last-child { border-radius: 0 0 var(--r-lg) var(--r-lg); }
+.ctrl-item + .ctrl-item { border-top: 1px solid var(--line); }
+.ctrl-item .ci { width: 32px; height: 32px; border-radius: 9px; background: var(--green-soft); color: var(--green); display: grid; place-items: center; flex-shrink: 0; }
+.ctrl-item .ci .ic { font-size: 17px; }
+.ctrl-item .ct { flex: 1; }
+.ctrl-item .ct .k { font-size: 13.5px; font-weight: 800; letter-spacing: -0.012em; }
+.ctrl-item .ct .v { font-size: 13px; color: var(--ink-2); line-height: 1.65; margin-top: 5px; font-weight: 500; }
+
+/* 출처 + 면책 */
+.source { display: flex; gap: 9px; align-items: flex-start; background: var(--field-bg); border-radius: var(--r-md); padding: 13px 14px; margin-top: 24px; }
+.source .ic { color: var(--gray); font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+.source p { font-size: 11.5px; color: var(--gray); line-height: 1.6; margin: 0; font-weight: 500; }
+
+/* 하단 CTA (.foot 베이스는 components 공통) */
+.foot .cta { width: 100%; height: 52px; border-radius: var(--r-md); color: #fff; font-size: 15px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  background: linear-gradient(180deg, #45BC38, var(--green) 52%, var(--green-2)); box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 6px 14px -6px rgba(40,150,28,.5); }
+.foot .cta .ic { font-size: 18px; }
+
+/* === 360px safety net === */
+.phone img, .phone svg { max-width: 100%; height: auto; }
+.phone { word-break: keep-all; overflow-wrap: break-word; }

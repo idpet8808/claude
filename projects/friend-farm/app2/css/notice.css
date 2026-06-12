@@ -1,0 +1,14 @@
+/* notice.css — 공지 목록 (당근식 담백 리스트) */
+/* 앱 셸: 헤더 고정 + .list 내부 스크롤 (이 페이지는 .scroll 대신 .list 사용) */
+.phone { height: 800px; min-height: 0; display: flex; flex-direction: column; }
+@media (max-width: 430px) { .phone { height: 100dvh; } }
+.phone > .status-bar, .phone > .appbar { flex-shrink: 0; }
+.phone > .list { flex: 1; overflow-y: auto; min-height: 0; }
+body { background: #E8E6DF; display: flex; justify-content: center; padding: 24px 0 40px; }
+
+.list { padding: 8px 22px 30px; }
+.row { display: block; padding: 20px 0; width: 100%; text-align: left; }
+.row + .row { border-top: 1px solid var(--line); }
+.row .ttl { font-size: 16px; font-weight: 600; letter-spacing: -0.018em; color: var(--ink); line-height: 1.42; }
+.row .ttl .pre { font-weight: 700; }
+.row .date { margin-top: 12px; font-size: 13px; color: var(--gray); font-weight: 500; }

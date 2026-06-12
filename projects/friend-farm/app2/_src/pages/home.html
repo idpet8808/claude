@@ -1,0 +1,135 @@
+<!--META {"layout":"raw"} -->
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KS팜 메인 MO - 미니멀(토스풍)</title>
+  <link rel="stylesheet" href="{{A}}css/common.css"/>
+  <link rel="stylesheet" href="{{A}}css/components.css"/>
+  <link rel="stylesheet" href="{{A}}css/home.css"/>
+</head>
+<body>
+{{SPRITE}}
+  <h1 class="sr-only">KS팜 메인 화면 - 미니멀 버전</h1>
+
+  <main class="phone" aria-label="KS팜 미니멀 미리보기">
+    <div class="app">
+      <div class="status-bar">
+        <span>9:41</span>
+        <span class="group"><svg class="ic"><use href="#i-wifi-dot"/></svg> <svg class="ic"><use href="#i-battery-fill"/></svg></span>
+      </div>
+
+      <header class="nav-head">
+        <div class="head-left">
+          <button class="location-btn" aria-label="위치 변경">
+            <svg class="ic pin"><use href="#i-pin-fill"/></svg>
+            <span class="place">강남구 역삼동</span>
+            <svg class="ic chev"><use href="#i-chev-down"/></svg>
+          </button>
+        </div>
+        <div class="head-actions">
+          <button class="icon-btn has-dot" aria-label="알림"><svg class="ic"><use href="#i-bell"/></svg></button>
+          <a class="icon-btn" href="menu.html" aria-label="메뉴"><svg class="ic"><use href="#i-menu"/></svg></a>
+        </div>
+      </header>
+
+      <section class="hero">
+        <div class="hi">김팜님, 안녕하세요</div>
+        <h2 id="heroTitle">오늘 작물은<br>잘 지내고 있나요?</h2>
+        <p class="sub" id="heroSub">궁금한 건 언제든 농사친구에게 물어보세요.</p>
+        <div class="wx" id="heroWx">
+          <span class="pill"><svg class="ic"><use href="#i-cloud-rain"/></svg> 23.1°<span class="dotsep"></span>습도 82%<span class="dotsep"></span>강수 60%</span>
+        </div>
+      </section>
+
+      <a class="cta" href="diagnose/diagnose-input.html" aria-label="사진으로 물어보기">
+        <span class="c-ic"><svg class="ic"><use href="#i-camera"/></svg></span>
+        <span class="c-tx">
+          <strong>사진으로 물어보기</strong>
+          <span>사진 한 장이면 작물 상태를 살펴봐 드려요</span>
+        </span>
+        <svg class="ic"><use href="#i-chev-right"/></svg>
+      </a>
+
+      <section class="sec">
+        <div class="sec-head"><h3>오늘의 작물 시세</h3><span class="date">5월 22일 기준</span></div>
+        <div class="card">
+          <div class="row">
+            <span class="token">🥒</span>
+            <div class="body"><div class="name-line"><strong>오이</strong><svg class="ic star"><use href="#i-star-fill"/></svg></div><span>도매 · 10kg</span></div>
+            <div class="amount"><div class="p">32,400<span class="won">원</span></div><div class="d up"><svg class="ic"><use href="#i-up"/></svg> 6.2%</div></div>
+          </div>
+          <div class="row">
+            <span class="token">🍓</span>
+            <div class="body"><div class="name-line"><strong>딸기</strong><svg class="ic star"><use href="#i-star-fill"/></svg></div><span>도매 · 2kg</span></div>
+            <div class="amount"><div class="p">18,900<span class="won">원</span></div><div class="d down"><svg class="ic"><use href="#i-down"/></svg> 2.1%</div></div>
+          </div>
+          <a class="more-row" href="price/pricehome.html">전체 시세 보기 <svg class="ic"><use href="#i-chev-right"/></svg></a>
+        </div>
+      </section>
+
+      <section class="sec">
+        <div class="sec-head"><h3>확인할 일 2건</h3></div>
+        <div class="card">
+          <a class="row" href="diary/diary-list.html">
+            <span class="ic-circle neutral"><svg class="ic"><use href="#i-notebook"/></svg></span>
+            <div class="body"><strong>미작성 영농일지</strong><span>최근 3일간 작성하지 않았어요</span></div>
+            <span class="badge">3건</span>
+          </a>
+          <a class="row" href="expert/expert-list.html">
+            <span class="ic-circle"><svg class="ic"><use href="#i-check-fill"/></svg></span>
+            <div class="body"><strong>내 질문에 답변 도착</strong><span>"오이 양액 pH" 질문 답변완료</span></div>
+            <svg class="ic chev"><use href="#i-chev-right"/></svg>
+          </a>
+        </div>
+      </section>
+
+      <section class="sec">
+        <div class="sec-head"><h3>오늘의 맞춤 정보</h3></div>
+        <div class="cats">
+          <a class="cat c-gold" href="support/support-list.html"><span class="ci"><svg class="ic"><use href="#i-gift"/></svg></span><strong>지원사업</strong><span>지역·작물</span></a>
+          <a class="cat c-clay" href="pestsearch/pestsearch-home.html"><span class="ci"><svg class="ic"><use href="#i-bug"/></svg></span><strong>병해충 정보</strong><span>예방·방제</span></a>
+          <a class="cat c-sage" href="cropguide/cropguide-list.html"><span class="ci"><svg class="ic"><use href="#i-sprout"/></svg></span><strong>재배 가이드</strong><span>작물별</span></a>
+        </div>
+        <div class="card feed">
+          <a class="row" href="support/support-list.html">
+            <span class="ftype dday">D-3</span>
+            <div class="body"><strong>스마트팜 기자재 지원</strong><div class="kw"><span class="k">최대 5,000만원</span><span class="k">시설원예 우대</span></div></div>
+            <svg class="ic chev"><use href="#i-chev-right"/></svg>
+          </a>
+          <a class="row" href="pestsearch/pestsearch-home.html">
+            <span class="ftype disease"><svg class="ic"><use href="#i-bug"/></svg></span>
+            <div class="body"><strong>잎곰팡이병 예방 가이드</strong><div class="kw"><span class="k">통풍 관리</span><span class="k">습도 조절</span></div></div>
+            <svg class="ic chev"><use href="#i-chev-right"/></svg>
+          </a>
+          <a class="row" href="pestsearch/pestsearch-home.html">
+            <span class="ftype info"><svg class="ic"><use href="#i-leaf-grow"/></svg></span>
+            <div class="body"><strong>흰가루병 발생 시기</strong><div class="kw"><span class="k">5~6월 발생</span><span class="k">집중 관리</span></div></div>
+            <svg class="ic chev"><use href="#i-chev-right"/></svg>
+          </a>
+        </div>
+      </section>
+
+      <section class="sec">
+        <div class="sec-head"><h3>전문가 질문 현황</h3><a href="expert/expert-list.html">전체보기</a></div>
+        <a class="card q" href="expert/expert-detail.html">
+          <div class="q-top"><span class="pill green">답변완료</span><span class="meta">스마트팜 · 환경제어 · 2일 전</span></div>
+          <h4>딸기 하우스 적정 온습도가 궁금합니다</h4>
+          <div class="answer">생육 단계에 따라 주간·야간 온도 기준을 분리해 관리하는 것이 좋습니다.</div>
+        </a>
+      </section>
+    </div>
+
+    <nav class="bottom-nav" aria-label="하단 메뉴">
+      <a class="nav-item active" href="home.html"><svg class="ic"><use href="#i-home-fill"/></svg><span>홈</span></a>
+      <a class="nav-item" href="#"><svg class="ic"><use href="#i-chatbot"/></svg><span>AI상담</span></a>
+      <a class="nav-item cam" href="diagnose/diagnose-input.html"><div class="cc"><svg class="ic"><use href="#i-camera"/></svg></div><span>진단</span></a>
+      <a class="nav-item" href="diary/diary-list.html"><svg class="ic"><use href="#i-notebook"/></svg><span>일지</span></a>
+      <a class="nav-item" href="mypage/mypage.html"><svg class="ic"><use href="#i-user"/></svg><span>MY</span></a>
+    </nav>
+  </main>
+
+  <script src="{{A}}js/home.js"></script>
+</body>
+</html>

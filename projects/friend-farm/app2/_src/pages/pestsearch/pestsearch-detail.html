@@ -1,0 +1,83 @@
+<!--META {"title":"병해충 정보","back":"pestsearch/pestsearch-search.html","menu":false,"css":"pestsearch-detail.css"} -->
+<div class="scroll">
+      <!-- 이미지 갤러리 -->
+      <div class="gallery">
+        <div class="track">
+          <div class="slide"><span class="ph"><svg class="ic"><use href="#i-img"/></svg></span></div>
+          <div class="slide"><span class="ph"><svg class="ic"><use href="#i-img"/></svg></span></div>
+          <div class="slide"><span class="ph"><svg class="ic"><use href="#i-img"/></svg></span></div>
+        </div>
+        <span class="count">1 / 3</span>
+      </div>
+
+      <!-- 제목 -->
+      <div class="head">
+        <div class="nm-row"><h1>탄저병</h1><span class="tag dis">병</span></div>
+        <div class="sci">Colletotrichum acutatum</div>
+        <div class="meta">
+          <span class="m"><svg class="ic"><use href="#i-leaf"/></svg> 고추</span>
+        </div>
+      </div>
+
+      <div class="body">
+        <!-- 증상 -->
+        <div class="sec">
+          <h2 class="sec-title"><svg class="ic"><use href="#i-spot"/></svg> 증상 (병징)</h2>
+          <div class="sec-card">
+            <p>과실에 물에 데친 듯한 둥근 반점이 생기고, 점차 움푹 들어가며 갈색~흑색으로 커집니다.</p>
+            <p>병든 부위에는 둥근 무늬 모양으로 분생포자가 형성되어 분홍빛 점질물이 보이기도 합니다. 습할 때 빠르게 번집니다.</p>
+          </div>
+        </div>
+
+        <!-- 발생 환경 -->
+        <div class="sec">
+          <h2 class="sec-title"><svg class="ic"><use href="#i-cloud"/></svg> 발생 환경</h2>
+          <div class="sec-card">
+            <p>기온 25~30℃, 다습한 조건에서 발생이 많습니다. 비가 잦거나 시설 내 습도가 높을 때 급격히 퍼집니다.</p>
+          </div>
+        </div>
+
+        <!-- 전염 경로 -->
+        <div class="sec">
+          <h2 class="sec-title"><svg class="ic"><use href="#i-share"/></svg> 전염 경로</h2>
+          <div class="sec-card">
+            <p>병든 과실·잔재물에서 균이 겨울을 나며, 이듬해 빗물이나 관수에 튀어 1차 전염원이 됩니다. 포자가 바람·물방울을 타고 주변 포기로 옮겨 가요.</p>
+          </div>
+        </div>
+
+        <!-- 방제법 -->
+        <div class="sec">
+          <h2 class="sec-title"><svg class="ic"><use href="#i-shield"/></svg> 방제법</h2>
+          <div class="control">
+            <div class="ctrl-item">
+              <span class="ci"><svg class="ic"><use href="#i-scissors"/></svg></span>
+              <div class="ct"><div class="k">경종적 방제</div><div class="v">병든 과실과 잔재물을 일찍 제거하고, 배수와 통풍을 좋게 해 습도를 낮춥니다. 건전한 종자·모종을 사용해요.</div></div>
+            </div>
+            <div class="ctrl-item">
+              <span class="ci"><svg class="ic"><use href="#i-flask"/></svg></span>
+              <div class="ct"><div class="k">약제 방제</div><div class="v">발병 초기에 등록 약제를 안전사용기준에 맞춰 살포합니다. 강우 전후 예방 위주로 방제하면 효과적이에요.</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 출처 -->
+        <div class="source">
+          <svg class="ic"><use href="#i-info"/></svg>
+          <p>농촌진흥청 국가농작물병해충관리시스템(NCPMS) 자료를 바탕으로 제공돼요. 약제는 반드시 작물별 등록 여부와 안전사용기준을 확인하세요.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 하단 CTA -->
+    <div class="foot">
+      <a class="cta" href="../diagnose/diagnose-input.html"><svg class="ic"><use href="#i-camera"/></svg> 사진으로 병해 진단하기</a>
+    </div>
+<script>
+    var track = document.querySelector('.track');
+    var count = document.querySelector('.count');
+    var slides = document.querySelectorAll('.slide').length;
+    track.addEventListener('scroll', function(){
+      var i = Math.round(track.scrollLeft / track.clientWidth) + 1;
+      count.textContent = i + ' / ' + slides;
+    });
+  </script>

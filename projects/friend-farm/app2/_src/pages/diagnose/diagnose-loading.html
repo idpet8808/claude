@@ -1,0 +1,45 @@
+<!--META {"layout":"raw"} -->
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KS팜 — AI 진단 중</title>
+<link rel="stylesheet" href="{{A}}css/common.css"/>
+<link rel="stylesheet" href="{{A}}css/components.css"/>
+<link rel="stylesheet" href="{{A}}css/diagnose-loading.css"/>
+</head>
+<body>
+  {{SPRITE}}
+
+  <div class="phone">
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="group"><svg class="ic"><use href="#i-wifi"/></svg> <svg class="ic"><use href="#i-batt"/></svg></span>
+    </div>
+
+    <div class="content">
+      <div class="scan-ring">
+        <div class="scan-orbit"><span class="dot"></span></div>
+        <div class="scan-core"><svg class="ic"><use href="#i-scan"/></svg></div>
+      </div>
+      <h1>AI가 진단 중이에요</h1>
+      <p class="sub">잠시만 기다려주세요<br>증상을 분석하고 있어요</p>
+      <div class="steps">
+        <div class="stp done"><span class="sdot"><svg class="ic"><use href="#i-check"/></svg></span><span class="stext">작물 정보 확인</span></div>
+        <div class="stp done"><span class="sdot"><svg class="ic"><use href="#i-check"/></svg></span><span class="stext">증상·부위 분석</span></div>
+        <div class="stp on"><span class="sdot"><span class="spinner"></span></span><span class="stext">사진 영상 분석</span></div>
+      </div>
+    </div>
+
+    <div class="skip-bar">
+      <span class="skip">평균 5~10초 정도 걸려요</span>
+    </div>
+  </div>
+
+  <script>
+    // 데모 흐름: 분석 완료 후 결과 화면으로 자동 이동
+    setTimeout(function(){ location.href = 'diagnose-result.html'; }, 2800);
+  </script>
+</body>
+</html>

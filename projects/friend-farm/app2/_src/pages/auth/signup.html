@@ -1,0 +1,53 @@
+<!--META {"title":"회원가입","back":"auth/signup-terms.html","menu":false,"css":"signup.css"} -->
+<div class="progress">
+      <div class="bar"><i></i></div>
+      <div class="step">2 / 2 단계 · 정보 입력</div>
+    </div>
+
+    <div class="scroll">
+      <h2 class="lead">가입 정보를<br>입력해 주세요</h2>
+      <p class="lead-sub"><span class="req">*</span> 표시는 필수 입력 항목이에요.</p>
+
+      <div class="field">
+        <label class="lab" for="s-id">아이디 <span class="req">*</span></label>
+        <div class="row2">
+          <div class="box"><input class="inp" id="s-id" type="text" placeholder="영문, 숫자 4~20자" /></div>
+          <button class="mini">중복확인</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="lab" for="s-pw">비밀번호 <span class="req">*</span></label>
+        <div class="box"><input class="inp" id="s-pw" type="password" placeholder="영문·숫자·특수문자 8~20자" /><button class="eye" aria-label="비밀번호 표시"><svg class="ic"><use href="#i-eye"/></svg></button></div>
+      </div>
+
+      <div class="field">
+        <label class="lab" for="s-pw2">비밀번호 확인 <span class="req">*</span></label>
+        <div class="box"><input class="inp" id="s-pw2" type="password" placeholder="비밀번호 재입력" /><button class="eye" aria-label="비밀번호 표시"><svg class="ic"><use href="#i-eye"/></svg></button></div>
+      </div>
+
+      <div class="field">
+        <label class="lab" for="s-name">이름 <span class="req">*</span></label>
+        <div class="box"><input class="inp" id="s-name" type="text" placeholder="이름" /></div>
+      </div>
+
+      <div class="field">
+        <label class="lab" for="s-nick">닉네임 <span class="req">*</span></label>
+        <div class="box"><input class="inp" id="s-nick" type="text" placeholder="닉네임" /></div>
+      </div>
+
+      <div class="field">
+        <label class="lab" for="s-email">이메일 <span class="req">*</span></label>
+        <div class="box"><input class="inp" id="s-email" type="email" placeholder="example@email.com" /></div>
+      </div>
+
+      <div class="field">
+        <label class="lab" for="s-phone">휴대폰 번호</label>
+        <div class="box"><input class="inp" id="s-phone" type="tel" placeholder="010-0000-0000" /></div>
+      </div>
+    </div>
+
+    <div class="foot">
+      <a class="btn-submit" href="../home.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none;">회원가입</a>
+    </div>
+<script src="{{A}}js/signup.js"></script>

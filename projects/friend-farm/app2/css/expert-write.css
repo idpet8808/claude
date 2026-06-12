@@ -1,0 +1,9 @@
+/* expert-write.css — 전문가 질문 작성
+ * 폼 레이아웃은 문의 작성과 동일 → inquiry-write.css 재사용.
+ * 카테고리 선택 칩(알약형)은 이 페이지 전용. (원본 인라인 <style> 분리)
+ */
+@import "inquiry-write.css";
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { height: 36px; padding: 0 15px; border-radius: 999px; background: var(--field-bg); color: var(--ink-2); font-size: 13.5px; font-weight: 700; display: inline-flex; align-items: center; transition: all .12s; }
+.chip.on { background: var(--green); color: #fff; box-shadow: 0 4px 10px -4px rgba(52,171,42,.5); }

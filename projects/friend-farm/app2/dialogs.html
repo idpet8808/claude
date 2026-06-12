@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KS팜 — 탈퇴 확인 / 수정 완료</title>
+<link rel="stylesheet" href="css/common.css"/>
+<link rel="stylesheet" href="css/components.css"/>
+<link rel="stylesheet" href="css/dialogs.css"/>
+</head>
+<body>
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></symbol></defs></svg>
+
+
+  <!-- 탈퇴 확인 다이얼로그 -->
+  <div class="col">
+    <div class="cap"><span class="tag">1</span><h3>회원 탈퇴 확인</h3><p>위험 행동이라 '탈퇴'는 약한 경고(클레이 외곽선), 안전한 '취소'를 기본 강조로. 실수 방지.</p></div>
+    <div class="phone">
+      <div class="bgform" aria-hidden="true">
+        <div class="bgf"><div class="l">이름</div><div class="v">김팜</div></div>
+        <div class="bgf"><div class="l">닉네임</div><div class="v">utii</div></div>
+        <div class="bgf"><div class="l">이메일</div><div class="v">summertoohotplzstop@gmail.com</div></div>
+      </div>
+      <div class="scrim">
+        <div class="dialog" role="alertdialog" aria-labelledby="dt">
+          <div class="dlg-title" id="dt">정말 탈퇴하시겠어요?</div>
+          <div class="dlg-desc">탈퇴하면 회원정보와 그동안의<br>영농일지·진단 기록이 모두 삭제돼요.</div>
+          <div class="dlg-actions">
+            <button class="btn btn-cancel">계속 이용하기</button>
+            <button class="btn btn-danger">탈퇴할게요</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 수정 완료 토스트 -->
+  <div class="col">
+    <div class="cap"><span class="tag">2</span><h3>정보 수정 완료</h3><p>브라우저 기본 alert 대신 hybrid 토스트. 아래에서 잠깐 떴다 사라지는 방식(논블로킹).</p></div>
+    <div class="phone">
+      <div class="bgform" aria-hidden="true">
+        <div class="bgf"><div class="l">이름</div><div class="v">김팜</div></div>
+        <div class="bgf"><div class="l">닉네임</div><div class="v">utii</div></div>
+        <div class="bgf"><div class="l">이메일</div><div class="v">summertoohotplzstop@gmail.com</div></div>
+        <div class="bgf"><div class="l">휴대폰 번호</div><div class="v">010-0020-3003</div></div>
+      </div>
+      <div class="toast-wrap">
+        <div class="toast" role="status">
+          <span class="tic"><svg class="ic"><use href="#i-check"/></svg></span>
+          <span class="tt">회원정보가 수정되었어요</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

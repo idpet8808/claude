@@ -1,0 +1,141 @@
+<!--META {"title":"농장 등록","back":"farm/farmlist.html","menu":true,"css":"farm-register.css"} -->
+<div class="scroll">
+      <h2 class="lead">등록하실 농장의<br>정보를 입력해 주세요</h2>
+
+      <!-- 농장정보 -->
+      <div class="sec-label">농장정보</div>
+      <div class="field">
+        <label class="lab">농장이름 <span class="req">*</span></label>
+        <div class="box"><input class="inp" type="text" placeholder="예) 스마트팜 하우스 농장" /></div>
+      </div>
+      <div class="field">
+        <label class="lab">농장위치 <span class="req">*</span></label>
+        <button class="select-box" id="openRegion"><svg class="ic pin" style="margin-right:6px"><use href="#i-pin"/></svg><span class="val ph">지역을 선택해 주세요</span><svg class="ic cv"><use href="#i-cv-down"/></svg></button>
+      </div>
+      <div class="field">
+        <label class="lab">재배방법</label>
+        <div class="radio-row">
+          <button class="radio on" data-radio="method"><span class="dot"></span>토경재배</button>
+          <button class="radio" data-radio="method"><span class="dot"></span>수경재배</button>
+        </div>
+      </div>
+
+      <!-- 면적정보 -->
+      <div class="sec-label">면적정보</div>
+      <div class="unit-toggle">
+        <button class="on" data-unit>㎡</button>
+        <button data-unit>평</button>
+      </div>
+      <div class="field">
+        <label class="lab">재배면적</label>
+        <div class="box"><input class="inp" type="number" placeholder="숫자 입력" /></div>
+      </div>
+
+      <!-- 재배작물 -->
+      <div class="sec-label">재배작물 정보</div>
+      <p class="sec-guide">재배 중인 작물을 최소 1가지 이상 추가해 주세요.</p>
+      <button class="btn-add" id="openCrop"><svg class="ic"><use href="#i-plus"/></svg> 작물 추가</button>
+
+      <div class="added-wrap">
+        <div class="added-label">추가된 작물 <span class="added-n">0</span></div>
+        <div class="added-list"></div>
+      </div>
+
+      <div class="divider-line"></div>
+
+      <!-- 기타 -->
+      <div class="sec-label">기타</div>
+      <div class="field">
+        <label class="lab">대표 재배작물</label>
+        <div class="select-box"><span class="val ph">대표 작물을 선택해 주세요</span><svg class="ic cv"><use href="#i-cv-down"/></svg></div>
+      </div>
+
+      <div class="field">
+        <label class="lab">농장 사진 (선택)</label>
+        <p class="photo-help">농장 사진을 등록하면 한눈에 알아보기 좋아요. 최대 5장.</p>
+        <div class="photo-row">
+          <button class="add-tile">
+            <svg class="ic"><use href="#i-camera"/></svg>
+            <span class="cnt">0 / 5</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="rep-row">
+        <span class="t">대표농장으로 설정</span>
+        <button class="toggle" data-toggle><span class="knob"></span></button>
+      </div>
+    </div>
+
+    <div class="foot">
+      <button class="btn-submit">농장 등록</button>
+    </div>
+
+    <!-- 작물 선택 바텀시트 -->
+    <div class="sheet-scrim" id="cropSheet">
+      <div class="sheet">
+        <div class="sheet-handle"></div>
+        <div class="sheet-title">재배작물 선택</div>
+        <div class="sheet-search"><div class="box"><svg class="ic"><use href="#i-search"/></svg><input type="text" placeholder="작물 이름 검색" id="cropSearch" /></div></div>
+        <div class="two-col">
+          <div class="col-item" id="cropCol">
+            <button class="ci on" data-crop="오이">오이</button>
+            <button class="ci" data-crop="토마토">토마토</button>
+            <button class="ci" data-crop="딸기">딸기</button>
+            <button class="ci" data-crop="상추">상추</button>
+            <button class="ci" data-crop="고추">고추</button>
+            <button class="ci" data-crop="파프리카">파프리카</button>
+            <button class="ci" data-crop="배추">배추</button>
+            <button class="ci" data-crop="감자">감자</button>
+            <button class="ci" data-crop="고구마">고구마</button>
+            <button class="ci" data-crop="옥수수">옥수수</button>
+          </div>
+          <div class="col-variety" id="varietyCol"></div>
+        </div>
+        <div class="sheet-foot">
+          <div class="sf-selected" id="sfSelected">오이 선택됨</div>
+          <div class="sf-row">
+            <div class="sf-jusu"><input type="number" id="sfJusu" placeholder="재식주수 (선택)" /><span class="unit">주</span></div>
+            <button class="sf-add" id="sfAdd">추가</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 지역 선택 바텀시트 -->
+    <div class="sheet-scrim" id="regionSheet">
+      <div class="sheet">
+        <div class="sheet-handle"></div>
+        <div class="sheet-title">농장 지역 선택</div>
+        <div class="two-col">
+          <div class="col-item" id="sidoCol">
+            <button class="ci on" data-sido="서울특별시">서울특별시</button>
+            <button class="ci" data-sido="경기도">경기도</button>
+            <button class="ci" data-sido="강원특별자치도">강원특별자치도</button>
+            <button class="ci" data-sido="충청북도">충청북도</button>
+            <button class="ci" data-sido="충청남도">충청남도</button>
+            <button class="ci" data-sido="전북특별자치도">전북특별자치도</button>
+            <button class="ci" data-sido="전라남도">전라남도</button>
+            <button class="ci" data-sido="경상북도">경상북도</button>
+            <button class="ci" data-sido="경상남도">경상남도</button>
+            <button class="ci" data-sido="제주특별자치도">제주특별자치도</button>
+          </div>
+          <div class="col-variety" id="sigunguCol"></div>
+        </div>
+        <div class="sheet-foot">
+          <div class="sf-selected" id="regionSelected">지역을 선택해 주세요</div>
+          <button class="sf-confirm" id="regionConfirm" disabled>확인</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 등록 완료 모달 -->
+    <div class="modal-scrim" id="doneModal">
+      <div class="modal">
+        <div class="modal-ic"><svg class="ic"><use href="#i-check-c"/></svg></div>
+        <div class="modal-title">농장 정보 등록 완료</div>
+        <div class="modal-desc">이제 농사친구 AI에서<br>나의 농장 일지를 작성해 보세요!</div>
+        <button class="modal-btn" id="doneOk">확인</button>
+      </div>
+    </div>
+<script src="{{A}}js/farm-register.js"></script>

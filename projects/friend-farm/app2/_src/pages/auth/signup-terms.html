@@ -1,0 +1,59 @@
+<!--META {"title":"약관 동의","back":"auth/login.html","menu":false,"css":"signup-terms.css"} -->
+<div class="progress">
+      <div class="bar"><i></i></div>
+      <div class="step">1 / 2 단계 · 약관 동의</div>
+    </div>
+
+    <div class="scroll">
+      <h2 class="lead">약관에 동의해 주세요</h2>
+      <p class="lead-sub">농사친구 서비스를 이용하려면<br>아래 약관 동의가 필요해요.</p>
+
+      <div class="ag-all">
+        <button class="chk" id="agAll" aria-label="전체 동의"><svg class="ic"><use href="#i-check"/></svg></button>
+        <span class="t">약관 전체 동의<span class="d">필수·선택 약관에 모두 동의합니다</span></span>
+      </div>
+
+      <div class="ag-list">
+        <div class="ag-row">
+          <button class="chk ag-item" data-req="1"><svg class="ic"><use href="#i-check"/></svg></button>
+          <span class="t"><span class="req">[필수]</span> 서비스 이용약관</span>
+          <a class="view" href="#"><svg class="ic"><use href="#i-cv"/></svg></a>
+        </div>
+        <div class="ag-row">
+          <button class="chk ag-item" data-req="1"><svg class="ic"><use href="#i-check"/></svg></button>
+          <span class="t"><span class="req">[필수]</span> 개인정보 처리방침</span>
+          <a class="view" href="#"><svg class="ic"><use href="#i-cv"/></svg></a>
+        </div>
+        <div class="ag-row">
+          <button class="chk ag-item" data-req="1"><svg class="ic"><use href="#i-check"/></svg></button>
+          <span class="t"><span class="req">[필수]</span> 위치기반 서비스 이용약관</span>
+          <a class="view" href="#"><svg class="ic"><use href="#i-cv"/></svg></a>
+        </div>
+        <div class="ag-row">
+          <button class="chk ag-item" data-req="0"><svg class="ic"><use href="#i-check"/></svg></button>
+          <span class="t"><span class="opt">[선택]</span> 마케팅 정보 수신 동의</span>
+          <a class="view" href="#"><svg class="ic"><use href="#i-cv"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot">
+      <a class="btn-next" id="next" href="signup.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none;pointer-events:none;opacity:.4;">동의하고 계속하기</a>
+    </div>
+<script src="{{A}}js/signup-terms.js"></script>
+<script>
+    // 동의 완료 시 다음 페이지 링크 활성화
+    (function () {
+      var next = document.getElementById('next');
+      var items = document.querySelectorAll('.ag-item');
+      var observer = new MutationObserver(function () {
+        var reqOk = Array.from(items).filter(function (i) { return i.dataset.req === '1'; })
+          .every(function (i) { return i.classList.contains('on'); });
+        next.style.pointerEvents = reqOk ? 'auto' : 'none';
+        next.style.opacity = reqOk ? '1' : '.4';
+      });
+      items.forEach(function (i) {
+        observer.observe(i, { attributes: true, attributeFilter: ['class'] });
+      });
+    })();
+  </script>

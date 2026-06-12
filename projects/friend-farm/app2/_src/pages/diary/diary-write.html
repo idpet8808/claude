@@ -1,0 +1,314 @@
+<!--META {"title":"영농일지 작성","back":"diary/diary-list.html","menu":true,"css":"diary-write.css"} -->
+<!-- 스텝 (2단계) -->
+    <div class="steps">
+      <div class="stp on"><span class="dot">1</span><span class="nm">기본정보 · 작업</span></div>
+      <div class="stp-line"></div>
+      <div class="stp"><span class="dot">2</span><span class="nm">상세 기록</span></div>
+    </div>
+
+    <div class="scroll">
+      <!-- 농장 선택 -->
+      <div class="field">
+        <label>농장 선택 <span class="req">*</span></label>
+        <div class="selectbox" id="farmTrigger"><span class="val" id="farmVal">완주 청년농원</span><svg class="ic"><use href="#i-down"/></svg></div>
+      </div>
+      <!-- 작물 -->
+      <div class="field">
+        <label>작물 <span class="req">*</span></label>
+        <div class="selectbox" id="cropTrigger"><span class="val" id="cropVal">오이</span><svg class="ic"><use href="#i-down"/></svg></div>
+      </div>
+      <!-- 작업일 -->
+      <div class="field">
+        <label>작업일 <span class="req">*</span></label>
+        <div class="selectbox" id="dateTrigger"><span class="val" id="dateVal">2026. 05. 27 (화)</span><svg class="ic"><use href="#i-cal"/></svg></div>
+      </div>
+
+      <!-- 주요 작업 (다중 선택 → 바텀시트) -->
+      <div class="field">
+        <label>주요 작업 <span class="req">*</span><button class="info-btn" id="infoBtn" aria-label="작업 용어 설명"><svg class="ic"><use href="#i-info"/></svg></button></label>
+        <div class="selectbox" id="workTrigger"><span class="val ph" id="workPh">작업 선택</span><svg class="ic"><use href="#i-down"/></svg></div>
+        <div class="sel-chips" id="selChips"></div>
+      </div>
+
+      <!-- 사진 -->
+      <div class="field">
+        <label>사진 <span class="count">1<span class="cmax">/5</span></span></label>
+        <div class="photo-area">
+          <button class="photo-add"><svg class="ic"><use href="#i-cam"/></svg><span class="pt">사진 추가</span></button>
+          <div class="photo-thumb"><button class="del" aria-label="삭제"><svg class="ic"><use href="#i-x"/></svg></button></div>
+        </div>
+        <p class="photo-hint">작업 현장이나 작물 상태를 남겨보세요</p>
+      </div>
+    </div>
+
+    <div class="footer">
+      <a class="btn btn-primary" href="diary-write2.html">다음 <svg class="ic"><use href="#i-next"/></svg></a>
+    </div>
+
+    <!-- 작업 용어 설명 바텀시트 -->
+    <div class="sheet-dim" id="sheetDim"></div>
+    <div class="sheet" id="sheet">
+      <div class="sheet-grip"></div>
+      <h3>작업 용어 안내</h3>
+      <p class="sh-sub">처음이라 헷갈린다면 참고하세요</p>
+      <div class="term"><span class="tm">파종</span><span class="td">씨앗을 뿌려 심는 일이에요.</span></div>
+      <div class="term"><span class="tm">정식</span><span class="td">모종을 본밭(하우스)에 옮겨 심는 일이에요. '아주심기'라고도 해요.</span></div>
+      <div class="term"><span class="tm">관수</span><span class="td">작물에 물을 주는 일이에요.</span></div>
+      <div class="term"><span class="tm">시비</span><span class="td">비료를 주는 일이에요.</span></div>
+      <div class="term"><span class="tm">방제</span><span class="td">병해충을 막기 위해 약제를 치는 일이에요.</span></div>
+      <div class="term"><span class="tm">제초</span><span class="td">잡초를 뽑거나 제거하는 일이에요.</span></div>
+      <div class="term"><span class="tm">적심·정지</span><span class="td">순을 자르거나(적심) 가지를 정리(정지)해 모양과 영양을 잡는 일이에요.</span></div>
+      <div class="term"><span class="tm">유인</span><span class="td">줄기를 줄이나 지지대에 매어 자라는 방향을 잡아주는 일이에요.</span></div>
+      <div class="term"><span class="tm">수확</span><span class="td">다 자란 작물을 거두는 일이에요.</span></div>
+      <button class="sheet-close" id="sheetClose">닫기</button>
+    </div>
+
+    <!-- 날짜 피커 시트 -->
+    <div class="sheet-dim" id="dpDim"></div>
+    <div class="sheet" id="dpSheet">
+      <div class="sheet-grip"></div>
+      <h3>작업일 선택</h3>
+      <p class="sh-sub">작업한 날짜를 골라주세요</p>
+      <div class="dp-cal">
+        <div class="dp-head">
+          <button class="dp-title" id="dpTitle">2026년 5월 <svg class="ic"><use href="#i-down"/></svg></button>
+          <div class="dp-nav">
+            <button id="dpToday2" class="dp-today-btn">오늘</button>
+            <button id="dpPrev" aria-label="이전 달"><svg class="ic"><use href="#i-prev"/></svg></button>
+            <button id="dpNext" aria-label="다음 달"><svg class="ic"><use href="#i-nextm"/></svg></button>
+          </div>
+        </div>
+        <div class="dp-dow" id="dpDow"><span class="sun">일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+        <div class="dp-grid" id="dpGrid"></div>
+        <!-- 년/월 선택 패널 -->
+        <div class="ym-panel" id="ymPanel">
+          <div class="ym-col" id="ymYears"></div>
+          <div class="ym-col" id="ymMonths"></div>
+        </div>
+      </div>
+      <button class="sheet-close" id="dpClose">확인</button>
+    </div>
+
+    <!-- 농장 선택 시트 -->
+    <div class="sheet-dim" id="farmDim"></div>
+    <div class="sheet" id="farmSheet">
+      <div class="sheet-grip"></div>
+      <h3>농장 선택</h3>
+      <p class="sh-sub">일지를 기록할 농장을 선택하세요</p>
+      <div class="opt-list" id="farmList">
+        <button class="opt-row on" data-v="완주 청년농원"><span class="ov">완주 청년농원<span class="rep">대표</span></span><span class="rc"><svg class="ic"><use href="#i-check"/></svg></span></button>
+        <button class="opt-row" data-v="완주 제2농장"><span class="ov">완주 제2농장</span><span class="rc"><svg class="ic"><use href="#i-check"/></svg></span></button>
+      </div>
+    </div>
+
+    <!-- 작물 선택 시트 -->
+    <div class="sheet-dim" id="cropDim"></div>
+    <div class="sheet" id="cropSheet">
+      <div class="sheet-grip"></div>
+      <h3>작물 선택</h3>
+      <p class="sh-sub">이 농장에 등록된 작물이에요</p>
+      <div class="opt-list" id="cropList">
+        <button class="opt-row on" data-v="오이"><span class="ov">오이<span class="rep">대표</span></span><span class="rc"><svg class="ic"><use href="#i-check"/></svg></span></button>
+        <button class="opt-row" data-v="딸기"><span class="ov">딸기</span><span class="rc"><svg class="ic"><use href="#i-check"/></svg></span></button>
+      </div>
+    </div>
+
+    <!-- 주요 작업 시트 (다중) -->
+    <div class="sheet-dim" id="workDim"></div>
+    <div class="sheet" id="workSheet">
+      <div class="sheet-grip"></div>
+      <h3>주요 작업</h3>
+      <p class="sh-sub">오늘 한 작업을 모두 선택하세요</p>
+      <div class="opt-list" id="workList">
+        <button class="opt-row" data-w="파종">파종<span class="rc"><svg class="ic"><use href="#i-check"/></svg></span></button>
+        <button class="opt-row" data-w="정식">정식<span class="rc"><svg class="ic"><use href="#i-check"/></svg></span></button>
+        <button class="opt-row" data-w="관수">관수<span class="rc"><svg class="ic"><use href="#i-check"/></svg></span></button>
+        <button class="opt-row on" data-w="시비">시비<span class="rc"><svg class="ic"><use href="#i-check"/></svg></span></button>
+        <button class="opt-row on" data-w="방제">방제<span class="rc"><svg class="ic"><use href="#i-check"/></svg></span></button>
+        <button class="opt-row" data-w="제초">제초<span class="rc"><svg class="ic"><use href="#i-check"/></svg></span></button>
+        <button class="opt-row" data-w="적심·정지">적심·정지<span class="rc"><svg class="ic"><use href="#i-check"/></svg></span></button>
+        <button class="opt-row" data-w="유인">유인<span class="rc"><svg class="ic"><use href="#i-check"/></svg></span></button>
+        <button class="opt-row" data-w="수확">수확<span class="rc"><svg class="ic"><use href="#i-check"/></svg></span></button>
+        <button class="opt-row" data-w="기타">기타<span class="rc"><svg class="ic"><use href="#i-check"/></svg></span></button>
+      </div>
+      <button class="sheet-close" id="workDone">선택 완료</button>
+    </div>
+<script>
+    function showSheet(sheet, dim){ sheet.classList.add('on'); dim.classList.add('on'); }
+    function hideSheet(sheet, dim){ sheet.classList.remove('on'); dim.classList.remove('on'); }
+
+    // 단일 선택 시트 (농장·작물)
+    function setupSingleSheet(triggerId, sheetId, dimId, valId){
+      var trigger = document.getElementById(triggerId);
+      var sheet = document.getElementById(sheetId);
+      var dim = document.getElementById(dimId);
+      var valEl = document.getElementById(valId);
+      trigger.addEventListener('click', function(){ showSheet(sheet, dim); });
+      dim.addEventListener('click', function(){ hideSheet(sheet, dim); });
+      sheet.querySelectorAll('.opt-row').forEach(function(o){
+        o.addEventListener('click', function(){
+          sheet.querySelectorAll('.opt-row').forEach(function(x){ x.classList.remove('on'); });
+          o.classList.add('on');
+          valEl.textContent = o.dataset.v;
+          hideSheet(sheet, dim);
+        });
+      });
+    }
+    setupSingleSheet('farmTrigger', 'farmSheet', 'farmDim', 'farmVal');
+    setupSingleSheet('cropTrigger', 'cropSheet', 'cropDim', 'cropVal');
+
+    // 다중 선택 시트 (주요 작업)
+    var workTrigger = document.getElementById('workTrigger');
+    var workSheet = document.getElementById('workSheet');
+    var workDim = document.getElementById('workDim');
+    var workPh = document.getElementById('workPh');
+    var selChips = document.getElementById('selChips');
+
+    function refreshWork(){
+      var sel = [];
+      workSheet.querySelectorAll('.opt-row.on').forEach(function(o){ sel.push(o.dataset.w); });
+      if (sel.length === 0){ workPh.textContent = '작업 선택'; workPh.classList.add('ph'); }
+      else { workPh.textContent = sel.join(', '); workPh.classList.remove('ph'); }
+      selChips.innerHTML = sel.map(function(w){
+        return '<span class="sel-chip" data-w="'+w+'">'+w+'<span class="x"><svg class="ic"><use href="#i-x"/></svg></span></span>';
+      }).join('');
+      selChips.querySelectorAll('.sel-chip .x').forEach(function(x){
+        x.addEventListener('click', function(){
+          var w = x.closest('.sel-chip').dataset.w;
+          var opt = workSheet.querySelector('.opt-row[data-w="'+w+'"]');
+          if (opt) opt.classList.remove('on');
+          refreshWork();
+        });
+      });
+    }
+    workTrigger.addEventListener('click', function(){ showSheet(workSheet, workDim); });
+    workDim.addEventListener('click', function(){ hideSheet(workSheet, workDim); });
+    workSheet.querySelectorAll('.opt-row').forEach(function(o){
+      o.addEventListener('click', function(){ o.classList.toggle('on'); refreshWork(); });
+    });
+    document.getElementById('workDone').addEventListener('click', function(){ hideSheet(workSheet, workDim); });
+    refreshWork();
+
+    // 용어 설명 시트
+    var sheet = document.getElementById('sheet');
+    var dim = document.getElementById('sheetDim');
+    document.getElementById('infoBtn').addEventListener('click', function(e){ e.stopPropagation(); showSheet(sheet, dim); });
+    document.getElementById('sheetClose').addEventListener('click', function(){ hideSheet(sheet, dim); });
+    dim.addEventListener('click', function(){ hideSheet(sheet, dim); });
+
+    // 날짜 피커
+    var dpSheet = document.getElementById('dpSheet');
+    var dpDim = document.getElementById('dpDim');
+    var dpGrid = document.getElementById('dpGrid');
+    var dateVal = document.getElementById('dateVal');
+    var dpTitle = document.getElementById('dpTitle');
+    var ymPanel = document.getElementById('ymPanel');
+    var dpDow = document.getElementById('dpDow');
+    var dowKo = ['일','월','화','수','목','금','토'];
+
+    var TODAY = { y: 2026, m: 5, d: 27 };           // 오늘
+    var view = { y: 2026, m: 5 };                    // 보고 있는 년·월
+    var sel = { y: 2026, m: 5, d: 27 };              // 선택된 날짜
+
+    function daysInMonth(y, m){ return new Date(y, m, 0).getDate(); }
+    function firstDow(y, m){ return new Date(y, m-1, 1).getDay(); }
+
+    function buildDp(){
+      dpTitle.firstChild.textContent = view.y + '년 ' + view.m + '월 ';
+      var fd = firstDow(view.y, view.m);
+      var dim = daysInMonth(view.y, view.m);
+      var h = '';
+      for (var i=0;i<fd;i++) h += '<div class="dp-day empty"></div>';
+      for (var d=1;d<=dim;d++){
+        var dow = (fd + d - 1) % 7;
+        var cls = 'dp-day';
+        if (dow===0) cls += ' sun';
+        if (view.y===TODAY.y && view.m===TODAY.m && d===TODAY.d) cls += ' today';
+        if (view.y===sel.y && view.m===sel.m && d===sel.d) cls += ' on';
+        h += '<button class="'+cls+'" data-d="'+d+'">'+d+'</button>';
+      }
+      dpGrid.innerHTML = h;
+      dpGrid.querySelectorAll('.dp-day[data-d]').forEach(function(b){
+        b.addEventListener('click', function(){
+          sel = { y: view.y, m: view.m, d: parseInt(b.dataset.d) };
+          buildDp();
+        });
+      });
+    }
+
+    function shiftMonth(delta){
+      var m = view.m + delta;
+      var y = view.y;
+      if (m < 1){ m = 12; y--; } else if (m > 12){ m = 1; y++; }
+      view = { y: y, m: m };
+      buildDp();
+    }
+
+    // 년/월 선택 패널
+    function buildYM(){
+      var yh = '';
+      for (var y = TODAY.y - 5; y <= TODAY.y + 1; y++){
+        yh += '<button class="ym-item'+(y===view.y?' on':'')+'" data-y="'+y+'">'+y+'년</button>';
+      }
+      document.getElementById('ymYears').innerHTML = yh;
+      var mh = '';
+      for (var m = 1; m <= 12; m++){
+        mh += '<button class="ym-item'+(m===view.m?' on':'')+'" data-m="'+m+'">'+m+'월</button>';
+      }
+      document.getElementById('ymMonths').innerHTML = mh;
+      document.querySelectorAll('#ymYears .ym-item').forEach(function(b){
+        b.addEventListener('click', function(){ view.y = parseInt(b.dataset.y); buildYM(); });
+      });
+      document.querySelectorAll('#ymMonths .ym-item').forEach(function(b){
+        b.addEventListener('click', function(){ view.m = parseInt(b.dataset.m); buildYM(); });
+      });
+    }
+    function toggleYM(open){
+      ymPanel.classList.toggle('open', open);
+      dpGrid.style.display = open ? 'none' : 'grid';
+      dpDow.style.display = open ? 'none' : 'grid';
+      dpTitle.classList.toggle('open', open);
+      document.querySelector('.dp-nav').style.visibility = open ? 'hidden' : 'visible';
+      if (open) buildYM();
+    }
+    var ymOpen = false;
+    var dpCloseBtn = document.getElementById('dpClose');
+    function syncCloseBtn(){
+      dpCloseBtn.textContent = ymOpen ? '이 달 보기' : '확인';
+    }
+    dpTitle.addEventListener('click', function(){
+      ymOpen = !ymOpen;
+      if (!ymOpen) buildDp();
+      toggleYM(ymOpen);
+      syncCloseBtn();
+    });
+
+    document.getElementById('dpPrev').addEventListener('click', function(){ shiftMonth(-1); });
+    document.getElementById('dpNext').addEventListener('click', function(){ shiftMonth(1); });
+    document.getElementById('dpToday2').addEventListener('click', function(){
+      if (ymOpen){ ymOpen = false; toggleYM(false); syncCloseBtn(); }
+      view = { y: TODAY.y, m: TODAY.m };
+      sel = { y: TODAY.y, m: TODAY.m, d: TODAY.d };
+      buildDp();
+    });
+
+    buildDp();
+    document.getElementById('dateTrigger').addEventListener('click', function(){ showSheet(dpSheet, dpDim); });
+    dpCloseBtn.addEventListener('click', function(){
+      if (ymOpen){
+        // 년/월 패널 → 그 달 달력으로 돌아가기 (시트 유지)
+        ymOpen = false;
+        toggleYM(false);
+        buildDp();
+        syncCloseBtn();
+        return;
+      }
+      // 날짜 선택 완료 → 값 반영하고 시트 닫기
+      var dow = (firstDow(sel.y, sel.m) + sel.d - 1) % 7;
+      var mm = (sel.m<10?'0':'') + sel.m;
+      var dd = (sel.d<10?'0':'') + sel.d;
+      dateVal.textContent = sel.y + '. ' + mm + '. ' + dd + ' (' + dowKo[dow] + ')';
+      hideSheet(dpSheet, dpDim);
+    });
+    dpDim.addEventListener('click', function(){ hideSheet(dpSheet, dpDim); });
+  </script>

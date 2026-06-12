@@ -1,0 +1,75 @@
+<!--META {"layout":"raw"} -->
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KS팜 — 비밀번호 변경</title>
+<link rel="stylesheet" href="{{A}}css/common.css"/>
+<link rel="stylesheet" href="{{A}}css/components.css"/>
+<link rel="stylesheet" href="{{A}}css/pwchange.css"/>
+</head>
+<body>
+  {{SPRITE}}
+
+  <div class="phone">
+    <div class="backhint" aria-hidden="true">
+      <div class="bh-field"><div class="l">이메일</div><div class="v">summertoohotplzstop@gmail.com</div></div>
+      <div class="bh-field"><div class="l">닉네임</div><div class="v">utii</div></div>
+    </div>
+    <div class="scrim"></div>
+
+    <section class="sheet">
+      <div class="handle"></div>
+      <div class="sheet-head">
+        <h2 class="sheet-title">비밀번호를<br>변경해 주세요</h2>
+        <a class="sheet-close" href="editprofile.html"><svg class="ic"><use href="#i-x"/></svg></a>
+      </div>
+
+      <div class="field">
+        <label class="lab" for="pw-cur">현재 비밀번호</label>
+        <div class="box"><input class="inp" id="pw-cur" type="password" placeholder="현재 비밀번호 입력" /><button class="eye"><svg class="ic"><use href="#i-eye"/></svg></button></div>
+      </div>
+
+      <div class="field" id="field-new">
+        <label class="lab" for="pw-new">새 비밀번호</label>
+        <div class="box"><input class="inp" id="pw-new" type="password" placeholder="새 비밀번호 입력" /><button class="eye"><svg class="ic"><use href="#i-eye"/></svg></button></div>
+        <p class="err-msg">영문·숫자·특수문자 포함 8~20자로 입력해 주세요.</p>
+      </div>
+
+      <div class="field" id="field-cfm">
+        <label class="lab" for="pw-cfm">비밀번호 확인</label>
+        <div class="box"><input class="inp" id="pw-cfm" type="password" placeholder="새 비밀번호 재입력" /><button class="eye"><svg class="ic"><use href="#i-eye"/></svg></button></div>
+        <p class="err-msg">비밀번호가 일치하지 않아요.</p>
+      </div>
+
+      <p class="hint"><svg class="ic"><use href="#i-info"/></svg> 영문·숫자 포함 8자 이상으로 설정해 주세요.</p>
+
+      <div class="sheet-foot"><button class="btn-save">비밀번호 변경</button></div>
+    </section>
+  </div>
+
+  <script>
+    document.querySelectorAll('.eye').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var inp = btn.parentElement.querySelector('.inp');
+        var use = btn.querySelector('use');
+        if (inp.type === 'password') { inp.type = 'text'; use.setAttribute('href', '#i-eye-off'); }
+        else { inp.type = 'password'; use.setAttribute('href', '#i-eye'); }
+      });
+    });
+    var btnSave = document.querySelector('.btn-save');
+    var fNew = document.getElementById('field-new'), fCfm = document.getElementById('field-cfm');
+    var iNew = document.getElementById('pw-new'), iCfm = document.getElementById('pw-cfm');
+    var rule = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,20}$/;
+    function setErr(f, on){ f.classList.toggle('show-err', on); f.querySelector('.box').classList.toggle('err', on); }
+    btnSave.addEventListener('click', function(){
+      var okNew = rule.test(iNew.value);
+      var okCfm = iCfm.value !== '' && iCfm.value === iNew.value;
+      setErr(fNew, !okNew); setErr(fCfm, !okCfm);
+      if (okNew && okCfm) window.location.href = 'editprofile.html';
+    });
+    [iNew, iCfm].forEach(function(inp){ inp.addEventListener('input', function(){ var f = inp.closest('.field'); if (f.classList.contains('show-err')) setErr(f, false); }); });
+  </script>
+</body>
+</html>

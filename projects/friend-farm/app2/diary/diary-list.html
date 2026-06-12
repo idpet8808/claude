@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KS팜 — 영농일지</title>
+<link rel="stylesheet" href="../css/common.css"/>
+<link rel="stylesheet" href="../css/components.css"/>
+<link rel="stylesheet" href="../css/diary-list.css"/>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14 0"/><path d="M8.5 16.05a6 6 0 0 1 7 0"/><path d="M2 8.82a15 15 0 0 1 20 0"/><line x1="12" y1="20" x2="12" y2="20"/></symbol><symbol id="i-battery" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="8" width="18" height="9" rx="2"/><path d="M22 11v3"/></symbol><symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 6 9 12 15 18"/></symbol><symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></symbol><symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-5.6 7-11a7 7 0 0 0-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol><symbol id="i-prev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 6 9 12 15 18"/></symbol><symbol id="i-next" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></symbol><symbol id="i-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8a7 7 0 0 1-13.71 2"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></symbol><symbol id="i-cam" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.2"/></symbol><symbol id="i-scan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><line x1="3" y1="12" x2="21" y2="12"/></symbol><symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol></defs></svg>
+  <div class="phone">
+    <div class="status-bar"><span>9:41</span><span class="group"><svg class="ic"><use href="#i-wifi"/></svg> <svg class="ic"><use href="#i-battery"/></svg></span></div>
+    <div class="appbar"><a class="back" href="../home.html" aria-label="뒤로"><svg class="ic"><use href="#i-back"/></svg></a><span class="title">영농일지</span><a class="menu" href="../menu.html" aria-label="메뉴"><svg class="ic"><use href="#i-menu"/></svg></a></div>
+<div class="scroll">
+      <div class="basis"><svg class="ic"><use href="#i-pin"/></svg> <b>완주 청년농원</b> · 시설채소</div>
+
+      <!-- 달력 -->
+      <div class="cal">
+        <div class="cal-head">
+          <span class="cal-title">2026년 5월</span>
+          <div class="cal-nav">
+            <button aria-label="이전 달"><svg class="ic"><use href="#i-prev"/></svg></button>
+            <button aria-label="다음 달"><svg class="ic"><use href="#i-next"/></svg></button>
+          </div>
+        </div>
+        <div class="dow"><span class="sun">일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+        <div class="grid" id="grid"></div>
+      </div>
+
+      <!-- 선택 날짜 일지 -->
+      <div class="sel-head">
+        <span class="d">5월 27일 (화)</span>
+        <span class="c">기록 2건</span>
+      </div>
+      <div class="logs">
+        <div class="log">
+          <div class="log-top">
+            <span class="log-tag"><svg class="ic"><use href="#i-leaf"/></svg> 방제</span>
+            <span class="log-time">오전 9:20</span>
+          </div>
+          <div class="log-body">오이 하우스 흰가루병 예방 약제 살포. 동별로 골고루 분사하고 환기 2시간 진행했음.</div>
+          <div class="log-photos">
+            <div class="ph"><svg class="ic"><use href="#i-cam"/></svg></div>
+            <div class="ph"><svg class="ic"><use href="#i-cam"/></svg></div>
+          </div>
+          <div class="log-diag"><svg class="ic"><use href="#i-scan"/></svg> 병해진단 결과 연결 · 오이 흰가루병</div>
+        </div>
+        <div class="log">
+          <div class="log-top">
+            <span class="log-tag"><svg class="ic"><use href="#i-leaf"/></svg> 수확</span>
+            <span class="log-time">오후 4:10</span>
+          </div>
+          <div class="log-body">딸기 2번 동 수확. 약 12kg, 상품 비율 좋음.</div>
+          <div class="log-photos">
+            <div class="ph"><svg class="ic"><use href="#i-cam"/></svg></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <a class="fab" href="diary-write.html"><svg class="ic"><use href="#i-plus"/></svg> 일지 쓰기</a>
+<script>
+    // 2026년 5월: 1일=금요일(요일 index 5), 31일까지
+    var year = 2026, month = 5;
+    var firstDow = 5; // 금
+    var daysInMonth = 31;
+    var today = 27;
+    var selected = 27;
+    var hasLog = { 3:1, 8:1, 12:1, 19:1, 20:1, 24:1, 27:1 }; // 일지 있는 날
+
+    function buildGrid(){
+      var grid = document.getElementById('grid');
+      var html = '';
+      for (var i = 0; i < firstDow; i++) html += '<div class="day empty"></div>';
+      for (var d = 1; d <= daysInMonth; d++){
+        var dow = (firstDow + d - 1) % 7;
+        var cls = 'day';
+        if (dow === 0) cls += ' sun';
+        if (d === today) cls += ' today';
+        if (d === selected) cls += ' on';
+        html += '<button class="'+cls+'" data-d="'+d+'">'+d
+          + (hasLog[d] ? '<span class="dot"></span>' : '<span style="width:5px;height:5px"></span>')
+          + '</button>';
+      }
+      grid.innerHTML = html;
+      grid.querySelectorAll('.day[data-d]').forEach(function(b){
+        b.addEventListener('click', function(){
+          selected = parseInt(b.dataset.d);
+          buildGrid();
+        });
+      });
+    }
+    buildGrid();
+  </script>
+
+  </div>
+
+</body>
+</html>

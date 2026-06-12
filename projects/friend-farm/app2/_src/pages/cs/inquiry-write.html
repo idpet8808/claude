@@ -1,0 +1,48 @@
+<!--META {"title":"문의하기","back":"cs/inquiry-list.html","menu":true,"css":"inquiry-write.css"} -->
+<div class="scroll">
+      <div class="field" id="field-title">
+        <label class="lab" for="q-title">제목</label>
+        <div class="box"><input class="inp" id="q-title" type="text" placeholder="문의 제목을 입력해 주세요" /></div>
+        <p class="err-msg">제목을 입력해 주세요.</p>
+      </div>
+
+      <div class="field" id="field-body">
+        <label class="lab" for="q-body">문의 내용</label>
+        <div class="area"><textarea id="q-body" placeholder="어떤 점이 궁금하신가요? 자세히 적어주시면 더 정확하게 답변드릴 수 있어요." maxlength="1000"></textarea></div>
+        <div class="count">0 / 1000</div>
+        <p class="err-msg">문의 내용을 10자 이상 입력해 주세요.</p>
+      </div>
+
+      <div class="field">
+        <label class="lab">사진 첨부 <span style="color:var(--gray);font-weight:600">(선택)</span></label>
+        <div class="photos"><button class="photo-add"><svg class="ic"><use href="#i-cam"/></svg><span class="n">0/3</span></button></div>
+      </div>
+
+      <p class="help">답변은 등록하신 알림과 '1:1 문의 내역'에서 확인할 수 있어요.</p>
+    </div>
+
+    <div class="foot"><button class="btn-submit" id="btnSubmit">문의 접수하기</button></div>
+
+    <div class="scrim" id="doneDialog">
+      <div class="dialog">
+        <div class="dlg-ic"><svg class="ic"><use href="#i-check"/></svg></div>
+        <div class="dlg-title">문의가 접수되었어요</div>
+        <div class="dlg-desc">답변이 등록되면 알림으로 알려드릴게요.<br>'1:1 문의 내역'에서도 확인할 수 있어요.</div>
+        <button class="dlg-btn" id="doneOk">확인</button>
+      </div>
+    </div>
+<script>
+    var ta = document.getElementById('q-body'), cnt = document.querySelector('.count');
+    if (ta && cnt) ta.addEventListener('input', function(){ cnt.textContent = ta.value.length + ' / 1000'; });
+    var iTitle = document.getElementById('q-title'), fTitle = document.getElementById('field-title'), fBody = document.getElementById('field-body'), dialog = document.getElementById('doneDialog');
+    function setErr(field, box, on){ field.classList.toggle('show-err', on); box.classList.toggle('err', on); }
+    document.getElementById('btnSubmit').addEventListener('click', function(){
+      var okTitle = iTitle.value.trim().length > 0, okBody = ta.value.trim().length >= 10;
+      setErr(fTitle, fTitle.querySelector('.box'), !okTitle);
+      setErr(fBody, fBody.querySelector('.area'), !okBody);
+      if (okTitle && okBody) dialog.classList.add('show');
+    });
+    iTitle.addEventListener('input', function(){ if (fTitle.classList.contains('show-err')) setErr(fTitle, fTitle.querySelector('.box'), false); });
+    ta.addEventListener('input', function(){ if (fBody.classList.contains('show-err')) setErr(fBody, fBody.querySelector('.area'), false); });
+    document.getElementById('doneOk').addEventListener('click', function(){ dialog.classList.remove('show'); window.location.href = 'inquiry-list.html'; });
+  </script>

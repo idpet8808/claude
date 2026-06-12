@@ -1,0 +1,274 @@
+<!--META {"layout":"raw"} -->
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KS팜 — 병해진단</title>
+<link rel="stylesheet" href="{{A}}css/common.css"/>
+<link rel="stylesheet" href="{{A}}css/components.css"/>
+<link rel="stylesheet" href="{{A}}css/diagnose-input.css"/>
+</head>
+<body>
+  {{SPRITE}}
+
+  <div class="phone">
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="group"><svg class="ic"><use href="#i-wifi"/></svg> <svg class="ic"><use href="#i-battery"/></svg></span>
+    </div>
+
+    <div class="appbar">
+      <button class="back" id="topBack" aria-label="뒤로"><svg class="ic"><use href="#i-back"/></svg></button>
+      <span class="title">병해진단</span>
+      <a class="menu" href="../menu.html" aria-label="메뉴"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></a>
+    </div>
+
+    <div class="prog" id="prog">
+      <div class="pstep on" data-s="1"><span class="pdot">1</span><span class="pnm">작물</span></div>
+      <span class="pline"></span>
+      <div class="pstep" data-s="2"><span class="pdot">2</span><span class="pnm">증상</span></div>
+      <span class="pline"></span>
+      <div class="pstep" data-s="3"><span class="pdot">3</span><span class="pnm">시기</span></div>
+      <span class="pline"></span>
+      <div class="pstep" data-s="4"><span class="pdot">4</span><span class="pnm">사진</span></div>
+    </div>
+
+    <div class="scroll">
+      <!-- STEP 1: 작물 -->
+      <div class="step active" data-step="1">
+        <p class="step-label">STEP 1</p>
+        <h2 class="bigq">어떤 작물에<br>생긴 문제인가요?</h2>
+        <p class="bigsub">작물을 골라주세요</p>
+        <div class="answers" id="cropAns">
+          <button class="ans on" data-v="오이">오이<span class="arrow"><svg class="ic"><use href="#i-check"/></svg></span></button>
+          <button class="ans" data-v="딸기">딸기<span class="arrow"><svg class="ic"><use href="#i-next"/></svg></span></button>
+          <button class="ans" data-v="토마토">토마토<span class="arrow"><svg class="ic"><use href="#i-next"/></svg></span></button>
+          <button class="ans" data-v="고추">고추<span class="arrow"><svg class="ic"><use href="#i-next"/></svg></span></button>
+          <button class="ans" data-v="배추">배추<span class="arrow"><svg class="ic"><use href="#i-next"/></svg></span></button>
+        </div>
+      </div>
+
+      <!-- STEP 2: 부위 + 증상 -->
+      <div class="step" data-step="2">
+        <p class="step-label">STEP 2</p>
+        <h2 class="bigq">어디에 어떤<br>증상이 보이나요?</h2>
+        <p class="bigsub">발생 부위와 증상을 골라주세요</p>
+
+        <p class="sub-label">발생 부위</p>
+        <div class="chips" id="partChips">
+          <button class="chip on">잎</button>
+          <button class="chip">줄기</button>
+          <button class="chip">열매</button>
+          <button class="chip">뿌리</button>
+          <button class="chip">전체</button>
+        </div>
+
+        <p class="sub-label">주요 증상 <button class="info-btn" id="infoBtn" aria-label="증상 용어 설명"><svg class="ic"><use href="#i-info"/></svg></button><span class="multi">복수 선택</span></p>
+        <div class="chips" id="symptomChips">
+          <button class="chip on">반점</button>
+          <button class="chip">마름</button>
+          <button class="chip">변색</button>
+          <button class="chip">황화</button>
+          <button class="chip on">흰가루</button>
+          <button class="chip">곰팡이</button>
+          <button class="chip">오그라듦</button>
+          <button class="chip">기형</button>
+          <button class="chip">시듦</button>
+          <button class="chip">괴사</button>
+          <button class="chip">기타</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: 발생 시기 -->
+      <div class="step" data-step="3">
+        <p class="step-label">STEP 3</p>
+        <h2 class="bigq">언제부터<br>증상이 보였나요?</h2>
+        <p class="bigsub">대략적인 시기를 골라주세요</p>
+        <div class="answers" id="periodAns">
+          <button class="ans" data-v="1~3일">최근 1~3일<span class="arrow"><svg class="ic"><use href="#i-next"/></svg></span></button>
+          <button class="ans on" data-v="4~7일">4~7일 전부터<span class="arrow"><svg class="ic"><use href="#i-check"/></svg></span></button>
+          <button class="ans" data-v="1~2주">1~2주 됐어요<span class="arrow"><svg class="ic"><use href="#i-next"/></svg></span></button>
+          <button class="ans" data-v="2주 이상">2주 이상 됐어요<span class="arrow"><svg class="ic"><use href="#i-next"/></svg></span></button>
+          <button class="ans" data-v="잘 모름">잘 모르겠어요<span class="arrow"><svg class="ic"><use href="#i-next"/></svg></span></button>
+        </div>
+      </div>
+
+      <!-- STEP 4: 사진 + 환경 -->
+      <div class="step" data-step="4">
+        <p class="step-label">STEP 4</p>
+        <h2 class="bigq">증상 사진을<br>올려주세요</h2>
+        <p class="bigsub">사진이 있으면 진단 정확도가 크게 올라가요</p>
+        <button class="photo-hero">
+          <svg class="ic"><use href="#i-cam"/></svg>
+          <span class="pt">사진 촬영 · 등록</span>
+          <span class="ps">잎·줄기·열매의 증상 부위를<br>가까이서 찍어주세요 (최대 5장)</span>
+          <span class="skip-in">사진 없이도 진단할 수 있어요</span>
+        </button>
+
+        <p class="env-title">재배 환경 <span style="font-size:11.5px;color:var(--gray);font-weight:600">선택</span></p>
+        <p class="env-sub">알려주면 진단이 더 정확해져요</p>
+        <div class="env-grid">
+          <div class="selectbox" data-env="재배 방식"><span>재배 방식</span><svg class="ic"><use href="#i-down"/></svg></div>
+          <div class="selectbox" data-env="온도"><span>온도</span><svg class="ic"><use href="#i-down"/></svg></div>
+          <div class="selectbox" data-env="습도"><span>습도</span><svg class="ic"><use href="#i-down"/></svg></div>
+          <div class="selectbox" data-env="토양 상태"><span>토양 상태</span><svg class="ic"><use href="#i-down"/></svg></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <button class="btn btn-ghost" id="prevBtn" style="display:none">이전</button>
+      <button class="btn btn-next" id="nextBtn">다음 <svg class="ic"><use href="#i-next"/></svg></button>
+      <a class="btn btn-diag" id="diagBtn" href="diagnose-loading.html" style="display:none"><svg class="ic"><use href="#i-scan"/></svg> AI 진단하기</a>
+    </div>
+
+    <!-- 환경 옵션 시트 -->
+    <div class="sheet-dim" id="envDim"></div>
+    <div class="sheet" id="envSheet">
+      <div class="sheet-grip"></div>
+      <h3 id="envTitle">재배 방식</h3>
+      <div id="envList"></div>
+    </div>
+
+    <!-- 증상 용어 설명 시트 -->
+    <div class="sheet-dim" id="gloDim"></div>
+    <div class="sheet" id="gloSheet">
+      <div class="sheet-grip"></div>
+      <h3>증상 용어 안내</h3>
+      <p class="bigsub" style="margin-bottom:14px">처음이라 헷갈린다면 참고하세요</p>
+      <div class="glo-term"><span class="gt">반점</span><span class="gd">잎·열매·줄기에 둥글거나 불규칙한 점·얼룩이 생기는 증상이에요.</span></div>
+      <div class="glo-term"><span class="gt">마름</span><span class="gd">조직이 말라서 갈색·검은색으로 변하고 바삭해지는 증상이에요.</span></div>
+      <div class="glo-term"><span class="gt">변색</span><span class="gd">원래 색과 다른 색으로 바뀌는 증상이에요 (반점·황화 외 전반적 색 변화).</span></div>
+      <div class="glo-term"><span class="gt">황화</span><span class="gd">잎이 노랗게 변하는 증상이에요. 영양 결핍·바이러스 등이 원인이에요.</span></div>
+      <div class="glo-term"><span class="gt">흰가루</span><span class="gd">잎 표면에 밀가루를 뿌린 듯 흰 가루가 덮이는 증상이에요 (흰가루병).</span></div>
+      <div class="glo-term"><span class="gt">곰팡이</span><span class="gd">회색·검은색·솜털 같은 곰팡이가 잎·열매에 피는 증상이에요.</span></div>
+      <div class="glo-term"><span class="gt">오그라듦</span><span class="gd">잎이 안쪽·바깥쪽으로 말리거나 쪼그라드는 증상이에요.</span></div>
+      <div class="glo-term"><span class="gt">기형</span><span class="gd">잎·열매가 비정상적인 모양으로 자라거나 비틀리는 증상이에요.</span></div>
+      <div class="glo-term"><span class="gt">시듦</span><span class="gd">물을 줘도 잎·줄기가 축 늘어지고 생기를 잃는 증상이에요.</span></div>
+      <div class="glo-term"><span class="gt">괴사</span><span class="gd">조직이 죽어 갈색·검은색으로 변하며 썩어들어가는 증상이에요.</span></div>
+      <button class="btn btn-next" id="gloClose" style="width:100%; margin-top:18px; flex:none">닫기</button>
+    </div>
+  </div>
+
+  <script>
+    var step = 1, totalSteps = 4;
+    var steps = document.querySelectorAll('.step');
+    var pSteps = document.querySelectorAll('#prog .pstep');
+    var pLines = document.querySelectorAll('#prog .pline');
+    var prevBtn = document.getElementById('prevBtn');
+    var nextBtn = document.getElementById('nextBtn');
+    var diagBtn = document.getElementById('diagBtn');
+    var curStepEl = document.getElementById('curStep');
+
+    function render(){
+      steps.forEach(function(s){ s.classList.toggle('active', parseInt(s.dataset.step)===step); });
+      pSteps.forEach(function(p){
+        var n = parseInt(p.dataset.s);
+        p.classList.toggle('on', n === step);
+        p.classList.toggle('done', n < step);
+        var dot = p.querySelector('.pdot');
+        if (n < step) dot.innerHTML = '<svg class="ic"><use href="#i-check"/></svg>';
+        else dot.textContent = n;
+      });
+      pLines.forEach(function(l,i){ l.classList.toggle('done', i < step - 1); });
+      if (curStepEl) curStepEl.textContent = step;
+      prevBtn.style.display = step > 1 ? 'inline-flex' : 'none';
+      if (step === totalSteps){
+        nextBtn.style.display = 'none';
+        diagBtn.style.display = 'inline-flex';
+      } else {
+        nextBtn.style.display = 'inline-flex';
+        diagBtn.style.display = 'none';
+      }
+      document.querySelector('.scroll').scrollTop = 0;
+    }
+    nextBtn.addEventListener('click', function(){ if (step < totalSteps){ step++; render(); } });
+    prevBtn.addEventListener('click', function(){ if (step > 1){ step--; render(); } });
+    document.getElementById('topBack').addEventListener('click', function(){ if (step > 1){ step--; render(); } else { location.href = '../home.html'; } });
+
+    // 작물 단일 선택
+    document.querySelectorAll('#cropAns .ans').forEach(function(a){
+      a.addEventListener('click', function(){
+        document.querySelectorAll('#cropAns .ans').forEach(function(x){
+          x.classList.remove('on');
+          x.querySelector('.arrow use').setAttribute('href', '#i-next');
+        });
+        a.classList.add('on');
+        a.querySelector('.arrow use').setAttribute('href', '#i-check');
+      });
+    });
+
+    // 발생 부위 단일 선택
+    document.querySelectorAll('#partChips .chip').forEach(function(c){
+      c.addEventListener('click', function(){
+        document.querySelectorAll('#partChips .chip').forEach(function(x){ x.classList.remove('on'); });
+        c.classList.add('on');
+      });
+    });
+
+    // 증상 복수 선택
+    document.querySelectorAll('#symptomChips .chip').forEach(function(c){
+      c.addEventListener('click', function(){ c.classList.toggle('on'); });
+    });
+
+    // 발생 시기 단일 선택
+    document.querySelectorAll('#periodAns .ans').forEach(function(a){
+      a.addEventListener('click', function(){
+        document.querySelectorAll('#periodAns .ans').forEach(function(x){
+          x.classList.remove('on');
+          x.querySelector('.arrow use').setAttribute('href', '#i-next');
+        });
+        a.classList.add('on');
+        a.querySelector('.arrow use').setAttribute('href', '#i-check');
+      });
+    });
+
+    // 증상 용어 설명 시트
+    var gloSheet = document.getElementById('gloSheet');
+    var gloDim = document.getElementById('gloDim');
+    document.getElementById('infoBtn').addEventListener('click', function(e){
+      e.stopPropagation();
+      gloSheet.classList.add('on'); gloDim.classList.add('on');
+    });
+    document.getElementById('gloClose').addEventListener('click', function(){
+      gloSheet.classList.remove('on'); gloDim.classList.remove('on');
+    });
+    gloDim.addEventListener('click', function(){ gloSheet.classList.remove('on'); gloDim.classList.remove('on'); });
+
+    // 환경 옵션 시트
+    var envOptions = {
+      '재배 방식': ['노지', '시설(하우스)', '수경', '기타'],
+      '온도': ['10℃ 이하', '10~20℃', '20~30℃', '30℃ 이상', '모름'],
+      '습도': ['건조(낮음)', '보통', '습함(높음)', '모름'],
+      '토양 상태': ['건조', '적당', '과습', '모름']
+    };
+    var envSheet = document.getElementById('envSheet');
+    var envDim = document.getElementById('envDim');
+    var envTitle = document.getElementById('envTitle');
+    var envList = document.getElementById('envList');
+    var curBox = null;
+    document.querySelectorAll('.selectbox[data-env]').forEach(function(box){
+      box.addEventListener('click', function(){
+        curBox = box; var key = box.dataset.env;
+        envTitle.textContent = key;
+        var cur = box.querySelector('span').textContent;
+        envList.innerHTML = envOptions[key].map(function(o){
+          return '<button class="opt-row'+(o===cur?' on':'')+'" data-v="'+o+'">'+o+'<span class="rc"><svg class="ic"><use href="#i-check"/></svg></span></button>';
+        }).join('');
+        envList.querySelectorAll('.opt-row').forEach(function(r){
+          r.addEventListener('click', function(){
+            curBox.querySelector('span').textContent = r.dataset.v;
+            curBox.classList.add('set');
+            envSheet.classList.remove('on'); envDim.classList.remove('on');
+          });
+        });
+        envSheet.classList.add('on'); envDim.classList.add('on');
+      });
+    });
+    envDim.addEventListener('click', function(){ envSheet.classList.remove('on'); envDim.classList.remove('on'); });
+
+    render();
+  </script>
+</body>
+</html>

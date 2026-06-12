@@ -1,0 +1,76 @@
+<!--META {"title":"병해충 정보","back":"home.html","menu":true,"css":"pestsearch-home.css"} -->
+<div class="scroll">
+      <!-- 검색 히어로 -->
+      <div class="hero">
+        <h1>무슨 병해충인지<br><b>찾아보세요</b></h1>
+        <p class="sub">작물 이름이나 병해충 이름으로<br>증상과 방제법을 확인할 수 있어요.</p>
+        <a class="searchbar" href="pestsearch-search.html">
+          <svg class="ic"><use href="#i-search"/></svg>
+          <input type="text" placeholder="예) 토마토, 탄저병" readonly/>
+        </a>
+      </div>
+
+      <!-- 조회 많은 병해충 (칩) -->
+      <div class="popular">
+        <p class="pop-lbl">조회 많은 병해충</p>
+        <div class="pchips">
+          <a class="pchip" href="pestsearch-search.html?q=탄저병"><span class="rk">1</span>탄저병<span class="dot dis"></span></a>
+          <a class="pchip" href="pestsearch-search.html?q=진딧물"><span class="rk">2</span>진딧물<span class="dot pst"></span></a>
+          <a class="pchip" href="pestsearch-search.html?q=노균병"><span class="rk">3</span>노균병<span class="dot dis"></span></a>
+          <a class="pchip" href="pestsearch-search.html?q=총채벌레"><span class="rk">4</span>총채벌레<span class="dot pst"></span></a>
+          <a class="pchip" href="pestsearch-search.html?q=역병"><span class="rk">5</span>역병<span class="dot dis"></span></a>
+        </div>
+      </div>
+
+      <!-- 내 농장 작물 병해충 -->
+      <div class="myfarm">
+        <p class="mf-lbl">내 농장 작물에 조심할 병해충</p>
+        <div class="crop-tabs">
+          <button class="crop-tab on" data-crop="오이">오이</button>
+          <button class="crop-tab" data-crop="딸기">딸기</button>
+        </div>
+        <div class="pest-list" id="pestList"></div>
+        <a class="pest-more" id="pestMore">전체 보기</a>
+      </div>
+    </div>
+<script>
+    var DATA = {
+      '오이': [
+        {nm:'노균병', kind:'dis', sci:'Pseudoperonospora cubensis'},
+        {nm:'흰가루병', kind:'dis', sci:'Sphaerotheca fuliginea'},
+        {nm:'탄저병', kind:'dis', sci:'Colletotrichum orbiculare'},
+        {nm:'총채벌레', kind:'pst', sci:'Frankliniella occidentalis'}
+      ],
+      '딸기': [
+        {nm:'잿빛곰팡이병', kind:'dis', sci:'Botrytis cinerea'},
+        {nm:'흰가루병', kind:'dis', sci:'Sphaerotheca aphanis'},
+        {nm:'점박이응애', kind:'pst', sci:'Tetranychus urticae'}
+      ]
+    };
+    var SEARCH = 'pestsearch-search.html';
+    var listEl = document.getElementById('pestList');
+    var moreEl = document.getElementById('pestMore');
+    var LIMIT = 2;
+
+    function itemHTML(d){
+      var tag = d.kind==='dis' ? '<span class="ptag dis">병</span>' : '<span class="ptag pst">해충</span>';
+      return '<a class="pest-item" href="'+SEARCH+'?q='+encodeURIComponent(d.nm)+'">'
+        + '<span class="thumb"><svg class="ic"><use href="#i-img"/></svg></span>'
+        + '<span class="pm"><span class="pn">'+d.nm+' '+tag+'</span><span class="psci">'+d.sci+'</span></span>'
+        + '<svg class="ic cv"><use href="#i-cv"/></svg></a>';
+    }
+    function render(crop){
+      var arr = DATA[crop];
+      listEl.innerHTML = arr.slice(0, LIMIT).map(itemHTML).join('');
+      moreEl.href = SEARCH + '?q=' + encodeURIComponent(crop);
+      moreEl.textContent = crop + ' 병해충 전체 보기';
+    }
+    document.querySelectorAll('.crop-tab').forEach(function(t){
+      t.addEventListener('click', function(){
+        document.querySelectorAll('.crop-tab').forEach(function(x){ x.classList.remove('on'); });
+        t.classList.add('on');
+        render(t.dataset.crop);
+      });
+    });
+    render('오이');
+  </script>

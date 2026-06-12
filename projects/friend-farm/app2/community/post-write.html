@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KS팜 — 영농 이야기 작성</title>
+<link rel="stylesheet" href="../css/common.css"/>
+<link rel="stylesheet" href="../css/components.css"/>
+<link rel="stylesheet" href="../css/community-write.css"/>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14 0"/><path d="M8.5 16.05a6 6 0 0 1 7 0"/><path d="M2 8.82a15 15 0 0 1 20 0"/><line x1="12" y1="20" x2="12" y2="20"/></symbol><symbol id="i-battery" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="8" width="18" height="9" rx="2"/><path d="M22 11v3"/></symbol><symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 6 9 12 15 18"/></symbol><symbol id="i-cam" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.2"/></symbol><symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></symbol><symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></symbol></defs></svg>
+  <div class="phone">
+    <div class="status-bar"><span>9:41</span><span class="group"><svg class="ic"><use href="#i-wifi"/></svg> <svg class="ic"><use href="#i-battery"/></svg></span></div>
+    <div class="appbar"><a class="back" href="board.html" aria-label="뒤로"><svg class="ic"><use href="#i-back"/></svg></a><span class="title" id="pageTitle">영농 이야기 작성</span><span class="sp"></span></div>
+
+    <div class="scroll">
+      <!-- 사진 (필수) -->
+      <div class="field" id="field-photo">
+        <label class="lab">사진 <span class="count"><b id="photoN">1</b>/5</span></label>
+        <div class="photo-grid" id="photoGrid">
+          <button class="photo-add" id="photoAdd"><svg class="ic"><use href="#i-cam"/></svg><span class="pt">사진 추가</span></button>
+          <div class="photo-thumb" style="background:url('https://loremflickr.com/300/300/strawberry,harvest?lock=11') center/cover no-repeat"><button class="del" aria-label="삭제"><svg class="ic"><use href="#i-x"/></svg></button></div>
+        </div>
+        <p class="err-msg">사진을 1장 이상 추가해 주세요.</p>
+      </div>
+
+      <!-- 내용 -->
+      <div class="field" id="field-body">
+        <label class="lab" for="c-body">내용</label>
+        <div class="area"><textarea id="c-body" placeholder="오늘의 농사 이야기를 들려주세요. 작물 상태, 작업 후기, 궁금한 점 무엇이든 좋아요." maxlength="1000"></textarea></div>
+        <div class="count2">0 / 1000</div>
+        <p class="err-msg">내용을 5자 이상 입력해 주세요.</p>
+      </div>
+    </div>
+
+    <div class="foot"><button class="btn-submit" id="btnSubmit">등록</button></div>
+
+    <div class="scrim" id="doneDialog">
+      <div class="dialog">
+        <div class="dlg-ic"><svg class="ic"><use href="#i-check"/></svg></div>
+        <div class="dlg-title" id="dlgTitle">이야기를 올렸어요</div>
+        <div class="dlg-desc">이웃 농부들과 함께 나눠보세요.</div>
+        <button class="dlg-btn" id="doneOk">확인</button>
+      </div>
+    </div>
+  </div>
+<script>
+  // 등록/수정 모드 전환
+  var isEdit = /[?&]mode=edit\b/.test(location.search);
+  if (isEdit) {
+    document.getElementById('pageTitle').textContent = '영농 이야기 수정';
+    document.getElementById('btnSubmit').textContent = '수정 완료';
+    document.getElementById('dlgTitle').textContent = '이야기를 수정했어요';
+    document.getElementById('c-body').value = '올해 첫 딸기 수확했어요. 겨우내 고생한 보람이 있네요. 다들 올해 작황 어떠신가요?';
+  }
+
+  // 글자수
+  var ta = document.getElementById('c-body'), cnt = document.querySelector('.count2');
+  ta.addEventListener('input', function(){ cnt.textContent = ta.value.length + ' / 1000'; });
+  if (isEdit) cnt.textContent = ta.value.length + ' / 1000';
+
+  // 사진 추가/삭제 (프로토타입 — 더미 썸네일 토글)
+  var grid = document.getElementById('photoGrid'), photoN = document.getElementById('photoN'), fieldPhoto = document.getElementById('field-photo');
+  var samples = ['tomato,seedling','plant,leaf','melon,field','greenhouse,strawberry'];
+  function refreshN(){ photoN.textContent = grid.querySelectorAll('.photo-thumb').length; }
+  function bindDel(t){ t.querySelector('.del').addEventListener('click', function(){ t.remove(); refreshN(); }); }
+  grid.querySelectorAll('.photo-thumb').forEach(bindDel);
+  document.getElementById('photoAdd').addEventListener('click', function(){
+    var thumbs = grid.querySelectorAll('.photo-thumb');
+    if (thumbs.length >= 5) return;
+    var kw = samples[(thumbs.length - 1) % samples.length];
+    var t = document.createElement('div');
+    t.className = 'photo-thumb';
+    t.style.background = "url('https://loremflickr.com/300/300/" + kw + "?lock=" + (60 + thumbs.length) + "') center/cover no-repeat";
+    t.innerHTML = '<button class="del" aria-label="삭제"><svg class="ic"><use href="#i-x"/></svg></button>';
+    grid.appendChild(t);
+    bindDel(t);
+    refreshN();
+    fieldPhoto.classList.remove('show-err');
+  });
+
+  // 등록/수정 검증
+  var fBody = document.getElementById('field-body');
+  document.getElementById('btnSubmit').addEventListener('click', function(){
+    var okPhoto = grid.querySelectorAll('.photo-thumb').length > 0;
+    var okBody = ta.value.trim().length >= 5;
+    fieldPhoto.classList.toggle('show-err', !okPhoto);
+    fBody.classList.toggle('show-err', !okBody);
+    fBody.querySelector('.area').classList.toggle('err', !okBody);
+    if (okPhoto && okBody) document.getElementById('doneDialog').classList.add('show');
+  });
+  ta.addEventListener('input', function(){ if (fBody.classList.contains('show-err')) { fBody.classList.remove('show-err'); fBody.querySelector('.area').classList.remove('err'); } });
+  document.getElementById('doneOk').addEventListener('click', function(){ window.location.href = isEdit ? 'post.html' : 'board.html'; });
+</script>
+</body>
+</html>

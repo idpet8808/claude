@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KS팜 — 농업 영상</title>
+<link rel="stylesheet" href="../css/common.css"/>
+<link rel="stylesheet" href="../css/components.css"/>
+<link rel="stylesheet" href="../css/video-detail.css"/>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14 0"/><path d="M8.5 16.05a6 6 0 0 1 7 0"/><path d="M2 8.82a15 15 0 0 1 20 0"/><line x1="12" y1="20" x2="12" y2="20"/></symbol><symbol id="i-battery" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="8" width="18" height="9" rx="2"/><path d="M22 11v3"/></symbol><symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 6 9 12 15 18"/></symbol><symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></symbol><symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></symbol><symbol id="i-heart-fill" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21l-7.8-7.6-1-1a5.5 5.5 0 0 1 7.8-7.8l1 1 1-1a5.5 5.5 0 0 1 7.8 7.8l-1 1L12 21z"/></symbol><symbol id="i-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></symbol><symbol id="i-bookmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12a1 1 0 0 1 1 1v15l-7-4-7 4V5a1 1 0 0 1 1-1z"/></symbol><symbol id="i-bookmark-fill" viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h12a1 1 0 0 1 1 1v16.2a1 1 0 0 1-1.5.86L12 18.2l-5.5 2.86A1 1 0 0 1 5 20.2V4a1 1 0 0 1 1-1z"/></symbol></defs></svg>
+  <div class="phone">
+    <div class="status-bar"><span>9:41</span><span class="group"><svg class="ic"><use href="#i-wifi"/></svg> <svg class="ic"><use href="#i-battery"/></svg></span></div>
+    <div class="appbar"><a class="back" href="video-list.html" aria-label="뒤로"><svg class="ic"><use href="#i-back"/></svg></a><span class="title">농업 영상</span><a class="menu" href="../menu.html" aria-label="메뉴"><svg class="ic"><use href="#i-menu"/></svg></a></div>
+
+    <div class="scroll">
+      <div class="player" style="background:url('https://loremflickr.com/640/360/greenhouse,strawberry?lock=55') center/cover no-repeat, linear-gradient(135deg,#D5E2C7 0%,#9CC07E 45%,#5C8E50 100%)">
+        <button class="play-lg" aria-label="재생"></button>
+        <span class="dur">12:34</span>
+      </div>
+
+      <div class="v-body">
+        <h1 class="v-title">딸기 수확량 늘리는 스마트 관수 노하우</h1>
+        <div class="v-meta">조회 1.2만 · 2026.06.08</div>
+
+        <div class="v-actions">
+          <button class="va like" id="likeBtn"><svg class="ic ic-line"><use href="#i-heart"/></svg><svg class="ic ic-fill"><use href="#i-heart-fill"/></svg> <span id="likeCount">342</span></button>
+        </div>
+
+        <div class="desc" id="desc">
+          <p class="desc-tx">스마트 관수 시스템으로 딸기 수확량을 끌어올린 실제 농가 사례를 소개합니다. 토양 수분 센서 설치 위치, 점적 관수 라인 배치, 생육 단계별 관수량 설정값을 단계별로 정리했습니다. 초기 투자 비용과 회수 기간, 흔히 하는 실수까지 함께 다룹니다.</p>
+          <button class="desc-more" id="descMore">더보기</button>
+        </div>
+
+        <div class="rel">
+          <div class="rel-title">관련 영상</div>
+
+          <a class="rel-card" href="video-detail.html">
+            <span class="rel-thumb" style="background:url('https://loremflickr.com/320/200/tomato,greenhouse?lock=56') center/cover no-repeat, linear-gradient(135deg,#E2D8C0 0%,#C2A56E 45%,#8E6E3C 100%)"><i class="play"></i></span>
+            <div class="rel-info">
+              <strong class="rel-name">토마토 곁순 제거, 이렇게 하면 수확량 2배</strong>
+              <span class="rel-meta">조회 8.4천</span>
+            </div>
+          </a>
+
+          <a class="rel-card" href="video-detail.html">
+            <span class="rel-thumb" style="background:url('https://loremflickr.com/320/200/cucumber,farm?lock=58') center/cover no-repeat, linear-gradient(135deg,#D9E4C5 0%,#8FB36E 45%,#4F7E45 100%)"><i class="play"></i></span>
+            <div class="rel-info">
+              <strong class="rel-name">스마트팜 환경제어 입문 - 온습도 설정값</strong>
+              <span class="rel-meta">조회 5.7천</span>
+            </div>
+          </a>
+
+          <a class="rel-card" href="video-detail.html">
+            <span class="rel-thumb" style="background:url('https://loremflickr.com/320/200/pepper,plant?lock=57') center/cover no-repeat, linear-gradient(135deg,#E7D7CB 0%,#C98E6E 45%,#8E4F3C 100%)"><i class="play"></i></span>
+            <div class="rel-info">
+              <strong class="rel-name">고추 탄저병 초기 대응법 총정리</strong>
+              <span class="rel-meta">조회 2.1만</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+<script>
+  // 좋아요 토글
+  var likeBtn = document.getElementById('likeBtn'), likeCount = document.getElementById('likeCount');
+  likeBtn.addEventListener('click', function(){
+    var on = likeBtn.classList.toggle('on');
+    likeCount.textContent = parseInt(likeCount.textContent, 10) + (on ? 1 : -1);
+  });
+  // 설명 더보기
+  var desc = document.getElementById('desc'), descMore = document.getElementById('descMore');
+  descMore.addEventListener('click', function(){
+    var open = desc.classList.toggle('open');
+    descMore.textContent = open ? '접기' : '더보기';
+  });
+</script>
+</body>
+</html>

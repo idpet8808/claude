@@ -1,0 +1,119 @@
+/* video-list.css — 농업 영상 목록 (YouTube식 큰 썸네일 피드)
+ * 공통 자산: common.css → components.css → 본 파일
+ */
+.phone { position: relative; }
+body { background: #E8E6DF; display: flex; justify-content: center; padding: 24px 0 40px; }
+
+/* 헤더 검색 아이콘 */
+.appbar .act-ic { width: 38px; height: 38px; display: grid; place-items: center; color: var(--ink); border-radius: 10px; }
+.appbar .act-ic .ic { font-size: 21px; }
+.appbar .act-ic.on { color: var(--green); }
+
+/* 검색 (헤더 아이콘 클릭 시 슬라이드 다운) */
+.top { flex-shrink: 0; max-height: 0; overflow: hidden; padding: 0 20px; opacity: 0; transition: max-height .26s ease, opacity .22s ease, padding .26s ease; }
+.top.open { max-height: 70px; padding: 10px 20px 4px; opacity: 1; }
+.search { display: flex; align-items: center; gap: 8px; background: var(--field-bg); border: 1px solid var(--line); border-radius: var(--r-md); padding: 0 14px; height: 46px; }
+.search .ic { color: var(--gray); font-size: 18px; }
+.search input { flex: 1; border: 0; background: transparent; font-size: 15px; font-weight: 600; color: var(--ink); outline: none; }
+.search input::placeholder { color: #ADAFa4; font-weight: 500; }
+
+/* 피드 (카드형 — 앱 디자인 언어 정합) */
+.scroll {
+  background: var(--bg);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scroll::-webkit-scrollbar { display: none; }
+
+/* 히어로 배너 (홈처럼 풀블리드) */
+.hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 22px 20px;
+  background-color: #2E6B3A;
+}
+.hero::after {
+  content: ""; position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(100deg, rgba(12,40,22,.40) 0%, rgba(12,40,22,.16) 48%, rgba(12,40,22,0) 100%),
+              linear-gradient(0deg, rgba(9,28,15,.22) 0%, rgba(9,28,15,0) 52%);
+}
+.hero-tx { position: relative; z-index: 3; color: #fff; }
+.hero-title { display: block; font-size: 20px; font-weight: 800; line-height: 1.32; letter-spacing: -0.022em; text-shadow: 0 1px 10px rgba(0,0,0,.45); }
+.hero-sub { display: block; margin-top: 7px; font-size: 12.5px; font-weight: 500; opacity: .94; text-shadow: 0 1px 8px rgba(0,0,0,.4); }
+
+/* 작물 카테고리 칩 */
+.crops {
+  display: flex;
+  gap: 8px;
+  padding: 14px 16px 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.crops::-webkit-scrollbar { display: none; }
+.crop {
+  flex: 0 0 auto;
+  height: 34px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  color: var(--ink-2);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.crop.on {
+  background: var(--green);
+  border-color: var(--green);
+  color: #fff;
+  box-shadow: 0 4px 10px -4px rgba(52,171,42,.5);
+}
+
+.vid-feed { padding: 14px 16px 20px; }
+
+/* 가로 리스트 카드 (썸네일 좌 + 제목/메타 우) */
+.vid {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow);
+  padding: 10px;
+}
+.vid + .vid { margin-top: 10px; }
+
+/* 썸네일 (좌측 고정) */
+.vid-thumb {
+  position: relative;
+  flex: 0 0 132px;
+  width: 132px;
+  height: 80px;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #EEEFEC;
+  background-size: cover;
+  background-position: center;
+}
+.vid-thumb .play {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 34px; height: 34px; border-radius: 50%;
+  background: rgba(18,28,18,.46);
+}
+.vid-thumb .play::after {
+  content: ''; position: absolute; top: 50%; left: 54%; transform: translate(-50%, -50%);
+  width: 0; height: 0; border-left: 11px solid #fff; border-top: 7px solid transparent; border-bottom: 7px solid transparent;
+}
+/* 영상 정보 (제목 + 메타) */
+.vid-info { flex: 1; min-width: 0; }
+.vid-title {
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  font-size: 14px; font-weight: 700; color: var(--ink); line-height: 1.35; letter-spacing: -0.012em;
+}
+.vid-meta { display: block; margin-top: 6px; font-size: 11.5px; color: var(--gray); }

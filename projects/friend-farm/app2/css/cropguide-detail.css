@@ -1,0 +1,87 @@
+/* cropguide-detail.css — 재배 가이드 상세 (5탭 sticky + 작물 일러스트) */
+:root { --line: rgba(48,42,30,.08); }
+.phone { position: relative; min-height: 860px; }
+body { background: #E8E6DF; display: flex; justify-content: center; padding: 24px 0 40px; }
+
+.scroll { overflow-x: hidden; flex: 1; overflow-y: auto; }
+
+/* 작물 헤더 */
+.crop-hero { background-color: #3A6B57; padding: 20px; position: relative; overflow: hidden; min-height: 132px; }
+.crop-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, rgba(8,24,14,.74) 0%, rgba(8,24,14,.40) 52%, rgba(8,24,14,.08) 100%); }
+.crop-hero .h-name { position: relative; z-index: 2; display: flex; align-items: center; gap: 8px; }
+.crop-hero .h-name h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.024em; color: #fff; margin: 0; text-shadow: 0 1px 10px rgba(0,0,0,.45); }
+.crop-hero .h-tag { font-size: 11px; font-weight: 800; color: #fff; background: rgba(255,255,255,.22); backdrop-filter: blur(2px); padding: 4px 11px; border-radius: 999px; }
+.crop-hero .h-desc { position: relative; z-index: 2; font-size: 13px; color: rgba(255,255,255,.95); line-height: 1.6; margin-top: 12px; font-weight: 500; max-width: 80%; text-shadow: 0 1px 8px rgba(0,0,0,.4); }
+
+/* 탭 */
+.tabs { display: flex; gap: 4px; overflow-x: auto; background: var(--card); padding: 0 12px; flex-shrink: 0; border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 5; -ms-overflow-style: none; scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab { flex-shrink: 0; padding: 14px 10px; font-size: 13.5px; font-weight: 700; color: var(--gray); position: relative; white-space: nowrap; }
+.tab.on { color: var(--green); font-weight: 800; }
+.tab.on::after { content: ""; position: absolute; left: 10px; right: 10px; bottom: -1px; height: 2.5px; border-radius: 2px; background: var(--green); }
+
+.body { padding: 20px; }
+.sec-title { font-size: 15px; font-weight: 800; letter-spacing: -0.018em; margin: 0 0 13px; display: flex; align-items: center; gap: 7px; }
+.sec-title .ic { font-size: 17px; color: var(--green); }
+
+/* 작물 개요 (정의형 카드) */
+.overview { background: var(--card); border-radius: var(--r-lg); box-shadow: var(--shadow); padding: 4px 16px; margin-bottom: 24px; }
+.ov-row { display: flex; gap: 14px; padding: 13px 0; }
+.ov-row + .ov-row { border-top: 1px solid var(--line); }
+.ov-row .k { flex: 0 0 72px; font-size: 13px; color: var(--gray); font-weight: 700; }
+.ov-row .v { flex: 1; font-size: 13.5px; color: var(--ink); font-weight: 600; line-height: 1.5; letter-spacing: -0.01em; }
+
+/* 핵심 포인트 */
+.points { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.pt { background: var(--card); border-radius: var(--r-md); box-shadow: var(--shadow); padding: 16px 8px 14px; text-align: center; }
+.pt .pic { width: 42px; height: 42px; border-radius: 50%; background: var(--green-soft); color: var(--green); display: grid; place-items: center; margin: 0 auto 9px; }
+.pt .pic .ic { font-size: 21px; }
+.pt .pk { font-size: 11.5px; color: var(--gray); font-weight: 700; }
+.pt .pv { font-size: 12.5px; color: var(--ink); font-weight: 800; margin-top: 3px; line-height: 1.35; letter-spacing: -0.01em; }
+
+/* 패널 전환 */
+.panel { display: none; }
+.panel.on { display: block; }
+
+/* 생육 단계 (타임라인) */
+.steps { position: relative; }
+.step { display: flex; gap: 14px; }
+.step-dot { position: relative; flex: 0 0 32px; display: flex; flex-direction: column; align-items: center; }
+.step-dot span { width: 32px; height: 32px; border-radius: 50%; background: var(--green); color: #fff; font-size: 14px; font-weight: 800; display: grid; place-items: center; flex-shrink: 0; z-index: 1; }
+.step-dot::after { content: ""; position: absolute; top: 32px; bottom: -4px; width: 2px; background: var(--line); }
+.step-dot.last::after { display: none; }
+.step-body { flex: 1; padding-bottom: 22px; }
+.step-t { font-size: 14.5px; font-weight: 800; letter-spacing: -0.014em; margin-top: 4px; }
+.step-d { font-size: 13px; color: var(--ink-2); line-height: 1.65; margin-top: 7px; font-weight: 500; }
+
+/* 재배 관리 아코디언 */
+.acc { background: var(--card); border-radius: var(--r-lg); box-shadow: var(--shadow); overflow: hidden; }
+.acc-item + .acc-item { border-top: 1px solid var(--line); }
+.acc-head { display: flex; align-items: center; gap: 11px; width: 100%; text-align: left; padding: 15px 16px; }
+.acc-ic { width: 30px; height: 30px; border-radius: 9px; background: var(--green-soft); color: var(--green); display: grid; place-items: center; flex-shrink: 0; }
+.acc-ic .ic { font-size: 16px; }
+.acc-title { flex: 1; font-size: 14.5px; font-weight: 700; color: var(--ink); letter-spacing: -0.014em; }
+.acc-cv { color: var(--gray); font-size: 18px; transition: transform .2s; }
+.acc-item.open .acc-cv { transform: rotate(180deg); }
+.acc-body { display: none; padding: 0 16px 16px 57px; font-size: 13px; color: var(--ink-2); line-height: 1.7; }
+.acc-item.open .acc-body { display: block; }
+
+/* 병해충 리스트 */
+.pest-list { display: flex; flex-direction: column; gap: 10px; }
+.pest { background: var(--card); border-radius: var(--r-lg); box-shadow: var(--shadow); padding: 15px 16px; }
+.pest-top { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.pest-nm { font-size: 14.5px; font-weight: 800; letter-spacing: -0.014em; }
+.pest-tag { font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 999px; }
+.pest-tag.dis { background: #F2E3D6; color: var(--clay); }
+.pest-tag.pst { background: var(--green-soft); color: var(--green); }
+.pest-d { font-size: 13px; color: var(--ink-2); line-height: 1.65; font-weight: 500; }
+
+/* 팁 박스 */
+.tip-box { display: flex; gap: 10px; align-items: flex-start; background: var(--green-soft); border-radius: var(--r-md); padding: 14px 15px; margin-top: 14px; }
+.tip-box .tip-ic { color: var(--green); flex-shrink: 0; }
+.tip-box .tip-ic .ic { font-size: 18px; }
+.tip-box .tip-tx { font-size: 13px; color: var(--green-2); line-height: 1.6; font-weight: 600; }
+
+/* === 360px safety net === */
+.phone img, .phone svg { max-width: 100%; height: auto; }
+.phone { word-break: keep-all; overflow-wrap: break-word; }

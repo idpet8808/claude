@@ -1,0 +1,51 @@
+<!--META {"title":"전문가에게 물어보기","back":"home.html","menu":true,"css":"expert-list.css","js":"expert-list.js","right":"<button class=\"act-ic\" id=\"searchBtn\" aria-label=\"검색\"><svg class=\"ic\"><use href=\"#i-search\"/></svg></button>"} -->
+<div class="top" id="searchTop"><div class="search"><svg class="ic"><use href="#i-search"/></svg><input type="text" id="searchInput" placeholder="궁금한 내용을 검색해 보세요" /></div></div>
+
+    <div class="cats">
+      <button class="cat on">전체</button><button class="cat">스마트팜</button><button class="cat">가공</button><button class="cat">유통</button><button class="cat">운영</button><button class="cat">기타</button>
+    </div>
+
+    <div class="filter-row">
+      <div class="status-chips">
+        <button class="sc on">전체</button>
+        <button class="sc"><span class="dotc d-wait"></span>미답변</button>
+        <button class="sc"><span class="dotc d-done"></span>답변완료</button>
+      </div>
+      <button class="mine-check" id="mineCheck"><span class="cbox"><svg class="ic"><use href="#i-check"/></svg></span><span class="mc-lb">내 질문</span></button>
+    </div>
+
+    <div class="scroll">
+      <div class="q-list">
+        <a class="q-item" href="expert-detail.html" style="text-decoration:none;color:inherit;">
+          <div class="q-row">
+            <div class="q-titlewrap">
+              <div class="q-top"><span class="q-badge done">답변완료</span></div>
+              <div class="q-title">딸기는 어떻게 재배 하나요?</div>
+              <div class="q-preview">처음 딸기 농사를 시작하는데 환경 설정이 막막합니다. 온도·습도·일조량은 어느 정도로 맞춰야 하고, 토양은 어떻게 준비해야 하나요?</div>
+            </div>
+            <div class="q-chk"><svg class="ic"><use href="#i-check"/></svg></div>
+          </div>
+          <div class="q-meta"><span class="cat-tag">가공</span><span class="dot"></span><span>2026.03.11</span><span class="dot"></span><span>김도하</span></div>
+        </a>
+        <a class="q-item" href="expert-detail.html" style="text-decoration:none;color:inherit;">
+          <div class="q-top"><span class="q-badge wait">미답변</span></div>
+          <div class="q-title">토마토 열과현상을 줄이는 방법</div>
+          <div class="q-preview">토마토 열매가 갈라지는 열과현상이 자주 생깁니다. 물 주기나 온도 관리에서 어떤 점을 신경 써야 줄일 수 있을까요?</div>
+          <div class="q-meta"><span>미분류</span><span class="dot"></span><span>2025.10.16</span><span class="dot"></span><span>kan****</span></div>
+        </a>
+        <a class="q-item" href="expert-detail.html" style="text-decoration:none;color:inherit;">
+          <div class="q-top"><span class="q-badge wait">미답변</span></div>
+          <div class="q-title">질문 테스트 11</div>
+          <div class="q-preview">스마트팜 환경제어 설정값 추천 부탁드립니다. 작물별 권장 온습도와 CO2 농도가 궁금합니다.</div>
+          <div class="q-meta"><span class="cat-tag">스마트팜</span><span class="dot"></span><span>2026.02.24</span><span class="dot"></span><span>utii</span></div>
+        </a>
+      </div>
+      <div class="more-row"><button>더보기 <svg class="ic"><use href="#i-chev-down"/></svg></button></div>
+    </div>
+
+    <a class="fab" href="expert-write.html"><svg class="ic"><use href="#i-pencil"/></svg> 질문하기</a>
+<script>
+    document.querySelectorAll('.cat').forEach(function(c){ c.addEventListener('click', function(){ document.querySelectorAll('.cat').forEach(function(x){ x.classList.remove('on'); }); c.classList.add('on'); }); });
+    document.querySelectorAll('.sc').forEach(function(s){ s.addEventListener('click', function(){ document.querySelectorAll('.sc').forEach(function(x){ x.classList.remove('on'); }); s.classList.add('on'); }); });
+    var mineCheck = document.getElementById('mineCheck'); mineCheck.addEventListener('click', function(){ mineCheck.classList.toggle('on'); });
+  </script>

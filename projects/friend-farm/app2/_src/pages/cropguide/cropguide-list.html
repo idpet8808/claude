@@ -1,0 +1,24 @@
+<!--META {"title":"작물별 재배 가이드","back":"home.html","menu":true,"right":"<button class=\"act\"><svg class=\"ic\"><use href=\"#i-search\"/></svg></button>","css":"cropguide-list.css"} -->
+<div class="scroll">
+      <a class="feature" href="cropguide-detail.html">
+        <span class="fbadge"><svg class="ic"><use href="#i-sun"/></svg> 5월 이번 달 추천</span>
+        <span class="fcrop"><svg viewBox="0 0 64 64"><use href="#c-tomato"/></svg></span>
+        <div class="fcap"><div class="ft">토마토</div><div class="fd">지금이 정식하기 딱 좋은 시기예요</div></div>
+      </a>
+
+      <div class="cats">
+        <button class="cat on">전체</button><button class="cat">과채류</button><button class="cat">엽채류</button><button class="cat">근채류</button><button class="cat">곡류</button><button class="cat">특용작물</button>
+      </div>
+
+      <div class="list">
+        <a class="lc" href="cropguide-detail.html"><span class="lth"><svg class="cropimg" viewBox="0 0 64 64"><use href="#c-tomato"/></svg></span><div class="lin"><div class="lnm">토마토</div><div class="ltype">시설/노지 재배</div><div class="lmeta">적정 20~28℃ · 정식 후 90~120일</div></div><svg class="ic lcv"><use href="#i-cv"/></svg></a>
+        <a class="lc" href="cropguide-detail.html"><span class="lth"><svg class="cropimg" viewBox="0 0 64 64"><use href="#c-pepper"/></svg></span><div class="lin"><div class="lnm">고추</div><div class="ltype">시설/노지 재배</div><div class="lmeta">적정 25~28℃ · 정식 후 약 100일</div></div><svg class="ic lcv"><use href="#i-cv"/></svg></a>
+        <a class="lc" href="cropguide-detail.html"><span class="lth"><svg class="cropimg" viewBox="0 0 64 64"><use href="#c-cucumber"/></svg></span><div class="lin"><div class="lnm">오이</div><div class="ltype">시설/노지 재배</div><div class="lmeta">적정 22~28℃ · 정식 후 50~60일</div></div><svg class="ic lcv"><use href="#i-cv"/></svg></a>
+        <a class="lc" href="cropguide-detail.html"><span class="lth"><svg class="cropimg" viewBox="0 0 64 64"><use href="#c-eggplant"/></svg></span><div class="lin"><div class="lnm">가지</div><div class="ltype">시설 재배</div><div class="lmeta">적정 22~30℃ · 정식 후 70~90일</div></div><svg class="ic lcv"><use href="#i-cv"/></svg></a>
+        <a class="lc" href="cropguide-detail.html"><span class="lth"><svg class="cropimg" viewBox="0 0 64 64"><use href="#c-cabbage"/></svg></span><div class="lin"><div class="lnm">배추</div><div class="ltype">노지 재배</div><div class="lmeta">적정 18~20℃ · 정식 후 70~90일</div></div><svg class="ic lcv"><use href="#i-cv"/></svg></a>
+        <a class="lc" href="cropguide-detail.html"><span class="lth"><svg class="cropimg" viewBox="0 0 64 64"><use href="#c-greenonion"/></svg></span><div class="lin"><div class="lnm">대파</div><div class="ltype">노지 재배</div><div class="lmeta">적정 15~25℃ · 정식 후 90~120일</div></div><svg class="ic lcv"><use href="#i-cv"/></svg></a>
+      </div>
+    </div>
+<script>
+    document.querySelectorAll('.cat').forEach(function(c){ c.addEventListener('click', function(){ document.querySelectorAll('.cat').forEach(function(x){ x.classList.remove('on'); }); c.classList.add('on'); }); });
+  </script>

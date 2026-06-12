@@ -1,0 +1,171 @@
+<!--META {"title":"영농일지 작성","back":"diary/diary-write.html","menu":true,"css":"diary-write2.css"} -->
+<!-- 스텝 (2단계) -->
+    <div class="steps">
+      <div class="stp done"><span class="dot"><svg class="ic"><use href="#i-check"/></svg></span><span class="nm">기본정보 · 작업</span></div>
+      <div class="stp-line"></div>
+      <div class="stp on"><span class="dot">2</span><span class="nm">상세 기록</span></div>
+    </div>
+
+    <div class="scroll">
+      <!-- 생육 상태 -->
+      <div class="field">
+        <label>생육 상태 <span class="opt">선택</span></label>
+        <div class="state-grid" id="stateGrid">
+          <button class="state good on"><svg class="ic sic"><use href="#s-good"/></svg><span class="st">좋음</span></button>
+          <button class="state normal"><svg class="ic sic"><use href="#s-normal"/></svg><span class="st">보통</span></button>
+          <button class="state warn"><svg class="ic sic"><use href="#s-warn"/></svg><span class="st">주의</span></button>
+        </div>
+      </div>
+
+      <!-- 사용 자재 -->
+      <div class="field">
+        <label>사용 자재 <span class="opt">선택</span></label>
+        <div class="mat-chips" id="matChips"></div>
+        <button class="mat-add" id="matAdd"><svg class="ic"><use href="#i-plus"/></svg> 자재 등록</button>
+        <p class="hint">방제·시비 등에 사용한 약제·비료를 등록하세요</p>
+      </div>
+
+      <!-- 상세 입력 -->
+      <div class="field">
+        <label>상세 입력 <span class="opt">선택</span></label>
+        <textarea class="textarea" placeholder="오늘 작업 내용이나 작물 상태를 자유롭게 적어보세요"></textarea>
+      </div>
+    </div>
+
+    <div class="footer">
+      <a class="btn btn-ghost" href="diary-write.html">이전</a>
+      <a class="btn btn-primary" href="diary-list.html">등록 완료</a>
+    </div>
+
+    <!-- 자재 등록 바텀시트 -->
+    <div class="sheet-dim" id="msDim"></div>
+    <div class="sheet" id="msSheet">
+      <div class="sheet-grip"></div>
+      <h3>사용한 자재가 있나요?<br>제품명과 사용량을 입력하세요</h3>
+      <p class="sh-sub">방제·시비에 쓴 약제·비료를 기록해요</p>
+
+      <div class="ms-field">
+        <label>제품명</label>
+        <input class="input" id="msName" type="text" placeholder="예: 아미스타 탑"/>
+        <p class="ms-hint">2자 이상 입력해주세요</p>
+      </div>
+
+      <div class="ms-field">
+        <label>사용량</label>
+        <div class="amt-row">
+          <input class="input" id="msAmt" type="number" inputmode="numeric" placeholder="사용량 입력"/>
+          <div class="input selectbox amt-unit" id="msUnitTrigger"><span id="msUnitVal">mL</span><svg class="ic"><use href="#i-down"/></svg></div>
+        </div>
+        <p class="ms-hint">제품에 표시된 단위로 입력하세요</p>
+      </div>
+
+      <button class="ms-reg" id="msReg"><svg class="ic"><use href="#i-plus"/></svg> 자재 등록</button>
+
+      <div class="ms-box" id="msBox"></div>
+      <p class="ms-count">최대 7개까지 등록 가능 (<b id="msCount">0</b>/7)</p>
+
+      <div class="ms-actions">
+        <button class="ms-btn ms-cancel" id="msCancel">취소</button>
+        <button class="ms-btn ms-ok" id="msOk">확인</button>
+      </div>
+    </div>
+
+    <!-- 단위 선택 미니 시트 -->
+    <div class="sheet-dim" id="unitDim"></div>
+    <div class="sheet" id="unitSheet">
+      <div class="sheet-grip"></div>
+      <h3>단위 선택</h3>
+      <div class="opt-list" id="unitList" style="margin-top:8px">
+        <button class="opt-row on" data-u="mL">mL<span class="urc"><svg class="ic"><use href="#i-check"/></svg></span></button>
+        <button class="opt-row" data-u="L">L<span class="urc"><svg class="ic"><use href="#i-check"/></svg></span></button>
+        <button class="opt-row" data-u="g">g<span class="urc"><svg class="ic"><use href="#i-check"/></svg></span></button>
+        <button class="opt-row" data-u="kg">kg<span class="urc"><svg class="ic"><use href="#i-check"/></svg></span></button>
+        <button class="opt-row" data-u="배">배 (희석)<span class="urc"><svg class="ic"><use href="#i-check"/></svg></span></button>
+        <button class="opt-row" data-u="포">포<span class="urc"><svg class="ic"><use href="#i-check"/></svg></span></button>
+      </div>
+    </div>
+<script>
+    // 생육 상태 단일 선택
+    document.querySelectorAll('#stateGrid .state').forEach(function(s){
+      s.addEventListener('click', function(){
+        document.querySelectorAll('#stateGrid .state').forEach(function(x){ x.classList.remove('on'); });
+        s.classList.add('on');
+      });
+    });
+
+    function showSheet(s, d){ s.classList.add('on'); d.classList.add('on'); }
+    function hideSheet(s, d){ s.classList.remove('on'); d.classList.remove('on'); }
+
+    // 자재 등록 시트
+    var msSheet = document.getElementById('msSheet');
+    var msDim = document.getElementById('msDim');
+    var msName = document.getElementById('msName');
+    var msAmt = document.getElementById('msAmt');
+    var msUnitVal = document.getElementById('msUnitVal');
+    var msBox = document.getElementById('msBox');
+    var msCount = document.getElementById('msCount');
+    var msReg = document.getElementById('msReg');
+    var matChips = document.getElementById('matChips');
+
+    var materials = [{ name: '아미스타 탑', amt: '1000', unit: '배' }]; // 임시 등록 데이터
+    var draft = [];
+
+    function renderMainChips(){
+      matChips.innerHTML = materials.map(function(m, i){
+        return '<div class="mat-chip"><span class="mt-name">'+m.name+'</span><span class="mt-amt">'+m.amt+m.unit+'</span><button class="mt-x" data-i="'+i+'" aria-label="삭제"><svg class="ic"><use href="#i-x"/></svg></button></div>';
+      }).join('');
+      matChips.querySelectorAll('.mt-x').forEach(function(b){
+        b.addEventListener('click', function(){ materials.splice(parseInt(b.dataset.i),1); renderMainChips(); });
+      });
+    }
+
+    function renderDraftBox(){
+      msBox.innerHTML = draft.map(function(m, i){
+        return '<span class="ms-tag">'+m.name+' / '+m.amt+m.unit+'<button class="tx" data-i="'+i+'" aria-label="삭제"><svg class="ic"><use href="#i-x"/></svg></button></span>';
+      }).join('');
+      msBox.querySelectorAll('.tx').forEach(function(b){
+        b.addEventListener('click', function(){ draft.splice(parseInt(b.dataset.i),1); renderDraftBox(); updateCount(); });
+      });
+    }
+    function updateCount(){
+      msCount.textContent = draft.length;
+      msReg.disabled = draft.length >= 7;
+    }
+
+    document.getElementById('matAdd').addEventListener('click', function(){
+      draft = materials.slice();
+      renderDraftBox(); updateCount();
+      msName.value = ''; msAmt.value = ''; msUnitVal.textContent = 'mL';
+      showSheet(msSheet, msDim);
+    });
+    msReg.addEventListener('click', function(){
+      var n = msName.value.trim();
+      if (n.length < 2 || !msAmt.value || draft.length >= 7) return;
+      draft.push({ name: n, amt: msAmt.value, unit: msUnitVal.textContent });
+      msName.value = ''; msAmt.value = '';
+      renderDraftBox(); updateCount();
+    });
+    document.getElementById('msCancel').addEventListener('click', function(){ hideSheet(msSheet, msDim); });
+    document.getElementById('msOk').addEventListener('click', function(){
+      materials = draft.slice();
+      renderMainChips();
+      hideSheet(msSheet, msDim);
+    });
+    msDim.addEventListener('click', function(){ hideSheet(msSheet, msDim); });
+
+    // 단위 선택 미니 시트
+    var unitSheet = document.getElementById('unitSheet');
+    var unitDim = document.getElementById('unitDim');
+    document.getElementById('msUnitTrigger').addEventListener('click', function(){ showSheet(unitSheet, unitDim); });
+    document.querySelectorAll('#unitList .opt-row').forEach(function(o){
+      o.addEventListener('click', function(){
+        document.querySelectorAll('#unitList .opt-row').forEach(function(x){ x.classList.remove('on'); });
+        o.classList.add('on');
+        msUnitVal.textContent = o.dataset.u;
+        hideSheet(unitSheet, unitDim);
+      });
+    });
+    unitDim.addEventListener('click', function(){ hideSheet(unitSheet, unitDim); });
+
+    renderMainChips();
+  </script>

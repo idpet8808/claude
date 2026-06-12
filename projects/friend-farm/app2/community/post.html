@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KS팜 — 영농 이야기</title>
+<link rel="stylesheet" href="../css/common.css"/>
+<link rel="stylesheet" href="../css/components.css"/>
+<link rel="stylesheet" href="../css/community-post.css"/>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14 0"/><path d="M8.5 16.05a6 6 0 0 1 7 0"/><path d="M2 8.82a15 15 0 0 1 20 0"/><line x1="12" y1="20" x2="12" y2="20"/></symbol><symbol id="i-battery" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="8" width="18" height="9" rx="2"/><path d="M22 11v3"/></symbol><symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 6 9 12 15 18"/></symbol><symbol id="i-more" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></symbol><symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></symbol><symbol id="i-heart-fill" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21l-7.8-7.6-1-1a5.5 5.5 0 0 1 7.8-7.8l1 1 1-1a5.5 5.5 0 0 1 7.8 7.8l-1 1L12 21z"/></symbol><symbol id="i-comment" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l1-4.5A8 8 0 1 1 21 12z"/></symbol><symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></symbol><symbol id="i-check-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></symbol></defs></svg>
+  <div class="phone">
+    <div class="status-bar"><span>9:41</span><span class="group"><svg class="ic"><use href="#i-wifi"/></svg> <svg class="ic"><use href="#i-battery"/></svg></span></div>
+    <div class="appbar"><a class="back" href="board.html" aria-label="뒤로"><svg class="ic"><use href="#i-back"/></svg></a><span class="title">영농 이야기</span><button class="more" id="moreBtn" aria-label="더보기"><svg class="ic"><use href="#i-more"/></svg></button></div>
+
+    <div class="scroll">
+      <div class="post-head">
+        <span class="ava">딸</span>
+        <span class="ph-info"><strong>딸기농부</strong><span>강남 역삼 농원 · 2시간 전</span></span>
+      </div>
+
+      <div class="post-photo" style="background:url('https://loremflickr.com/600/600/strawberry,harvest?lock=11') center/cover no-repeat, linear-gradient(150deg,#EBDCC4 0%,#C97E58 58%,#8A4F33 100%)"></div>
+
+      <div class="post-actions">
+        <button class="act like on" id="likeBtn" aria-label="좋아요"><svg class="ic ic-line"><use href="#i-heart"/></svg><svg class="ic ic-fill"><use href="#i-heart-fill"/></svg></button>
+        <button class="act" id="cmtBtn" aria-label="댓글 달기"><svg class="ic"><use href="#i-comment"/></svg></button>
+      </div>
+
+      <div class="post-body">
+        <span class="likes">좋아요 <b id="likeCount">42</b></span>
+        <p class="cap"><strong>딸기농부</strong> 올해 첫 딸기 수확했어요. 겨우내 고생한 보람이 있네요. 당도도 잘 올라왔고 색도 예쁘게 나와서 만족스럽습니다. 다들 올해 작황 어떠신가요?</p>
+      </div>
+
+      <div class="cmt-sec">
+        <div class="cmt-title">댓글 <b>8</b></div>
+
+        <div class="cmt">
+          <span class="ava sm">양</span>
+          <div class="cmt-main">
+            <div class="cmt-top"><strong>양평비닐</strong><span>1시간 전</span></div>
+            <p class="cmt-tx">와 색이 진짜 예쁘네요! 품종이 어떻게 되나요?</p>
+            <div class="cmt-foot"><button class="reply-btn" data-user="양평비닐">답글</button><button class="lk"><svg class="ic"><use href="#i-heart"/></svg> 3</button></div>
+            <button class="reply-toggle" aria-expanded="false"><span class="line"></span><span class="tg-tx">답글 2개 보기</span></button>
+            <div class="replies" hidden>
+              <div class="cmt reply">
+                <span class="ava sm">딸</span>
+                <div class="cmt-main">
+                  <div class="cmt-top"><strong>딸기농부</strong><span>50분 전</span></div>
+                  <p class="cmt-tx"><span class="mention">@양평비닐</span> 설향이에요 ㅎㅎ 올해 당도가 잘 올라왔어요.</p>
+                  <div class="cmt-foot"><button class="reply-btn" data-user="딸기농부">답글</button><button class="lk"><svg class="ic"><use href="#i-heart"/></svg> 0</button></div>
+                </div>
+              </div>
+              <div class="cmt reply">
+                <span class="ava sm">양</span>
+                <div class="cmt-main">
+                  <div class="cmt-top"><strong>양평비닐</strong><span>45분 전</span></div>
+                  <p class="cmt-tx"><span class="mention">@딸기농부</span> 오 설향이군요! 저도 내년엔 바꿔봐야겠어요.</p>
+                  <div class="cmt-foot"><button class="reply-btn" data-user="양평비닐">답글</button><button class="lk"><svg class="ic"><use href="#i-heart"/></svg> 1</button></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cmt">
+          <span class="ava sm">성</span>
+          <div class="cmt-main">
+            <div class="cmt-top"><strong>성주참외</strong><span>40분 전</span></div>
+            <p class="cmt-tx">고생하셨어요 ㅎㅎ 저도 다음 주에 첫 수확 예정입니다.</p>
+            <div class="cmt-foot"><button class="reply-btn" data-user="성주참외">답글</button><button class="lk"><svg class="ic"><use href="#i-heart"/></svg> 1</button></div>
+            <button class="reply-toggle" aria-expanded="false"><span class="line"></span><span class="tg-tx">답글 1개 보기</span></button>
+            <div class="replies" hidden>
+              <div class="cmt reply">
+                <span class="ava sm">딸</span>
+                <div class="cmt-main">
+                  <div class="cmt-top"><strong>딸기농부</strong><span>30분 전</span></div>
+                  <p class="cmt-tx"><span class="mention">@성주참외</span> 풍년 기원할게요! 사진도 올려주세요 :)</p>
+                  <div class="cmt-foot"><button class="reply-btn" data-user="딸기농부">답글</button><button class="lk"><svg class="ic"><use href="#i-heart"/></svg> 0</button></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cmt">
+          <span class="ava sm">초</span>
+          <div class="cmt-main">
+            <div class="cmt-top"><strong>초보농부</strong><span>20분 전</span></div>
+            <p class="cmt-tx">부럽습니다. 저는 아직 꽃도 안 폈는데 ㅠㅠ 관리 팁 좀 알려주세요!</p>
+            <div class="cmt-foot"><button class="reply-btn" data-user="초보농부">답글</button><button class="lk"><svg class="ic"><use href="#i-heart"/></svg> 0</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 댓글 입력 (토글로 슬라이드업) -->
+    <div class="cmt-scrim" id="cmtScrim"></div>
+    <div class="cmt-bar" id="cmtBar">
+      <span class="ava sm me">김</span>
+      <input class="cmt-inp" type="text" placeholder="댓글을 입력하세요" />
+      <button class="cmt-send" aria-label="등록"><svg class="ic"><use href="#i-send"/></svg></button>
+    </div>
+
+    <!-- 더보기 액션시트 -->
+    <div class="sheet-scrim" id="actionSheet">
+      <div class="action-sheet">
+        <div class="as-group"><button class="as-item" id="asEdit">글 수정</button><button class="as-item del" id="asDelete">글 삭제</button></div>
+        <button class="as-cancel" id="asCancel">취소</button>
+      </div>
+    </div>
+
+    <!-- 삭제 확인 모달 -->
+    <div class="modal-scrim" id="confirmModal">
+      <div class="modal">
+        <div class="modal-title">글을 삭제할까요?</div>
+        <div class="modal-desc">삭제하면 사진·댓글이 함께<br>사라지며 되돌릴 수 없어요.</div>
+        <div class="modal-actions">
+          <button class="mbtn-ghost" id="confirmCancel">취소</button>
+          <button class="mbtn-danger" id="confirmDelete">삭제</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 삭제 완료 모달 -->
+    <div class="modal-scrim" id="deletedModal">
+      <div class="modal">
+        <div class="modal-ic"><svg class="ic"><use href="#i-check-c"/></svg></div>
+        <div class="modal-title">삭제 완료</div>
+        <div class="modal-desc">글을 삭제했어요.</div>
+        <button class="modal-btn" id="deletedOk">확인</button>
+      </div>
+    </div>
+  </div>
+<script>
+  // 좋아요 토글
+  var likeBtn = document.getElementById('likeBtn'), likeCount = document.getElementById('likeCount');
+  likeBtn.addEventListener('click', function(){
+    var on = likeBtn.classList.toggle('on');
+    likeCount.textContent = parseInt(likeCount.textContent, 10) + (on ? 1 : -1);
+  });
+
+  // 대댓글 펼치기/접기 토글
+  document.querySelectorAll('.reply-toggle').forEach(function(tg){
+    tg.addEventListener('click', function(){
+      var replies = tg.nextElementSibling;
+      var n = replies.querySelectorAll('.cmt.reply').length;
+      var open = replies.hasAttribute('hidden');
+      if (open) { replies.removeAttribute('hidden'); } else { replies.setAttribute('hidden', ''); }
+      tg.setAttribute('aria-expanded', open ? 'true' : 'false');
+      tg.querySelector('.tg-tx').textContent = open ? '답글 숨기기' : ('답글 ' + n + '개 보기');
+      tg.classList.toggle('open', open);
+    });
+  });
+
+  // 댓글 입력 토글 (슬라이드업)
+  var cmtInp = document.querySelector('.cmt-inp');
+  var cmtBar = document.getElementById('cmtBar');
+  var cmtScrim = document.getElementById('cmtScrim');
+  function openCmt(prefill){
+    if (typeof prefill === 'string') cmtInp.value = prefill;
+    cmtBar.classList.add('open');
+    cmtScrim.classList.add('show');
+    setTimeout(function(){ cmtInp.focus(); }, 60);
+  }
+  function closeCmt(){
+    cmtBar.classList.remove('open');
+    cmtScrim.classList.remove('show');
+    cmtInp.blur();
+  }
+  document.getElementById('cmtBtn').addEventListener('click', function(){ openCmt(''); });
+  cmtScrim.addEventListener('click', closeCmt);
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeCmt(); });
+  // 답글 버튼 → @멘션 후 입력창 열기
+  document.querySelectorAll('.reply-btn').forEach(function(b){
+    b.addEventListener('click', function(){ openCmt('@' + (b.dataset.user || '') + ' '); });
+  });
+  // 전송(프로토타입) → 입력창 닫기
+  document.querySelector('.cmt-send').addEventListener('click', function(){ cmtInp.value = ''; closeCmt(); });
+
+  // 더보기 → 수정/삭제
+  function show(id){ document.getElementById(id).classList.add('show'); }
+  function hide(id){ document.getElementById(id).classList.remove('show'); }
+  document.getElementById('moreBtn').addEventListener('click', function(){ show('actionSheet'); });
+  document.getElementById('asCancel').addEventListener('click', function(){ hide('actionSheet'); });
+  document.getElementById('actionSheet').addEventListener('click', function(e){ if (!e.target.closest('.action-sheet')) hide('actionSheet'); });
+  document.getElementById('asEdit').addEventListener('click', function(){ hide('actionSheet'); window.location.href = 'post-write.html?mode=edit'; });
+  document.getElementById('asDelete').addEventListener('click', function(){ hide('actionSheet'); setTimeout(function(){ show('confirmModal'); }, 180); });
+  document.getElementById('confirmCancel').addEventListener('click', function(){ hide('confirmModal'); });
+  document.getElementById('confirmDelete').addEventListener('click', function(){ hide('confirmModal'); setTimeout(function(){ show('deletedModal'); }, 180); });
+  document.getElementById('deletedOk').addEventListener('click', function(){ hide('deletedModal'); window.location.href = 'board.html'; });
+</script>
+</body>
+</html>

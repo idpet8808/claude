@@ -1,0 +1,19 @@
+<!--META {"title":"마케팅 정보 수신 동의","back":"mypage/settings.html","menu":true,"css":"marketing-consent.css"} -->
+<div class="scroll">
+      <div class="intro">
+        <div class="t">이벤트·혜택 소식을<br>받아보시겠어요?</div>
+        <div class="d">새 지원사업, 할인 이벤트, 유용한 영농 소식을 보내드려요. 동의는 선택이며 언제든 변경할 수 있어요.</div>
+      </div>
+
+      <div class="master">
+        <div class="txt"><div class="t">마케팅 정보 수신</div><div class="d">광고성 정보 수신 (선택)</div></div>
+        <button class="toggle on" id="master"><span class="knob"></span></button>
+      </div>
+      <div class="consent-note" id="note"><svg class="ic"><use href="#i-check"/></svg> 2026.05.22 수신에 동의했어요</div>
+
+      <a class="terms-link" href="terms-view.html"><span class="li"><svg class="ic"><use href="#i-doc"/></svg></span><span class="lbl">마케팅 정보 수신 동의 약관</span><svg class="ic cv"><use href="#i-cv"/></svg></a>
+    </div>
+<script>
+    var master = document.getElementById('master'), note = document.getElementById('note');
+    master.addEventListener('click', function(){ master.classList.toggle('on'); note.classList.toggle('hide', !master.classList.contains('on')); });
+  </script>
