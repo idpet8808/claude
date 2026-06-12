@@ -220,7 +220,7 @@
   if (doneOk) {
     doneOk.addEventListener('click', function () {
       doneModal.classList.remove('show');
-      window.location.href = 'farm-detail.html';
+      window.location.href = '../home.html';
     });
   }
 })();

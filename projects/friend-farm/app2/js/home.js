@@ -49,6 +49,47 @@ renderHero(wx);
   });
 })();
 
+/* Login onboarding overlay */
+(function () {
+  const overlay = document.getElementById('firstOnboarding');
+  if (!overlay) return;
+
+  const params = new URLSearchParams(window.location.search);
+  const shouldShow = params.get('onboarding') === '1';
+  const phone = document.querySelector('.phone');
+  const app = document.querySelector('.app');
+  const nav = document.querySelector('.bottom-nav');
+
+  function closeOverlay() {
+    overlay.hidden = true;
+    if (phone) phone.classList.remove('is-onboarding-open');
+    if (app) app.removeAttribute('aria-hidden');
+    if (nav) nav.removeAttribute('aria-hidden');
+
+    if (params.has('onboarding')) {
+      params.delete('onboarding');
+      const query = params.toString();
+      const cleanUrl = window.location.pathname + (query ? '?' + query : '') + window.location.hash;
+      window.history.replaceState({}, '', cleanUrl);
+    }
+  }
+
+  if (shouldShow) {
+    overlay.hidden = false;
+    if (phone) phone.classList.add('is-onboarding-open');
+    if (app) app.setAttribute('aria-hidden', 'true');
+    if (nav) nav.setAttribute('aria-hidden', 'true');
+  }
+
+  overlay.querySelectorAll('[data-onboarding-close]').forEach(function (button) {
+    button.addEventListener('click', closeOverlay);
+  });
+
+  window.addEventListener('keydown', function (event) {
+    if (!overlay.hidden && event.key === 'Escape') closeOverlay();
+  });
+})();
+
 /* 가로 스크롤 영역 마우스 드래그 스와이프 + 관성 (데스크톱 — 마우스 휠은 세로만 동작) */
 (function () {
   document.querySelectorAll('.story-row').forEach(function (row) {
